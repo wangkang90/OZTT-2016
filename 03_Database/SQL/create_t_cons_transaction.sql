@@ -1,0 +1,25 @@
+DROP TABLE IF EXISTS `t_cons_transaction`;
+CREATE TABLE `t_cons_transaction` (
+  `no` bigint(12) NOT NULL AUTO_INCREMENT,
+  `transactionNo` varchar(16) NOT NULL,
+  `customerNo` varchar(16) NOT NULL,
+  `inOutFlg` char(1) NOT NULL,
+  `accountNo` varchar(8) NOT NULL,
+  `transactionMethod` varchar(6) DEFAULT NULL,
+  `transactionType` varchar(6) DEFAULT NULL,
+  `transactionObject` varchar(255) DEFAULT NULL,
+  `transactionSerialNo` varchar(255) DEFAULT NULL,
+  `transactionAmount` decimal(12, 2),
+  `transactionStatus` varchar(6) NOT NULL,
+  `transactionTimestamp` timestamp NULL DEFAULT NULL,
+  `transactionComments` varchar(500) DEFAULT NULL,
+  `transactionBeforeAmount` decimal(12, 2),
+  `transactionAfterAmount` decimal(12, 2),
+  `transactionOperator` varchar(16) DEFAULT NULL,
+  `addTimestamp` timestamp NULL DEFAULT NULL,
+  `addUserKey` varchar(40) DEFAULT NULL,
+  `updTimestamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updUserKey` varchar(40) DEFAULT NULL,
+  `updPgmId` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
