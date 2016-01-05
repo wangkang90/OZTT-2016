@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS `t_admin_basic_info`;
 CREATE TABLE `t_admin_basic_info` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `adminNo` varchar(10) NOT NULL,
+  `roleId` varchar(100) NOT NULL,
   `nickName` varchar(50) DEFAULT NULL,
   `headPic` varchar(200) DEFAULT NULL,
   `telNo` varchar(20) NOT NULL,

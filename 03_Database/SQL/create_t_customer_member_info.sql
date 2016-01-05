@@ -1,11 +1,10 @@
-DROP TABLE IF EXISTS `t_admin_login_info`;
-CREATE TABLE `t_admin_login_info` (
+DROP TABLE IF EXISTS `t_customer_member_info`;
+CREATE TABLE `t_customer_member_info` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
-  `adminNo` varchar(10) NOT NULL,
-  `loginPass` varchar(255) NOT NULL,
-  `salt` varchar(100) DEFAULT NULL,
-  `loginStatus` char(1),
-  `deleteFlg` char(1) NOT NULL,
+  `customerNo` varchar(16) NOT NULL,
+  `memberCardNo` varchar(16) DEFAULT NULL,
+  `points` int(8),
+  `level` varchar(6) DEFAULT NULL,
   `addTimestamp` timestamp NULL DEFAULT NULL,
   `addUserKey` varchar(40) DEFAULT NULL,
   `updTimestamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
