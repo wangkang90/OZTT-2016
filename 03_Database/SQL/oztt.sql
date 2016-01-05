@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50618
 File Encoding         : 65001
 
-Date: 2015-12-23 21:35:31
+Date: 2016-01-05 16:13:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,6 +21,7 @@ DROP TABLE IF EXISTS `t_admin_basic_info`;
 CREATE TABLE `t_admin_basic_info` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `adminNo` varchar(10) NOT NULL,
+  `roleId` varchar(100) NOT NULL,
   `nickName` varchar(50) DEFAULT NULL,
   `headPic` varchar(200) DEFAULT NULL,
   `telNo` varchar(20) NOT NULL,
@@ -63,6 +64,7 @@ CREATE TABLE `t_admin_login_info` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `adminNo` varchar(10) NOT NULL,
   `loginPass` varchar(255) NOT NULL,
+  `salt` varchar(100) DEFAULT NULL,
   `loginStatus` char(1) DEFAULT NULL,
   `deleteFlg` char(1) NOT NULL,
   `addTimestamp` timestamp NULL DEFAULT NULL,
@@ -221,7 +223,6 @@ DROP TABLE IF EXISTS `t_customer_login_info`;
 CREATE TABLE `t_customer_login_info` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `customerNo` varchar(16) NOT NULL,
-  `memberNo` varchar(16) DEFAULT NULL,
   `loginId` varchar(50) NOT NULL,
   `loginPass` varchar(255) NOT NULL,
   `loginStatus` char(1) DEFAULT NULL,
@@ -236,6 +237,28 @@ CREATE TABLE `t_customer_login_info` (
 
 -- ----------------------------
 -- Records of t_customer_login_info
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `t_customer_member_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_customer_member_info`;
+CREATE TABLE `t_customer_member_info` (
+  `no` bigint(12) NOT NULL AUTO_INCREMENT,
+  `customerNo` varchar(16) NOT NULL,
+  `memberCardNo` varchar(16) DEFAULT NULL,
+  `points` int(8) DEFAULT NULL,
+  `level` varchar(6) DEFAULT NULL,
+  `addTimestamp` timestamp NULL DEFAULT NULL,
+  `addUserKey` varchar(40) DEFAULT NULL,
+  `updTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updUserKey` varchar(40) DEFAULT NULL,
+  `updPgmId` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_customer_member_info
 -- ----------------------------
 
 -- ----------------------------
@@ -612,21 +635,41 @@ CREATE TABLE `t_sys_module` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `t_sys_resource`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_sys_resource`;
+CREATE TABLE `t_sys_resource` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `resourceName` varchar(100) NOT NULL,
+  `resourceType` varchar(50) DEFAULT NULL,
+  `resourceUrl` varchar(500) DEFAULT NULL,
+  `parentResourceId` bigint(20) DEFAULT NULL,
+  `parentResourceIds` varchar(200) DEFAULT NULL,
+  `resourcePermission` varchar(100) DEFAULT NULL,
+  `resourceAvailable` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_sys_resource
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `t_sys_role`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_role`;
 CREATE TABLE `t_sys_role` (
-  `no` bigint(12) NOT NULL AUTO_INCREMENT,
-  `roleNo` varchar(8) NOT NULL,
+  `id` bigint(12) NOT NULL AUTO_INCREMENT,
   `roleName` varchar(50) NOT NULL,
   `roleDesc` varchar(100) DEFAULT NULL,
+  `resourceIds` varchar(1000) DEFAULT NULL,
   `openFlg` char(1) DEFAULT NULL,
   `addTimestamp` timestamp NULL DEFAULT NULL,
   `addUserKey` varchar(40) DEFAULT NULL,
   `updTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updUserKey` varchar(40) DEFAULT NULL,
   `updPgmId` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`no`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
