@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.oztt.dao.TGoodsGroupDao" >
+  <resultMap id="BaseResultMap" type="com.org.oztt.entity.TGoodsGroup" >
+    <id column="no" property="no" jdbcType="BIGINT" />
+    <result column="groupNo" property="groupno" jdbcType="VARCHAR" />
+    <result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
+    <result column="groupPrice" property="groupprice" jdbcType="DECIMAL" />
+    <result column="groupMaxQuantity" property="groupmaxquantity" jdbcType="DECIMAL" />
+    <result column="groupCurrentQuantity" property="groupcurrentquantity" jdbcType="DECIMAL" />
+    <result column="groupComments" property="groupcomments" jdbcType="VARCHAR" />
+    <result column="groupDesc" property="groupdesc" jdbcType="VARCHAR" />
+    <result column="comsumerReminder" property="comsumerreminder" jdbcType="VARCHAR" />
+    <result column="shopperRules" property="shopperrules" jdbcType="VARCHAR" />
+    <result column="openFlg" property="openflg" jdbcType="CHAR" />
+    <result column="validPeriodStart" property="validperiodstart" jdbcType="TIMESTAMP" />
+    <result column="validPeriodEnd" property="validperiodend" jdbcType="TIMESTAMP" />
+    <result column="addTimestamp" property="addtimestamp" jdbcType="TIMESTAMP" />
+    <result column="addUserKey" property="adduserkey" jdbcType="VARCHAR" />
+    <result column="updTimestamp" property="updtimestamp" jdbcType="TIMESTAMP" />
+    <result column="updUserKey" property="upduserkey" jdbcType="VARCHAR" />
+    <result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    no, groupNo, goodsId, groupPrice, groupMaxQuantity, groupCurrentQuantity, groupComments, 
+    groupDesc, comsumerReminder, shopperRules, openFlg, validPeriodStart, validPeriodEnd, 
+    addTimestamp, addUserKey, updTimestamp, updUserKey, updPgmId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods_group
+    where no = #{no,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_goods_group
+    where no = #{no,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.org.oztt.entity.TGoodsGroup" >
+    insert into t_goods_group (no, groupNo, goodsId, 
+      groupPrice, groupMaxQuantity, groupCurrentQuantity, 
+      groupComments, groupDesc, comsumerReminder, 
+      shopperRules, openFlg, validPeriodStart, 
+      validPeriodEnd, addTimestamp, addUserKey, 
+      updTimestamp, updUserKey, updPgmId
+      )
+    values (#{no,jdbcType=BIGINT}, #{groupno,jdbcType=VARCHAR}, #{goodsid,jdbcType=VARCHAR}, 
+      #{groupprice,jdbcType=DECIMAL}, #{groupmaxquantity,jdbcType=DECIMAL}, #{groupcurrentquantity,jdbcType=DECIMAL}, 
+      #{groupcomments,jdbcType=VARCHAR}, #{groupdesc,jdbcType=VARCHAR}, #{comsumerreminder,jdbcType=VARCHAR}, 
+      #{shopperrules,jdbcType=VARCHAR}, #{openflg,jdbcType=CHAR}, #{validperiodstart,jdbcType=TIMESTAMP}, 
+      #{validperiodend,jdbcType=TIMESTAMP}, #{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR}, 
+      #{updtimestamp,jdbcType=TIMESTAMP}, #{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.org.oztt.entity.TGoodsGroup" >
+    insert into t_goods_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="groupno != null" >
+        groupNo,
+      </if>
+      <if test="goodsid != null" >
+        goodsId,
+      </if>
+      <if test="groupprice != null" >
+        groupPrice,
+      </if>
+      <if test="groupmaxquantity != null" >
+        groupMaxQuantity,
+      </if>
+      <if test="groupcurrentquantity != null" >
+        groupCurrentQuantity,
+      </if>
+      <if test="groupcomments != null" >
+        groupComments,
+      </if>
+      <if test="groupdesc != null" >
+        groupDesc,
+      </if>
+      <if test="comsumerreminder != null" >
+        comsumerReminder,
+      </if>
+      <if test="shopperrules != null" >
+        shopperRules,
+      </if>
+      <if test="openflg != null" >
+        openFlg,
+      </if>
+      <if test="validperiodstart != null" >
+        validPeriodStart,
+      </if>
+      <if test="validperiodend != null" >
+        validPeriodEnd,
+      </if>
+      <if test="addtimestamp != null" >
+        addTimestamp,
+      </if>
+      <if test="adduserkey != null" >
+        addUserKey,
+      </if>
+      <if test="updtimestamp != null" >
+        updTimestamp,
+      </if>
+      <if test="upduserkey != null" >
+        updUserKey,
+      </if>
+      <if test="updpgmid != null" >
+        updPgmId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        #{no,jdbcType=BIGINT},
+      </if>
+      <if test="groupno != null" >
+        #{groupno,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null" >
+        #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="groupprice != null" >
+        #{groupprice,jdbcType=DECIMAL},
+      </if>
+      <if test="groupmaxquantity != null" >
+        #{groupmaxquantity,jdbcType=DECIMAL},
+      </if>
+      <if test="groupcurrentquantity != null" >
+        #{groupcurrentquantity,jdbcType=DECIMAL},
+      </if>
+      <if test="groupcomments != null" >
+        #{groupcomments,jdbcType=VARCHAR},
+      </if>
+      <if test="groupdesc != null" >
+        #{groupdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="comsumerreminder != null" >
+        #{comsumerreminder,jdbcType=VARCHAR},
+      </if>
+      <if test="shopperrules != null" >
+        #{shopperrules,jdbcType=VARCHAR},
+      </if>
+      <if test="openflg != null" >
+        #{openflg,jdbcType=CHAR},
+      </if>
+      <if test="validperiodstart != null" >
+        #{validperiodstart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validperiodend != null" >
+        #{validperiodend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addtimestamp != null" >
+        #{addtimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adduserkey != null" >
+        #{adduserkey,jdbcType=VARCHAR},
+      </if>
+      <if test="updtimestamp != null" >
+        #{updtimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upduserkey != null" >
+        #{upduserkey,jdbcType=VARCHAR},
+      </if>
+      <if test="updpgmid != null" >
+        #{updpgmid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TGoodsGroup" >
+    update t_goods_group
+    <set >
+      <if test="groupno != null" >
+        groupNo = #{groupno,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null" >
+        goodsId = #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="groupprice != null" >
+        groupPrice = #{groupprice,jdbcType=DECIMAL},
+      </if>
+      <if test="groupmaxquantity != null" >
+        groupMaxQuantity = #{groupmaxquantity,jdbcType=DECIMAL},
+      </if>
+      <if test="groupcurrentquantity != null" >
+        groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
+      </if>
+      <if test="groupcomments != null" >
+        groupComments = #{groupcomments,jdbcType=VARCHAR},
+      </if>
+      <if test="groupdesc != null" >
+        groupDesc = #{groupdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="comsumerreminder != null" >
+        comsumerReminder = #{comsumerreminder,jdbcType=VARCHAR},
+      </if>
+      <if test="shopperrules != null" >
+        shopperRules = #{shopperrules,jdbcType=VARCHAR},
+      </if>
+      <if test="openflg != null" >
+        openFlg = #{openflg,jdbcType=CHAR},
+      </if>
+      <if test="validperiodstart != null" >
+        validPeriodStart = #{validperiodstart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validperiodend != null" >
+        validPeriodEnd = #{validperiodend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addtimestamp != null" >
+        addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adduserkey != null" >
+        addUserKey = #{adduserkey,jdbcType=VARCHAR},
+      </if>
+      <if test="updtimestamp != null" >
+        updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upduserkey != null" >
+        updUserKey = #{upduserkey,jdbcType=VARCHAR},
+      </if>
+      <if test="updpgmid != null" >
+        updPgmId = #{updpgmid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TGoodsGroup" >
+    update t_goods_group
+    set groupNo = #{groupno,jdbcType=VARCHAR},
+      goodsId = #{goodsid,jdbcType=VARCHAR},
+      groupPrice = #{groupprice,jdbcType=DECIMAL},
+      groupMaxQuantity = #{groupmaxquantity,jdbcType=DECIMAL},
+      groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
+      groupComments = #{groupcomments,jdbcType=VARCHAR},
+      groupDesc = #{groupdesc,jdbcType=VARCHAR},
+      comsumerReminder = #{comsumerreminder,jdbcType=VARCHAR},
+      shopperRules = #{shopperrules,jdbcType=VARCHAR},
+      openFlg = #{openflg,jdbcType=CHAR},
+      validPeriodStart = #{validperiodstart,jdbcType=TIMESTAMP},
+      validPeriodEnd = #{validperiodend,jdbcType=TIMESTAMP},
+      addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
+      addUserKey = #{adduserkey,jdbcType=VARCHAR},
+      updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
+      updUserKey = #{upduserkey,jdbcType=VARCHAR},
+      updPgmId = #{updpgmid,jdbcType=VARCHAR}
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+</mapper>

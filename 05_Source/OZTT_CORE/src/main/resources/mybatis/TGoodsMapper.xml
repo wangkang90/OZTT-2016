@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.oztt.dao.TGoodsDao" >
+  <resultMap id="BaseResultMap" type="com.org.oztt.entity.TGoods" >
+    <id column="no" property="no" jdbcType="BIGINT" />
+    <result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
+    <result column="classId" property="classid" jdbcType="VARCHAR" />
+    <result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
+    <result column="goodsDesc" property="goodsdesc" jdbcType="VARCHAR" />
+    <result column="goodsComments" property="goodscomments" jdbcType="VARCHAR" />
+    <result column="goodsThumbnail" property="goodsthumbnail" jdbcType="VARCHAR" />
+    <result column="goodsSmallPic" property="goodssmallpic" jdbcType="VARCHAR" />
+    <result column="goodsNormalPic" property="goodsnormalpic" jdbcType="VARCHAR" />
+    <result column="onSaleFlg" property="onsaleflg" jdbcType="CHAR" />
+    <result column="hotSaleFlg" property="hotsaleflg" jdbcType="CHAR" />
+    <result column="newSaleFlg" property="newsaleflg" jdbcType="CHAR" />
+    <result column="costPrice" property="costprice" jdbcType="DECIMAL" />
+    <result column="sortOrder" property="sortorder" jdbcType="INTEGER" />
+    <result column="deleteFlg" property="deleteflg" jdbcType="CHAR" />
+    <result column="addTimestamp" property="addtimestamp" jdbcType="TIMESTAMP" />
+    <result column="addUserKey" property="adduserkey" jdbcType="VARCHAR" />
+    <result column="updTimestamp" property="updtimestamp" jdbcType="TIMESTAMP" />
+    <result column="updUserKey" property="upduserkey" jdbcType="VARCHAR" />
+    <result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    no, goodsId, classId, goodsName, goodsDesc, goodsComments, goodsThumbnail, goodsSmallPic, 
+    goodsNormalPic, onSaleFlg, hotSaleFlg, newSaleFlg, costPrice, sortOrder, deleteFlg, 
+    addTimestamp, addUserKey, updTimestamp, updUserKey, updPgmId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where no = #{no,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_goods
+    where no = #{no,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.org.oztt.entity.TGoods" >
+    insert into t_goods (no, goodsId, classId, 
+      goodsName, goodsDesc, goodsComments, 
+      goodsThumbnail, goodsSmallPic, goodsNormalPic, 
+      onSaleFlg, hotSaleFlg, newSaleFlg, 
+      costPrice, sortOrder, deleteFlg, 
+      addTimestamp, addUserKey, updTimestamp, 
+      updUserKey, updPgmId)
+    values (#{no,jdbcType=BIGINT}, #{goodsid,jdbcType=VARCHAR}, #{classid,jdbcType=VARCHAR}, 
+      #{goodsname,jdbcType=VARCHAR}, #{goodsdesc,jdbcType=VARCHAR}, #{goodscomments,jdbcType=VARCHAR}, 
+      #{goodsthumbnail,jdbcType=VARCHAR}, #{goodssmallpic,jdbcType=VARCHAR}, #{goodsnormalpic,jdbcType=VARCHAR}, 
+      #{onsaleflg,jdbcType=CHAR}, #{hotsaleflg,jdbcType=CHAR}, #{newsaleflg,jdbcType=CHAR}, 
+      #{costprice,jdbcType=DECIMAL}, #{sortorder,jdbcType=INTEGER}, #{deleteflg,jdbcType=CHAR}, 
+      #{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR}, #{updtimestamp,jdbcType=TIMESTAMP}, 
+      #{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.org.oztt.entity.TGoods" >
+    insert into t_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="goodsid != null" >
+        goodsId,
+      </if>
+      <if test="classid != null" >
+        classId,
+      </if>
+      <if test="goodsname != null" >
+        goodsName,
+      </if>
+      <if test="goodsdesc != null" >
+        goodsDesc,
+      </if>
+      <if test="goodscomments != null" >
+        goodsComments,
+      </if>
+      <if test="goodsthumbnail != null" >
+        goodsThumbnail,
+      </if>
+      <if test="goodssmallpic != null" >
+        goodsSmallPic,
+      </if>
+      <if test="goodsnormalpic != null" >
+        goodsNormalPic,
+      </if>
+      <if test="onsaleflg != null" >
+        onSaleFlg,
+      </if>
+      <if test="hotsaleflg != null" >
+        hotSaleFlg,
+      </if>
+      <if test="newsaleflg != null" >
+        newSaleFlg,
+      </if>
+      <if test="costprice != null" >
+        costPrice,
+      </if>
+      <if test="sortorder != null" >
+        sortOrder,
+      </if>
+      <if test="deleteflg != null" >
+        deleteFlg,
+      </if>
+      <if test="addtimestamp != null" >
+        addTimestamp,
+      </if>
+      <if test="adduserkey != null" >
+        addUserKey,
+      </if>
+      <if test="updtimestamp != null" >
+        updTimestamp,
+      </if>
+      <if test="upduserkey != null" >
+        updUserKey,
+      </if>
+      <if test="updpgmid != null" >
+        updPgmId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        #{no,jdbcType=BIGINT},
+      </if>
+      <if test="goodsid != null" >
+        #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null" >
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsdesc != null" >
+        #{goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodscomments != null" >
+        #{goodscomments,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsthumbnail != null" >
+        #{goodsthumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="goodssmallpic != null" >
+        #{goodssmallpic,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsnormalpic != null" >
+        #{goodsnormalpic,jdbcType=VARCHAR},
+      </if>
+      <if test="onsaleflg != null" >
+        #{onsaleflg,jdbcType=CHAR},
+      </if>
+      <if test="hotsaleflg != null" >
+        #{hotsaleflg,jdbcType=CHAR},
+      </if>
+      <if test="newsaleflg != null" >
+        #{newsaleflg,jdbcType=CHAR},
+      </if>
+      <if test="costprice != null" >
+        #{costprice,jdbcType=DECIMAL},
+      </if>
+      <if test="sortorder != null" >
+        #{sortorder,jdbcType=INTEGER},
+      </if>
+      <if test="deleteflg != null" >
+        #{deleteflg,jdbcType=CHAR},
+      </if>
+      <if test="addtimestamp != null" >
+        #{addtimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adduserkey != null" >
+        #{adduserkey,jdbcType=VARCHAR},
+      </if>
+      <if test="updtimestamp != null" >
+        #{updtimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upduserkey != null" >
+        #{upduserkey,jdbcType=VARCHAR},
+      </if>
+      <if test="updpgmid != null" >
+        #{updpgmid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TGoods" >
+    update t_goods
+    <set >
+      <if test="goodsid != null" >
+        goodsId = #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        classId = #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null" >
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsdesc != null" >
+        goodsDesc = #{goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodscomments != null" >
+        goodsComments = #{goodscomments,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsthumbnail != null" >
+        goodsThumbnail = #{goodsthumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="goodssmallpic != null" >
+        goodsSmallPic = #{goodssmallpic,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsnormalpic != null" >
+        goodsNormalPic = #{goodsnormalpic,jdbcType=VARCHAR},
+      </if>
+      <if test="onsaleflg != null" >
+        onSaleFlg = #{onsaleflg,jdbcType=CHAR},
+      </if>
+      <if test="hotsaleflg != null" >
+        hotSaleFlg = #{hotsaleflg,jdbcType=CHAR},
+      </if>
+      <if test="newsaleflg != null" >
+        newSaleFlg = #{newsaleflg,jdbcType=CHAR},
+      </if>
+      <if test="costprice != null" >
+        costPrice = #{costprice,jdbcType=DECIMAL},
+      </if>
+      <if test="sortorder != null" >
+        sortOrder = #{sortorder,jdbcType=INTEGER},
+      </if>
+      <if test="deleteflg != null" >
+        deleteFlg = #{deleteflg,jdbcType=CHAR},
+      </if>
+      <if test="addtimestamp != null" >
+        addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adduserkey != null" >
+        addUserKey = #{adduserkey,jdbcType=VARCHAR},
+      </if>
+      <if test="updtimestamp != null" >
+        updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upduserkey != null" >
+        updUserKey = #{upduserkey,jdbcType=VARCHAR},
+      </if>
+      <if test="updpgmid != null" >
+        updPgmId = #{updpgmid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TGoods" >
+    update t_goods
+    set goodsId = #{goodsid,jdbcType=VARCHAR},
+      classId = #{classid,jdbcType=VARCHAR},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsDesc = #{goodsdesc,jdbcType=VARCHAR},
+      goodsComments = #{goodscomments,jdbcType=VARCHAR},
+      goodsThumbnail = #{goodsthumbnail,jdbcType=VARCHAR},
+      goodsSmallPic = #{goodssmallpic,jdbcType=VARCHAR},
+      goodsNormalPic = #{goodsnormalpic,jdbcType=VARCHAR},
+      onSaleFlg = #{onsaleflg,jdbcType=CHAR},
+      hotSaleFlg = #{hotsaleflg,jdbcType=CHAR},
+      newSaleFlg = #{newsaleflg,jdbcType=CHAR},
+      costPrice = #{costprice,jdbcType=DECIMAL},
+      sortOrder = #{sortorder,jdbcType=INTEGER},
+      deleteFlg = #{deleteflg,jdbcType=CHAR},
+      addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
+      addUserKey = #{adduserkey,jdbcType=VARCHAR},
+      updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
+      updUserKey = #{upduserkey,jdbcType=VARCHAR},
+      updPgmId = #{updpgmid,jdbcType=VARCHAR}
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where no = #{no,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="com.org.oztt.entity.TGoods" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where 1=1
+	  <if test="goodsid != null" >
+        and goodsId = #{goodsid,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        and classId = #{classid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null" >
+        and goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsdesc != null" >
+        and goodsDesc = #{goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodscomments != null" >
+        and goodsComments = #{goodscomments,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsthumbnail != null" >
+        and goodsThumbnail = #{goodsthumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="goodssmallpic != null" >
+        and goodsSmallPic = #{goodssmallpic,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsnormalpic != null" >
+        and goodsNormalPic = #{goodsnormalpic,jdbcType=VARCHAR},
+      </if>
+      <if test="onsaleflg != null" >
+        and onSaleFlg = #{onsaleflg,jdbcType=CHAR},
+      </if>
+      <if test="hotsaleflg != null" >
+        and hotSaleFlg = #{hotsaleflg,jdbcType=CHAR},
+      </if>
+      <if test="newsaleflg != null" >
+        and newSaleFlg = #{newsaleflg,jdbcType=CHAR},
+      </if>
+      <if test="costprice != null" >
+        and costPrice = #{costprice,jdbcType=DECIMAL},
+      </if>
+      <if test="sortorder != null" >
+        and sortOrder = #{sortorder,jdbcType=INTEGER},
+      </if>
+      <if test="deleteflg != null" >
+        and deleteFlg = #{deleteflg,jdbcType=CHAR},
+      </if>
+  </select>
+  
+  <select id="getFirstThreeNewArravail" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where newSaleFlg = '1' and onSaleFlg= '1'
+    limit 3
+  </select>
+  
+  <select id="getAllNewArravail" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where newSaleFlg = '1' and onSaleFlg= '1'
+  </select>
+</mapper>

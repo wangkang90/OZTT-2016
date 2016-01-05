@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.oztt.dao.TNoCustomerDao">
+	<resultMap id="BaseResultMap" type="com.org.oztt.entity.TNoCustomer">
+		<id column="no" property="no" jdbcType="BIGINT" />
+		<result column="date" property="date" jdbcType="VARCHAR" />
+		<result column="maxNo" property="maxno" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="condition.date != null">
+				and date = #{condition.date,jdbcType=VARCHAR}
+			</if>
+			<if test="condition.maxno != null">
+				and maxNo = #{condition.maxno,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		<include refid="Base_Column_List" />
+		from t_no_customer
+		where no = #{no,jdbcType=BIGINT}
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="example.condition.date != null">
+				and date = #{example.condition.date,jdbcType=VARCHAR}
+			</if>
+			<if test="example.condition.maxno != null">
+				and maxNo = #{example.condition.maxno,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		t_no_customer
+		where no = #{no,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.org.oztt.entity.TNoCustomer">
+		insert into t_no_customer (no,
+		date, maxNo
+		)
+		values (#{no,jdbcType=BIGINT}, #{date,jdbcType=VARCHAR},
+		#{maxno,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.org.oztt.entity.TNoCustomer">
+		insert into t_no_customer
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				no,
+			</if>
+			<if test="date != null">
+				date,
+			</if>
+			<if test="maxno != null">
+				maxNo,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				#{no,jdbcType=BIGINT},
+			</if>
+			<if test="date != null">
+				#{date,jdbcType=VARCHAR},
+			</if>
+			<if test="maxno != null">
+				#{maxno,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TNoCustomer">
+		update t_no_customer
+		<set>
+			<if test="date != null">
+				date = #{date,jdbcType=VARCHAR},
+			</if>
+			<if test="maxno != null">
+				maxNo = #{maxno,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where no = #{no,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TNoCustomer">
+		update
+		t_no_customer
+		set date = #{date,jdbcType=VARCHAR},
+		maxNo =
+		#{maxno,jdbcType=VARCHAR}
+		where no = #{no,jdbcType=BIGINT}
+	</update>
+	<select id="selectMaxCustomerNo" resultType="java.lang.String" >
+		select
+		max(maxNo) as maxNo
+		from t_no_customer
+	</select>
+</mapper>

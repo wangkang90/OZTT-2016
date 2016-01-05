@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.oztt.dao.TCustomerLoginHisDao" >
+  <resultMap id="BaseResultMap" type="com.org.oztt.entity.TCustomerLoginHis" >
+    <id column="no" property="no" jdbcType="BIGINT" />
+    <result column="customerNo" property="customerno" jdbcType="VARCHAR" />
+    <result column="loginTimestamp" property="logintimestamp" jdbcType="TIMESTAMP" />
+    <result column="logoutTimestamp" property="logouttimestamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.customerno != null" >
+         and customerNo = #{condition.customerno,jdbcType=VARCHAR}
+      </if>
+      <if test="condition.logintimestamp != null" >
+         and loginTimestamp = #{condition.logintimestamp,jdbcType=TIMESTAMP}
+      </if>
+      <if test="condition.logouttimestamp != null" >
+         and logoutTimestamp = #{condition.logouttimestamp,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    <include refid="Base_Column_List" />
+    from t_customer_login_his
+    where no = #{no,jdbcType=BIGINT}
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="example.condition.customerno != null" >
+         and customerNo = #{example.condition.customerno,jdbcType=VARCHAR}
+      </if>
+      <if test="example.condition.logintimestamp != null" >
+         and loginTimestamp = #{example.condition.logintimestamp,jdbcType=TIMESTAMP}
+      </if>
+      <if test="example.condition.logouttimestamp != null" >
+         and logoutTimestamp = #{example.condition.logouttimestamp,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_customer_login_his
+    where no = #{no,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.org.oztt.entity.TCustomerLoginHis" >
+    insert into t_customer_login_his (no, customerNo, loginTimestamp, 
+      logoutTimestamp)
+    values (#{no,jdbcType=BIGINT}, #{customerno,jdbcType=VARCHAR}, #{logintimestamp,jdbcType=TIMESTAMP}, 
+      #{logouttimestamp,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.org.oztt.entity.TCustomerLoginHis" >
+    insert into t_customer_login_his
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="customerno != null" >
+        customerNo,
+      </if>
+      <if test="logintimestamp != null" >
+        loginTimestamp,
+      </if>
+      <if test="logouttimestamp != null" >
+        logoutTimestamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        #{no,jdbcType=BIGINT},
+      </if>
+      <if test="customerno != null" >
+        #{customerno,jdbcType=VARCHAR},
+      </if>
+      <if test="logintimestamp != null" >
+        #{logintimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logouttimestamp != null" >
+        #{logouttimestamp,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TCustomerLoginHis" >
+    update t_customer_login_his
+    <set >
+      <if test="customerno != null" >
+        customerNo = #{customerno,jdbcType=VARCHAR},
+      </if>
+      <if test="logintimestamp != null" >
+        loginTimestamp = #{logintimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logouttimestamp != null" >
+        logoutTimestamp = #{logouttimestamp,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TCustomerLoginHis" >
+    update t_customer_login_his
+    set customerNo = #{customerno,jdbcType=VARCHAR},
+      loginTimestamp = #{logintimestamp,jdbcType=TIMESTAMP},
+      logoutTimestamp = #{logouttimestamp,jdbcType=TIMESTAMP}
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+</mapper>
