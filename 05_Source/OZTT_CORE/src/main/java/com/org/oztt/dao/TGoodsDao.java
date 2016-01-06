@@ -1,6 +1,7 @@
 package com.org.oztt.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.org.oztt.entity.TGoods;
 
@@ -56,5 +57,12 @@ public interface TGoodsDao {
      * @return
      */
     List<TGoods> getAllNewArravail();
+    
+    /**
+     * 根据参数获取商品数据
+     * @param map
+     * @return
+     */
+    List<TGoods> getGoodsListForMain(Map<String, String> map);
      
 }

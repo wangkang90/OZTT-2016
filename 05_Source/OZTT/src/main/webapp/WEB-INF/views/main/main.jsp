@@ -9,11 +9,27 @@
   <meta charset="utf-8">
   <title>Main</title>
   <%@ include file="../commoncssHead.jsp"%>
+  <!-- Head END -->
+  <script>
+  	/* 访问后台去的详情数据 */
+	function viewProductPopUp(){
+		
+	}
+  	
+  	/* 商品显示画面 */
+  	function gotoList(str){
+  		
+  	}
+  	
+  	/*  */
+  	function addCart(str) {
+  		
+  	}
+	
+	
+  </script>
 </head>
-<!-- Head END -->
-<script>
 
-</script>
 
 <!-- Body BEGIN -->
 <body>
@@ -107,13 +123,13 @@
                     <div class="pi-img-wrapper">
                       <img src="${goodNewArr.goodsnormalpic }" class="img-responsive" alt="${goodNewArr.goodsname }">
                       <div>
-                        <a href="${goodNewArr.goodsnormalpic }" class="btn btn-default fancybox-button">Zoom</a>
-                        <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                        <a href="${goodNewArr.goodsnormalpic }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
+                        <a href="#product-pop-up" onclick="viewProductPopUp('${goodNewArr.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                       </div>
                     </div>
                     <h3><a onclick="goToItem('${goodNewArr.goodsid }')">${goodNewArr.goodsname }</a></h3>
                     <div class="pi-price">${goodNewArr.costprice }<fmt:message key="common_yuan"/></div>
-                    <a onclick="addCart('${goodNewArr.goodsid }')" class="btn btn-default add2cart"><fmt:message key="index_addtocart"/></a>
+                    <a onclick="addCart('${goodNewArr.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_addtocart"/></a>
                   </div>
                 </li>
                 </c:forEach>
@@ -127,145 +143,65 @@
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40 ">
           <!-- BEGIN SIDEBAR -->
-          <div class="sidebar col-md-3 col-sm-4">
+          <div class="sidebar col-md-3 col-sm-5">
             <ul class="list-group margin-bottom-25 sidebar-menu">
-              <li class="list-group-item clearfix"><a href="product-list.html"><i class="fa fa-angle-right"></i> Ladies</a></li>
+            <c:forEach var="beanListC" items="${ menucategory }">
               <li class="list-group-item clearfix dropdown">
-                <a href="javascript:void(0);">
+                <a href="<c:if test="${empty beanListC.childrenClass}">javascript:gotoList('${ beanListC.fatherClass.classid }');</c:if><c:if test="${not empty beanListC.childrenClass}">javascript:void(0);</c:if>">
                   <i class="fa fa-angle-right"></i>
-                  Mens
+                  ${ beanListC.fatherClass.classname }
                   <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu">
+                 <c:forEach var="childrenListC" items="${ beanListC.childrenClass }">
                   <li class="list-group-item dropdown clearfix">
-                    <a href="javascript:void(0);"><i class="fa fa-circle"></i> Shoes <i class="fa fa-angle-down"></i></a>
-                      <ul class="dropdown-menu">
+                    <a href="<c:if test="${empty childrenListC.childrenClass}">javascript:gotoList('${ childrenListC.fatherClass.classid }');</c:if><c:if test="${not empty childrenListC.childrenClass}">javascript:void(0);</c:if>">
+                    	<i class="fa fa-circle"></i> ${ childrenListC.fatherClass.classname } <i class="fa fa-angle-down"></i></a>
+                      	<ul class="dropdown-menu">
+                      	<c:forEach var="childrenNextListC" items="${ childrenListC.childrenClass }">
                         <li class="list-group-item dropdown clearfix">
-                          <a href="javascript:void(0);"><i class="fa fa-circle"></i> Classic <i class="fa fa-angle-down"></i></a>
-                          <ul class="dropdown-menu">
-                            <li><a href="product-list.html"><i class="fa fa-circle"></i> Classic 1</a></li>
-                            <li><a href="product-list.html"><i class="fa fa-circle"></i> Classic 2</a></li>
-                          </ul>
+                          <a href="javascript:gotoList('${ childrenNextListC.fatherClass.classid }');">
+	                          <i class="fa fa-circle"></i> 
+	                          ${ childrenNextListC.fatherClass.classname } 
+	                          <i class="fa fa-angle-down"></i>
+                          </a>
                         </li>
-                        <li class="list-group-item dropdown clearfix">
-                          <a href="javascript:void(0);"><i class="fa fa-circle"></i> Sport  <i class="fa fa-angle-down"></i></a>
-                          <ul class="dropdown-menu">
-                            <li><a href="product-list.html"><i class="fa fa-circle"></i> Sport 1</a></li>
-                            <li><a href="product-list.html"><i class="fa fa-circle"></i> Sport 2</a></li>
-                          </ul>
-                        </li>
+                        </c:forEach>
                       </ul>
                   </li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i> Trainers</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i> Jeans</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i> Chinos</a></li>
-                  <li><a href="product-list.html"><i class="fa fa-circle"></i> T-Shirts</a></li>
+                  </c:forEach>
                 </ul>
               </li>
-              <li class="list-group-item clearfix"><a href="product-list.html"><i class="fa fa-angle-right"></i> Kids</a></li>
-              <li class="list-group-item clearfix"><a href="product-list.html"><i class="fa fa-angle-right"></i> Accessories</a></li>
-              <li class="list-group-item clearfix"><a href="product-list.html"><i class="fa fa-angle-right"></i> Sports</a></li>
-              <li class="list-group-item clearfix"><a href="product-list.html"><i class="fa fa-angle-right"></i> Brands</a></li>
-              <li class="list-group-item clearfix"><a href="product-list.html"><i class="fa fa-angle-right"></i> Electronics</a></li>
-              <li class="list-group-item clearfix"><a href="product-list.html"><i class="fa fa-angle-right"></i> Home & Garden</a></li>
-              <li class="list-group-item clearfix"><a href="product-list.html"><i class="fa fa-angle-right"></i> Custom Link</a></li>
+			</c:forEach>
             </ul>
           </div>
           <!-- END SIDEBAR -->
           <!-- BEGIN CONTENT -->
-          <div class="col-md-9 col-sm-8">
-            <h2>Three items</h2>
-            <div class="bxslider-wrapper">
-              <ul class="bxslider" data-slides-phone="1" data-slides-tablet="2" data-slides-desktop="3" data-slide-margin="15">
-                <li>
-                  <div class="product-item">
-                    <div class="pi-img-wrapper">
-                      <img src="<c:url value='/assets/temp/products/k1.jpg' />" class="img-responsive" alt="Berry Lace Dress">
-                      <div>
-                        <a href="<c:url value='/assets/temp/products/k1.jpg' />" class="btn btn-default fancybox-button">Zoom</a>
-                        <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                      </div>
+          <div class="col-md-9 col-sm-7">
+          <div class="row product-list">
+          <c:forEach var="goodslist" items="${ tgoodList }">
+          <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="product-item">
+                  <div class="pi-img-wrapper">
+                    <img src="${goodslist.goodsnormalpic }" class="img-responsive" alt="${goodslist.goodsname }">
+                    <div>
+                      <a href="${goodslist.goodsnormalpic }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
+                      <a href="#product-pop-up" onclick="viewProductPopUp('${goodNewArr.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                     </div>
-                    <h3><a href="item.html">Berry Lace Dress</a></h3>
-                    <div class="pi-price">$29.00</div>
-                    <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                    <div class="sticker sticker-new"></div>
                   </div>
-                </li>
-                <li>
-                  <div class="product-item">
-                    <div class="pi-img-wrapper">
-                      <img src="<c:url value='/assets/temp/products/k2.jpg' />" class="img-responsive" alt="Berry Lace Dress">
-                      <div>
-                        <a href="<c:url value='/assets/temp/products/k2.jpg' />" class="btn btn-default fancybox-button">Zoom</a>
-                        <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                      </div>
-                    </div>
-                    <h3><a href="item.html">Berry Lace Dress2</a></h3>
-                    <div class="pi-price">$29.00</div>
-                    <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                  </div>
-                </li>
-                <li>
-                  <div class="product-item">
-                    <div class="pi-img-wrapper">
-                      <img src="<c:url value='/assets/temp/products/k3.jpg' />" class="img-responsive" alt="Berry Lace Dress">
-                      <div>
-                        <a href="<c:url value='/assets/temp/products/k3.jpg' />" class="btn btn-default fancybox-button">Zoom</a>
-                        <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                      </div>
-                    </div>
-                    <h3><a href="item.html">Berry Lace Dress3</a></h3>
-                    <div class="pi-price">$29.00</div>
-                    <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                  </div>
-                </li>
-                <li>
-                  <div class="product-item">
-                    <div class="pi-img-wrapper">
-                      <img src="<c:url value='/assets/temp/products/k4.jpg' />" class="img-responsive" alt="Berry Lace Dress">
-                      <div>
-                        <a href="<c:url value='/assets/temp/products/k4.jpg' />" class="btn btn-default fancybox-button">Zoom</a>
-                        <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                      </div>
-                    </div>
-                    <h3><a href="item.html">Berry Lace Dress4</a></h3>
-                    <div class="pi-price">$29.00</div>
-                    <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                    <div class="sticker sticker-sale"></div>
-                  </div>
-                </li>
-                <li>
-                  <div class="product-item">
-                    <div class="pi-img-wrapper">
-                      <img src="<c:url value='/assets/temp/products/k1.jpg' />" class="img-responsive" alt="Berry Lace Dress">
-                      <div>
-                        <a href="<c:url value='/assets/temp/products/k1.jpg' />" class="btn btn-default fancybox-button">Zoom</a>
-                        <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                      </div>
-                    </div>
-                    <h3><a href="item.html">Berry Lace Dress5</a></h3>
-                    <div class="pi-price">$29.00</div>
-                    <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                  </div>
-                </li>
-                <li>
-                  <div class="product-item">
-                    <div class="pi-img-wrapper">
-                      <img src="<c:url value='/assets/temp/products/k2.jpg' />" class="img-responsive" alt="Berry Lace Dress">
-                      <div>
-                        <a href="<c:url value='/assets/temp/products/k2.jpg' />" class="btn btn-default fancybox-button">Zoom</a>
-                        <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
-                      </div>
-                    </div>
-                    <h3><a href="item.html">Berry Lace Dress6</a></h3>
-                    <div class="pi-price">$29.00</div>
-                    <a href="#" class="btn btn-default add2cart">Add to cart</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+                  <h3><a onclick="goToItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>
+                  <div class="pi-price">${goodslist.costprice }<fmt:message key="common_yuan"/></div>
+                  <a onclick="addCart('${goodslist.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_addtocart"/></a>
+                  <c:if test="${goodslist.newsaleflg == '1' }">
+                  	<div class="sticker sticker-new"></div>
+                  </c:if>
+                  
+                </div>
+           
+           </div>
+           </c:forEach>
+           </div>
+           </div>
           <!-- END CONTENT -->
         </div>
         <!-- END SIDEBAR & CONTENT -->
@@ -324,7 +260,7 @@ Nostrud duis molestie at dolore.</p>
                     <div class="product-quantity">
                         <input id="product-quantity" type="text" value="1" readonly name="product-quantity" class="form-control input-sm">
                     </div>
-                    <button class="btn btn-primary" type="submit">Add to cart</button>
+                    <button class="btn btn-primary" type="submit"><fmt:message key="common_addtocart"/></button>
                     <button class="btn btn-default" type="submit">More details</button>
                   </div>
                 </div>
