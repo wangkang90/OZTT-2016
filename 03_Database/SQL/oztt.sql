@@ -428,7 +428,7 @@ CREATE TABLE `t_goods_property` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `goodsId` varchar(16) NOT NULL,
   `goodsClassId` varchar(10) NOT NULL,
-  `goodsClassValue` varchar(255) DEFAULT NULL,
+  `goodsClassValue` varchar(500) DEFAULT NULL,
   `openFlg` char(1) NOT NULL,
   `addTimestamp` timestamp NULL DEFAULT NULL,
   `addUserKey` varchar(40) DEFAULT NULL,
