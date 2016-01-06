@@ -22,4 +22,10 @@ public final class CommonConstants {
 
     public static final String MAIN_LIST_COUNT     = "12";               // 主页面中显示的个数
 
+    public static final String IS_HOT_SALE         = "1";                // 热卖
+
+    public static final String IS_ON_SALE          = "1";                // 在售
+
+    public static final int    PRODUCT_INIT_COUNT  = 15;                 // 默认显示15条数据
+
 }

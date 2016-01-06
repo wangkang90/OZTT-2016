@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.org.oztt.base.dao.BaseDao;
+import com.org.oztt.base.page.Pagination;
+import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.dao.TGoodsDao;
 import com.org.oztt.entity.TGoods;
 
@@ -60,6 +62,11 @@ public class TGoodsDaoImpl extends BaseDao implements TGoodsDao {
 
     public List<TGoods> getGoodsListForMain(Map<String, String> map) {
         return select("com.org.oztt.dao.TGoodsDao.getGoodsListForMain", map);
+    }
+
+    public PagingResult<TGoods> getGoodsByParamForPage(Pagination pagination) {
+        return selectPagination("com.org.oztt.dao.TGoodsDao.getGoodsByParamForPage",
+                "com.org.oztt.dao.TGoodsDao.getGoodsByParamForPageCount", pagination);
     }
 
 }

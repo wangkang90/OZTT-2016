@@ -2,50 +2,49 @@ package com.org.oztt.formDto;
 
 /**
  * 忘记密码画面以及密码修改确认画面
+ * 
  * @author linliuan
- *
  */
 public class OzTtTpFpDto {
 
-	private String email;
-	
-	private String newPassword;
-	
-	private String confirmPasswrod;
-	
-	private String customerNo;
+    private String email;
 
-	public String getEmail() {
-		return email;
-	}
+    private String newPassword;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    private String confirmPasswrod;
 
-	public String getNewPassword() {
-		return newPassword;
-	}
+    private String customerNo;
 
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getConfirmPasswrod() {
-		return confirmPasswrod;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setConfirmPasswrod(String confirmPasswrod) {
-		this.confirmPasswrod = confirmPasswrod;
-	}
+    public String getNewPassword() {
+        return newPassword;
+    }
 
-	public String getCustomerNo() {
-		return customerNo;
-	}
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
 
-	public void setCustomerNo(String customerNo) {
-		this.customerNo = customerNo;
-	}
+    public String getConfirmPasswrod() {
+        return confirmPasswrod;
+    }
 
-	
+    public void setConfirmPasswrod(String confirmPasswrod) {
+        this.confirmPasswrod = confirmPasswrod;
+    }
+
+    public String getCustomerNo() {
+        return customerNo;
+    }
+
+    public void setCustomerNo(String customerNo) {
+        this.customerNo = customerNo;
+    }
+
 }

@@ -7,7 +7,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Main</title>
+  <title>首页</title>
   <%@ include file="../commoncssHead.jsp"%>
   <!-- Head END -->
   <script>
