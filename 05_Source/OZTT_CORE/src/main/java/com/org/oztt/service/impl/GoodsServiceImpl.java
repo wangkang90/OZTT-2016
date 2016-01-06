@@ -1,6 +1,7 @@
 package com.org.oztt.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -14,23 +15,27 @@ import com.org.oztt.service.GoodsService;
 @Service
 public class GoodsServiceImpl extends BaseService implements GoodsService {
 
-	@Resource
-	private TGoodsDao tGoodsDao;
-	
-	public TGoods getGoodsById(String goodsId) throws Exception {
-		return tGoodsDao.selectByGoodsId(goodsId);
-	}
+    @Resource
+    private TGoodsDao tGoodsDao;
 
-	public List<TGoods> getGoodsByParam(TGoods tGoods) throws Exception {
-		return tGoodsDao.selectByParams(tGoods);
-	}
+    public TGoods getGoodsById(String goodsId) throws Exception {
+        return tGoodsDao.selectByGoodsId(goodsId);
+    }
 
-	public List<TGoods> getFirstThreeNewArravail() throws Exception {
-		return tGoodsDao.getFirstThreeNewArravail();
-	}
-	
-	public List<TGoods> getAllNewArravail() throws Exception {
-		return tGoodsDao.getAllNewArravail();
-	}
+    public List<TGoods> getGoodsByParam(TGoods tGoods) throws Exception {
+        return tGoodsDao.selectByParams(tGoods);
+    }
+
+    public List<TGoods> getFirstThreeNewArravail() throws Exception {
+        return tGoodsDao.getFirstThreeNewArravail();
+    }
+
+    public List<TGoods> getAllNewArravail() throws Exception {
+        return tGoodsDao.getAllNewArravail();
+    }
+
+    public List<TGoods> getGoodsListForMain(Map<String, String> map) throws Exception {
+        return tGoodsDao.getGoodsListForMain(map);
+    }
 
 }

@@ -4,7 +4,9 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+        <dependent-module archiveName="OZTT_CORE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/OZTT_CORE/OZTT_CORE">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="OZTT_API"/>
         <property name="java-output-path" value="/OZTT_API/target/classes"/>
     </wb-module>
