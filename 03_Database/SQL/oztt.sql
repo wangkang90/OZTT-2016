@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : local
@@ -292,7 +292,8 @@ CREATE TABLE `t_goods` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `goodsId` varchar(16) NOT NULL,
   `classId` varchar(10) NOT NULL,
-  `goodsName` varchar(50) NOT NULL,
+  `goodsBrand` varchar(50) NOT NULL,
+  `goodsName` varchar(100) NOT NULL,
   `goodsDesc` varchar(200) DEFAULT NULL,
   `goodsComments` varchar(500) DEFAULT NULL,
   `goodsThumbnail` varchar(255) DEFAULT NULL,
