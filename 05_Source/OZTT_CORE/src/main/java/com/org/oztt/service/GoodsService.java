@@ -3,7 +3,10 @@ package com.org.oztt.service;
 import java.util.List;
 import java.util.Map;
 
+import com.org.oztt.base.page.Pagination;
+import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TGoods;
+import com.org.oztt.entity.TGoodsClassfication;
 
 /**
  * 商品的服务
@@ -54,4 +57,20 @@ public interface GoodsService {
      * @throws Exception
      */
     public List<TGoods> getGoodsListForMain(Map<String, String> map) throws Exception;
+    
+    /**
+     * 通过分类ID取得分类名称
+     * @param classId
+     * @return
+     * @throws Exception
+     */
+    public TGoodsClassfication getGoodsClassficationByClassId(String classId) throws Exception;
+    
+    /**
+     * 分页获取商品信息
+     * @param pagination
+     * @return
+     * @throws Exception
+     */
+    public PagingResult<TGoods> getGoodsByParamForPage(Pagination pagination) throws Exception;
 }

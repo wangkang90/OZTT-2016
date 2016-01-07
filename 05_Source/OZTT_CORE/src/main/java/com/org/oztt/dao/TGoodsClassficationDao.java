@@ -44,4 +44,11 @@ public interface TGoodsClassficationDao {
      * 取得指定父类下面的所有子类
      */
     List<TGoodsClassfication> getChildrenKey(String fatherId);
+    
+    /**
+     * 通过分类ID取得分类名称
+     * @param classId
+     * @return
+     */
+    TGoodsClassfication getGoodsClassficationByClassId(String classId);
 }

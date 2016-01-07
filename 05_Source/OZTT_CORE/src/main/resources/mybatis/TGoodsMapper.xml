@@ -292,46 +292,46 @@
 		from t_goods
 		where 1=1
 		<if test="goodsid != null">
-			and goodsId = #{goodsid,jdbcType=VARCHAR},
+			and goodsId = #{goodsid,jdbcType=VARCHAR}
 		</if>
 		<if test="classid != null">
-			and classId = #{classid,jdbcType=VARCHAR},
+			and classId = #{classid,jdbcType=VARCHAR}
 		</if>
 		<if test="goodsname != null">
-			and goodsName = #{goodsname,jdbcType=VARCHAR},
+			and goodsName = #{goodsname,jdbcType=VARCHAR}
 		</if>
 		<if test="goodsdesc != null">
-			and goodsDesc = #{goodsdesc,jdbcType=VARCHAR},
+			and goodsDesc = #{goodsdesc,jdbcType=VARCHAR}
 		</if>
 		<if test="goodscomments != null">
-			and goodsComments = #{goodscomments,jdbcType=VARCHAR},
+			and goodsComments = #{goodscomments,jdbcType=VARCHAR}
 		</if>
 		<if test="goodsthumbnail != null">
-			and goodsThumbnail = #{goodsthumbnail,jdbcType=VARCHAR},
+			and goodsThumbnail = #{goodsthumbnail,jdbcType=VARCHAR}
 		</if>
 		<if test="goodssmallpic != null">
-			and goodsSmallPic = #{goodssmallpic,jdbcType=VARCHAR},
+			and goodsSmallPic = #{goodssmallpic,jdbcType=VARCHAR}
 		</if>
 		<if test="goodsnormalpic != null">
-			and goodsNormalPic = #{goodsnormalpic,jdbcType=VARCHAR},
+			and goodsNormalPic = #{goodsnormalpic,jdbcType=VARCHAR}
 		</if>
 		<if test="onsaleflg != null">
-			and onSaleFlg = #{onsaleflg,jdbcType=CHAR},
+			and onSaleFlg = #{onsaleflg,jdbcType=CHAR}
 		</if>
 		<if test="hotsaleflg != null">
-			and hotSaleFlg = #{hotsaleflg,jdbcType=CHAR},
+			and hotSaleFlg = #{hotsaleflg,jdbcType=CHAR}
 		</if>
 		<if test="newsaleflg != null">
-			and newSaleFlg = #{newsaleflg,jdbcType=CHAR},
+			and newSaleFlg = #{newsaleflg,jdbcType=CHAR}
 		</if>
 		<if test="costprice != null">
-			and costPrice = #{costprice,jdbcType=DECIMAL},
+			and costPrice = #{costprice,jdbcType=DECIMAL}
 		</if>
 		<if test="sortorder != null">
-			and sortOrder = #{sortorder,jdbcType=INTEGER},
+			and sortOrder = #{sortorder,jdbcType=INTEGER}
 		</if>
 		<if test="deleteflg != null">
-			and deleteFlg = #{deleteflg,jdbcType=CHAR},
+			and deleteFlg = #{deleteflg,jdbcType=CHAR}
 		</if>
 	</select>
 
@@ -356,11 +356,32 @@
 		from t_goods
 		where onSaleFlg= '1'
 		<if test="classId != null">
-			and classId = #{classId,jdbcType=INTEGER},
+			and classId = #{classId,jdbcType=VARCHAR}
 		</if>
 		<if test="limitParam != null">
 			limit #{limitParam,jdbcType=INTEGER},
 		</if>
 	</select>
+	
+	<select id="getGoodsByParamForPage" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_goods
+		where onSaleFlg= '1'
+		<if test="classId != null">
+			and classId = #{classId,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	<select id="getGoodsByParamForPageCount" resultType="int" >
+		SELECT count(1)
+		FROM t_goods 
+		WHERE onSaleFlg= '1'
+		<if test="classId != null">
+			and classId = #{classId,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	
 	
 </mapper>

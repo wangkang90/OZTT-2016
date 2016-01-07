@@ -3,6 +3,8 @@ package com.org.oztt.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.org.oztt.base.page.Pagination;
+import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TGoods;
 
 public interface TGoodsDao {
@@ -64,5 +66,12 @@ public interface TGoodsDao {
      * @return
      */
     List<TGoods> getGoodsListForMain(Map<String, String> map);
+    
+    /**
+     * 分页获取商品信息
+     * @param pagination
+     * @return
+     */
+    PagingResult<TGoods> getGoodsByParamForPage(Pagination pagination);
      
 }

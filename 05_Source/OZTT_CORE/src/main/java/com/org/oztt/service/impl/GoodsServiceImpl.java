@@ -7,8 +7,12 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.org.oztt.base.page.Pagination;
+import com.org.oztt.base.page.PagingResult;
+import com.org.oztt.dao.TGoodsClassficationDao;
 import com.org.oztt.dao.TGoodsDao;
 import com.org.oztt.entity.TGoods;
+import com.org.oztt.entity.TGoodsClassfication;
 import com.org.oztt.service.BaseService;
 import com.org.oztt.service.GoodsService;
 
@@ -17,6 +21,9 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
 
     @Resource
     private TGoodsDao tGoodsDao;
+    
+    @Resource
+    private TGoodsClassficationDao tGoodsClassficationDao;
 
     public TGoods getGoodsById(String goodsId) throws Exception {
         return tGoodsDao.selectByGoodsId(goodsId);
@@ -36,6 +43,14 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
 
     public List<TGoods> getGoodsListForMain(Map<String, String> map) throws Exception {
         return tGoodsDao.getGoodsListForMain(map);
+    }
+
+    public TGoodsClassfication getGoodsClassficationByClassId(String classId) throws Exception {
+        return tGoodsClassficationDao.getGoodsClassficationByClassId(classId);
+    }
+
+    public PagingResult<TGoods> getGoodsByParamForPage(Pagination pagination) throws Exception {
+        return tGoodsDao.getGoodsByParamForPage(pagination);
     }
 
 }

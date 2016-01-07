@@ -170,4 +170,14 @@
 	WHERE
 		fatherClassId = #{fatherClassId,jdbcType=VARCHAR}
   </select>
+  
+  
+  <select id="getGoodsClassficationByClassId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+	FROM
+		t_goods_classification
+	WHERE
+		classId = #{classid,jdbcType=VARCHAR}
+  </select>
 </mapper>
