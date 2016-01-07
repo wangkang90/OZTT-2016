@@ -359,7 +359,7 @@
 			and classId = #{classId,jdbcType=VARCHAR}
 		</if>
 		<if test="limitParam != null">
-			limit #{limitParam,jdbcType=INTEGER},
+			limit ${limitParam}
 		</if>
 	</select>
 	

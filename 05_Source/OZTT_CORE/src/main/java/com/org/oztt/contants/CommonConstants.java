@@ -16,7 +16,7 @@ public final class CommonConstants {
 
     public static final String SESSION_CUSTOMERNO  = "sessionCustomerNO"; // 用来保存的用户名
 
-    public static final String BELONG_FATHER_CLASS = "0000";             // 父分类
+    public static final String BELONG_FATHER_CLASS = "0C0000";             // 父分类
 
     public static final String LIMIT_PARAM         = "limitParam";       // SQL文中的限制参数
 

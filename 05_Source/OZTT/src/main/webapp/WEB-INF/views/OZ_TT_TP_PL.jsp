@@ -11,9 +11,23 @@
   <%@ include file="./commoncssHead.jsp"%>
   <!-- Head END -->
   <script>
-  		function selectListCount(str) {
-  			
+  		function selectListCount(countList) {
+  			var listCount = $(countList).val();
+  			var classId = $("#classId").val();
+  			var pageNo = $("#pageNo").val();
+  			location.href = "${ctx}/OZ_TT_TP_PL/search?listCount="+listCount+"&classId="+classId+"&pageNo="+pageNo;
   		}
+  		
+  		function pageSelected(pageNo){
+  			var listCount = $("#listCount").val();
+  			var classId = $("#classId").val();
+  			location.href = "${ctx}/OZ_TT_TP_PL/search?listCount="+listCount+"&classId="+classId+"&pageNo="+pageNo;
+  		}
+  		
+  		/* 商品显示画面 */
+  	  	function gotoList(str){
+  	  		location.href = "${ctx}/OZ_TT_TP_PL/search?listCount=&classId="+str+"&pageNo=";
+  	  	}
 	
   </script>
 </head>
@@ -64,7 +78,7 @@
             </ul>
               </li>
 			</c:forEach>
-			
+			</ul>
 			</br></br></br>
 
             <div class="sidebar-products clearfix">
@@ -88,14 +102,14 @@
               </div>
               <div class="col-md-10 col-sm-10">
               	<div class="pull-left">
-              		<label class="control-label">labelContent</label>
+              		<h2>${className }</h2>
               	</div>
                 <div class="pull-right">
-                  <label class="control-label">Show:</label>
-                  <select class="form-control input-sm" onchange="selectListCount(this)">
-                    <option value="15" >15</option>
+                  <label class="control-label"><fmt:message key="OZ_TT_TP_PL_shows"/></label>
+                  <select class="form-control input-sm" onchange="selectListCount(this)" id="listCountSel">
+                    <option value="15">15</option>
                     <option value="25">25</option>
-                    <option value="50" selected="selected">50</option>
+                    <option value="50">50</option>
                     <option value="75">75</option>
                     <option value="100">100</option>
                   </select>
@@ -105,7 +119,7 @@
             <!-- BEGIN PRODUCT LIST -->
             <div class="row product-list">
               <!-- PRODUCT ITEM START -->
-              <c:forEach var="goodslist" items="${ tgoodList }">
+              <c:forEach var="goodslist" items="${ pageInfo.resultList }">
           		<div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="product-item">
                   <div class="pi-img-wrapper">
@@ -128,20 +142,43 @@
             </div>
             <!-- END PRODUCT LIST -->
             <!-- BEGIN PAGINATOR -->
+            <c:if test="${pageInfo.firstPage > 0 || pageInfo.prevPage > 0 || pageInfo.nextPage > 0 || pageInfo.lastPage >0}">
             <div class="row">
               <div class="col-md-4 col-sm-4 items-info"></div>
               <div class="col-md-8 col-sm-8">
                 <ul class="pagination pull-right">
-                  <li><a href="#">&laquo;</a></li>
-                  <li><a href="#">1</a></li>
-                  <li><span>2</span></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
-                  <li><a href="#">&raquo;</a></li>
+                  <c:choose>
+					<c:when test="${pageInfo.firstPage > 0}"><li class="prev"><a href="javascript:pageSelected('${pageInfo.firstPage}')" title="第一页"><i class="fa fa-angle-double-left"></i></a></li></c:when>
+					<c:otherwise><li class="prev disabled"><a href="javascript:void(0);" title="第一页"><i class="fa fa-angle-double-left"></i></a></li></c:otherwise>
+				  </c:choose>
+				  <c:choose>
+					<c:when test="${pageInfo.prevPage < pageInfo.currentPage}"><li class="prev"><a href="javascript:pageSelected('${pageInfo.prevPage}')" title="上一页"><i class="fa fa-angle-left"></i></a></li></c:when>
+					<c:otherwise><li class="prev disabled"><a href="javascript:void(0);" title="上一页"><i class="fa fa-angle-left"></i></a></li></c:otherwise>
+				  </c:choose>
+				  <c:forEach var="u" items="${pageInfo.pageList}">
+					<c:choose>
+					<c:when test="${pageInfo.currentPage == u}">
+						<li><span>${u}</span></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="javascript:pageSelected('${u}')">${u}</a></li>
+					</c:otherwise>
+					</c:choose>
+				  </c:forEach>
+				  
+				  <c:choose>
+					<c:when test="${pageInfo.nextPage > pageInfo.currentPage}"><li class="next"><a href="javascript:pageSelected('${pageInfo.nextPage}')" title="下一页"><i class="fa fa-angle-right"></i></a></li></c:when>
+					<c:otherwise><li class="next disabled"><a href="javascript:void(0)" title="下一页"><i class="fa fa-angle-right"></i></a></li></c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${pageInfo.lastPage > 0}"><li class="next"><a href="javascript:pageSelected( '${pageInfo.lastPage}')" title="最后页"><i class="fa fa-angle-double-right"></i></a></li></c:when>
+					<c:otherwise><li class="next disabled"><a href="javascript:void(0)" title="最后页"><i class="fa fa-angle-double-right"></i></a></li></c:otherwise>
+				</c:choose>
+               
                 </ul>
               </div>
             </div>
+            </c:if>
             <!-- END PAGINATOR -->
           </div>
           <!-- END CONTENT -->
@@ -149,7 +186,15 @@
         <!-- END SIDEBAR & CONTENT -->
       </div>
     </div>
+    <input type="hidden" value="${page.currentPage}" id="pageNo">
+    <input type="hidden" value="${listCount }" id="listCount"/>
+    <input type="hidden" value="${classId }" id="classId"/>
 	<%@ include file="./commonpopup.jsp"%>
     <%@ include file="./commonjsFooter.jsp"%>
+    <script type="text/javascript">
+    	var listCount = $("#listCount").val();
+    	$("#listCountSel").val(listCount);
+
+    </script>
 </body>
 </html>
