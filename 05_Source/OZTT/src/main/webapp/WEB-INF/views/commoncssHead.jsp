@@ -25,10 +25,15 @@
   <!-- Global styles END  -->
    
   <!-- Page level plugin styles START -->
-  <link href="<c:url value='/assets/plugins/fancybox/source/jquery.fancybox.css' />" rel="stylesheet">              
+  <link href="<c:url value='/assets/plugins/fancybox/source/jquery.fancybox.css' />" rel="stylesheet">  
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"><!-- for slider-range -->
+              
   <link href="<c:url value='/assets/plugins/bxslider/jquery.bxslider.css' />" rel="stylesheet">
   <link rel="stylesheet" href="<c:url value='/assets/plugins/layerslider/css/layerslider.css' />" type="text/css">
   <!-- Page level plugin styles END -->
+  
+  <link href="${ctx}/assets/plugins/rateit/src/rateit.css" rel="stylesheet" type="text/css">
+  <link href="${ctx}/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
 
   <!-- Theme styles START -->
   <link href="<c:url value='/assets/css/style-metronic.css' />" rel="stylesheet" type="text/css">

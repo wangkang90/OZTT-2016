@@ -18,7 +18,7 @@
   	
   	/* 商品显示画面 */
   	function gotoList(str){
-  		
+  		location.href = "${ctx}/OZ_TT_TP_PL/search?listCount=&classId="+str+"&pageNo=";
   	}
   	
   	/*  */

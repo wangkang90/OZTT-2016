@@ -13,7 +13,13 @@
     <!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
     <script type="text/javascript" src="${ctx}/assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script><!-- pop up -->
     <script type="text/javascript" src="${ctx}/assets/plugins/bxslider/jquery.bxslider.min.js"></script><!-- slider for products -->
+    <script src="${ctx}/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
+    <script src="${ctx}/assets/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
     <script type="text/javascript" src='${ctx}/assets/plugins/zoom/jquery.zoom.min.js'></script><!-- product zoom -->
+    
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script><!-- for slider-range -->
+    <script src="${ctx}/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script> 
+    
     <script src="${ctx}/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
 
     <!-- BEGIN LayerSlider -->
@@ -33,6 +39,9 @@
         jQuery(document).ready(function() {
             App.init();    
             App.initBxSlider();
+            App.initImageZoom();
+            App.initSliderRange();
+            App.initUniform();
             Index.initLayerSlider();
             App.initImageZoom();
             App.initTouchspin();

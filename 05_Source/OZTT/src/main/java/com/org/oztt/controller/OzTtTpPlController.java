@@ -9,8 +9,10 @@ import javax.annotation.Resource;
 import org.apache.shiro.util.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.org.oztt.base.common.MyCategroy;
 import com.org.oztt.base.page.Pagination;
@@ -68,7 +70,7 @@ public class OzTtTpPlController extends BaseController {
             }
             // 取出
             String className = "";
-            if (classId != null) {
+            if (!StringUtils.isEmpty(classId)) {
                 TGoodsClassfication tGoodsClassfication = goodsService.getGoodsClassficationByClassId(classId);
                 className = tGoodsClassfication.getClassname();
             }
@@ -76,15 +78,15 @@ public class OzTtTpPlController extends BaseController {
             // 分页获取商品
             // 获取明细分类的数据
             Pagination pagination = null;
-            if (page == null || listCount == null) {
+            if (StringUtils.isEmpty(page)) page = "1";
+            if (StringUtils.isEmpty(listCount)) {
                 pagination = new Pagination(1, CommonConstants.PRODUCT_INIT_COUNT);
-                page = "1";
                 listCount = String.valueOf(CommonConstants.PRODUCT_INIT_COUNT);
             } else {
                 pagination = new Pagination(Integer.parseInt(page), Integer.parseInt(listCount));
             }
             Map<Object, Object> mapParam = new HashMap<Object, Object>();
-            mapParam.put("classID", classId);
+            mapParam.put("classId", classId);
             pagination.setParams(mapParam);
             
             PagingResult<TGoods> pageInfo = goodsService.getGoodsByParamForPage(pagination);
@@ -98,12 +100,34 @@ public class OzTtTpPlController extends BaseController {
             // 热卖的商品
             model.addAttribute("hotSellerList", hotSellerList);
             model.addAttribute("arrlist", newArrivalList);
-            model.addAttribute("tgoodList", pageInfo.getResultList());
+            model.addAttribute("pageInfo", pageInfo);
             model.addAttribute("className", className);
+            model.addAttribute("classId", classId);
+            model.addAttribute("listCount", listCount);
 
             return "/OZ_TT_TP_PL";
         }
         catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return CommonConstants.ERROR_PAGE;
+        }
+    }
+    
+    
+    /**
+     * 画面点击链接进行检索
+     * @param model
+     * @param classId
+     * @param page
+     * @param listCount
+     * @return
+     */
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public String search(Model model, @RequestParam String listCount, @RequestParam String classId, @RequestParam String pageNo) {
+        try {
+            return this.init(model, classId, pageNo, listCount);  
+        }catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
             return CommonConstants.ERROR_PAGE;
