@@ -5,6 +5,7 @@
 		<id column="no" property="no" jdbcType="BIGINT" />
 		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
 		<result column="classId" property="classid" jdbcType="VARCHAR" />
+		<result column="goodsBrand" property="goodsbrand" jdbcType="VARCHAR" />
 		<result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
 		<result column="goodsDesc" property="goodsdesc" jdbcType="VARCHAR" />
 		<result column="goodsComments" property="goodscomments"
@@ -28,10 +29,11 @@
 		<result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		no, goodsId, classId, goodsName, goodsDesc, goodsComments,
-		goodsThumbnail, goodsSmallPic,
-		goodsNormalPic, onSaleFlg, hotSaleFlg, newSaleFlg, costPrice, sortOrder, deleteFlg,
-		addTimestamp, addUserKey, updTimestamp, updUserKey, updPgmId
+		no, goodsId, classId, goodsBrand, goodsName, goodsDesc, goodsComments,
+		goodsThumbnail,
+		goodsSmallPic, goodsNormalPic, onSaleFlg, hotSaleFlg, newSaleFlg, costPrice,
+		sortOrder,
+		deleteFlg, addTimestamp, addUserKey, updTimestamp, updUserKey, updPgmId
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
@@ -46,22 +48,25 @@
 	</delete>
 	<insert id="insert" parameterType="com.org.oztt.entity.TGoods">
 		insert into t_goods (no, goodsId, classId,
-		goodsName, goodsDesc, goodsComments,
-		goodsThumbnail, goodsSmallPic, goodsNormalPic,
-		onSaleFlg, hotSaleFlg, newSaleFlg,
-		costPrice, sortOrder, deleteFlg,
-		addTimestamp, addUserKey, updTimestamp,
-		updUserKey, updPgmId)
+		goodsBrand, goodsName, goodsDesc,
+		goodsComments, goodsThumbnail, goodsSmallPic,
+		goodsNormalPic, onSaleFlg, hotSaleFlg,
+		newSaleFlg, costPrice, sortOrder,
+		deleteFlg, addTimestamp, addUserKey,
+		updTimestamp, updUserKey, updPgmId
+		)
 		values (#{no,jdbcType=BIGINT}, #{goodsid,jdbcType=VARCHAR},
 		#{classid,jdbcType=VARCHAR},
-		#{goodsname,jdbcType=VARCHAR}, #{goodsdesc,jdbcType=VARCHAR}, #{goodscomments,jdbcType=VARCHAR},
-		#{goodsthumbnail,jdbcType=VARCHAR}, #{goodssmallpic,jdbcType=VARCHAR},
-		#{goodsnormalpic,jdbcType=VARCHAR},
-		#{onsaleflg,jdbcType=CHAR}, #{hotsaleflg,jdbcType=CHAR}, #{newsaleflg,jdbcType=CHAR},
-		#{costprice,jdbcType=DECIMAL}, #{sortorder,jdbcType=INTEGER},
-		#{deleteflg,jdbcType=CHAR},
-		#{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR}, #{updtimestamp,jdbcType=TIMESTAMP},
-		#{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR})
+		#{goodsbrand,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, #{goodsdesc,jdbcType=VARCHAR},
+		#{goodscomments,jdbcType=VARCHAR}, #{goodsthumbnail,jdbcType=VARCHAR},
+		#{goodssmallpic,jdbcType=VARCHAR},
+		#{goodsnormalpic,jdbcType=VARCHAR}, #{onsaleflg,jdbcType=CHAR}, #{hotsaleflg,jdbcType=CHAR},
+		#{newsaleflg,jdbcType=CHAR}, #{costprice,jdbcType=DECIMAL},
+		#{sortorder,jdbcType=INTEGER},
+		#{deleteflg,jdbcType=CHAR}, #{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR},
+		#{updtimestamp,jdbcType=TIMESTAMP}, #{upduserkey,jdbcType=VARCHAR},
+		#{updpgmid,jdbcType=VARCHAR}
+		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.org.oztt.entity.TGoods">
 		insert into t_goods
@@ -74,6 +79,9 @@
 			</if>
 			<if test="classid != null">
 				classId,
+			</if>
+			<if test="goodsbrand != null">
+				goodsBrand,
 			</if>
 			<if test="goodsname != null">
 				goodsName,
@@ -137,6 +145,9 @@
 			<if test="classid != null">
 				#{classid,jdbcType=VARCHAR},
 			</if>
+			<if test="goodsbrand != null">
+				#{goodsbrand,jdbcType=VARCHAR},
+			</if>
 			<if test="goodsname != null">
 				#{goodsname,jdbcType=VARCHAR},
 			</if>
@@ -199,6 +210,9 @@
 			<if test="classid != null">
 				classId = #{classid,jdbcType=VARCHAR},
 			</if>
+			<if test="goodsbrand != null">
+				goodsBrand = #{goodsbrand,jdbcType=VARCHAR},
+			</if>
 			<if test="goodsname != null">
 				goodsName = #{goodsname,jdbcType=VARCHAR},
 			</if>
@@ -257,6 +271,7 @@
 		update t_goods
 		set goodsId = #{goodsid,jdbcType=VARCHAR},
 		classId = #{classid,jdbcType=VARCHAR},
+		goodsBrand = #{goodsbrand,jdbcType=VARCHAR},
 		goodsName = #{goodsname,jdbcType=VARCHAR},
 		goodsDesc = #{goodsdesc,jdbcType=VARCHAR},
 		goodsComments = #{goodscomments,jdbcType=VARCHAR},
@@ -276,7 +291,7 @@
 		updPgmId = #{updpgmid,jdbcType=VARCHAR}
 		where no = #{no,jdbcType=BIGINT}
 	</update>
-
+	
 	<select id="selectByGoodsId" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
 		select
@@ -381,7 +396,5 @@
 			and classId = #{classId,jdbcType=VARCHAR}
 		</if>
 	</select>
-	
-	
 	
 </mapper>

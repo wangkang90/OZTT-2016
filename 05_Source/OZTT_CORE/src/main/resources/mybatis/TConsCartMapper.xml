@@ -5,16 +5,14 @@
 		<id column="no" property="no" jdbcType="BIGINT" />
 		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
 		<result column="customerNo" property="customerno" jdbcType="VARCHAR" />
-		<result column="groupMaxQuantity" property="groupmaxquantity"
+		<result column="goodsSpecifications" property="goodsspecifications"
 			jdbcType="VARCHAR" />
-		<result column="groupCurrentQuantity" property="groupcurrentquantity"
-			jdbcType="DECIMAL" />
-		<result column="groupComments" property="groupcomments"
-			jdbcType="VARCHAR" />
-		<result column="groupDesc" property="groupdesc" jdbcType="VARCHAR" />
+		<result column="quantity" property="quantity" jdbcType="DECIMAL" />
+		<result column="ifGroup" property="ifgroup" jdbcType="CHAR" />
+		<result column="groupNo" property="groupno" jdbcType="VARCHAR" />
 		<result column="priceNo" property="priceno" jdbcType="VARCHAR" />
-		<result column="comsumerReminder" property="comsumerreminder"
-			jdbcType="VARCHAR" />
+		<result column="addCartTimestamp" property="addcarttimestamp"
+			jdbcType="TIMESTAMP" />
 		<result column="addTimestamp" property="addtimestamp" jdbcType="TIMESTAMP" />
 		<result column="addUserKey" property="adduserkey" jdbcType="VARCHAR" />
 		<result column="updTimestamp" property="updtimestamp" jdbcType="TIMESTAMP" />
@@ -22,10 +20,9 @@
 		<result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		no, goodsId, customerNo, groupMaxQuantity, groupCurrentQuantity,
-		groupComments, groupDesc,
-		priceNo, comsumerReminder, addTimestamp, addUserKey, updTimestamp, updUserKey,
-		updPgmId
+		no, goodsId, customerNo, goodsSpecifications, quantity, ifGroup, groupNo,
+		priceNo,
+		addCartTimestamp, addTimestamp, addUserKey, updTimestamp, updUserKey, updPgmId
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
@@ -40,20 +37,18 @@
 	</delete>
 	<insert id="insert" parameterType="com.org.oztt.entity.TConsCart">
 		insert into t_cons_cart (no, goodsId, customerNo,
-		groupMaxQuantity, groupCurrentQuantity,
-		groupComments, groupDesc, priceNo,
-		comsumerReminder, addTimestamp, addUserKey,
-		updTimestamp, updUserKey, updPgmId
-		)
+		goodsSpecifications, quantity, ifGroup,
+		groupNo, priceNo, addCartTimestamp,
+		addTimestamp, addUserKey, updTimestamp,
+		updUserKey, updPgmId)
 		values (#{no,jdbcType=BIGINT}, #{goodsid,jdbcType=VARCHAR},
 		#{customerno,jdbcType=VARCHAR},
-		#{groupmaxquantity,jdbcType=VARCHAR}, #{groupcurrentquantity,jdbcType=DECIMAL},
-		#{groupcomments,jdbcType=VARCHAR}, #{groupdesc,jdbcType=VARCHAR},
-		#{priceno,jdbcType=VARCHAR},
-		#{comsumerreminder,jdbcType=VARCHAR}, #{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR},
-		#{updtimestamp,jdbcType=TIMESTAMP}, #{upduserkey,jdbcType=VARCHAR},
-		#{updpgmid,jdbcType=VARCHAR}
-		)
+		#{goodsspecifications,jdbcType=VARCHAR}, #{quantity,jdbcType=DECIMAL},
+		#{ifgroup,jdbcType=CHAR},
+		#{groupno,jdbcType=VARCHAR}, #{priceno,jdbcType=VARCHAR}, #{addcarttimestamp,jdbcType=TIMESTAMP},
+		#{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR},
+		#{updtimestamp,jdbcType=TIMESTAMP},
+		#{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.org.oztt.entity.TConsCart">
 		insert into t_cons_cart
@@ -67,23 +62,23 @@
 			<if test="customerno != null">
 				customerNo,
 			</if>
-			<if test="groupmaxquantity != null">
-				groupMaxQuantity,
+			<if test="goodsspecifications != null">
+				goodsSpecifications,
 			</if>
-			<if test="groupcurrentquantity != null">
-				groupCurrentQuantity,
+			<if test="quantity != null">
+				quantity,
 			</if>
-			<if test="groupcomments != null">
-				groupComments,
+			<if test="ifgroup != null">
+				ifGroup,
 			</if>
-			<if test="groupdesc != null">
-				groupDesc,
+			<if test="groupno != null">
+				groupNo,
 			</if>
 			<if test="priceno != null">
 				priceNo,
 			</if>
-			<if test="comsumerreminder != null">
-				comsumerReminder,
+			<if test="addcarttimestamp != null">
+				addCartTimestamp,
 			</if>
 			<if test="addtimestamp != null">
 				addTimestamp,
@@ -111,23 +106,23 @@
 			<if test="customerno != null">
 				#{customerno,jdbcType=VARCHAR},
 			</if>
-			<if test="groupmaxquantity != null">
-				#{groupmaxquantity,jdbcType=VARCHAR},
+			<if test="goodsspecifications != null">
+				#{goodsspecifications,jdbcType=VARCHAR},
 			</if>
-			<if test="groupcurrentquantity != null">
-				#{groupcurrentquantity,jdbcType=DECIMAL},
+			<if test="quantity != null">
+				#{quantity,jdbcType=DECIMAL},
 			</if>
-			<if test="groupcomments != null">
-				#{groupcomments,jdbcType=VARCHAR},
+			<if test="ifgroup != null">
+				#{ifgroup,jdbcType=CHAR},
 			</if>
-			<if test="groupdesc != null">
-				#{groupdesc,jdbcType=VARCHAR},
+			<if test="groupno != null">
+				#{groupno,jdbcType=VARCHAR},
 			</if>
 			<if test="priceno != null">
 				#{priceno,jdbcType=VARCHAR},
 			</if>
-			<if test="comsumerreminder != null">
-				#{comsumerreminder,jdbcType=VARCHAR},
+			<if test="addcarttimestamp != null">
+				#{addcarttimestamp,jdbcType=TIMESTAMP},
 			</if>
 			<if test="addtimestamp != null">
 				#{addtimestamp,jdbcType=TIMESTAMP},
@@ -155,23 +150,23 @@
 			<if test="customerno != null">
 				customerNo = #{customerno,jdbcType=VARCHAR},
 			</if>
-			<if test="groupmaxquantity != null">
-				groupMaxQuantity = #{groupmaxquantity,jdbcType=VARCHAR},
+			<if test="goodsspecifications != null">
+				goodsSpecifications = #{goodsspecifications,jdbcType=VARCHAR},
 			</if>
-			<if test="groupcurrentquantity != null">
-				groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
+			<if test="quantity != null">
+				quantity = #{quantity,jdbcType=DECIMAL},
 			</if>
-			<if test="groupcomments != null">
-				groupComments = #{groupcomments,jdbcType=VARCHAR},
+			<if test="ifgroup != null">
+				ifGroup = #{ifgroup,jdbcType=CHAR},
 			</if>
-			<if test="groupdesc != null">
-				groupDesc = #{groupdesc,jdbcType=VARCHAR},
+			<if test="groupno != null">
+				groupNo = #{groupno,jdbcType=VARCHAR},
 			</if>
 			<if test="priceno != null">
 				priceNo = #{priceno,jdbcType=VARCHAR},
 			</if>
-			<if test="comsumerreminder != null">
-				comsumerReminder = #{comsumerreminder,jdbcType=VARCHAR},
+			<if test="addcarttimestamp != null">
+				addCartTimestamp = #{addcarttimestamp,jdbcType=TIMESTAMP},
 			</if>
 			<if test="addtimestamp != null">
 				addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
@@ -195,12 +190,12 @@
 		update t_cons_cart
 		set goodsId = #{goodsid,jdbcType=VARCHAR},
 		customerNo = #{customerno,jdbcType=VARCHAR},
-		groupMaxQuantity = #{groupmaxquantity,jdbcType=VARCHAR},
-		groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
-		groupComments = #{groupcomments,jdbcType=VARCHAR},
-		groupDesc = #{groupdesc,jdbcType=VARCHAR},
+		goodsSpecifications = #{goodsspecifications,jdbcType=VARCHAR},
+		quantity = #{quantity,jdbcType=DECIMAL},
+		ifGroup = #{ifgroup,jdbcType=CHAR},
+		groupNo = #{groupno,jdbcType=VARCHAR},
 		priceNo = #{priceno,jdbcType=VARCHAR},
-		comsumerReminder = #{comsumerreminder,jdbcType=VARCHAR},
+		addCartTimestamp = #{addcarttimestamp,jdbcType=TIMESTAMP},
 		addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
 		addUserKey = #{adduserkey,jdbcType=VARCHAR},
 		updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
@@ -220,9 +215,8 @@
 		<if test="customerno != null">
 			and customerNo = #{customerno,jdbcType=VARCHAR}
 		</if>
-		<if test="groupmaxquantity != null">
-			and groupMaxQuantity = #{groupmaxquantity,jdbcType=VARCHAR}
+		<if test="goodsspecifications != null">
+			and goodsSpecifications = #{goodsspecifications,jdbcType=VARCHAR}
 		</if>
 	</select>
-	
 </mapper>

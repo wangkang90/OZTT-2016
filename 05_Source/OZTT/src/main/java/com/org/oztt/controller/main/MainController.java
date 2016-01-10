@@ -43,7 +43,7 @@ public class MainController extends BaseController {
 
             if (!CollectionUtils.isEmpty(newArrivalList)) {
                 for (TGoods goods : newArrivalList) {
-                    goods.setGoodsnormalpic(imgUrl + goods.getGoodsnormalpic());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
                 }
             }
 
@@ -52,7 +52,7 @@ public class MainController extends BaseController {
 
             if (!CollectionUtils.isEmpty(allGoodsList)) {
                 for (TGoods goods : allGoodsList) {
-                    goods.setGoodsnormalpic(imgUrl + goods.getGoodsnormalpic());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
                 }
             }
 
@@ -62,7 +62,7 @@ public class MainController extends BaseController {
             List<TGoods> tgoodList = goodsService.getGoodsListForMain(mapParam);
             if (!CollectionUtils.isEmpty(tgoodList)) {
                 for (TGoods goods : tgoodList) {
-                    goods.setGoodsnormalpic(imgUrl + goods.getGoodsnormalpic());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
                 }
             }
             model.addAttribute("menucategory", myCategroyList);

@@ -68,7 +68,7 @@
               <h2><fmt:message key="OZ_TT_TP_PL_bestSellers"/></h2>
               <c:forEach var="hotSellerList" items="${ hotSellerList }">
               <div class="item">
-                <a href="javascript:toItem('${hotSellerList.goodsid }')"><img src="${ hotSellerList.goodsThumbnail }" alt="${ hotSellerList.goodsname }"></a>
+                <a href="javascript:toItem('${hotSellerList.goodsid }')"><img src="${ hotSellerList.goodsthumbnail }" alt="${ hotSellerList.goodsname }"></a>
                 <h3><a href="javascript:toItem('${hotSellerList.goodsid }')">${ hotSellerList.goodsname }</a></h3>
                 <div class="price">${ hotSellerList.costprice }<fmt:message key="common_yuan"/></div>
               </div>

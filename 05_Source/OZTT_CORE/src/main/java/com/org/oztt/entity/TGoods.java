@@ -12,6 +12,8 @@ public class TGoods implements Serializable {
     private String goodsid;
 
     private String classid;
+    
+    private String goodsbrand;
 
     private String goodsname;
 
@@ -205,5 +207,13 @@ public class TGoods implements Serializable {
 
     public void setUpdpgmid(String updpgmid) {
         this.updpgmid = updpgmid;
+    }
+
+    public String getGoodsbrand() {
+        return goodsbrand;
+    }
+
+    public void setGoodsbrand(String goodsbrand) {
+        this.goodsbrand = goodsbrand;
     }
 }

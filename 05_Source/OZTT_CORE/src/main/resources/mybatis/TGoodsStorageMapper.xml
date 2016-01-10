@@ -4,9 +4,9 @@
   <resultMap id="BaseResultMap" type="com.org.oztt.entity.TGoodsStorage" >
     <id column="no" property="no" jdbcType="BIGINT" />
     <result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
-    <result column="groupPrice" property="groupprice" jdbcType="VARCHAR" />
-    <result column="groupMaxQuantity" property="groupmaxquantity" jdbcType="DECIMAL" />
-    <result column="groupCurrentQuantity" property="groupcurrentquantity" jdbcType="DECIMAL" />
+    <result column="checkinBatch" property="checkinbatch" jdbcType="VARCHAR" />
+    <result column="checkinQuantity" property="checkinquantity" jdbcType="DECIMAL" />
+    <result column="currentQuantity" property="currentquantity" jdbcType="DECIMAL" />
     <result column="checkinPrice" property="checkinprice" jdbcType="DECIMAL" />
     <result column="checkinTimestamp" property="checkintimestamp" jdbcType="TIMESTAMP" />
     <result column="checkinPerson" property="checkinperson" jdbcType="VARCHAR" />
@@ -18,7 +18,7 @@
     <result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    no, goodsId, groupPrice, groupMaxQuantity, groupCurrentQuantity, checkinPrice, checkinTimestamp, 
+    no, goodsId, checkinBatch, checkinQuantity, currentQuantity, checkinPrice, checkinTimestamp, 
     checkinPerson, checkinFlg, addTimestamp, addUserKey, updTimestamp, updUserKey, updPgmId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -32,18 +32,16 @@
     where no = #{no,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.org.oztt.entity.TGoodsStorage" >
-    insert into t_goods_storage (no, goodsId, groupPrice, 
-      groupMaxQuantity, groupCurrentQuantity, 
-      checkinPrice, checkinTimestamp, checkinPerson, 
-      checkinFlg, addTimestamp, addUserKey, 
-      updTimestamp, updUserKey, updPgmId
-      )
-    values (#{no,jdbcType=BIGINT}, #{goodsid,jdbcType=VARCHAR}, #{groupprice,jdbcType=VARCHAR}, 
-      #{groupmaxquantity,jdbcType=DECIMAL}, #{groupcurrentquantity,jdbcType=DECIMAL}, 
-      #{checkinprice,jdbcType=DECIMAL}, #{checkintimestamp,jdbcType=TIMESTAMP}, #{checkinperson,jdbcType=VARCHAR}, 
-      #{checkinflg,jdbcType=CHAR}, #{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR}, 
-      #{updtimestamp,jdbcType=TIMESTAMP}, #{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR}
-      )
+    insert into t_goods_storage (no, goodsId, checkinBatch, 
+      checkinQuantity, currentQuantity, checkinPrice, 
+      checkinTimestamp, checkinPerson, checkinFlg, 
+      addTimestamp, addUserKey, updTimestamp, 
+      updUserKey, updPgmId)
+    values (#{no,jdbcType=BIGINT}, #{goodsid,jdbcType=VARCHAR}, #{checkinbatch,jdbcType=VARCHAR}, 
+      #{checkinquantity,jdbcType=DECIMAL}, #{currentquantity,jdbcType=DECIMAL}, #{checkinprice,jdbcType=DECIMAL}, 
+      #{checkintimestamp,jdbcType=TIMESTAMP}, #{checkinperson,jdbcType=VARCHAR}, #{checkinflg,jdbcType=CHAR}, 
+      #{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR}, #{updtimestamp,jdbcType=TIMESTAMP}, 
+      #{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.org.oztt.entity.TGoodsStorage" >
     insert into t_goods_storage
@@ -54,14 +52,14 @@
       <if test="goodsid != null" >
         goodsId,
       </if>
-      <if test="groupprice != null" >
-        groupPrice,
+      <if test="checkinbatch != null" >
+        checkinBatch,
       </if>
-      <if test="groupmaxquantity != null" >
-        groupMaxQuantity,
+      <if test="checkinquantity != null" >
+        checkinQuantity,
       </if>
-      <if test="groupcurrentquantity != null" >
-        groupCurrentQuantity,
+      <if test="currentquantity != null" >
+        currentQuantity,
       </if>
       <if test="checkinprice != null" >
         checkinPrice,
@@ -98,14 +96,14 @@
       <if test="goodsid != null" >
         #{goodsid,jdbcType=VARCHAR},
       </if>
-      <if test="groupprice != null" >
-        #{groupprice,jdbcType=VARCHAR},
+      <if test="checkinbatch != null" >
+        #{checkinbatch,jdbcType=VARCHAR},
       </if>
-      <if test="groupmaxquantity != null" >
-        #{groupmaxquantity,jdbcType=DECIMAL},
+      <if test="checkinquantity != null" >
+        #{checkinquantity,jdbcType=DECIMAL},
       </if>
-      <if test="groupcurrentquantity != null" >
-        #{groupcurrentquantity,jdbcType=DECIMAL},
+      <if test="currentquantity != null" >
+        #{currentquantity,jdbcType=DECIMAL},
       </if>
       <if test="checkinprice != null" >
         #{checkinprice,jdbcType=DECIMAL},
@@ -142,14 +140,14 @@
       <if test="goodsid != null" >
         goodsId = #{goodsid,jdbcType=VARCHAR},
       </if>
-      <if test="groupprice != null" >
-        groupPrice = #{groupprice,jdbcType=VARCHAR},
+      <if test="checkinbatch != null" >
+        checkinBatch = #{checkinbatch,jdbcType=VARCHAR},
       </if>
-      <if test="groupmaxquantity != null" >
-        groupMaxQuantity = #{groupmaxquantity,jdbcType=DECIMAL},
+      <if test="checkinquantity != null" >
+        checkinQuantity = #{checkinquantity,jdbcType=DECIMAL},
       </if>
-      <if test="groupcurrentquantity != null" >
-        groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
+      <if test="currentquantity != null" >
+        currentQuantity = #{currentquantity,jdbcType=DECIMAL},
       </if>
       <if test="checkinprice != null" >
         checkinPrice = #{checkinprice,jdbcType=DECIMAL},
@@ -184,9 +182,9 @@
   <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TGoodsStorage" >
     update t_goods_storage
     set goodsId = #{goodsid,jdbcType=VARCHAR},
-      groupPrice = #{groupprice,jdbcType=VARCHAR},
-      groupMaxQuantity = #{groupmaxquantity,jdbcType=DECIMAL},
-      groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
+      checkinBatch = #{checkinbatch,jdbcType=VARCHAR},
+      checkinQuantity = #{checkinquantity,jdbcType=DECIMAL},
+      currentQuantity = #{currentquantity,jdbcType=DECIMAL},
       checkinPrice = #{checkinprice,jdbcType=DECIMAL},
       checkinTimestamp = #{checkintimestamp,jdbcType=TIMESTAMP},
       checkinPerson = #{checkinperson,jdbcType=VARCHAR},

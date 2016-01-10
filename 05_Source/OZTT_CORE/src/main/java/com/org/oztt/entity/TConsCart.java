@@ -1,28 +1,25 @@
 package com.org.oztt.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class TConsCart implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class TConsCart {
     private Long no;
 
     private String goodsid;
 
     private String customerno;
 
-    private String groupmaxquantity;
+    private String goodsspecifications;
 
-    private Long groupcurrentquantity;
+    private Long quantity;
 
-    private String groupcomments;
+    private String ifgroup;
 
-    private String groupdesc;
+    private String groupno;
 
     private String priceno;
 
-    private String comsumerreminder;
+    private Date addcarttimestamp;
 
     private Date addtimestamp;
 
@@ -58,36 +55,36 @@ public class TConsCart implements Serializable {
         this.customerno = customerno;
     }
 
-    public String getGroupmaxquantity() {
-        return groupmaxquantity;
+    public String getGoodsspecifications() {
+        return goodsspecifications;
     }
 
-    public void setGroupmaxquantity(String groupmaxquantity) {
-        this.groupmaxquantity = groupmaxquantity;
+    public void setGoodsspecifications(String goodsspecifications) {
+        this.goodsspecifications = goodsspecifications;
     }
 
-    public Long getGroupcurrentquantity() {
-        return groupcurrentquantity;
+    public Long getQuantity() {
+        return quantity;
     }
 
-    public void setGroupcurrentquantity(Long groupcurrentquantity) {
-        this.groupcurrentquantity = groupcurrentquantity;
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
 
-    public String getGroupcomments() {
-        return groupcomments;
+    public String getIfgroup() {
+        return ifgroup;
     }
 
-    public void setGroupcomments(String groupcomments) {
-        this.groupcomments = groupcomments;
+    public void setIfgroup(String ifgroup) {
+        this.ifgroup = ifgroup;
     }
 
-    public String getGroupdesc() {
-        return groupdesc;
+    public String getGroupno() {
+        return groupno;
     }
 
-    public void setGroupdesc(String groupdesc) {
-        this.groupdesc = groupdesc;
+    public void setGroupno(String groupno) {
+        this.groupno = groupno;
     }
 
     public String getPriceno() {
@@ -98,12 +95,12 @@ public class TConsCart implements Serializable {
         this.priceno = priceno;
     }
 
-    public String getComsumerreminder() {
-        return comsumerreminder;
+    public Date getAddcarttimestamp() {
+        return addcarttimestamp;
     }
 
-    public void setComsumerreminder(String comsumerreminder) {
-        this.comsumerreminder = comsumerreminder;
+    public void setAddcarttimestamp(Date addcarttimestamp) {
+        this.addcarttimestamp = addcarttimestamp;
     }
 
     public Date getAddtimestamp() {

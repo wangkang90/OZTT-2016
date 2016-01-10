@@ -85,7 +85,7 @@
               <h2><fmt:message key="OZ_TT_TP_PL_bestSellers"/></h2>
               <c:forEach var="hotSellerList" items="${ hotSellerList }">
               <div class="item">
-                <a href="javascript:toItem('${hotSellerList.goodsid }')"><img src="${ hotSellerList.goodsThumbnail }" alt="${ hotSellerList.goodsname }"></a>
+                <a href="javascript:toItem('${hotSellerList.goodsid }')"><img src="${ hotSellerList.goodsthumbnail }" alt="${ hotSellerList.goodsname }"></a>
                 <h3><a href="javascript:toItem('${hotSellerList.goodsid }')">${ hotSellerList.goodsname }</a></h3>
                 <div class="price">${ hotSellerList.costprice }<fmt:message key="common_yuan"/></div>
               </div>
@@ -123,9 +123,9 @@
           		<div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="product-item">
                   <div class="pi-img-wrapper">
-                    <img src="${goodslist.goodsThumbnail }" class="img-responsive" alt="${goodslist.goodsname }">
+                    <img src="${goodslist.goodsthumbnail }" class="img-responsive" alt="${goodslist.goodsname }">
                     <div>
-                      <a href="${goodslist.goodsThumbnail }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
+                      <a href="${goodslist.goodsthumbnail }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
                       <a href="#product-pop-up" onclick="viewProductPopUp('${goodslist.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                     </div>
                   </div>
