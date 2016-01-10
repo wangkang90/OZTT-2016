@@ -48,7 +48,7 @@ public class OzTtTpPdController extends BaseController {
 
             if (!CollectionUtils.isEmpty(newArrivalList)) {
                 for (TGoods goods : newArrivalList) {
-                    goods.setGoodsnormalpic(imgUrl + goods.getGoodsnormalpic());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
                 }
             }
 
@@ -60,7 +60,7 @@ public class OzTtTpPdController extends BaseController {
             List<TGoods> hotSellerList = goodsService.getGoodsByParam(tGoodsParam);
             if (!CollectionUtils.isEmpty(hotSellerList)) {
                 for (TGoods goods : hotSellerList) {
-                    goods.setGoodsnormalpic(imgUrl + goods.getGoodsnormalpic());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
                 }
             }
 

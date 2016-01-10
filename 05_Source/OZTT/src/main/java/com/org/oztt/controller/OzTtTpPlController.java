@@ -53,7 +53,7 @@ public class OzTtTpPlController extends BaseController {
 
             if (!CollectionUtils.isEmpty(newArrivalList)) {
                 for (TGoods goods : newArrivalList) {
-                    goods.setGoodsnormalpic(imgUrl + goods.getGoodsnormalpic());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
                 }
             }
 
@@ -65,7 +65,7 @@ public class OzTtTpPlController extends BaseController {
             List<TGoods> hotSellerList = goodsService.getGoodsByParam(tGoodsParam);
             if (!CollectionUtils.isEmpty(hotSellerList)) {
                 for (TGoods goods : hotSellerList) {
-                    goods.setGoodsnormalpic(imgUrl + goods.getGoodsnormalpic());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
                 }
             }
             // 取出
@@ -93,7 +93,7 @@ public class OzTtTpPlController extends BaseController {
             
             if (!CollectionUtils.isEmpty(pageInfo.getResultList())) {
                 for (TGoods goods : pageInfo.getResultList()) {
-                    goods.setGoodsnormalpic(imgUrl + goods.getGoodsnormalpic());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
                 }
             }
 
