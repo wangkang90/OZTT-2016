@@ -2,9 +2,9 @@ DROP TABLE IF EXISTS `t_goods_storage`;
 CREATE TABLE `t_goods_storage` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `goodsId` varchar(16) NOT NULL,
-  `groupPrice` varchar(20) NOT NULL,
-  `groupMaxQuantity` decimal(12, 0),
-  `groupCurrentQuantity` decimal(12, 0),
+  `checkinBatch` varchar(20) NOT NULL,
+  `checkinQuantity` decimal(12, 0),
+  `currentQuantity` decimal(12, 0),
   `checkinPrice` decimal(12, 2),
   `checkinTimestamp` timestamp NULL DEFAULT NULL,
   `checkinPerson` varchar(10) DEFAULT NULL,
