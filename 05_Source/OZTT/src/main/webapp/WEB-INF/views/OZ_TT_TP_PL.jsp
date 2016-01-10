@@ -126,7 +126,7 @@
                     <img src="${goodslist.goodsnormalpic }" class="img-responsive" alt="${goodslist.goodsname }">
                     <div>
                       <a href="${goodslist.goodsnormalpic }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
-                      <a href="#product-pop-up" onclick="viewProductPopUp('${goodNewArr.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
+                      <a href="#product-pop-up" onclick="viewProductPopUp('${goodslist.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                     </div>
                   </div>
                   <h3><a onclick="goToItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>

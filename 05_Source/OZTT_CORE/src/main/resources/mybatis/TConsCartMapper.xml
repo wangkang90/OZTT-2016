@@ -1,201 +1,228 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.org.oztt.dao.TConsCartDao" >
-  <resultMap id="BaseResultMap" type="com.org.oztt.entity.TConsCart" >
-    <id column="no" property="no" jdbcType="BIGINT" />
-    <result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
-    <result column="customerNo" property="customerno" jdbcType="VARCHAR" />
-    <result column="groupMaxQuantity" property="groupmaxquantity" jdbcType="VARCHAR" />
-    <result column="groupCurrentQuantity" property="groupcurrentquantity" jdbcType="DECIMAL" />
-    <result column="groupComments" property="groupcomments" jdbcType="VARCHAR" />
-    <result column="groupDesc" property="groupdesc" jdbcType="VARCHAR" />
-    <result column="priceNo" property="priceno" jdbcType="VARCHAR" />
-    <result column="comsumerReminder" property="comsumerreminder" jdbcType="VARCHAR" />
-    <result column="addTimestamp" property="addtimestamp" jdbcType="TIMESTAMP" />
-    <result column="addUserKey" property="adduserkey" jdbcType="VARCHAR" />
-    <result column="updTimestamp" property="updtimestamp" jdbcType="TIMESTAMP" />
-    <result column="updUserKey" property="upduserkey" jdbcType="VARCHAR" />
-    <result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    no, goodsId, customerNo, groupMaxQuantity, groupCurrentQuantity, groupComments, groupDesc, 
-    priceNo, comsumerReminder, addTimestamp, addUserKey, updTimestamp, updUserKey, updPgmId
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_cons_cart
-    where no = #{no,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from t_cons_cart
-    where no = #{no,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.org.oztt.entity.TConsCart" >
-    insert into t_cons_cart (no, goodsId, customerNo, 
-      groupMaxQuantity, groupCurrentQuantity, 
-      groupComments, groupDesc, priceNo, 
-      comsumerReminder, addTimestamp, addUserKey, 
-      updTimestamp, updUserKey, updPgmId
-      )
-    values (#{no,jdbcType=BIGINT}, #{goodsid,jdbcType=VARCHAR}, #{customerno,jdbcType=VARCHAR}, 
-      #{groupmaxquantity,jdbcType=VARCHAR}, #{groupcurrentquantity,jdbcType=DECIMAL}, 
-      #{groupcomments,jdbcType=VARCHAR}, #{groupdesc,jdbcType=VARCHAR}, #{priceno,jdbcType=VARCHAR}, 
-      #{comsumerreminder,jdbcType=VARCHAR}, #{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR}, 
-      #{updtimestamp,jdbcType=TIMESTAMP}, #{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.org.oztt.entity.TConsCart" >
-    insert into t_cons_cart
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="no != null" >
-        no,
-      </if>
-      <if test="goodsid != null" >
-        goodsId,
-      </if>
-      <if test="customerno != null" >
-        customerNo,
-      </if>
-      <if test="groupmaxquantity != null" >
-        groupMaxQuantity,
-      </if>
-      <if test="groupcurrentquantity != null" >
-        groupCurrentQuantity,
-      </if>
-      <if test="groupcomments != null" >
-        groupComments,
-      </if>
-      <if test="groupdesc != null" >
-        groupDesc,
-      </if>
-      <if test="priceno != null" >
-        priceNo,
-      </if>
-      <if test="comsumerreminder != null" >
-        comsumerReminder,
-      </if>
-      <if test="addtimestamp != null" >
-        addTimestamp,
-      </if>
-      <if test="adduserkey != null" >
-        addUserKey,
-      </if>
-      <if test="updtimestamp != null" >
-        updTimestamp,
-      </if>
-      <if test="upduserkey != null" >
-        updUserKey,
-      </if>
-      <if test="updpgmid != null" >
-        updPgmId,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="no != null" >
-        #{no,jdbcType=BIGINT},
-      </if>
-      <if test="goodsid != null" >
-        #{goodsid,jdbcType=VARCHAR},
-      </if>
-      <if test="customerno != null" >
-        #{customerno,jdbcType=VARCHAR},
-      </if>
-      <if test="groupmaxquantity != null" >
-        #{groupmaxquantity,jdbcType=VARCHAR},
-      </if>
-      <if test="groupcurrentquantity != null" >
-        #{groupcurrentquantity,jdbcType=DECIMAL},
-      </if>
-      <if test="groupcomments != null" >
-        #{groupcomments,jdbcType=VARCHAR},
-      </if>
-      <if test="groupdesc != null" >
-        #{groupdesc,jdbcType=VARCHAR},
-      </if>
-      <if test="priceno != null" >
-        #{priceno,jdbcType=VARCHAR},
-      </if>
-      <if test="comsumerreminder != null" >
-        #{comsumerreminder,jdbcType=VARCHAR},
-      </if>
-      <if test="addtimestamp != null" >
-        #{addtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="adduserkey != null" >
-        #{adduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updtimestamp != null" >
-        #{updtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="upduserkey != null" >
-        #{upduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updpgmid != null" >
-        #{updpgmid,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TConsCart" >
-    update t_cons_cart
-    <set >
-      <if test="goodsid != null" >
-        goodsId = #{goodsid,jdbcType=VARCHAR},
-      </if>
-      <if test="customerno != null" >
-        customerNo = #{customerno,jdbcType=VARCHAR},
-      </if>
-      <if test="groupmaxquantity != null" >
-        groupMaxQuantity = #{groupmaxquantity,jdbcType=VARCHAR},
-      </if>
-      <if test="groupcurrentquantity != null" >
-        groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
-      </if>
-      <if test="groupcomments != null" >
-        groupComments = #{groupcomments,jdbcType=VARCHAR},
-      </if>
-      <if test="groupdesc != null" >
-        groupDesc = #{groupdesc,jdbcType=VARCHAR},
-      </if>
-      <if test="priceno != null" >
-        priceNo = #{priceno,jdbcType=VARCHAR},
-      </if>
-      <if test="comsumerreminder != null" >
-        comsumerReminder = #{comsumerreminder,jdbcType=VARCHAR},
-      </if>
-      <if test="addtimestamp != null" >
-        addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="adduserkey != null" >
-        addUserKey = #{adduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updtimestamp != null" >
-        updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="upduserkey != null" >
-        updUserKey = #{upduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updpgmid != null" >
-        updPgmId = #{updpgmid,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where no = #{no,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TConsCart" >
-    update t_cons_cart
-    set goodsId = #{goodsid,jdbcType=VARCHAR},
-      customerNo = #{customerno,jdbcType=VARCHAR},
-      groupMaxQuantity = #{groupmaxquantity,jdbcType=VARCHAR},
-      groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
-      groupComments = #{groupcomments,jdbcType=VARCHAR},
-      groupDesc = #{groupdesc,jdbcType=VARCHAR},
-      priceNo = #{priceno,jdbcType=VARCHAR},
-      comsumerReminder = #{comsumerreminder,jdbcType=VARCHAR},
-      addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
-      addUserKey = #{adduserkey,jdbcType=VARCHAR},
-      updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
-      updUserKey = #{upduserkey,jdbcType=VARCHAR},
-      updPgmId = #{updpgmid,jdbcType=VARCHAR}
-    where no = #{no,jdbcType=BIGINT}
-  </update>
+<mapper namespace="com.org.oztt.dao.TConsCartDao">
+	<resultMap id="BaseResultMap" type="com.org.oztt.entity.TConsCart">
+		<id column="no" property="no" jdbcType="BIGINT" />
+		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
+		<result column="customerNo" property="customerno" jdbcType="VARCHAR" />
+		<result column="groupMaxQuantity" property="groupmaxquantity"
+			jdbcType="VARCHAR" />
+		<result column="groupCurrentQuantity" property="groupcurrentquantity"
+			jdbcType="DECIMAL" />
+		<result column="groupComments" property="groupcomments"
+			jdbcType="VARCHAR" />
+		<result column="groupDesc" property="groupdesc" jdbcType="VARCHAR" />
+		<result column="priceNo" property="priceno" jdbcType="VARCHAR" />
+		<result column="comsumerReminder" property="comsumerreminder"
+			jdbcType="VARCHAR" />
+		<result column="addTimestamp" property="addtimestamp" jdbcType="TIMESTAMP" />
+		<result column="addUserKey" property="adduserkey" jdbcType="VARCHAR" />
+		<result column="updTimestamp" property="updtimestamp" jdbcType="TIMESTAMP" />
+		<result column="updUserKey" property="upduserkey" jdbcType="VARCHAR" />
+		<result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		no, goodsId, customerNo, groupMaxQuantity, groupCurrentQuantity,
+		groupComments, groupDesc,
+		priceNo, comsumerReminder, addTimestamp, addUserKey, updTimestamp, updUserKey,
+		updPgmId
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from t_cons_cart
+		where no = #{no,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from t_cons_cart
+		where no = #{no,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.org.oztt.entity.TConsCart">
+		insert into t_cons_cart (no, goodsId, customerNo,
+		groupMaxQuantity, groupCurrentQuantity,
+		groupComments, groupDesc, priceNo,
+		comsumerReminder, addTimestamp, addUserKey,
+		updTimestamp, updUserKey, updPgmId
+		)
+		values (#{no,jdbcType=BIGINT}, #{goodsid,jdbcType=VARCHAR},
+		#{customerno,jdbcType=VARCHAR},
+		#{groupmaxquantity,jdbcType=VARCHAR}, #{groupcurrentquantity,jdbcType=DECIMAL},
+		#{groupcomments,jdbcType=VARCHAR}, #{groupdesc,jdbcType=VARCHAR},
+		#{priceno,jdbcType=VARCHAR},
+		#{comsumerreminder,jdbcType=VARCHAR}, #{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR},
+		#{updtimestamp,jdbcType=TIMESTAMP}, #{upduserkey,jdbcType=VARCHAR},
+		#{updpgmid,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.org.oztt.entity.TConsCart">
+		insert into t_cons_cart
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				no,
+			</if>
+			<if test="goodsid != null">
+				goodsId,
+			</if>
+			<if test="customerno != null">
+				customerNo,
+			</if>
+			<if test="groupmaxquantity != null">
+				groupMaxQuantity,
+			</if>
+			<if test="groupcurrentquantity != null">
+				groupCurrentQuantity,
+			</if>
+			<if test="groupcomments != null">
+				groupComments,
+			</if>
+			<if test="groupdesc != null">
+				groupDesc,
+			</if>
+			<if test="priceno != null">
+				priceNo,
+			</if>
+			<if test="comsumerreminder != null">
+				comsumerReminder,
+			</if>
+			<if test="addtimestamp != null">
+				addTimestamp,
+			</if>
+			<if test="adduserkey != null">
+				addUserKey,
+			</if>
+			<if test="updtimestamp != null">
+				updTimestamp,
+			</if>
+			<if test="upduserkey != null">
+				updUserKey,
+			</if>
+			<if test="updpgmid != null">
+				updPgmId,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				#{no,jdbcType=BIGINT},
+			</if>
+			<if test="goodsid != null">
+				#{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="customerno != null">
+				#{customerno,jdbcType=VARCHAR},
+			</if>
+			<if test="groupmaxquantity != null">
+				#{groupmaxquantity,jdbcType=VARCHAR},
+			</if>
+			<if test="groupcurrentquantity != null">
+				#{groupcurrentquantity,jdbcType=DECIMAL},
+			</if>
+			<if test="groupcomments != null">
+				#{groupcomments,jdbcType=VARCHAR},
+			</if>
+			<if test="groupdesc != null">
+				#{groupdesc,jdbcType=VARCHAR},
+			</if>
+			<if test="priceno != null">
+				#{priceno,jdbcType=VARCHAR},
+			</if>
+			<if test="comsumerreminder != null">
+				#{comsumerreminder,jdbcType=VARCHAR},
+			</if>
+			<if test="addtimestamp != null">
+				#{addtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="adduserkey != null">
+				#{adduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updtimestamp != null">
+				#{updtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="upduserkey != null">
+				#{upduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updpgmid != null">
+				#{updpgmid,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TConsCart">
+		update t_cons_cart
+		<set>
+			<if test="goodsid != null">
+				goodsId = #{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="customerno != null">
+				customerNo = #{customerno,jdbcType=VARCHAR},
+			</if>
+			<if test="groupmaxquantity != null">
+				groupMaxQuantity = #{groupmaxquantity,jdbcType=VARCHAR},
+			</if>
+			<if test="groupcurrentquantity != null">
+				groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
+			</if>
+			<if test="groupcomments != null">
+				groupComments = #{groupcomments,jdbcType=VARCHAR},
+			</if>
+			<if test="groupdesc != null">
+				groupDesc = #{groupdesc,jdbcType=VARCHAR},
+			</if>
+			<if test="priceno != null">
+				priceNo = #{priceno,jdbcType=VARCHAR},
+			</if>
+			<if test="comsumerreminder != null">
+				comsumerReminder = #{comsumerreminder,jdbcType=VARCHAR},
+			</if>
+			<if test="addtimestamp != null">
+				addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="adduserkey != null">
+				addUserKey = #{adduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updtimestamp != null">
+				updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="upduserkey != null">
+				updUserKey = #{upduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updpgmid != null">
+				updPgmId = #{updpgmid,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where no = #{no,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TConsCart">
+		update t_cons_cart
+		set goodsId = #{goodsid,jdbcType=VARCHAR},
+		customerNo = #{customerno,jdbcType=VARCHAR},
+		groupMaxQuantity = #{groupmaxquantity,jdbcType=VARCHAR},
+		groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
+		groupComments = #{groupcomments,jdbcType=VARCHAR},
+		groupDesc = #{groupdesc,jdbcType=VARCHAR},
+		priceNo = #{priceno,jdbcType=VARCHAR},
+		comsumerReminder = #{comsumerreminder,jdbcType=VARCHAR},
+		addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
+		addUserKey = #{adduserkey,jdbcType=VARCHAR},
+		updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
+		updUserKey = #{upduserkey,jdbcType=VARCHAR},
+		updPgmId = #{updpgmid,jdbcType=VARCHAR}
+		where no = #{no,jdbcType=BIGINT}
+	</update>
+	
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="com.org.oztt.entity.TConsCart">
+		select
+		<include refid="Base_Column_List" />
+		from t_cons_cart
+		where 1 = 1
+		<if test="goodsid != null">
+			and goodsId = #{goodsid,jdbcType=VARCHAR}
+		</if>
+		<if test="customerno != null">
+			and customerNo = #{customerno,jdbcType=VARCHAR}
+		</if>
+		<if test="groupmaxquantity != null">
+			and groupMaxQuantity = #{groupmaxquantity,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
 </mapper>

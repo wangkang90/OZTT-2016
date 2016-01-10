@@ -32,4 +32,11 @@ public interface TGoodsPriceDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TGoodsPrice record);
+    
+    /**
+     * 根据参数检索出数据
+     * @param record
+     * @return
+     */
+    TGoodsPrice selectByParams(TGoodsPrice record);
 }

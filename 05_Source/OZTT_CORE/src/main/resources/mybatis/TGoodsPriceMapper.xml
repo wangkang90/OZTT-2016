@@ -1,142 +1,168 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.org.oztt.dao.TGoodsPriceDao" >
-  <resultMap id="BaseResultMap" type="com.org.oztt.entity.TGoodsPrice" >
-    <id column="no" property="no" jdbcType="BIGINT" />
-    <result column="priceNo" property="priceno" jdbcType="VARCHAR" />
-    <result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
-    <result column="goodsClassId" property="goodsclassid" jdbcType="VARCHAR" />
-    <result column="goodsClassValue" property="goodsclassvalue" jdbcType="DECIMAL" />
-    <result column="openFlg" property="openflg" jdbcType="CHAR" />
-    <result column="validPeriodStart" property="validperiodstart" jdbcType="TIMESTAMP" />
-    <result column="validPeriodEnd" property="validperiodend" jdbcType="TIMESTAMP" />
-    <result column="defaultFlg" property="defaultflg" jdbcType="CHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    no, priceNo, goodsId, goodsClassId, goodsClassValue, openFlg, validPeriodStart, validPeriodEnd, 
-    defaultFlg
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_goods_price
-    where no = #{no,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from t_goods_price
-    where no = #{no,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.org.oztt.entity.TGoodsPrice" >
-    insert into t_goods_price (no, priceNo, goodsId, 
-      goodsClassId, goodsClassValue, openFlg, 
-      validPeriodStart, validPeriodEnd, defaultFlg
-      )
-    values (#{no,jdbcType=BIGINT}, #{priceno,jdbcType=VARCHAR}, #{goodsid,jdbcType=VARCHAR}, 
-      #{goodsclassid,jdbcType=VARCHAR}, #{goodsclassvalue,jdbcType=DECIMAL}, #{openflg,jdbcType=CHAR}, 
-      #{validperiodstart,jdbcType=TIMESTAMP}, #{validperiodend,jdbcType=TIMESTAMP}, #{defaultflg,jdbcType=CHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.org.oztt.entity.TGoodsPrice" >
-    insert into t_goods_price
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="no != null" >
-        no,
-      </if>
-      <if test="priceno != null" >
-        priceNo,
-      </if>
-      <if test="goodsid != null" >
-        goodsId,
-      </if>
-      <if test="goodsclassid != null" >
-        goodsClassId,
-      </if>
-      <if test="goodsclassvalue != null" >
-        goodsClassValue,
-      </if>
-      <if test="openflg != null" >
-        openFlg,
-      </if>
-      <if test="validperiodstart != null" >
-        validPeriodStart,
-      </if>
-      <if test="validperiodend != null" >
-        validPeriodEnd,
-      </if>
-      <if test="defaultflg != null" >
-        defaultFlg,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="no != null" >
-        #{no,jdbcType=BIGINT},
-      </if>
-      <if test="priceno != null" >
-        #{priceno,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsid != null" >
-        #{goodsid,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsclassid != null" >
-        #{goodsclassid,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsclassvalue != null" >
-        #{goodsclassvalue,jdbcType=DECIMAL},
-      </if>
-      <if test="openflg != null" >
-        #{openflg,jdbcType=CHAR},
-      </if>
-      <if test="validperiodstart != null" >
-        #{validperiodstart,jdbcType=TIMESTAMP},
-      </if>
-      <if test="validperiodend != null" >
-        #{validperiodend,jdbcType=TIMESTAMP},
-      </if>
-      <if test="defaultflg != null" >
-        #{defaultflg,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TGoodsPrice" >
-    update t_goods_price
-    <set >
-      <if test="priceno != null" >
-        priceNo = #{priceno,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsid != null" >
-        goodsId = #{goodsid,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsclassid != null" >
-        goodsClassId = #{goodsclassid,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsclassvalue != null" >
-        goodsClassValue = #{goodsclassvalue,jdbcType=DECIMAL},
-      </if>
-      <if test="openflg != null" >
-        openFlg = #{openflg,jdbcType=CHAR},
-      </if>
-      <if test="validperiodstart != null" >
-        validPeriodStart = #{validperiodstart,jdbcType=TIMESTAMP},
-      </if>
-      <if test="validperiodend != null" >
-        validPeriodEnd = #{validperiodend,jdbcType=TIMESTAMP},
-      </if>
-      <if test="defaultflg != null" >
-        defaultFlg = #{defaultflg,jdbcType=CHAR},
-      </if>
-    </set>
-    where no = #{no,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TGoodsPrice" >
-    update t_goods_price
-    set priceNo = #{priceno,jdbcType=VARCHAR},
-      goodsId = #{goodsid,jdbcType=VARCHAR},
-      goodsClassId = #{goodsclassid,jdbcType=VARCHAR},
-      goodsClassValue = #{goodsclassvalue,jdbcType=DECIMAL},
-      openFlg = #{openflg,jdbcType=CHAR},
-      validPeriodStart = #{validperiodstart,jdbcType=TIMESTAMP},
-      validPeriodEnd = #{validperiodend,jdbcType=TIMESTAMP},
-      defaultFlg = #{defaultflg,jdbcType=CHAR}
-    where no = #{no,jdbcType=BIGINT}
-  </update>
+<mapper namespace="com.org.oztt.dao.TGoodsPriceDao">
+	<resultMap id="BaseResultMap" type="com.org.oztt.entity.TGoodsPrice">
+		<id column="no" property="no" jdbcType="BIGINT" />
+		<result column="priceNo" property="priceno" jdbcType="VARCHAR" />
+		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
+		<result column="goodsClassId" property="goodsclassid" jdbcType="VARCHAR" />
+		<result column="goodsClassValue" property="goodsclassvalue"
+			jdbcType="DECIMAL" />
+		<result column="openFlg" property="openflg" jdbcType="CHAR" />
+		<result column="validPeriodStart" property="validperiodstart"
+			jdbcType="TIMESTAMP" />
+		<result column="validPeriodEnd" property="validperiodend"
+			jdbcType="TIMESTAMP" />
+		<result column="defaultFlg" property="defaultflg" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		no, priceNo, goodsId, goodsClassId, goodsClassValue, openFlg,
+		validPeriodStart, validPeriodEnd,
+		defaultFlg
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from t_goods_price
+		where no = #{no,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from t_goods_price
+		where no = #{no,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.org.oztt.entity.TGoodsPrice">
+		insert into t_goods_price (no, priceNo, goodsId,
+		goodsClassId, goodsClassValue, openFlg,
+		validPeriodStart, validPeriodEnd, defaultFlg
+		)
+		values (#{no,jdbcType=BIGINT}, #{priceno,jdbcType=VARCHAR},
+		#{goodsid,jdbcType=VARCHAR},
+		#{goodsclassid,jdbcType=VARCHAR}, #{goodsclassvalue,jdbcType=DECIMAL}, #{openflg,jdbcType=CHAR},
+		#{validperiodstart,jdbcType=TIMESTAMP},
+		#{validperiodend,jdbcType=TIMESTAMP}, #{defaultflg,jdbcType=CHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.org.oztt.entity.TGoodsPrice">
+		insert into t_goods_price
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				no,
+			</if>
+			<if test="priceno != null">
+				priceNo,
+			</if>
+			<if test="goodsid != null">
+				goodsId,
+			</if>
+			<if test="goodsclassid != null">
+				goodsClassId,
+			</if>
+			<if test="goodsclassvalue != null">
+				goodsClassValue,
+			</if>
+			<if test="openflg != null">
+				openFlg,
+			</if>
+			<if test="validperiodstart != null">
+				validPeriodStart,
+			</if>
+			<if test="validperiodend != null">
+				validPeriodEnd,
+			</if>
+			<if test="defaultflg != null">
+				defaultFlg,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				#{no,jdbcType=BIGINT},
+			</if>
+			<if test="priceno != null">
+				#{priceno,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsid != null">
+				#{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsclassid != null">
+				#{goodsclassid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsclassvalue != null">
+				#{goodsclassvalue,jdbcType=DECIMAL},
+			</if>
+			<if test="openflg != null">
+				#{openflg,jdbcType=CHAR},
+			</if>
+			<if test="validperiodstart != null">
+				#{validperiodstart,jdbcType=TIMESTAMP},
+			</if>
+			<if test="validperiodend != null">
+				#{validperiodend,jdbcType=TIMESTAMP},
+			</if>
+			<if test="defaultflg != null">
+				#{defaultflg,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TGoodsPrice">
+		update t_goods_price
+		<set>
+			<if test="priceno != null">
+				priceNo = #{priceno,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsid != null">
+				goodsId = #{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsclassid != null">
+				goodsClassId = #{goodsclassid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsclassvalue != null">
+				goodsClassValue = #{goodsclassvalue,jdbcType=DECIMAL},
+			</if>
+			<if test="openflg != null">
+				openFlg = #{openflg,jdbcType=CHAR},
+			</if>
+			<if test="validperiodstart != null">
+				validPeriodStart = #{validperiodstart,jdbcType=TIMESTAMP},
+			</if>
+			<if test="validperiodend != null">
+				validPeriodEnd = #{validperiodend,jdbcType=TIMESTAMP},
+			</if>
+			<if test="defaultflg != null">
+				defaultFlg = #{defaultflg,jdbcType=CHAR},
+			</if>
+		</set>
+		where no = #{no,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TGoodsPrice">
+		update t_goods_price
+		set priceNo = #{priceno,jdbcType=VARCHAR},
+		goodsId = #{goodsid,jdbcType=VARCHAR},
+		goodsClassId = #{goodsclassid,jdbcType=VARCHAR},
+		goodsClassValue = #{goodsclassvalue,jdbcType=DECIMAL},
+		openFlg = #{openflg,jdbcType=CHAR},
+		validPeriodStart = #{validperiodstart,jdbcType=TIMESTAMP},
+		validPeriodEnd = #{validperiodend,jdbcType=TIMESTAMP},
+		defaultFlg = #{defaultflg,jdbcType=CHAR}
+		where no = #{no,jdbcType=BIGINT}
+	</update>
+	
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="com.org.oztt.entity.TGoodsPrice">
+		select
+		<include refid="Base_Column_List" />
+		from t_goods_price
+		where 1 = 1
+		<if test="goodsid != null">
+			and goodsId = #{goodsid,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsclassid != null">
+			and goodsClassId = #{goodsclassid,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsclassvalue != null">
+			and goodsClassValue = #{goodsclassvalue,jdbcType=DECIMAL}
+		</if>
+		<if test="openflg != null">
+			and openFlg = #{openflg,jdbcType=CHAR}
+		</if>
+	</select>
 </mapper>

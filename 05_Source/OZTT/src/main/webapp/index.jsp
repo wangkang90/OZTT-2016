@@ -9,10 +9,7 @@
 <html>
 <head>
 <script>
-function toLogin(){
 	location.href = "${pageContext.request.contextPath}/main/init";
-}
-
 </script>
 </head>
 <body onload="toLogin()">

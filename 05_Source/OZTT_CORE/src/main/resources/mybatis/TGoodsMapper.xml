@@ -282,7 +282,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from t_goods
-		where no = #{no,jdbcType=BIGINT}
+		where goodsId = #{goodsid,jdbcType=VARCHAR}
 	</select>
 
 	<select id="selectByParams" resultMap="BaseResultMap"
