@@ -69,4 +69,9 @@ public class TGoodsDaoImpl extends BaseDao implements TGoodsDao {
                 "com.org.oztt.dao.TGoodsDao.getGoodsByParamForPageCount", pagination);
     }
 
+    @Override
+    public List<TGoods> getFiveHotSeller(TGoods record) {
+        return select("com.org.oztt.dao.TGoodsDao.getFiveHotSeller", record);
+    }
+
 }

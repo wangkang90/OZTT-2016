@@ -43,21 +43,12 @@ public class OzTtTpPdController extends BaseController {
 
             String imgUrl = super.getApplicationMessage("saveImgUrl");
 
-            // 获取新货前三个
-            List<TGoods> newArrivalList = goodsService.getFirstThreeNewArravail();
-
-            if (!CollectionUtils.isEmpty(newArrivalList)) {
-                for (TGoods goods : newArrivalList) {
-                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
-                }
-            }
-
             // 取得热卖的产品
             TGoods tGoodsParam = new TGoods();
             tGoodsParam.setDeleteflg(CommonConstants.IS_NOT_DELETE);
             tGoodsParam.setOnsaleflg(CommonConstants.IS_ON_SALE);
             tGoodsParam.setHotsaleflg(CommonConstants.IS_HOT_SALE);
-            List<TGoods> hotSellerList = goodsService.getGoodsByParam(tGoodsParam);
+            List<TGoods> hotSellerList = goodsService.getFiveHotSeller(tGoodsParam);
             if (!CollectionUtils.isEmpty(hotSellerList)) {
                 for (TGoods goods : hotSellerList) {
                     goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
@@ -69,7 +60,6 @@ public class OzTtTpPdController extends BaseController {
             // 后台维护的时候提示让以逗号隔开
             model.addAttribute("goodItemDto", goodItemDto);
             model.addAttribute("hotSellerList", hotSellerList);
-            model.addAttribute("arrlist", newArrivalList);
 
             return "/OZ_TT_TP_PD";
         }

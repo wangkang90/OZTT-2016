@@ -96,13 +96,11 @@
           <!-- BEGIN CONTENT -->
           <div class="col-md-9 col-sm-7">
             <div class="row list-view-sorting clearfix">
-              <div class="col-md-2 col-sm-2 list-view">
-                <a href="#"><i class="fa fa-th-large"></i></a>
-                <a href="#"><i class="fa fa-th-list"></i></a>
+              <div class="col-md-8 col-sm-8">
+                	<h2>${className }</h2>
               </div>
-              <div class="col-md-10 col-sm-10">
+              <div class="col-md-4 col-sm-4">
               	<div class="pull-left">
-              		<h2>${className }</h2>
               	</div>
                 <div class="pull-right">
                   <label class="control-label"><fmt:message key="OZ_TT_TP_PL_shows"/></label>
@@ -129,7 +127,7 @@
                       <a href="#product-pop-up" onclick="viewProductPopUp('${goodslist.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                     </div>
                   </div>
-                  <h3><a onclick="goToItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>
+                  <h3><a onclick="toItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>
                   <div class="pi-price">${goodslist.costprice }<fmt:message key="common_yuan"/></div>
                   <a onclick="addCart('${goodslist.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_addtocart"/></a>
                   <c:if test="${goodslist.newsaleflg == '1' }">

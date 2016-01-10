@@ -73,5 +73,13 @@ public interface TGoodsDao {
      * @return
      */
     PagingResult<TGoods> getGoodsByParamForPage(Pagination pagination);
+    
+    
+    /**
+     * 热卖
+     * @param record
+     * @return
+     */
+    List<TGoods> getFiveHotSeller(TGoods record);
      
 }

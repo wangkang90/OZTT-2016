@@ -219,4 +219,11 @@
 			and goodsSpecifications = #{goodsspecifications,jdbcType=VARCHAR}
 		</if>
 	</select>
+	
+	<delete id="deleteAllContCard" parameterType="java.lang.String">
+		delete from t_cons_cart
+		where customerNo = #{customerno,jdbcType=VARCHAR}
+	</delete>
+	
+	
 </mapper>

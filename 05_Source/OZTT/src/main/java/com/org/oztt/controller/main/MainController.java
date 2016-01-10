@@ -38,14 +38,6 @@ public class MainController extends BaseController {
             List<MyCategroy> myCategroyList = super.commonService.getMyCategroy();
 
             String imgUrl = super.getApplicationMessage("saveImgUrl");
-            // 获取新货前三个
-            List<TGoods> newArrivalList = goodsService.getFirstThreeNewArravail();
-
-            if (!CollectionUtils.isEmpty(newArrivalList)) {
-                for (TGoods goods : newArrivalList) {
-                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
-                }
-            }
 
             // 获取新货
             List<TGoods> allGoodsList = goodsService.getAllNewArravail();
@@ -66,7 +58,6 @@ public class MainController extends BaseController {
                 }
             }
             model.addAttribute("menucategory", myCategroyList);
-            model.addAttribute("arrlist", newArrivalList);
             model.addAttribute("allGoodsList", allGoodsList);
             model.addAttribute("tgoodList", tgoodList);
 

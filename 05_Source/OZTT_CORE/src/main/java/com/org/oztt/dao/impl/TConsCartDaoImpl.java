@@ -50,4 +50,9 @@ public class TConsCartDaoImpl extends BaseDao implements TConsCartDao {
         return selectOne("com.org.oztt.dao.TConsCartDao.selectByParams", record);
     }
 
+    @Override
+    public void deleteAllContCard(String customerNo) {
+        update("com.org.oztt.dao.TConsCartDao.deleteAllContCard", customerNo);
+    }
+
 }

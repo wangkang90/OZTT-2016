@@ -1,6 +1,7 @@
 package com.org.oztt.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import com.org.oztt.dao.TGoodsDao;
 import com.org.oztt.dao.TGoodsGroupDao;
 import com.org.oztt.dao.TGoodsPriceDao;
 import com.org.oztt.dao.TGoodsPropertyDao;
+import com.org.oztt.entity.TConsCart;
 import com.org.oztt.entity.TGoods;
 import com.org.oztt.entity.TGoodsAppendItems;
 import com.org.oztt.entity.TGoodsClassfication;
@@ -62,10 +64,6 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
 
     public List<TGoods> getGoodsByParam(TGoods tGoods) throws Exception {
         return tGoodsDao.selectByParams(tGoods);
-    }
-
-    public List<TGoods> getFirstThreeNewArravail() throws Exception {
-        return tGoodsDao.getFirstThreeNewArravail();
     }
 
     public List<TGoods> getAllNewArravail() throws Exception {
@@ -169,7 +167,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         return goodItemDto;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public boolean addContCart(String customerNo, List list) throws Exception {
         if (list == null)
@@ -177,16 +175,74 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         for (int i = 0; i < list.size(); i++) {
             Map<String, String> map = (Map<String, String>) list.get(i);
             String goodId = map.get("goodId");
-            String customer = map.get("customerNo");
             String goodProperties = map.get("properties");
             String goodQuantity = map.get("quantity");
             // 判断属性是不是相同，如果相同则数量相加
-//            TConsCar tConsCartDao = new TConsCartDao();
-//            tConsCartDao.setGoodsid(goodId);
-//            tConsCartDao.setg
-//            tDao.selectByParams(record);
+            TConsCart tConsCart = new TConsCart();
+            tConsCart.setGoodsid(goodId);
+            tConsCart.setCustomerno(customerNo);
+            tConsCart.setGoodsspecifications(goodProperties);
+            tConsCart = tConsCartDao.selectByParams(tConsCart);
+            if (tConsCart == null) {
+                // 没有数据则需要插入数据
+                tConsCart = new TConsCart();
+                tConsCart.setAddcarttimestamp(new Date());
+                tConsCart.setAddtimestamp(new Date());
+                tConsCart.setAdduserkey(customerNo);
+                tConsCart.setCustomerno(customerNo);
+                tConsCart.setGoodsid(goodId);
+                tConsCart.setGoodsspecifications(goodProperties);
+                // 商品价格
+                TGoodsPrice tGoodsPrice = new TGoodsPrice();
+                tGoodsPrice.setGoodsid(goodId);
+                tGoodsPrice = this.getGoodPrice(tGoodsPrice);
+                tConsCart.setPriceno(tGoodsPrice.getPriceno());
+                // 商品团购
+                TGoodsGroup tGoodsGroup = new TGoodsGroup();
+                tGoodsGroup.setGoodsid(goodId);
+                tGoodsGroup = this.getGoodPrice(tGoodsGroup);
+                tConsCart.setGroupno(tGoodsGroup.getGroupno());
+                
+                tConsCart.setIfgroup(CommonConstants.IS_GROUP);
+                tConsCart.setQuantity(Long.valueOf(goodQuantity));
+                tConsCartDao.insertSelective(tConsCart);
+                
+            } else {
+                // 有数据则增加数量
+                tConsCart.setQuantity(Long.parseLong(goodQuantity) + tConsCart.getQuantity());
+                tConsCart.setUpdpgmid(CommonConstants.UP_CART);
+                tConsCart.setUpdtimestamp(new Date());
+                tConsCart.setUpduserkey(customerNo);
+                tConsCartDao.updateByPrimaryKey(tConsCart);
+            }
         }
         
-        return false;
+        return true;
     }
+
+    @Override
+    public List<TGoods> getFiveHotSeller(TGoods tGoods) throws Exception {
+        return tGoodsDao.getFiveHotSeller(tGoods);
+    }
+
+    @Override
+    public boolean deleteContCart(String customerNo, Map<String, String> cartMap) throws Exception {
+        String goodId = cartMap.get("goodId");
+        String goodProperties = cartMap.get("properties");
+        // 判断属性是不是相同，如果相同则数量相加
+        TConsCart tConsCart = new TConsCart();
+        tConsCart.setGoodsid(goodId);
+        tConsCart.setCustomerno(customerNo);
+        tConsCart.setGoodsspecifications(goodProperties);
+        tConsCart = tConsCartDao.selectByParams(tConsCart);
+        tConsCartDao.deleteByPrimaryKey(tConsCart.getNo());
+        return true;
+    }
+
+    @Override
+    public boolean deleteAllContCart(String customerNo) throws Exception {
+        tConsCartDao.deleteAllContCard(customerNo);
+        return true;
+    }
+    
 }
