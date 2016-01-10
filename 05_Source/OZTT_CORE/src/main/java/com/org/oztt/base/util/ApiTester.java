@@ -9,7 +9,9 @@ class ApiTester {
 
     private final static String m4uPass   = "p3HrD7dX";        // messagemedia password
 
+    //private final static String testPhone = "+61452176840";  // phone number to receive test messages (start with a + in international format)
     private final static String testPhone = "+8615298870452";  // phone number to receive test messages (start with a + in international format)
+    //private final static String testPhone = "+8618036825586";  // phone number to receive test messages (start with a + in international format)
 
     // Open an interface connection.
     private static SmsInterface openConnection(boolean secureMode, boolean debug, String debugFile) {
@@ -58,10 +60,8 @@ class ApiTester {
     private static void testSendMessages(String testPhone, String testMessage, boolean secureMode, boolean debug,
             String debugFile) {
         SmsInterface si;
-
         if ((si = openConnection(secureMode, debug, debugFile)) == null)
             return;
-
         si.addMessage(testPhone, testMessage, 0, 0, ValidityPeriod.DEFAULT, false);
 
         if (si.sendMessages()) {
@@ -130,7 +130,7 @@ class ApiTester {
     // Main routine.
     public static void main(String argv[]) {
         boolean testFunction = false;
-        String testMessage = "Test message" + System.getProperty("line.separator") + "from Java API";
+        String testMessage = "Test message" + System.getProperty("line.separator") + "from Java API  --林柳安";
 
         boolean secureMode = false;
         boolean debug = false;

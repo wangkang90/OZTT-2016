@@ -68,7 +68,7 @@
               <h2><fmt:message key="OZ_TT_TP_PL_bestSellers"/></h2>
               <c:forEach var="hotSellerList" items="${ hotSellerList }">
               <div class="item">
-                <a href="javascript:toItem('${hotSellerList.goodsid }')"><img src="${ hotSellerList.goodsnormalpic }" alt="${ hotSellerList.goodsname }"></a>
+                <a href="javascript:toItem('${hotSellerList.goodsid }')"><img src="${ hotSellerList.goodsThumbnail }" alt="${ hotSellerList.goodsname }"></a>
                 <h3><a href="javascript:toItem('${hotSellerList.goodsid }')">${ hotSellerList.goodsname }</a></h3>
                 <div class="price">${ hotSellerList.costprice }<fmt:message key="common_yuan"/></div>
               </div>
@@ -83,46 +83,35 @@
               <div class="row">
                 <div class="col-md-6 col-sm-6">
                   <div class="product-main-image">
-                    <img src="${ctx}/assets/temp/products/model7.jpg" alt="Cool green dress with red bell" class="img-responsive" data-BigImgSrc="assets/temp/products/model7.jpg">
+                    <img src="${goodItemDto.firstImg}" alt="${goodItemDto.goods.goodsname}" class="img-responsive" data-BigImgSrc="${goodItemDto.firstImg}">
                   </div>
                   <div class="product-other-images">
-                    <a href="#" class="active"><img alt="Berry Lace Dress" src="${ctx}/assets/temp/products/model3.jpg"></a>
-                    <a href="#"><img alt="Berry Lace Dress" src="${ctx}/assets/temp/products/model4.jpg"></a>
-                    <a href="#"><img alt="Berry Lace Dress" src="${ctx}/assets/temp/products/model5.jpg"></a>
+                  <c:forEach var="imgTh" items="${ goodItemDto.imgList }" varStatus="status">
+                  		<c:if test="${ status.index == 0}">
+                  			<a onclick="showImgMain(this,'${imgTh}')" class="active"><img alt="${goodItemDto.goods.goodsname}" src="${imgTh}"></a>
+                  		</c:if>
+                  		<c:if test="${ status.index != 0}">
+	                  		<a onclick="showImgMain(this,'${imgTh}')"><img alt="${goodItemDto.goods.goodsname}" src="${imgTh}"></a>
+                  		</c:if>
+                  </c:forEach>
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                  <h1>Cool green dress with red bell</h1>
+                  <h1>${goodItemDto.goods.goodsname}</h1>
                   <div class="price-availability-block clearfix">
                     <div class="price">
-                      <strong><span>$</span>47.00</strong>
-                      <em>$<span>62.00</span></em>
+                      <strong>${goodItemDto.disPrice}<fmt:message key="common_yuan"/></strong>
+                      <em><span>${goodItemDto.nowPrice}<fmt:message key="common_yuan"/></span></em>
                     </div>
                     <div class="availability">
-                      Availability: <strong>In Stock</strong>
+                      <fmt:message key="OZ_TT_TP_PD_youhuo"/>
                     </div>
                   </div>
                   <div class="description">
-                    <p>Lorem ipsum dolor ut sit ame dolore  adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat 
-Nostrud duis molestie at dolore.</p>
+                    <p>${goodItemDto.goods.goodsdesc}</p>
                   </div>
-                  <div class="product-page-options">
-                    <div class="pull-left">
-                      <label class="control-label">Size:</label>
-                      <select class="form-control input-sm">
-                        <option>L</option>
-                        <option>M</option>
-                        <option>XL</option>
-                      </select>
-                    </div>
-                    <div class="pull-left">
-                      <label class="control-label">Color:</label>
-                      <select class="form-control input-sm">
-                        <option>Red</option>
-                        <option>Blue</option>
-                        <option>Black</option>
-                      </select>
-                    </div>
+                  <div class="product-page-options" id="productOptions">
+                    
 
 
                   </div>
@@ -139,16 +128,17 @@ Nostrud duis molestie at dolore.</p>
                   <ul id="myTab" class="nav nav-tabs">
                     <li class="active"><a href="#Description" data-toggle="tab"><fmt:message key="OZ_TT_TP_PD_des"/></a></li>
                     <li><a href="#Information" data-toggle="tab"><fmt:message key="OZ_TT_TP_PD_info"/></a></li>
+                    <li><a href="#Information" data-toggle="tab"><fmt:message key="OZ_TT_TP_PD_rule"/></a></li>
                   </ul>
                   <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade in active" id="Description">
-                      
+                      	${goodItemDto.productInfo}
                     </div>
                     <div class="tab-pane fade" id="Information">
-                      
+                      	${goodItemDto.productDesc}
                     </div>
                     <div class="tab-pane fade" id="Reviews">
-                      
+                      	${goodItemDto.sellerRule}
                     </div>
                   </div>
                 </div>
@@ -165,6 +155,33 @@ Nostrud duis molestie at dolore.</p>
     </div>
 
     <%@ include file="./commonjsFooter.jsp"%>
+    <script type="text/javascript">
+    	var properties = ${goodItemDto.properties};
+    	var properJson = eval(properties);
+    	var temp1 = '<div class="pull-left" style="padding-top:5px">';
+    	var temp2 = '<label class="control-label">{0}</label>';
+    	var temp3 = '<select class="form-control input-sm" id="{0}">';
+   		var temp4 = '<option value="{0}">{1}</option>';
+		var temp5 = '</select>';
+		var temp6 = '</div>';
+    	for(var i=0; i<properJson.length; i++){
+    		if (properJson[i].goodsPropertiesType == "3") {
+    			var inHtml = temp1;
+    			inHtml += temp2.replace("{0}",properJson[i].goodsPropertiesName);
+    			inHtml += temp3.replace("{0}",properJson[i].goodsPropertiesId);
+    			var classValue = properJson[i].goodsPropertiesJson.split(",");
+    			for (var j = 0; j < classValue.length; j++) {
+    				inHtml += temp4.replace("{0}",classValue[j]).replace("{1}", classValue[j]);
+    			}
+    			inHtml += temp5;
+    			inHtml += temp6;
+    			$("#productOptions").append(inHtml);
+    		}
+    	}
+    	
+    	
+    	
     
+    </script>
 </body>
 </html>

@@ -4,53 +4,35 @@
               <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-3">
                   <div class="product-main-image">
-                    <img src="assets/temp/products/model7.jpg" alt="Cool green dress with red bell" class="img-responsive">
+                    <img src="" alt="" class="img-responsive" id="activeImage">
                   </div>
-                  <div class="product-other-images">
-                    <a href="#" class="active"><img alt="Berry Lace Dress" src="assets/temp/products/model3.jpg"></a>
-                    <a href="#"><img alt="Berry Lace Dress" src="assets/temp/products/model4.jpg"></a>
-                    <a href="#"><img alt="Berry Lace Dress" src="assets/temp/products/model5.jpg"></a>
+                  <div class="product-other-images" id="productImage">
+                    
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-9">
-                  <h1>Cool green dress with red bell</h1>
+                  <h1 id="goodsNameh1"></h1>
                   <div class="price-availability-block clearfix">
                     <div class="price">
-                      <strong><span>$</span>47.00</strong>
-                      <em>$<span>62.00</span></em>
+                      <strong id="disPrice"></strong>
+                      <em><span id="nowPrice"></span></em>
                     </div>
                     <div class="availability">
-                      Availability: <strong>In Stock</strong>
+                      <fmt:message key="OZ_TT_TP_PD_youhuo"/>
                     </div>
                   </div>
                   <div class="description">
-                    <p>Lorem ipsum dolor ut sit ame dolore  adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat 
-Nostrud duis molestie at dolore.</p>
+                    <p id="prodectDesc"></p>
                   </div>
-                  <div class="product-page-options">
-                    <div class="pull-left">
-                      <label class="control-label">Size:</label>
-                      <select class="form-control input-sm">
-                        <option>L</option>
-                        <option>M</option>
-                        <option>XL</option>
-                      </select>
-                    </div>
-                    <div class="pull-left">
-                      <label class="control-label">Color:</label>
-                      <select class="form-control input-sm">
-                        <option>Red</option>
-                        <option>Blue</option>
-                        <option>Black</option>
-                      </select>
-                    </div>
+                  <div class="product-page-options" id="productOptions">
+                    
                   </div>
                   <div class="product-page-cart">
                     <div class="product-quantity">
                         <input id="product-quantity" type="text" value="1" readonly name="product-quantity" class="form-control input-sm">
                     </div>
-                    <button class="btn btn-primary" type="submit">Add to cart</button>
-                    <button class="btn btn-default" type="submit">More details</button>
+                    <button class="btn btn-primary" type="button" id="addCart"><fmt:message key="common_addtocart"/></button>
+                    <button class="btn btn-default" type="button" id="detail"><fmt:message key="common_detail"/></button>
                   </div>
                 </div>
 

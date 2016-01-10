@@ -32,4 +32,11 @@ public interface TGoodsAppendItemsDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TGoodsAppendItems record);
+    
+    /**
+     * 根据参数检索出数据
+     * @param record
+     * @return
+     */
+    TGoodsAppendItems selectByParams(TGoodsAppendItems record);
 }

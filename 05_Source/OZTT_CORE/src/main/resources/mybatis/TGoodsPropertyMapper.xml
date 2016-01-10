@@ -1,153 +1,177 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.org.oztt.dao.TGoodsPropertyDao" >
-  <resultMap id="BaseResultMap" type="com.org.oztt.entity.TGoodsProperty" >
-    <id column="no" property="no" jdbcType="BIGINT" />
-    <result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
-    <result column="goodsClassId" property="goodsclassid" jdbcType="VARCHAR" />
-    <result column="goodsClassValue" property="goodsclassvalue" jdbcType="VARCHAR" />
-    <result column="openFlg" property="openflg" jdbcType="CHAR" />
-    <result column="addTimestamp" property="addtimestamp" jdbcType="TIMESTAMP" />
-    <result column="addUserKey" property="adduserkey" jdbcType="VARCHAR" />
-    <result column="updTimestamp" property="updtimestamp" jdbcType="TIMESTAMP" />
-    <result column="updUserKey" property="upduserkey" jdbcType="VARCHAR" />
-    <result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    no, goodsId, goodsClassId, goodsClassValue, openFlg, addTimestamp, addUserKey, updTimestamp, 
-    updUserKey, updPgmId
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_goods_property
-    where no = #{no,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from t_goods_property
-    where no = #{no,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.org.oztt.entity.TGoodsProperty" >
-    insert into t_goods_property (no, goodsId, goodsClassId, 
-      goodsClassValue, openFlg, addTimestamp, 
-      addUserKey, updTimestamp, updUserKey, 
-      updPgmId)
-    values (#{no,jdbcType=BIGINT}, #{goodsid,jdbcType=VARCHAR}, #{goodsclassid,jdbcType=VARCHAR}, 
-      #{goodsclassvalue,jdbcType=VARCHAR}, #{openflg,jdbcType=CHAR}, #{addtimestamp,jdbcType=TIMESTAMP}, 
-      #{adduserkey,jdbcType=VARCHAR}, #{updtimestamp,jdbcType=TIMESTAMP}, #{upduserkey,jdbcType=VARCHAR}, 
-      #{updpgmid,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.org.oztt.entity.TGoodsProperty" >
-    insert into t_goods_property
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="no != null" >
-        no,
-      </if>
-      <if test="goodsid != null" >
-        goodsId,
-      </if>
-      <if test="goodsclassid != null" >
-        goodsClassId,
-      </if>
-      <if test="goodsclassvalue != null" >
-        goodsClassValue,
-      </if>
-      <if test="openflg != null" >
-        openFlg,
-      </if>
-      <if test="addtimestamp != null" >
-        addTimestamp,
-      </if>
-      <if test="adduserkey != null" >
-        addUserKey,
-      </if>
-      <if test="updtimestamp != null" >
-        updTimestamp,
-      </if>
-      <if test="upduserkey != null" >
-        updUserKey,
-      </if>
-      <if test="updpgmid != null" >
-        updPgmId,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="no != null" >
-        #{no,jdbcType=BIGINT},
-      </if>
-      <if test="goodsid != null" >
-        #{goodsid,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsclassid != null" >
-        #{goodsclassid,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsclassvalue != null" >
-        #{goodsclassvalue,jdbcType=VARCHAR},
-      </if>
-      <if test="openflg != null" >
-        #{openflg,jdbcType=CHAR},
-      </if>
-      <if test="addtimestamp != null" >
-        #{addtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="adduserkey != null" >
-        #{adduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updtimestamp != null" >
-        #{updtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="upduserkey != null" >
-        #{upduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updpgmid != null" >
-        #{updpgmid,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TGoodsProperty" >
-    update t_goods_property
-    <set >
-      <if test="goodsid != null" >
-        goodsId = #{goodsid,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsclassid != null" >
-        goodsClassId = #{goodsclassid,jdbcType=VARCHAR},
-      </if>
-      <if test="goodsclassvalue != null" >
-        goodsClassValue = #{goodsclassvalue,jdbcType=VARCHAR},
-      </if>
-      <if test="openflg != null" >
-        openFlg = #{openflg,jdbcType=CHAR},
-      </if>
-      <if test="addtimestamp != null" >
-        addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="adduserkey != null" >
-        addUserKey = #{adduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updtimestamp != null" >
-        updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="upduserkey != null" >
-        updUserKey = #{upduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updpgmid != null" >
-        updPgmId = #{updpgmid,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where no = #{no,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TGoodsProperty" >
-    update t_goods_property
-    set goodsId = #{goodsid,jdbcType=VARCHAR},
-      goodsClassId = #{goodsclassid,jdbcType=VARCHAR},
-      goodsClassValue = #{goodsclassvalue,jdbcType=VARCHAR},
-      openFlg = #{openflg,jdbcType=CHAR},
-      addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
-      addUserKey = #{adduserkey,jdbcType=VARCHAR},
-      updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
-      updUserKey = #{upduserkey,jdbcType=VARCHAR},
-      updPgmId = #{updpgmid,jdbcType=VARCHAR}
-    where no = #{no,jdbcType=BIGINT}
-  </update>
+<mapper namespace="com.org.oztt.dao.TGoodsPropertyDao">
+	<resultMap id="BaseResultMap" type="com.org.oztt.entity.TGoodsProperty">
+		<id column="no" property="no" jdbcType="BIGINT" />
+		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
+		<result column="goodsClassId" property="goodsclassid" jdbcType="VARCHAR" />
+		<result column="goodsClassValue" property="goodsclassvalue"
+			jdbcType="VARCHAR" />
+		<result column="openFlg" property="openflg" jdbcType="CHAR" />
+		<result column="addTimestamp" property="addtimestamp" jdbcType="TIMESTAMP" />
+		<result column="addUserKey" property="adduserkey" jdbcType="VARCHAR" />
+		<result column="updTimestamp" property="updtimestamp" jdbcType="TIMESTAMP" />
+		<result column="updUserKey" property="upduserkey" jdbcType="VARCHAR" />
+		<result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		no, goodsId, goodsClassId, goodsClassValue, openFlg, addTimestamp,
+		addUserKey, updTimestamp,
+		updUserKey, updPgmId
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from t_goods_property
+		where no = #{no,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from t_goods_property
+		where no = #{no,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.org.oztt.entity.TGoodsProperty">
+		insert into t_goods_property (no, goodsId, goodsClassId,
+		goodsClassValue, openFlg, addTimestamp,
+		addUserKey, updTimestamp, updUserKey,
+		updPgmId)
+		values (#{no,jdbcType=BIGINT}, #{goodsid,jdbcType=VARCHAR},
+		#{goodsclassid,jdbcType=VARCHAR},
+		#{goodsclassvalue,jdbcType=VARCHAR}, #{openflg,jdbcType=CHAR}, #{addtimestamp,jdbcType=TIMESTAMP},
+		#{adduserkey,jdbcType=VARCHAR}, #{updtimestamp,jdbcType=TIMESTAMP},
+		#{upduserkey,jdbcType=VARCHAR},
+		#{updpgmid,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.org.oztt.entity.TGoodsProperty">
+		insert into t_goods_property
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				no,
+			</if>
+			<if test="goodsid != null">
+				goodsId,
+			</if>
+			<if test="goodsclassid != null">
+				goodsClassId,
+			</if>
+			<if test="goodsclassvalue != null">
+				goodsClassValue,
+			</if>
+			<if test="openflg != null">
+				openFlg,
+			</if>
+			<if test="addtimestamp != null">
+				addTimestamp,
+			</if>
+			<if test="adduserkey != null">
+				addUserKey,
+			</if>
+			<if test="updtimestamp != null">
+				updTimestamp,
+			</if>
+			<if test="upduserkey != null">
+				updUserKey,
+			</if>
+			<if test="updpgmid != null">
+				updPgmId,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				#{no,jdbcType=BIGINT},
+			</if>
+			<if test="goodsid != null">
+				#{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsclassid != null">
+				#{goodsclassid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsclassvalue != null">
+				#{goodsclassvalue,jdbcType=VARCHAR},
+			</if>
+			<if test="openflg != null">
+				#{openflg,jdbcType=CHAR},
+			</if>
+			<if test="addtimestamp != null">
+				#{addtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="adduserkey != null">
+				#{adduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updtimestamp != null">
+				#{updtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="upduserkey != null">
+				#{upduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updpgmid != null">
+				#{updpgmid,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TGoodsProperty">
+		update t_goods_property
+		<set>
+			<if test="goodsid != null">
+				goodsId = #{goodsid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsclassid != null">
+				goodsClassId = #{goodsclassid,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsclassvalue != null">
+				goodsClassValue = #{goodsclassvalue,jdbcType=VARCHAR},
+			</if>
+			<if test="openflg != null">
+				openFlg = #{openflg,jdbcType=CHAR},
+			</if>
+			<if test="addtimestamp != null">
+				addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="adduserkey != null">
+				addUserKey = #{adduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updtimestamp != null">
+				updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="upduserkey != null">
+				updUserKey = #{upduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updpgmid != null">
+				updPgmId = #{updpgmid,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where no = #{no,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TGoodsProperty">
+		update t_goods_property
+		set goodsId = #{goodsid,jdbcType=VARCHAR},
+		goodsClassId = #{goodsclassid,jdbcType=VARCHAR},
+		goodsClassValue = #{goodsclassvalue,jdbcType=VARCHAR},
+		openFlg = #{openflg,jdbcType=CHAR},
+		addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
+		addUserKey = #{adduserkey,jdbcType=VARCHAR},
+		updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
+		updUserKey = #{upduserkey,jdbcType=VARCHAR},
+		updPgmId = #{updpgmid,jdbcType=VARCHAR}
+		where no = #{no,jdbcType=BIGINT}
+	</update>
+	
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="com.org.oztt.entity.TGoodsProperty">
+		select
+		<include refid="Base_Column_List" />
+		from t_goods_property
+		where 1 = 1 
+		<if test="goodsid != null">
+			and goodsId = #{goodsid,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsclassid != null">
+			and goodsClassId = #{goodsclassid,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsclassvalue != null">
+			and goodsClassValue = #{goodsclassvalue,jdbcType=VARCHAR}
+		</if>
+		<if test="openflg != null">
+			and openFlg = #{openflg,jdbcType=CHAR}
+		</if>
+	</select>
 </mapper>

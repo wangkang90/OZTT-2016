@@ -27,6 +27,76 @@
 	function login(){
 		location.href = "${pageContext.request.contextPath}/OZ_TT_TP_LG/init";
 	}
+	
+	function viewProductPopUp(goodsId){
+		jQuery.ajax({
+			type : 'GET',
+			contentType : 'application/json',
+			url : '${pageContext.request.contextPath}/COMMON/getGoodsItem?goodsId='+goodsId,
+			cache : false,
+			async : false,
+			dataType : 'json',
+			success : function(data) {
+				if(!data.isException){
+					var goodItemDto = data.goodItemDto;
+					$("#activeImage").attr("src", goodItemDto.firstImg);
+					$("#activeImage").attr("alt", goodItemDto.goods.goodsname);
+					
+					$("#productImage").empty();
+					
+					var imghtml = "";
+					var imgList = goodItemDto.imgList;
+					for(var j = 0; j < imgList.length; j++) {
+						if (j = 0) {
+							imghtml +=  '<a onclick="showImgMain(this,\"'+imgList[j]+'\")" class="active"><img alt="'+goodItemDto.goods.goodsname+'" src="'+imgList[j]+'"></a>';
+						} else {
+							imghtml +=  '<a onclick="showImgMain(this,\"'+imgList[j]+'\")"><img alt="'+goodItemDto.goods.goodsname+'" src="'+imgList[j]+'"></a>';
+						}
+					}
+					$("#productImage").append(imghtml);
+					$("#disPrice").html(goodItemDto.disPrice + '<fmt:message key="common_yuan"/>');
+					$("#nowPrice").html(goodItemDto.nowPrice + '<fmt:message key="common_yuan"/>');
+					
+					$("#prodectDesc").html(goodItemDto.goods.goodsdesc)
+					
+					$("#productOptions").empty();
+
+					$("#detail").attr("onclick", "toItem('"+goodItemDto.goods.goodsid+"')");
+					
+					var properties = JSON.parse(goodItemDto.properties);
+					
+			    	var properJson = eval(properties);
+			    	var temp1 = '<div class="pull-left" style="padding-top:5px">';
+			    	var temp2 = '<label class="control-label">{0}</label>';
+			    	var temp3 = '<select class="form-control input-sm" id="{0}">';
+			   		var temp4 = '<option value="{0}">{1}</option>';
+					var temp5 = '</select>';
+					var temp6 = '</div>';
+			    	for(var i=0; i<properJson.length; i++){
+			    		if (properJson[i].goodsPropertiesType == "3") {
+			    			var inHtml = temp1;
+			    			inHtml += temp2.replace("{0}",properJson[i].goodsPropertiesName);
+			    			inHtml += temp3.replace("{0}",properJson[i].goodsPropertiesId);
+			    			var classValue = properJson[i].goodsPropertiesJson.split(",");
+			    			for (var j = 0; j < classValue.length; j++) {
+			    				inHtml += temp4.replace("{0}",classValue[j]).replace("{1}", classValue[j]);
+			    			}
+			    			inHtml += temp5;
+			    			inHtml += temp6;
+			    			$("#productOptions").append(inHtml);
+			    		}
+			    	}
+				}
+			},
+			error : function(data) {
+				
+			}
+		});	
+	}
+	
+	function toItem(goodsId) {
+		location.href = "${pageContext.request.contextPath}/OZ_TT_TP_PD/init?goodId="+goodsId;
+	}
 </script>
 
 <!-- Body BEGIN -->
@@ -84,7 +154,7 @@
                   <div class="cart-content">
                     <ul class="scroller" style="height: 250px;">
                       <li>
-                        <a href="item.html"><img src="<c:url value='/assets/temp/cart-img.jpg' />" alt="Rolex Classic Watch" width="37" height="34"></a>
+                        <a href="item.html"><img src="http://localhost:8180/wwwfile/1001.jpg" alt="Rolex Classic Watch" width="37" height="34"></a>
                         <span class="cart-content-count">x 1</span>
                         <strong><a href="item.html">Rolex Classic Watch</a></strong>
                         <em>$1230</em>
@@ -151,7 +221,7 @@
                           	<c:forEach var="goodslist" items="${ arrlist }">
                             <div class="product-item">
                               <div class="pi-img-wrapper">
-                                <a onclick="goToItem('${goodslist.goodsid }')"><img src="<c:url value='${goodslist.goodsnormalpic }' />" class="img-responsive" alt="${goodslist.goodsname }"></a>
+                                <a onclick="goToItem('${goodslist.goodsid }')"><img src="<c:url value='${goodslist.goodsThumbnail }' />" class="img-responsive" alt="${goodslist.goodsname }"></a>
                               </div>
                               <h3><a onclick="goToItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>
                               <div class="pi-price">${goodslist.costprice }<fmt:message key="common_yuan"/></div>
