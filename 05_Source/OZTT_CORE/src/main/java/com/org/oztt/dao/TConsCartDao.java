@@ -32,4 +32,11 @@ public interface TConsCartDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TConsCart record);
+    
+    /**
+     * 根据参数检索出数据
+     * @param record
+     * @return
+     */
+    TConsCart selectByParams(TConsCart record);
 }

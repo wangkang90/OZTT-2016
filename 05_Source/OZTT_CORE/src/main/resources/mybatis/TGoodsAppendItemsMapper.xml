@@ -1,248 +1,296 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.org.oztt.dao.TGoodsAppendItemsDao" >
-  <resultMap id="BaseResultMap" type="com.org.oztt.entity.TGoodsAppendItems" >
-    <id column="no" property="no" jdbcType="BIGINT" />
-    <result column="itemId" property="itemid" jdbcType="VARCHAR" />
-    <result column="classId" property="classid" jdbcType="VARCHAR" />
-    <result column="displayName" property="displayname" jdbcType="VARCHAR" />
-    <result column="fieldName" property="fieldname" jdbcType="VARCHAR" />
-    <result column="fieldType" property="fieldtype" jdbcType="VARCHAR" />
-    <result column="fieldLength" property="fieldlength" jdbcType="INTEGER" />
-    <result column="inputType" property="inputtype" jdbcType="VARCHAR" />
-    <result column="defaultValue" property="defaultvalue" jdbcType="VARCHAR" />
-    <result column="isRequired" property="isrequired" jdbcType="CHAR" />
-    <result column="sortOrder" property="sortorder" jdbcType="INTEGER" />
-    <result column="openFlg" property="openflg" jdbcType="CHAR" />
-    <result column="buyUseFlg" property="buyuseflg" jdbcType="CHAR" />
-    <result column="addTimestamp" property="addtimestamp" jdbcType="TIMESTAMP" />
-    <result column="addUserKey" property="adduserkey" jdbcType="VARCHAR" />
-    <result column="updTimestamp" property="updtimestamp" jdbcType="TIMESTAMP" />
-    <result column="updUserKey" property="upduserkey" jdbcType="VARCHAR" />
-    <result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    no, itemId, classId, displayName, fieldName, fieldType, fieldLength, inputType, defaultValue, 
-    isRequired, sortOrder, openFlg, buyUseFlg, addTimestamp, addUserKey, updTimestamp, 
-    updUserKey, updPgmId
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_goods_append_items
-    where no = #{no,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from t_goods_append_items
-    where no = #{no,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.org.oztt.entity.TGoodsAppendItems" >
-    insert into t_goods_append_items (no, itemId, classId, 
-      displayName, fieldName, fieldType, 
-      fieldLength, inputType, defaultValue, 
-      isRequired, sortOrder, openFlg, 
-      buyUseFlg, addTimestamp, addUserKey, 
-      updTimestamp, updUserKey, updPgmId
-      )
-    values (#{no,jdbcType=BIGINT}, #{itemid,jdbcType=VARCHAR}, #{classid,jdbcType=VARCHAR}, 
-      #{displayname,jdbcType=VARCHAR}, #{fieldname,jdbcType=VARCHAR}, #{fieldtype,jdbcType=VARCHAR}, 
-      #{fieldlength,jdbcType=INTEGER}, #{inputtype,jdbcType=VARCHAR}, #{defaultvalue,jdbcType=VARCHAR}, 
-      #{isrequired,jdbcType=CHAR}, #{sortorder,jdbcType=INTEGER}, #{openflg,jdbcType=CHAR}, 
-      #{buyuseflg,jdbcType=CHAR}, #{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR}, 
-      #{updtimestamp,jdbcType=TIMESTAMP}, #{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.org.oztt.entity.TGoodsAppendItems" >
-    insert into t_goods_append_items
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="no != null" >
-        no,
-      </if>
-      <if test="itemid != null" >
-        itemId,
-      </if>
-      <if test="classid != null" >
-        classId,
-      </if>
-      <if test="displayname != null" >
-        displayName,
-      </if>
-      <if test="fieldname != null" >
-        fieldName,
-      </if>
-      <if test="fieldtype != null" >
-        fieldType,
-      </if>
-      <if test="fieldlength != null" >
-        fieldLength,
-      </if>
-      <if test="inputtype != null" >
-        inputType,
-      </if>
-      <if test="defaultvalue != null" >
-        defaultValue,
-      </if>
-      <if test="isrequired != null" >
-        isRequired,
-      </if>
-      <if test="sortorder != null" >
-        sortOrder,
-      </if>
-      <if test="openflg != null" >
-        openFlg,
-      </if>
-      <if test="buyuseflg != null" >
-        buyUseFlg,
-      </if>
-      <if test="addtimestamp != null" >
-        addTimestamp,
-      </if>
-      <if test="adduserkey != null" >
-        addUserKey,
-      </if>
-      <if test="updtimestamp != null" >
-        updTimestamp,
-      </if>
-      <if test="upduserkey != null" >
-        updUserKey,
-      </if>
-      <if test="updpgmid != null" >
-        updPgmId,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="no != null" >
-        #{no,jdbcType=BIGINT},
-      </if>
-      <if test="itemid != null" >
-        #{itemid,jdbcType=VARCHAR},
-      </if>
-      <if test="classid != null" >
-        #{classid,jdbcType=VARCHAR},
-      </if>
-      <if test="displayname != null" >
-        #{displayname,jdbcType=VARCHAR},
-      </if>
-      <if test="fieldname != null" >
-        #{fieldname,jdbcType=VARCHAR},
-      </if>
-      <if test="fieldtype != null" >
-        #{fieldtype,jdbcType=VARCHAR},
-      </if>
-      <if test="fieldlength != null" >
-        #{fieldlength,jdbcType=INTEGER},
-      </if>
-      <if test="inputtype != null" >
-        #{inputtype,jdbcType=VARCHAR},
-      </if>
-      <if test="defaultvalue != null" >
-        #{defaultvalue,jdbcType=VARCHAR},
-      </if>
-      <if test="isrequired != null" >
-        #{isrequired,jdbcType=CHAR},
-      </if>
-      <if test="sortorder != null" >
-        #{sortorder,jdbcType=INTEGER},
-      </if>
-      <if test="openflg != null" >
-        #{openflg,jdbcType=CHAR},
-      </if>
-      <if test="buyuseflg != null" >
-        #{buyuseflg,jdbcType=CHAR},
-      </if>
-      <if test="addtimestamp != null" >
-        #{addtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="adduserkey != null" >
-        #{adduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updtimestamp != null" >
-        #{updtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="upduserkey != null" >
-        #{upduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updpgmid != null" >
-        #{updpgmid,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TGoodsAppendItems" >
-    update t_goods_append_items
-    <set >
-      <if test="itemid != null" >
-        itemId = #{itemid,jdbcType=VARCHAR},
-      </if>
-      <if test="classid != null" >
-        classId = #{classid,jdbcType=VARCHAR},
-      </if>
-      <if test="displayname != null" >
-        displayName = #{displayname,jdbcType=VARCHAR},
-      </if>
-      <if test="fieldname != null" >
-        fieldName = #{fieldname,jdbcType=VARCHAR},
-      </if>
-      <if test="fieldtype != null" >
-        fieldType = #{fieldtype,jdbcType=VARCHAR},
-      </if>
-      <if test="fieldlength != null" >
-        fieldLength = #{fieldlength,jdbcType=INTEGER},
-      </if>
-      <if test="inputtype != null" >
-        inputType = #{inputtype,jdbcType=VARCHAR},
-      </if>
-      <if test="defaultvalue != null" >
-        defaultValue = #{defaultvalue,jdbcType=VARCHAR},
-      </if>
-      <if test="isrequired != null" >
-        isRequired = #{isrequired,jdbcType=CHAR},
-      </if>
-      <if test="sortorder != null" >
-        sortOrder = #{sortorder,jdbcType=INTEGER},
-      </if>
-      <if test="openflg != null" >
-        openFlg = #{openflg,jdbcType=CHAR},
-      </if>
-      <if test="buyuseflg != null" >
-        buyUseFlg = #{buyuseflg,jdbcType=CHAR},
-      </if>
-      <if test="addtimestamp != null" >
-        addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="adduserkey != null" >
-        addUserKey = #{adduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updtimestamp != null" >
-        updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
-      </if>
-      <if test="upduserkey != null" >
-        updUserKey = #{upduserkey,jdbcType=VARCHAR},
-      </if>
-      <if test="updpgmid != null" >
-        updPgmId = #{updpgmid,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where no = #{no,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TGoodsAppendItems" >
-    update t_goods_append_items
-    set itemId = #{itemid,jdbcType=VARCHAR},
-      classId = #{classid,jdbcType=VARCHAR},
-      displayName = #{displayname,jdbcType=VARCHAR},
-      fieldName = #{fieldname,jdbcType=VARCHAR},
-      fieldType = #{fieldtype,jdbcType=VARCHAR},
-      fieldLength = #{fieldlength,jdbcType=INTEGER},
-      inputType = #{inputtype,jdbcType=VARCHAR},
-      defaultValue = #{defaultvalue,jdbcType=VARCHAR},
-      isRequired = #{isrequired,jdbcType=CHAR},
-      sortOrder = #{sortorder,jdbcType=INTEGER},
-      openFlg = #{openflg,jdbcType=CHAR},
-      buyUseFlg = #{buyuseflg,jdbcType=CHAR},
-      addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
-      addUserKey = #{adduserkey,jdbcType=VARCHAR},
-      updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
-      updUserKey = #{upduserkey,jdbcType=VARCHAR},
-      updPgmId = #{updpgmid,jdbcType=VARCHAR}
-    where no = #{no,jdbcType=BIGINT}
-  </update>
+<mapper namespace="com.org.oztt.dao.TGoodsAppendItemsDao">
+	<resultMap id="BaseResultMap" type="com.org.oztt.entity.TGoodsAppendItems">
+		<id column="no" property="no" jdbcType="BIGINT" />
+		<result column="itemId" property="itemid" jdbcType="VARCHAR" />
+		<result column="classId" property="classid" jdbcType="VARCHAR" />
+		<result column="displayName" property="displayname" jdbcType="VARCHAR" />
+		<result column="fieldName" property="fieldname" jdbcType="VARCHAR" />
+		<result column="fieldType" property="fieldtype" jdbcType="VARCHAR" />
+		<result column="fieldLength" property="fieldlength" jdbcType="INTEGER" />
+		<result column="inputType" property="inputtype" jdbcType="VARCHAR" />
+		<result column="defaultValue" property="defaultvalue" jdbcType="VARCHAR" />
+		<result column="isRequired" property="isrequired" jdbcType="CHAR" />
+		<result column="sortOrder" property="sortorder" jdbcType="INTEGER" />
+		<result column="openFlg" property="openflg" jdbcType="CHAR" />
+		<result column="buyUseFlg" property="buyuseflg" jdbcType="CHAR" />
+		<result column="addTimestamp" property="addtimestamp" jdbcType="TIMESTAMP" />
+		<result column="addUserKey" property="adduserkey" jdbcType="VARCHAR" />
+		<result column="updTimestamp" property="updtimestamp" jdbcType="TIMESTAMP" />
+		<result column="updUserKey" property="upduserkey" jdbcType="VARCHAR" />
+		<result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		no, itemId, classId, displayName, fieldName, fieldType,
+		fieldLength,
+		inputType, defaultValue,
+		isRequired, sortOrder, openFlg,
+		buyUseFlg, addTimestamp, addUserKey,
+		updTimestamp,
+		updUserKey, updPgmId
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from t_goods_append_items
+		where no = #{no,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		t_goods_append_items
+		where no = #{no,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.org.oztt.entity.TGoodsAppendItems">
+		insert into
+		t_goods_append_items (no, itemId, classId,
+		displayName, fieldName,
+		fieldType,
+		fieldLength, inputType, defaultValue,
+		isRequired, sortOrder,
+		openFlg,
+		buyUseFlg, addTimestamp, addUserKey,
+		updTimestamp, updUserKey,
+		updPgmId
+		)
+		values (#{no,jdbcType=BIGINT}, #{itemid,jdbcType=VARCHAR},
+		#{classid,jdbcType=VARCHAR},
+		#{displayname,jdbcType=VARCHAR},
+		#{fieldname,jdbcType=VARCHAR}, #{fieldtype,jdbcType=VARCHAR},
+		#{fieldlength,jdbcType=INTEGER}, #{inputtype,jdbcType=VARCHAR},
+		#{defaultvalue,jdbcType=VARCHAR},
+		#{isrequired,jdbcType=CHAR},
+		#{sortorder,jdbcType=INTEGER}, #{openflg,jdbcType=CHAR},
+		#{buyuseflg,jdbcType=CHAR}, #{addtimestamp,jdbcType=TIMESTAMP},
+		#{adduserkey,jdbcType=VARCHAR},
+		#{updtimestamp,jdbcType=TIMESTAMP},
+		#{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.org.oztt.entity.TGoodsAppendItems">
+		insert into t_goods_append_items
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				no,
+			</if>
+			<if test="itemid != null">
+				itemId,
+			</if>
+			<if test="classid != null">
+				classId,
+			</if>
+			<if test="displayname != null">
+				displayName,
+			</if>
+			<if test="fieldname != null">
+				fieldName,
+			</if>
+			<if test="fieldtype != null">
+				fieldType,
+			</if>
+			<if test="fieldlength != null">
+				fieldLength,
+			</if>
+			<if test="inputtype != null">
+				inputType,
+			</if>
+			<if test="defaultvalue != null">
+				defaultValue,
+			</if>
+			<if test="isrequired != null">
+				isRequired,
+			</if>
+			<if test="sortorder != null">
+				sortOrder,
+			</if>
+			<if test="openflg != null">
+				openFlg,
+			</if>
+			<if test="buyuseflg != null">
+				buyUseFlg,
+			</if>
+			<if test="addtimestamp != null">
+				addTimestamp,
+			</if>
+			<if test="adduserkey != null">
+				addUserKey,
+			</if>
+			<if test="updtimestamp != null">
+				updTimestamp,
+			</if>
+			<if test="upduserkey != null">
+				updUserKey,
+			</if>
+			<if test="updpgmid != null">
+				updPgmId,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="no != null">
+				#{no,jdbcType=BIGINT},
+			</if>
+			<if test="itemid != null">
+				#{itemid,jdbcType=VARCHAR},
+			</if>
+			<if test="classid != null">
+				#{classid,jdbcType=VARCHAR},
+			</if>
+			<if test="displayname != null">
+				#{displayname,jdbcType=VARCHAR},
+			</if>
+			<if test="fieldname != null">
+				#{fieldname,jdbcType=VARCHAR},
+			</if>
+			<if test="fieldtype != null">
+				#{fieldtype,jdbcType=VARCHAR},
+			</if>
+			<if test="fieldlength != null">
+				#{fieldlength,jdbcType=INTEGER},
+			</if>
+			<if test="inputtype != null">
+				#{inputtype,jdbcType=VARCHAR},
+			</if>
+			<if test="defaultvalue != null">
+				#{defaultvalue,jdbcType=VARCHAR},
+			</if>
+			<if test="isrequired != null">
+				#{isrequired,jdbcType=CHAR},
+			</if>
+			<if test="sortorder != null">
+				#{sortorder,jdbcType=INTEGER},
+			</if>
+			<if test="openflg != null">
+				#{openflg,jdbcType=CHAR},
+			</if>
+			<if test="buyuseflg != null">
+				#{buyuseflg,jdbcType=CHAR},
+			</if>
+			<if test="addtimestamp != null">
+				#{addtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="adduserkey != null">
+				#{adduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updtimestamp != null">
+				#{updtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="upduserkey != null">
+				#{upduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updpgmid != null">
+				#{updpgmid,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TGoodsAppendItems">
+		update t_goods_append_items
+		<set>
+			<if test="itemid != null">
+				itemId = #{itemid,jdbcType=VARCHAR},
+			</if>
+			<if test="classid != null">
+				classId = #{classid,jdbcType=VARCHAR},
+			</if>
+			<if test="displayname != null">
+				displayName = #{displayname,jdbcType=VARCHAR},
+			</if>
+			<if test="fieldname != null">
+				fieldName = #{fieldname,jdbcType=VARCHAR},
+			</if>
+			<if test="fieldtype != null">
+				fieldType = #{fieldtype,jdbcType=VARCHAR},
+			</if>
+			<if test="fieldlength != null">
+				fieldLength = #{fieldlength,jdbcType=INTEGER},
+			</if>
+			<if test="inputtype != null">
+				inputType = #{inputtype,jdbcType=VARCHAR},
+			</if>
+			<if test="defaultvalue != null">
+				defaultValue = #{defaultvalue,jdbcType=VARCHAR},
+			</if>
+			<if test="isrequired != null">
+				isRequired = #{isrequired,jdbcType=CHAR},
+			</if>
+			<if test="sortorder != null">
+				sortOrder = #{sortorder,jdbcType=INTEGER},
+			</if>
+			<if test="openflg != null">
+				openFlg = #{openflg,jdbcType=CHAR},
+			</if>
+			<if test="buyuseflg != null">
+				buyUseFlg = #{buyuseflg,jdbcType=CHAR},
+			</if>
+			<if test="addtimestamp != null">
+				addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="adduserkey != null">
+				addUserKey = #{adduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updtimestamp != null">
+				updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="upduserkey != null">
+				updUserKey = #{upduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updpgmid != null">
+				updPgmId = #{updpgmid,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where no = #{no,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TGoodsAppendItems">
+		update
+		t_goods_append_items
+		set itemId = #{itemid,jdbcType=VARCHAR},
+		classId =
+		#{classid,jdbcType=VARCHAR},
+		displayName =
+		#{displayname,jdbcType=VARCHAR},
+		fieldName =
+		#{fieldname,jdbcType=VARCHAR},
+		fieldType =
+		#{fieldtype,jdbcType=VARCHAR},
+		fieldLength =
+		#{fieldlength,jdbcType=INTEGER},
+		inputType =
+		#{inputtype,jdbcType=VARCHAR},
+		defaultValue =
+		#{defaultvalue,jdbcType=VARCHAR},
+		isRequired =
+		#{isrequired,jdbcType=CHAR},
+		sortOrder = #{sortorder,jdbcType=INTEGER},
+		openFlg = #{openflg,jdbcType=CHAR},
+		buyUseFlg =
+		#{buyuseflg,jdbcType=CHAR},
+		addTimestamp =
+		#{addtimestamp,jdbcType=TIMESTAMP},
+		addUserKey =
+		#{adduserkey,jdbcType=VARCHAR},
+		updTimestamp =
+		#{updtimestamp,jdbcType=TIMESTAMP},
+		updUserKey =
+		#{upduserkey,jdbcType=VARCHAR},
+		updPgmId = #{updpgmid,jdbcType=VARCHAR}
+		where no = #{no,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectByParams" resultMap="BaseResultMap" parameterType="com.org.oztt.entity.TGoodsAppendItems">
+		select
+		<include refid="Base_Column_List" />
+		from t_goods_append_items
+		where 1=1
+		<if test="itemid != null">
+			and itemId = #{itemid,jdbcType=VARCHAR}
+		</if>
+		<if test="classid != null">
+			and classId = #{classid,jdbcType=VARCHAR}
+		</if>
+		<if test="openflg != null">
+			and openFlg = #{openflg,jdbcType=CHAR}
+		</if>
+	</select>
+
+
 </mapper>

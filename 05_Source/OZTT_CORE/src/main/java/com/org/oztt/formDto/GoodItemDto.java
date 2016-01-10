@@ -1,46 +1,102 @@
 package com.org.oztt.formDto;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.util.List;
 
+import com.org.oztt.entity.TGoods;
+
+/**
+ * 所有商品涵盖的信息表
+ * @author linliuan
+ *
+ */
 public class GoodItemDto {
     
-    private String goodsid;
+    private TGoods goods; //基本属性
+    
+    private String firstImg; //默认显示的图片
+    private List<String> imgList; // 图片
+    
+    private String nowPrice;// 现价
+    
+    private String disPrice;// 折扣价格
+    
+    private String productInfo; // 商品详情
+    
+    private String productDesc; // 商品描述
+    
+    private String sellerRule; // 买家规则
+    
+    private String properties;
 
-    private String classid;
+    public TGoods getGoods() {
+        return goods;
+    }
 
-    private String goodsname;
+    public void setGoods(TGoods goods) {
+        this.goods = goods;
+    }
 
-    private String goodsdesc;
+    public List<String> getImgList() {
+        return imgList;
+    }
 
-    private String goodscomments;
+    public void setImgList(List<String> imgList) {
+        this.imgList = imgList;
+    }
 
-    private String goodsthumbnail;
+    public String getNowPrice() {
+        return nowPrice;
+    }
 
-    private String goodssmallpic;
+    public void setNowPrice(String nowPrice) {
+        this.nowPrice = nowPrice;
+    }
 
-    private String goodsnormalpic;
+    public String getDisPrice() {
+        return disPrice;
+    }
 
-    private String onsaleflg;
+    public void setDisPrice(String disPrice) {
+        this.disPrice = disPrice;
+    }
 
-    private String hotsaleflg;
+    public String getProductInfo() {
+        return productInfo;
+    }
 
-    private String newsaleflg;
+    public void setProductInfo(String productInfo) {
+        this.productInfo = productInfo;
+    }
 
-    private BigDecimal costprice;
+    public String getProductDesc() {
+        return productDesc;
+    }
 
-    private Integer sortorder;
+    public void setProductDesc(String productDesc) {
+        this.productDesc = productDesc;
+    }
 
-    private String deleteflg;
+    public String getSellerRule() {
+        return sellerRule;
+    }
 
-    private Date addtimestamp;
+    public void setSellerRule(String sellerRule) {
+        this.sellerRule = sellerRule;
+    }
 
-    private String adduserkey;
+    public String getFirstImg() {
+        return firstImg;
+    }
 
-    private Date updtimestamp;
+    public void setFirstImg(String firstImg) {
+        this.firstImg = firstImg;
+    }
 
-    private String upduserkey;
+    public String getProperties() {
+        return properties;
+    }
 
-    private String updpgmid;
-    // 以上为商品的基本属性
+    public void setProperties(String properties) {
+        this.properties = properties;
+    }
 }

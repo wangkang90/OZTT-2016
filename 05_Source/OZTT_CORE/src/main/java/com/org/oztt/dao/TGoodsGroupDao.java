@@ -32,4 +32,11 @@ public interface TGoodsGroupDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TGoodsGroup record);
+    
+    /**
+     * 根据参数检索出数据
+     * @param record
+     * @return
+     */
+    TGoodsGroup selectByParams(TGoodsGroup record);
 }

@@ -16,7 +16,7 @@ public final class CommonConstants {
 
     public static final String SESSION_CUSTOMERNO  = "sessionCustomerNO"; // 用来保存的用户名
 
-    public static final String BELONG_FATHER_CLASS = "0C0000";             // 父分类
+    public static final String BELONG_FATHER_CLASS = "0C0000";           // 父分类
 
     public static final String LIMIT_PARAM         = "limitParam";       // SQL文中的限制参数
 
@@ -27,5 +27,7 @@ public final class CommonConstants {
     public static final String IS_ON_SALE          = "1";                // 在售
 
     public static final int    PRODUCT_INIT_COUNT  = 15;                 // 默认显示15条数据
+
+    public static final String OPEN_FLAG           = "0";                // 0:开放
 
 }

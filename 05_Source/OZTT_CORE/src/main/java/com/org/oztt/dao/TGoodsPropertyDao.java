@@ -1,5 +1,7 @@
 package com.org.oztt.dao;
 
+import java.util.List;
+
 import com.org.oztt.entity.TGoodsProperty;
 
 public interface TGoodsPropertyDao {
@@ -32,4 +34,11 @@ public interface TGoodsPropertyDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TGoodsProperty record);
+    
+    /**
+     * 根据参数检索出数据
+     * @param record
+     * @return
+     */
+    List<TGoodsProperty> selectByParams(TGoodsProperty record);
 }

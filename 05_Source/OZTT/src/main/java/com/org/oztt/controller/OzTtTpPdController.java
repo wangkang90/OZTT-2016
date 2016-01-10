@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.org.oztt.base.common.MyCategroy;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.entity.TGoods;
+import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.service.CustomerService;
 import com.org.oztt.service.GoodsService;
 
@@ -62,13 +63,14 @@ public class OzTtTpPdController extends BaseController {
                     goods.setGoodsnormalpic(imgUrl + goods.getGoodsnormalpic());
                 }
             }
-            
-            // 取得当前商品的所有属性
 
+            GoodItemDto goodItemDto = goodsService.getGoodAllItemDto(goodId);
+
+            // 后台维护的时候提示让以逗号隔开
+            model.addAttribute("goodItemDto", goodItemDto);
             model.addAttribute("hotSellerList", hotSellerList);
             model.addAttribute("arrlist", newArrivalList);
-            
-            
+
             return "/OZ_TT_TP_PD";
         }
         catch (Exception e) {

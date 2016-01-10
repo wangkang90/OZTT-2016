@@ -6,7 +6,12 @@ import java.util.Map;
 import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TGoods;
+import com.org.oztt.entity.TGoodsAppendItems;
 import com.org.oztt.entity.TGoodsClassfication;
+import com.org.oztt.entity.TGoodsGroup;
+import com.org.oztt.entity.TGoodsPrice;
+import com.org.oztt.entity.TGoodsProperty;
+import com.org.oztt.formDto.GoodItemDto;
 
 /**
  * 商品的服务
@@ -73,4 +78,53 @@ public interface GoodsService {
      * @throws Exception
      */
     public PagingResult<TGoods> getGoodsByParamForPage(Pagination pagination) throws Exception;
+    
+    /**
+     * 获取商品价格信息
+     * @param tGoodsPrice
+     * @return
+     * @throws Exception
+     */
+    public TGoodsPrice getGoodPrice(TGoodsPrice tGoodsPrice) throws Exception;
+    
+    /**
+     * 获取商品团购信息
+     * @param tGoodsGroup
+     * @return
+     * @throws Exception
+     */
+    public TGoodsGroup getGoodPrice(TGoodsGroup tGoodsGroup) throws Exception;
+    
+    /**
+     * 获取商品属性信息
+     * @param tGoodsProperty
+     * @return
+     * @throws Exception
+     */
+    public List<TGoodsProperty> getGoodsProperty(TGoodsProperty tGoodsProperty) throws Exception;
+    
+    /**
+     * 获取商品扩展属性信息
+     * @param tGoodsAppendItems
+     * @return
+     * @throws Exception
+     */
+    public TGoodsAppendItems getGoodsAppendItems(TGoodsAppendItems tGoodsAppendItems) throws Exception;
+    
+    /**
+     * 获取商品的所有属性
+     * @param tGoodsAppendItems
+     * @return
+     * @throws Exception
+     */
+    public GoodItemDto getGoodAllItemDto(String goodId) throws Exception;
+    
+    /**
+     * 加入购物车
+     * @param list
+     * @return
+     * @throws Exception
+     */
+    @SuppressWarnings("rawtypes")
+    public boolean addContCart(String customerNo, List list) throws Exception;
 }
