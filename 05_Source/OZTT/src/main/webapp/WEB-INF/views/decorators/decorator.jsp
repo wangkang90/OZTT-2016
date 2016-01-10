@@ -221,7 +221,7 @@
                           	<c:forEach var="goodslist" items="${ arrlist }">
                             <div class="product-item">
                               <div class="pi-img-wrapper">
-                                <a onclick="goToItem('${goodslist.goodsid }')"><img src="<c:url value='${goodslist.goodsnormalpic }' />" class="img-responsive" alt="${goodslist.goodsname }"></a>
+                                <a onclick="goToItem('${goodslist.goodsid }')"><img src="<c:url value='${goodslist.goodsThumbnail }' />" class="img-responsive" alt="${goodslist.goodsname }"></a>
                               </div>
                               <h3><a onclick="goToItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>
                               <div class="pi-price">${goodslist.costprice }<fmt:message key="common_yuan"/></div>

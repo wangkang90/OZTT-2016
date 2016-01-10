@@ -121,9 +121,9 @@
                 <li>
                   <div class="product-item">
                     <div class="pi-img-wrapper">
-                      <img src="${goodNewArr.goodsnormalpic }" class="img-responsive" alt="${goodNewArr.goodsname }">
+                      <img src="${goodNewArr.goodsThumbnail }" class="img-responsive" alt="${goodNewArr.goodsname }">
                       <div>
-                        <a href="${goodNewArr.goodsnormalpic }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
+                        <a href="${goodNewArr.goodsThumbnail }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
                         <a href="#product-pop-up" onclick="viewProductPopUp('${goodNewArr.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                       </div>
                     </div>
@@ -183,9 +183,9 @@
           <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="product-item">
                   <div class="pi-img-wrapper">
-                    <img src="${goodslist.goodsnormalpic }" class="img-responsive" alt="${goodslist.goodsname }">
+                    <img src="${goodslist.goodsThumbnail }" class="img-responsive" alt="${goodslist.goodsname }">
                     <div>
-                      <a href="${goodslist.goodsnormalpic }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
+                      <a href="${goodslist.goodsThumbnail }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
                       <a href="#product-pop-up" onclick="viewProductPopUp('${goodNewArr.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                     </div>
                   </div>
