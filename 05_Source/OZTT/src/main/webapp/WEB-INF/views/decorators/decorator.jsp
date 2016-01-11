@@ -47,13 +47,16 @@
 					var imghtml = "";
 					var imgList = goodItemDto.imgList;
 					for(var j = 0; j < imgList.length; j++) {
-						if (j = 0) {
+						if (j == 0) {
 							imghtml +=  '<a onclick="showImgMain(this,\"'+imgList[j]+'\")" class="active"><img alt="'+goodItemDto.goods.goodsname+'" src="'+imgList[j]+'"></a>';
 						} else {
 							imghtml +=  '<a onclick="showImgMain(this,\"'+imgList[j]+'\")"><img alt="'+goodItemDto.goods.goodsname+'" src="'+imgList[j]+'"></a>';
 						}
 					}
 					$("#productImage").append(imghtml);
+					
+					
+					$("#goodsNameh1").html(goodItemDto.goods.goodsname)
 					$("#disPrice").html(goodItemDto.disPrice + '<fmt:message key="common_yuan"/>');
 					$("#nowPrice").html(goodItemDto.nowPrice + '<fmt:message key="common_yuan"/>');
 					
@@ -96,6 +99,10 @@
 	
 	function toItem(goodsId) {
 		location.href = "${pageContext.request.contextPath}/OZ_TT_TP_PD/init?goodId="+goodsId;
+	}
+	
+	function toMainIndex(){
+		location.href = "${pageContext.request.contextPath}/main/init";
 	}
 </script>
 
@@ -140,7 +147,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- END RESPONSIVE MENU TOGGLER -->
-                <a href="index.html" class="navbar-brand"><img src="<c:url value='/assets/img/logo_red.png' />" alt="Metronic Shop UI"></a><!-- LOGO -->
+                <a href="${ctx}/main/init" class="navbar-brand"><img src="${ctx}/images/logo.png" alt="OZTUANTUAN.COM.AU"></a><!-- LOGO -->
             </div>
             <!-- BEGIN CART -->
             <div class="cart-block">
@@ -180,61 +187,31 @@
             <!-- BEGIN NAVIGATION -->
             <div class="collapse navbar-collapse mega-menu">
                 <ul class="nav navbar-nav">
-                	<c:forEach var="beanList" items="${ menucategory }">
-                    <li class="dropdown">
+                    <li class="dropdown" onclick="toMainIndex()">
                       <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="product-list.html" href="product-list.html">
-                         ${ beanList.fatherClass.classname }
+                         <fmt:message key="common_group"/>
                         <i class="fa fa-angle-down"></i>
                       </a>
-                      <!-- BEGIN DROPDOWN MENU -->
-                      <ul class="dropdown-menu" aria-labelledby="mega-menu">
-                        <li>
-                          <div class="nav-content">
-                            <!-- BEGIN DROPDOWN MENU - COLUMN -->
-                            <c:forEach var="childrenList" items="${ beanList.childrenClass }">
-                            <div class="nav-content-col">
-                              <h3>${ childrenList.fatherClass.classname }</h3>
-                              <ul>
-                              <c:forEach var="childrenNextList" items="${ childrenList.childrenClass }">
-                              	<li><a href="product-list.html">${ childrenNextList.fatherClass.classname }</a></li>
-                              </c:forEach>
-                              </ul>
-                            </div>
-                            <!-- END DROPDOWN MENU - COLUMN -->
-                           </c:forEach>
-                          </div>
-                        </li>
-                      </ul>
-                      <!-- END DROPDOWN MENU -->
                     </li>
-                    </c:forEach>
                     <li class="dropdown">
                       <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="product-list.html" href="product-list.html">
-                        <fmt:message key="indexNew"/>
+                         <fmt:message key="common_pleshop"/>
                         <i class="fa fa-angle-down"></i>
                       </a>
-                      <!-- BEGIN DROPDOWN MENU -->
-                      <ul class="dropdown-menu" aria-labelledby="mega-menu-catalogue">
-                        <li>
-                          <div class="nav-content">
-                          	
-                          	<c:forEach var="goodslist" items="${ arrlist }">
-                            <div class="product-item">
-                              <div class="pi-img-wrapper">
-                                <a onclick="goToItem('${goodslist.goodsid }')"><img src="<c:url value='${goodslist.goodsthumbnail }' />" class="img-responsive" alt="${goodslist.goodsname }"></a>
-                              </div>
-                              <h3><a onclick="goToItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>
-                              <div class="pi-price">${goodslist.costprice }<fmt:message key="common_yuan"/></div>
-                              <a onclick="addCart('${goodslist.goodsid }')" class="btn btn-default add2cart">
-                              	<fmt:message key="index_addtocart"/>
-                              </a>
-                            </div>
-                            </c:forEach>
-                          </div>
-                        </li>
-                      </ul>
-                      <!-- END DROPDOWN MENU -->
                     </li>
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="product-list.html" href="product-list.html">
+                         <fmt:message key="common_hotsell"/>
+                        <i class="fa fa-angle-down"></i>
+                      </a>
+                    </li>
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="product-list.html" href="product-list.html">
+                         <fmt:message key="common_retail"/>
+                        <i class="fa fa-angle-down"></i>
+                      </a>
+                    </li>
+                    
                     <!-- BEGIN TOP SEARCH -->
                     <li class="menu-search">
                         <span class="sep"></span>

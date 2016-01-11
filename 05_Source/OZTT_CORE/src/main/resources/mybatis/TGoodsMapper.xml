@@ -397,4 +397,55 @@
 		</if>
 	</select>
 	
+	<select id="getFiveHotSeller" resultMap="BaseResultMap" parameterType="com.org.oztt.entity.TGoods">
+		select
+		<include refid="Base_Column_List" />
+		from t_goods
+		where 1=1
+		<if test="goodsid != null">
+			and goodsId = #{goodsid,jdbcType=VARCHAR}
+		</if>
+		<if test="classid != null">
+			and classId = #{classid,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsname != null">
+			and goodsName = #{goodsname,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsdesc != null">
+			and goodsDesc = #{goodsdesc,jdbcType=VARCHAR}
+		</if>
+		<if test="goodscomments != null">
+			and goodsComments = #{goodscomments,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsthumbnail != null">
+			and goodsThumbnail = #{goodsthumbnail,jdbcType=VARCHAR}
+		</if>
+		<if test="goodssmallpic != null">
+			and goodsSmallPic = #{goodssmallpic,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsnormalpic != null">
+			and goodsNormalPic = #{goodsnormalpic,jdbcType=VARCHAR}
+		</if>
+		<if test="onsaleflg != null">
+			and onSaleFlg = #{onsaleflg,jdbcType=CHAR}
+		</if>
+		<if test="hotsaleflg != null">
+			and hotSaleFlg = #{hotsaleflg,jdbcType=CHAR}
+		</if>
+		<if test="newsaleflg != null">
+			and newSaleFlg = #{newsaleflg,jdbcType=CHAR}
+		</if>
+		<if test="costprice != null">
+			and costPrice = #{costprice,jdbcType=DECIMAL}
+		</if>
+		<if test="sortorder != null">
+			and sortOrder = #{sortorder,jdbcType=INTEGER}
+		</if>
+		<if test="deleteflg != null">
+			and deleteFlg = #{deleteflg,jdbcType=CHAR}
+		</if>
+		limit 5
+	</select>
+
+	
 </mapper>

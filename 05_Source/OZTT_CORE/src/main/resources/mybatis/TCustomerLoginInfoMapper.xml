@@ -4,7 +4,6 @@
 	<resultMap id="BaseResultMap" type="com.org.oztt.entity.TCustomerLoginInfo">
 		<id column="no" property="no" jdbcType="BIGINT" />
 		<result column="customerNo" property="customerno" jdbcType="VARCHAR" />
-		<result column="memberNo" property="memberno" jdbcType="VARCHAR" />
 		<result column="loginId" property="loginid" jdbcType="VARCHAR" />
 		<result column="loginPass" property="loginpass" jdbcType="VARCHAR" />
 		<result column="loginStatus" property="loginstatus" jdbcType="CHAR" />
@@ -18,7 +17,6 @@
 	<sql id="Base_Column_List">
 		 no
 		,customerNo
-		,memberNo
 		,loginId
 		,loginPass
 		,loginStatus
@@ -42,7 +40,7 @@
 	</delete>
 	<insert id="insert" parameterType="com.org.oztt.entity.TCustomerLoginInfo">
 		insert into
-		t_customer_login_info (no, customerNo, memberNo,
+		t_customer_login_info (no, customerNo, 
 		loginId, loginPass,
 		loginStatus,
 		deleteFlg, addTimestamp, addUserKey,
@@ -51,7 +49,6 @@
 		)
 		values (#{no,jdbcType=BIGINT},
 		#{customerno,jdbcType=VARCHAR},
-		#{memberno,jdbcType=VARCHAR},
 		#{loginid,jdbcType=VARCHAR}, #{loginpass,jdbcType=VARCHAR},
 		#{loginstatus,jdbcType=CHAR},
 		#{deleteflg,jdbcType=CHAR},
@@ -69,9 +66,6 @@
 			</if>
 			<if test="customerno != null">
 				customerNo,
-			</if>
-			<if test="memberno != null">
-				memberNo,
 			</if>
 			<if test="loginid != null">
 				loginId,
@@ -108,9 +102,6 @@
 			<if test="customerno != null">
 				#{customerno,jdbcType=VARCHAR},
 			</if>
-			<if test="memberno != null">
-				#{memberno,jdbcType=VARCHAR},
-			</if>
 			<if test="loginid != null">
 				#{loginid,jdbcType=VARCHAR},
 			</if>
@@ -146,9 +137,6 @@
 			<if test="customerno != null">
 				customerNo = #{customerno,jdbcType=VARCHAR},
 			</if>
-			<if test="memberno != null">
-				memberNo = #{memberno,jdbcType=VARCHAR},
-			</if>
 			<if test="loginid != null">
 				loginId = #{loginid,jdbcType=VARCHAR},
 			</if>
@@ -183,7 +171,6 @@
 		update
 		t_customer_login_info
 		set customerNo = #{customerno,jdbcType=VARCHAR},
-		memberNo = #{memberno,jdbcType=VARCHAR},
 		loginId =
 		#{loginid,jdbcType=VARCHAR},
 		loginPass = #{loginpass,jdbcType=VARCHAR},

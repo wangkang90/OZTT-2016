@@ -37,14 +37,14 @@ public interface GoodsService {
      * @throws Exception
      */
     public List<TGoods> getGoodsByParam(TGoods tGoods) throws Exception;
-
+    
     /**
-     * 获取新货的前三个
+     * 获取热卖的前五个
      * 
      * @return
      * @throws Exception
      */
-    public List<TGoods> getFirstThreeNewArravail() throws Exception;
+    public List<TGoods> getFiveHotSeller(TGoods tGoods) throws Exception;
 
     /**
      * 获取新货
@@ -127,4 +127,20 @@ public interface GoodsService {
      */
     @SuppressWarnings("rawtypes")
     public boolean addContCart(String customerNo, List list) throws Exception;
+    
+    /**
+     * 删除购物车
+     * @param list
+     * @return
+     * @throws Exception
+     */
+    public boolean deleteContCart(String customerNo, Map<String, String> cartMap) throws Exception;
+    
+    /**
+     * 清空购物车
+     * @param list
+     * @return
+     * @throws Exception
+     */
+    public boolean deleteAllContCart(String customerNo) throws Exception;
 }

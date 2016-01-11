@@ -48,21 +48,12 @@ public class OzTtTpPlController extends BaseController {
 
             String imgUrl = super.getApplicationMessage("saveImgUrl");
 
-            // 获取新货前三个
-            List<TGoods> newArrivalList = goodsService.getFirstThreeNewArravail();
-
-            if (!CollectionUtils.isEmpty(newArrivalList)) {
-                for (TGoods goods : newArrivalList) {
-                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
-                }
-            }
-
             // 取得热卖的产品
             TGoods tGoodsParam = new TGoods();
             tGoodsParam.setDeleteflg(CommonConstants.IS_NOT_DELETE);
             tGoodsParam.setOnsaleflg(CommonConstants.IS_ON_SALE);
             tGoodsParam.setHotsaleflg(CommonConstants.IS_HOT_SALE);
-            List<TGoods> hotSellerList = goodsService.getGoodsByParam(tGoodsParam);
+            List<TGoods> hotSellerList = goodsService.getFiveHotSeller(tGoodsParam);
             if (!CollectionUtils.isEmpty(hotSellerList)) {
                 for (TGoods goods : hotSellerList) {
                     goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
@@ -73,6 +64,19 @@ public class OzTtTpPlController extends BaseController {
             if (!StringUtils.isEmpty(classId)) {
                 TGoodsClassfication tGoodsClassfication = goodsService.getGoodsClassficationByClassId(classId);
                 className = tGoodsClassfication.getClassname();
+                // 二级结构
+                tGoodsClassfication = goodsService.getGoodsClassficationByClassId(tGoodsClassfication.getFatherclassid());
+                if (tGoodsClassfication != null) {
+                    className = tGoodsClassfication.getClassname() + CommonConstants.LEFT_INDICATE + className;
+                }
+                // 三级结构
+                tGoodsClassfication = goodsService.getGoodsClassficationByClassId(tGoodsClassfication.getFatherclassid());
+                if (tGoodsClassfication != null) {
+                    className = tGoodsClassfication.getClassname() + CommonConstants.LEFT_INDICATE + className;
+                }
+                
+                
+                
             }
             
             // 分页获取商品
@@ -99,7 +103,6 @@ public class OzTtTpPlController extends BaseController {
 
             // 热卖的商品
             model.addAttribute("hotSellerList", hotSellerList);
-            model.addAttribute("arrlist", newArrivalList);
             model.addAttribute("pageInfo", pageInfo);
             model.addAttribute("className", className);
             model.addAttribute("classId", classId);

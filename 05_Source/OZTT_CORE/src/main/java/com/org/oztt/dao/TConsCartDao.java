@@ -39,4 +39,10 @@ public interface TConsCartDao {
      * @return
      */
     TConsCart selectByParams(TConsCart record);
+    
+    /**
+     * 
+     * @param customerNo 用户号
+     */
+    void deleteAllContCard(String customerNo);
 }
