@@ -123,10 +123,10 @@
                 <!-- BEGIN TOP BAR MENU -->
                 <div class="col-md-6 col-sm-6 additional-nav">
                     <ul class="list-unstyled list-inline pull-right">
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="#">My Wishlist</a></li>
-                        <li><a href="checkout.html">Checkout</a></li>
-                        <li><a onclick="login();return false;">Log In</a></li>
+                        <li><a href="#"><fmt:message key="header_myOztuantuan"/></a></li>
+                        <!-- <li><a href="#">My Wishlist</a></li> -->
+                        <li><a href="checkout.html"><fmt:message key="header_checkout"/></a></li>
+                        <li><a onclick="login();return false;"><fmt:message key="header_welcomeLogin"/></a></li>
                     </ul>
                 </div>
                 <!-- END TOP BAR MENU -->
