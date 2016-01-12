@@ -31,8 +31,8 @@
                     <div class="product-quantity">
                         <input id="product-quantity" type="text" value="1" readonly name="product-quantity" class="form-control input-sm">
                     </div>
-                    <button class="btn btn-primary" type="button" id="addCart"><fmt:message key="common_addtocart"/></button>
-                    <button class="btn btn-default" type="button" id="detail"><fmt:message key="common_detail"/></button>
+                    <button class="btn btn-primary" type="button" id="addCart" onclick=""><fmt:message key="common_addtocart"/></button>
+                    <button class="btn btn-default" type="button" id="detail" onclick=""><fmt:message key="common_detail"/></button>
                   </div>
                 </div>
 

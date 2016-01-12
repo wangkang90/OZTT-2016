@@ -143,4 +143,12 @@ public interface GoodsService {
      * @throws Exception
      */
     public boolean deleteAllContCart(String customerNo) throws Exception;
+    
+    /**
+     * 商品检索
+     * @param tGoods
+     * @return
+     * @throws Exception
+     */
+    public List<TGoods> getGoodsBySearchParam(String goodsParam) throws Exception;
 }

@@ -83,25 +83,25 @@
               <div class="row">
                 <div class="col-md-6 col-sm-6">
                   <div class="product-main-image">
-                    <img src="${goodItemDto.firstImg}" alt="${goodItemDto.goods.goodsname}" class="img-responsive" data-BigImgSrc="${goodItemDto.firstImg}">
+                    <img src="${goodItemDto.firstImg}" alt="${goodItemDto.goods.goodsname}" class="img-responsive" data-BigImgSrc="${goodItemDto.firstImg}" id="activeImage">
                   </div>
                   <div class="product-other-images">
                   <c:forEach var="imgTh" items="${ goodItemDto.imgList }" varStatus="status">
                   		<c:if test="${ status.index == 0}">
-                  			<a onclick="showImgMain(this,'${imgTh}')" class="active"><img alt="${goodItemDto.goods.goodsname}" src="${imgTh}"></a>
+                  			<a onclick="showImgMain(this,'${imgTh}','${goodItemDto.goods.goodsname}')" class="active"><img alt="${goodItemDto.goods.goodsname}" src="${imgTh}"></a>
                   		</c:if>
                   		<c:if test="${ status.index != 0}">
-	                  		<a onclick="showImgMain(this,'${imgTh}')"><img alt="${goodItemDto.goods.goodsname}" src="${imgTh}"></a>
+	                  		<a onclick="showImgMain(this,'${imgTh}','${goodItemDto.goods.goodsname}')"><img alt="${goodItemDto.goods.goodsname}" src="${imgTh}"></a>
                   		</c:if>
                   </c:forEach>
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                  <h1>${goodItemDto.goods.goodsname}</h1>
+                  <h1 id="goodsNameh1">${goodItemDto.goods.goodsname}</h1>
                   <div class="price-availability-block clearfix">
                     <div class="price">
-                      <strong>${goodItemDto.disPrice}<fmt:message key="common_yuan"/></strong>
-                      <em><span>${goodItemDto.nowPrice}<fmt:message key="common_yuan"/></span></em>
+                      <strong id="disPrice">${goodItemDto.disPrice}<fmt:message key="common_yuan"/></strong>
+                      <em><span id="nowPrice">${goodItemDto.nowPrice}<fmt:message key="common_yuan"/></span></em>
                     </div>
                     <div class="availability">
                       <fmt:message key="OZ_TT_TP_PD_youhuo"/>
@@ -119,7 +119,7 @@
                     <div class="product-quantity">
                         <input id="product-quantity" type="text" value="1" readonly class="form-control input-sm">
                     </div>
-                    <button class="btn btn-primary" type="botton"><fmt:message key="common_addtocart"/></button>
+                    <button class="btn btn-primary" type="botton" onclick="addToCart('${goodItemDto.goods.goodsid}')"><fmt:message key="common_addtocart"/></button>
                   </div>
                   
                 </div>
@@ -128,7 +128,7 @@
                   <ul id="myTab" class="nav nav-tabs">
                     <li class="active"><a href="#Description" data-toggle="tab"><fmt:message key="OZ_TT_TP_PD_des"/></a></li>
                     <li><a href="#Information" data-toggle="tab"><fmt:message key="OZ_TT_TP_PD_info"/></a></li>
-                    <li><a href="#Information" data-toggle="tab"><fmt:message key="OZ_TT_TP_PD_rule"/></a></li>
+                    <li><a href="#Reviews" data-toggle="tab"><fmt:message key="OZ_TT_TP_PD_rule"/></a></li>
                   </ul>
                   <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade in active" id="Description">
@@ -159,7 +159,7 @@
     	var properties = ${goodItemDto.properties};
     	var properJson = eval(properties);
     	var temp1 = '<div class="pull-left" style="padding-top:5px">';
-    	var temp2 = '<label class="control-label">{0}</label>';
+    	var temp2 = '<label class="control-label" id="{1}">{0}</label>';
     	var temp3 = '<select class="form-control input-sm" id="{0}">';
    		var temp4 = '<option value="{0}">{1}</option>';
 		var temp5 = '</select>';
@@ -167,7 +167,7 @@
     	for(var i=0; i<properJson.length; i++){
     		if (properJson[i].goodsPropertiesType == "3") {
     			var inHtml = temp1;
-    			inHtml += temp2.replace("{0}",properJson[i].goodsPropertiesName);
+    			inHtml += temp2.replace("{0}",properJson[i].goodsPropertiesName).replace("{1}", properJson[i].goodsPropertiesType);
     			inHtml += temp3.replace("{0}",properJson[i].goodsPropertiesId);
     			var classValue = properJson[i].goodsPropertiesJson.split(",");
     			for (var j = 0; j < classValue.length; j++) {

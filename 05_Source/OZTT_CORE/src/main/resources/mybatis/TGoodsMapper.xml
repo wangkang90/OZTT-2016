@@ -446,6 +446,13 @@
 		</if>
 		limit 5
 	</select>
-
+	
+	<select id="getGoodsBySearchParam" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_goods
+		where onSaleFlg= '1'
+		and goodsName like concat('%',#{goodsParam},'%')
+	</select>
 	
 </mapper>

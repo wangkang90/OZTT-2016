@@ -11,21 +11,11 @@
   <%@ include file="../commoncssHead.jsp"%>
   <!-- Head END -->
   <script>
-  	/* 访问后台去的详情数据 */
-	function viewProductPopUp(){
-		
-	}
-  	
+
   	/* 商品显示画面 */
   	function gotoList(str){
   		location.href = "${ctx}/OZ_TT_TP_PL/search?listCount=&classId="+str+"&pageNo=";
-  	}
-  	
-  	/*  */
-  	function addCart(str) {
-  		
-  	}
-	
+  	}	
 	
   </script>
 </head>
@@ -127,9 +117,9 @@
                         <a href="#product-pop-up" onclick="viewProductPopUp('${goodNewArr.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                       </div>
                     </div>
-                    <h3><a onclick="goToItem('${goodNewArr.goodsid }')">${goodNewArr.goodsname }</a></h3>
+                    <h3><a onclick="toItem('${goodNewArr.goodsid }')">${goodNewArr.goodsname }</a></h3>
                     <div class="pi-price">${goodNewArr.costprice }<fmt:message key="common_yuan"/></div>
-                    <a onclick="addCart('${goodNewArr.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_addtocart"/></a>
+                    <a onclick="toItem('${goodNewArr.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_detail"/></a>
                   </div>
                 </li>
                 </c:forEach>
@@ -186,12 +176,12 @@
                     <img src="${goodslist.goodsthumbnail }" class="img-responsive" alt="${goodslist.goodsname }">
                     <div>
                       <a href="${goodslist.goodsthumbnail }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
-                      <a href="#product-pop-up" onclick="viewProductPopUp('${goodNewArr.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
+                      <a href="#product-pop-up" onclick="viewProductPopUp('${goodslist.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                     </div>
                   </div>
-                  <h3><a onclick="goToItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>
+                  <h3><a onclick="toItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>
                   <div class="pi-price">${goodslist.costprice }<fmt:message key="common_yuan"/></div>
-                  <a onclick="addCart('${goodslist.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_addtocart"/></a>
+                  <a onclick="toItem('${goodslist.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_detail"/></a>
                   <c:if test="${goodslist.newsaleflg == '1' }">
                   	<div class="sticker sticker-new"></div>
                   </c:if>
@@ -210,65 +200,7 @@
     </div>
 
     <!-- BEGIN fast view of a product -->
-    <div id="product-pop-up" style="display: none; width: 700px;">
-            <div class="product-page product-pop-up">
-              <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-3">
-                  <div class="product-main-image">
-                    <img src="<c:url value='/assets/temp/products/model7.jpg' />" alt="Cool green dress with red bell" class="img-responsive">
-                  </div>
-                  <div class="product-other-images">
-                    <a href="#" class="active"><img alt="Berry Lace Dress" src="<c:url value='/assets/temp/products/model3.jpg' />"></a>
-                    <a href="#"><img alt="Berry Lace Dress" src="<c:url value='/assets/temp/products/model4.jpg' />"></a>
-                    <a href="#"><img alt="Berry Lace Dress" src="<c:url value='/assets/temp/products/model5.jpg' />"></a>
-                  </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-9">
-                  <h1>Cool green dress with red bell</h1>
-                  <div class="price-availability-block clearfix">
-                    <div class="price">
-                      <strong><span>$</span>47.00</strong>
-                      <em>$<span>62.00</span></em>
-                    </div>
-                    <div class="availability">
-                      Availability: <strong>In Stock</strong>
-                    </div>
-                  </div>
-                  <div class="description">
-                    <p>Lorem ipsum dolor ut sit ame dolore  adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat 
-Nostrud duis molestie at dolore.</p>
-                  </div>
-                  <div class="product-page-options">
-                    <div class="pull-left">
-                      <label class="control-label">Size:</label>
-                      <select class="form-control input-sm">
-                        <option>L</option>
-                        <option>M</option>
-                        <option>XL</option>
-                      </select>
-                    </div>
-                    <div class="pull-left">
-                      <label class="control-label">Color:</label>
-                      <select class="form-control input-sm">
-                        <option>Red</option>
-                        <option>Blue</option>
-                        <option>Black</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="product-page-cart">
-                    <div class="product-quantity">
-                        <input id="product-quantity" type="text" value="1" readonly name="product-quantity" class="form-control input-sm">
-                    </div>
-                    <button class="btn btn-primary" type="submit"><fmt:message key="common_addtocart"/></button>
-                    <button class="btn btn-default" type="submit">More details</button>
-                  </div>
-                </div>
-
-                <div class="sticker sticker-sale"></div>
-              </div>
-            </div>
-    </div>
+	<%@ include file="../commonpopup.jsp"%>
     <%@ include file="../commonjsFooter.jsp"%>
 </body>
 <!-- END BODY -->

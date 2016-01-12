@@ -56,7 +56,7 @@ public class OzTtTpPlController extends BaseController {
             List<TGoods> hotSellerList = goodsService.getFiveHotSeller(tGoodsParam);
             if (!CollectionUtils.isEmpty(hotSellerList)) {
                 for (TGoods goods : hotSellerList) {
-                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
                 }
             }
             // 取出
@@ -97,7 +97,7 @@ public class OzTtTpPlController extends BaseController {
             
             if (!CollectionUtils.isEmpty(pageInfo.getResultList())) {
                 for (TGoods goods : pageInfo.getResultList()) {
-                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
                 }
             }
 

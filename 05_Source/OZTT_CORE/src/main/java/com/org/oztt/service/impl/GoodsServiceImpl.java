@@ -148,7 +148,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             String[] goodsPic = goods.getGoodsnormalpic().split(",");
             if (goodsPic != null && goodsPic.length > 0) {
                 for (String pic : goodsPic) {
-                    goodPicList.add(imgUrl + pic);
+                    goodPicList.add(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + pic);
                 }
             }
         }
@@ -243,6 +243,11 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
     public boolean deleteAllContCart(String customerNo) throws Exception {
         tConsCartDao.deleteAllContCard(customerNo);
         return true;
+    }
+
+    @Override
+    public List<TGoods> getGoodsBySearchParam(String goodsParam) throws Exception {
+        return tGoodsDao.getGoodsBySearchParam(goodsParam);
     }
     
 }

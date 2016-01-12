@@ -51,7 +51,7 @@ public class OzTtTpPdController extends BaseController {
             List<TGoods> hotSellerList = goodsService.getFiveHotSeller(tGoodsParam);
             if (!CollectionUtils.isEmpty(hotSellerList)) {
                 for (TGoods goods : hotSellerList) {
-                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsthumbnail());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
                 }
             }
 
