@@ -41,4 +41,5 @@ public interface TGoodsPropertyDao {
      * @return
      */
     List<TGoodsProperty> selectByParams(TGoodsProperty record);
+    
 }

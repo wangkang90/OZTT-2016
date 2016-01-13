@@ -129,7 +129,7 @@
                   </div>
                   <h3><a onclick="toItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>
                   <div class="pi-price">${goodslist.costprice }<fmt:message key="common_yuan"/></div>
-                  <a onclick="addCart('${goodslist.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_addtocart"/></a>
+                  <a onclick="toItem('${goodslist.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_detail"/></a>
                   <c:if test="${goodslist.newsaleflg == '1' }">
                   	<div class="sticker sticker-new"></div>
                   </c:if>

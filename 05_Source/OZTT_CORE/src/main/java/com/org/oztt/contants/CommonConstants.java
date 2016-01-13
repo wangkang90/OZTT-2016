@@ -34,6 +34,8 @@ public final class CommonConstants {
 
     public static final String UP_CART             = "CART";                                 // 购物车
 
-    public static final String IS_GROUP            = "1";                                     //是团购
+    public static final String IS_GROUP            = "1";                                    //是团购
+
+    public static final String PATH_SPLIT          = "/";                                    //
 
 }

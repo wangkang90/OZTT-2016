@@ -81,5 +81,12 @@ public interface TGoodsDao {
      * @return
      */
     List<TGoods> getFiveHotSeller(TGoods record);
+    
+    /**
+     * 检索商品
+     * @param goodsParam
+     * @return
+     */
+    List<TGoods> getGoodsBySearchParam(String goodsParam);
      
 }
