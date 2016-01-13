@@ -432,7 +432,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- END RESPONSIVE MENU TOGGLER -->
-                <a href="${ctx}/main/init" class="navbar-brand"><img src="${ctx}/images/logo.png" alt="OZTUANTUAN.COM.AU"></a><!-- LOGO -->
+                <a href="${ctx}/main/init" class="navbar-brand"><img src="${ctx}/images/logo.png" width="129px" height="32px" alt="OZTUANTUAN.COM.AU"></a><!-- LOGO -->
             </div>
             <!-- BEGIN CART -->
              <div class="cart-block">
