@@ -206,6 +206,11 @@
 				}
 			});
 		}
+		
+		// 关闭弹出框
+		$(".fancybox-close").click();
+		// 回到页面最上
+		$("#topcontrol").click();
 	}
 	
 	function reflashCart(){
@@ -370,7 +375,7 @@
 	function viewcart(){
 		var licount = $("#contcartScroller").find("li")
 		if (licount == null || licount.length == 0) return;
-		alert("viewcart");
+		location.href = "${pageContext.request.contextPath}/OZ_TT_GB_CA/init";
 	}
 	
 	// 结算画面

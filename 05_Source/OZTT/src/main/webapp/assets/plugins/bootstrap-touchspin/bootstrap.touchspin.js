@@ -36,7 +36,7 @@
     $.fn.TouchSpin = function(options) {
 
         var defaults = {
-            min: 0,
+            min: 1,
             max: 100,
             initval: "",
             step: 1,
@@ -174,7 +174,7 @@
             }
 
             function _buildInputGroup() {
-                var html = '<div class="input-group bootstrap-touchspin"><span class="input-group-btn"><button class="' + settings.buttondown_class + ' bootstrap-touchspin-down" type="button">-</button></span><span class="input-group-addon bootstrap-touchspin-prefix">' + settings.prefix + '</span><span class="input-group-addon bootstrap-touchspin-postfix">' + settings.postfix + '</span><span class="input-group-btn"><button class="' + settings.buttonup_class + ' bootstrap-touchspin-up" type="button">+</button></span></div>';
+                var html = '<div class="input-group bootstrap-touchspin"><span class="input-group-btn"><button class="' + settings.buttondown_class + ' bootstrap-touchspin-down" type="button" onclick="changeQuantity(this)">-</button></span><span class="input-group-addon bootstrap-touchspin-prefix">' + settings.prefix + '</span><span class="input-group-addon bootstrap-touchspin-postfix">' + settings.postfix + '</span><span class="input-group-btn"><button class="' + settings.buttonup_class + ' bootstrap-touchspin-up" type="button" onclick="changeQuantity(this)">+</button></span></div>';
 
                 container = $(html).insertBefore(originalinput);
 
