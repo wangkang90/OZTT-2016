@@ -1,5 +1,7 @@
 package com.org.oztt.dao;
 
+import java.util.Map;
+
 import com.org.oztt.entity.TCustomerLoginInfo;
 
 public interface TCustomerLoginInfoDao {
@@ -39,7 +41,7 @@ public interface TCustomerLoginInfoDao {
      * @param password
      * @return
      */
-    TCustomerLoginInfo userLogin(TCustomerLoginInfo record);
+    TCustomerLoginInfo userLogin(Map<String, String> map);
     
     /**
      * 通过输入邮箱取得用户号

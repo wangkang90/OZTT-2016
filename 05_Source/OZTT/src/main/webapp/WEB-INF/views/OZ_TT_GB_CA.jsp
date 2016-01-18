@@ -110,7 +110,7 @@
 					var goodsPrice = contcartArray[i].goodsPrice;
 				    var goodsUnitPrice = goodsPrice/goodsQuantity;
 					var goodsProperties = contcartArray[i].goodsProperties;
-					var goodsPropertiesEval = eval(JSON.parse(goodsProperties));
+					var goodsPropertiesEval = eval(goodsProperties);
 					var goodsPropertiesStr = "";
 					for(var j=0; j<goodsPropertiesEval.length; j++){
 						goodsPropertiesStr += goodsPropertiesEval[j].properName + ":" + goodsPropertiesEval[j].properValue + " ";
@@ -155,17 +155,60 @@
 			var quantity = $(inputQu).val();
 			var index = $(inputQu).parent().parent().attr('id').replace("quantity","");
 			var contcart = getCookie("contcart");
+			// 是否需要更新DB，以及更新DB所需要的内容
+			var shouldUpdateDB = false;
+			var updateData;
 			if(contcart != null && contcart.length > 0) {
 				var contcartJSON = JSON.parse(contcart);
 				var contcartArray = eval(contcartJSON);
 				var hasGoods = false;
 				for(var i=0; i<contcartArray.length; i++){
 					if (i == parseFloat(index)) {
+						if (parseFloat(contcartArray[i].goodsQuantity) - parseFloat(quantity) != 0){
+							shouldUpdateDB = true;
+						}
+						
+						var updateQuantity = parseFloat(quantity) - parseFloat(contcartArray[i].goodsQuantity);
 						contcartArray[i].goodsPrice = parseFloat(contcartArray[i].goodsPrice) / parseFloat(contcartArray[i].goodsQuantity) * parseFloat(quantity);
 						contcartArray[i].goodsQuantity = quantity;
+						updateData = {
+								"goodsId":contcartArray[i].goodsId,
+								"goodsName":contcartArray[i].goodsName,
+								"goodsImage":contcartArray[i].goodsImage,
+								"goodsQuantity":updateQuantity,
+								"goodsPrice":contcartArray[i].goodsPrice,
+								"goodsProperties":JSON.stringify(contcartArray[i].goodsProperties)
+
+						}
 					}
 				}
 			}
+			
+			if (shouldUpdateDB) {
+				var inputList = [];
+				inputList.push(updateData);
+				$.ajax({
+					type : "POST",
+					contentType:'application/json',
+					url : '${pageContext.request.contextPath}/COMMON/addConsCart',
+					dataType : "json",
+					async : false,
+					data : JSON.stringify(inputList), 
+					success : function(data) {
+						if(!data.isException){
+							// 同步购物车成功
+							
+						} else {
+							// 同步购物车失败
+						}
+					},
+					error : function(data) {
+						
+					}
+				});
+			}
+			
+			
 			// 更新Cookie
 			delCookie("contcart");
 			addCookie("contcart",JSON.stringify(contcartJSON))

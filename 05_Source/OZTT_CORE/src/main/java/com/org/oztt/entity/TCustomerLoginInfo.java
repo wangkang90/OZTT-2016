@@ -17,6 +17,8 @@ public class TCustomerLoginInfo implements Serializable {
     private String loginpass;
 
     private String loginstatus;
+    
+    private String canlogin;
 
     private String deleteflg;
 
@@ -124,5 +126,13 @@ public class TCustomerLoginInfo implements Serializable {
 
     public void setUpdpgmid(String updpgmid) {
         this.updpgmid = updpgmid;
+    }
+
+    public String getCanlogin() {
+        return canlogin;
+    }
+
+    public void setCanlogin(String canlogin) {
+        this.canlogin = canlogin;
     }
 }

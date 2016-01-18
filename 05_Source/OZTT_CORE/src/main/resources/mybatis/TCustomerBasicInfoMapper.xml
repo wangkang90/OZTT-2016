@@ -26,168 +26,49 @@
 		<result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		passportNo, sex, nickName, birthday, headPic, marriage, education,
-		occupation, deleteFlg,
+		no, customerNo, cnSurname, cnGivenname, enFirstName, enMiddleName,
+		enLastName, idCardNo,
+		passportNo, sex, nickName, birthday, headPic, marriage, education, occupation,
+		deleteFlg,
 		addTimestamp, addUserKey, updTimestamp, updUserKey, updPgmId
-		<trim prefix="where" prefixOverrides="and|or">
-			<if test="condition.customerno != null">
-				and customerNo = #{condition.customerno,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.cnsurname != null">
-				and cnSurname = #{condition.cnsurname,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.cngivenname != null">
-				and cnGivenname = #{condition.cngivenname,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.enfirstname != null">
-				and enFirstName = #{condition.enfirstname,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.enmiddlename != null">
-				and enMiddleName = #{condition.enmiddlename,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.enlastname != null">
-				and enLastName = #{condition.enlastname,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.idcardno != null">
-				and idCardNo = #{condition.idcardno,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.passportno != null">
-				and passportNo = #{condition.passportno,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.sex != null">
-				and sex = #{condition.sex,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.nickname != null">
-				and nickName = #{condition.nickname,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.birthday != null">
-				and birthday = #{condition.birthday,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.headpic != null">
-				and headPic = #{condition.headpic,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.marriage != null">
-				and marriage = #{condition.marriage,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.education != null">
-				and education = #{condition.education,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.occupation != null">
-				and occupation = #{condition.occupation,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.deleteflg != null">
-				and deleteFlg = #{condition.deleteflg,jdbcType=CHAR}
-			</if>
-			<if test="condition.addtimestamp != null">
-				and addTimestamp = #{condition.addtimestamp,jdbcType=TIMESTAMP}
-			</if>
-			<if test="condition.adduserkey != null">
-				and addUserKey = #{condition.adduserkey,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.updtimestamp != null">
-				and updTimestamp = #{condition.updtimestamp,jdbcType=TIMESTAMP}
-			</if>
-			<if test="condition.upduserkey != null">
-				and updUserKey = #{condition.upduserkey,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.updpgmid != null">
-				and updPgmId = #{condition.updpgmid,jdbcType=VARCHAR}
-			</if>
-		</trim>
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
+		select
 		<include refid="Base_Column_List" />
 		from t_customer_basic_info
 		where no = #{no,jdbcType=BIGINT}
-		<trim prefix="where" prefixOverrides="and|or">
-			<if test="example.condition.customerno != null">
-				and customerNo = #{example.condition.customerno,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.cnsurname != null">
-				and cnSurname = #{example.condition.cnsurname,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.cngivenname != null">
-				and cnGivenname = #{example.condition.cngivenname,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.enfirstname != null">
-				and enFirstName = #{example.condition.enfirstname,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.enmiddlename != null">
-				and enMiddleName = #{example.condition.enmiddlename,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.enlastname != null">
-				and enLastName = #{example.condition.enlastname,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.idcardno != null">
-				and idCardNo = #{example.condition.idcardno,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.passportno != null">
-				and passportNo = #{example.condition.passportno,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.sex != null">
-				and sex = #{example.condition.sex,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.nickname != null">
-				and nickName = #{example.condition.nickname,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.birthday != null">
-				and birthday = #{example.condition.birthday,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.headpic != null">
-				and headPic = #{example.condition.headpic,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.marriage != null">
-				and marriage = #{example.condition.marriage,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.education != null">
-				and education = #{example.condition.education,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.occupation != null">
-				and occupation = #{example.condition.occupation,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.deleteflg != null">
-				and deleteFlg = #{example.condition.deleteflg,jdbcType=CHAR}
-			</if>
-			<if test="example.condition.addtimestamp != null">
-				and addTimestamp = #{example.condition.addtimestamp,jdbcType=TIMESTAMP}
-			</if>
-			<if test="example.condition.adduserkey != null">
-				and addUserKey = #{example.condition.adduserkey,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.updtimestamp != null">
-				and updTimestamp = #{example.condition.updtimestamp,jdbcType=TIMESTAMP}
-			</if>
-			<if test="example.condition.upduserkey != null">
-				and updUserKey = #{example.condition.upduserkey,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.updpgmid != null">
-				and updPgmId = #{example.condition.updpgmid,jdbcType=VARCHAR}
-			</if>
-		</trim>
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from t_customer_basic_info
 		where no = #{no,jdbcType=BIGINT}
 	</delete>
 	<insert id="insert" parameterType="com.org.oztt.entity.TCustomerBasicInfo">
-		insert into t_customer_basic_info (no, customerNo, cnSurname,
-		cnGivenname, enFirstName, enMiddleName,
+		insert into
+		t_customer_basic_info (no, customerNo, cnSurname,
+		cnGivenname,
+		enFirstName, enMiddleName,
 		enLastName, idCardNo, passportNo,
-		sex, nickName, birthday,
+		sex,
+		nickName, birthday,
 		headPic, marriage, education,
-		occupation, deleteFlg, addTimestamp,
+		occupation, deleteFlg,
+		addTimestamp,
 		addUserKey, updTimestamp, updUserKey,
 		updPgmId)
-		values (#{no,jdbcType=BIGINT}, #{customerno,jdbcType=VARCHAR},
+		values
+		(#{no,jdbcType=BIGINT}, #{customerno,jdbcType=VARCHAR},
 		#{cnsurname,jdbcType=VARCHAR},
-		#{cngivenname,jdbcType=VARCHAR}, #{enfirstname,jdbcType=VARCHAR}, #{enmiddlename,jdbcType=VARCHAR},
+		#{cngivenname,jdbcType=VARCHAR},
+		#{enfirstname,jdbcType=VARCHAR}, #{enmiddlename,jdbcType=VARCHAR},
 		#{enlastname,jdbcType=VARCHAR}, #{idcardno,jdbcType=VARCHAR},
 		#{passportno,jdbcType=VARCHAR},
-		#{sex,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR},
+		#{nickname,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR},
 		#{headpic,jdbcType=VARCHAR}, #{marriage,jdbcType=VARCHAR},
 		#{education,jdbcType=VARCHAR},
-		#{occupation,jdbcType=VARCHAR}, #{deleteflg,jdbcType=CHAR}, #{addtimestamp,jdbcType=TIMESTAMP},
+		#{occupation,jdbcType=VARCHAR},
+		#{deleteflg,jdbcType=CHAR}, #{addtimestamp,jdbcType=TIMESTAMP},
 		#{adduserkey,jdbcType=VARCHAR}, #{updtimestamp,jdbcType=TIMESTAMP},
 		#{upduserkey,jdbcType=VARCHAR},
 		#{updpgmid,jdbcType=VARCHAR})
@@ -401,29 +282,51 @@
 		where no = #{no,jdbcType=BIGINT}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TCustomerBasicInfo">
-		update t_customer_basic_info
+		update
+		t_customer_basic_info
 		set customerNo = #{customerno,jdbcType=VARCHAR},
 		cnSurname = #{cnsurname,jdbcType=VARCHAR},
-		cnGivenname = #{cngivenname,jdbcType=VARCHAR},
-		enFirstName = #{enfirstname,jdbcType=VARCHAR},
-		enMiddleName = #{enmiddlename,jdbcType=VARCHAR},
-		enLastName = #{enlastname,jdbcType=VARCHAR},
-		idCardNo = #{idcardno,jdbcType=VARCHAR},
-		passportNo = #{passportno,jdbcType=VARCHAR},
+		cnGivenname =
+		#{cngivenname,jdbcType=VARCHAR},
+		enFirstName =
+		#{enfirstname,jdbcType=VARCHAR},
+		enMiddleName =
+		#{enmiddlename,jdbcType=VARCHAR},
+		enLastName =
+		#{enlastname,jdbcType=VARCHAR},
+		idCardNo =
+		#{idcardno,jdbcType=VARCHAR},
+		passportNo =
+		#{passportno,jdbcType=VARCHAR},
 		sex = #{sex,jdbcType=VARCHAR},
-		nickName = #{nickname,jdbcType=VARCHAR},
-		birthday = #{birthday,jdbcType=VARCHAR},
+		nickName
+		= #{nickname,jdbcType=VARCHAR},
+		birthday =
+		#{birthday,jdbcType=VARCHAR},
 		headPic = #{headpic,jdbcType=VARCHAR},
 		marriage = #{marriage,jdbcType=VARCHAR},
-		education = #{education,jdbcType=VARCHAR},
-		occupation = #{occupation,jdbcType=VARCHAR},
+		education =
+		#{education,jdbcType=VARCHAR},
+		occupation =
+		#{occupation,jdbcType=VARCHAR},
 		deleteFlg = #{deleteflg,jdbcType=CHAR},
 		addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
-		addUserKey = #{adduserkey,jdbcType=VARCHAR},
-		updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
-		updUserKey = #{upduserkey,jdbcType=VARCHAR},
+		addUserKey =
+		#{adduserkey,jdbcType=VARCHAR},
+		updTimestamp =
+		#{updtimestamp,jdbcType=TIMESTAMP},
+		updUserKey =
+		#{upduserkey,jdbcType=VARCHAR},
 		updPgmId = #{updpgmid,jdbcType=VARCHAR}
 		where no = #{no,jdbcType=BIGINT}
 	</update>
+
+
+	<select id="selectBaseInfoByCustomerNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_customer_basic_info
+		where customerNo = #{customerno,jdbcType=VARCHAR}
+	</select>
 
 </mapper>

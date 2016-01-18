@@ -7,32 +7,17 @@
 		<result column="maxNo" property="maxno" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		<trim prefix="where" prefixOverrides="and|or">
-			<if test="condition.date != null">
-				and date = #{condition.date,jdbcType=VARCHAR}
-			</if>
-			<if test="condition.maxno != null">
-				and maxNo = #{condition.maxno,jdbcType=VARCHAR}
-			</if>
-		</trim>
+		no, date, maxNo
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
+		select
 		<include refid="Base_Column_List" />
 		from t_no_customer
 		where no = #{no,jdbcType=BIGINT}
-		<trim prefix="where" prefixOverrides="and|or">
-			<if test="example.condition.date != null">
-				and date = #{example.condition.date,jdbcType=VARCHAR}
-			</if>
-			<if test="example.condition.maxno != null">
-				and maxNo = #{example.condition.maxno,jdbcType=VARCHAR}
-			</if>
-		</trim>
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from
-		t_no_customer
+		delete from t_no_customer
 		where no = #{no,jdbcType=BIGINT}
 	</delete>
 	<insert id="insert" parameterType="com.org.oztt.entity.TNoCustomer">
@@ -88,9 +73,11 @@
 		#{maxno,jdbcType=VARCHAR}
 		where no = #{no,jdbcType=BIGINT}
 	</update>
-	<select id="selectMaxCustomerNo" resultType="java.lang.String" >
+	<select id="selectMaxCustomerNo" resultType="com.org.oztt.entity.TNoCustomer">
 		select
-		max(maxNo) as maxNo
+		<include refid="Base_Column_List" />
 		from t_no_customer
+		where maxNo = (select max(maxNo) from
+		t_no_customer)
 	</select>
 </mapper>

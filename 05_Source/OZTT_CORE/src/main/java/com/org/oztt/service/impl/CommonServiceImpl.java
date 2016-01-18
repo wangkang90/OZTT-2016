@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.org.oztt.base.common.MyCategroy;
 import com.org.oztt.base.common.MyMap;
+import com.org.oztt.base.util.CommonUtils;
+import com.org.oztt.base.util.MessageUtils;
+import com.org.oztt.base.util.SendSMS;
+import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.contants.SysCodeConstants;
 import com.org.oztt.dao.TGoodsClassficationDao;
 import com.org.oztt.dao.TSysCodeDao;
@@ -26,12 +30,15 @@ public class CommonServiceImpl extends BaseService implements CommonService {
 
     private static List<MyMap>     educationMapList = null;
 
+    private static List<MyMap>     marriageMapList  = null;
+
     @Resource
     private TSysCodeDao            tSysCodeDao;
 
     @Resource
     private TGoodsClassficationDao tGoodsClassficationDao;
 
+    @Override
     public List<MyMap> getSex() throws Exception {
         if (sexMapList == null) {
             sexMapList = entityList2mapList(tSysCodeDao.selectByCodeId(SysCodeConstants.SEX_CODE));
@@ -39,11 +46,20 @@ public class CommonServiceImpl extends BaseService implements CommonService {
         return sexMapList;
     }
 
+    @Override
     public List<MyMap> getEducation() throws Exception {
         if (educationMapList == null) {
             educationMapList = entityList2mapList(tSysCodeDao.selectByCodeId(SysCodeConstants.EDUCTION_CODE));
         }
         return educationMapList;
+    }
+
+    @Override
+    public List<MyMap> getIsMarried() throws Exception {
+        if (marriageMapList == null) {
+            marriageMapList = entityList2mapList(tSysCodeDao.selectByCodeId(SysCodeConstants.MARRIAGE_CODE));
+        }
+        return marriageMapList;
     }
 
     private List<MyMap> entityList2mapList(List<TSysCode> list) {
@@ -100,6 +116,34 @@ public class CommonServiceImpl extends BaseService implements CommonService {
         reCa.setChildrenClass(cList);
         return reCa;
 
+    }
+
+    @Override
+    public boolean getPhoneVerifyCode(String phone) throws Exception {
+        String msg = MessageUtils.getMessage("MESSAGE_TEMP");
+        String random = CommonUtils.getRandomNum(6);
+        logger.info(random);
+        boolean sendStatus = SendSMS.SendMessages(phone, msg.replace(CommonConstants.MESSAGE_PARAM_ONE, random));
+        if (sendStatus) {
+            // 发送正确则插入数据//TODO
+        }
+        else {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean checkPhoneVerifyCode(String phone, String verifyCode) throws Exception {
+        //根据手机获取手机验证吗
+        String verifyCodeFormDB = "1234";//TODO
+        if (verifyCode.equals(verifyCodeFormDB)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 }

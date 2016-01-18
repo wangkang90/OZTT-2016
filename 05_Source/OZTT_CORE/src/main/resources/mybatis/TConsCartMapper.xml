@@ -5,7 +5,7 @@
 		<id column="no" property="no" jdbcType="BIGINT" />
 		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
 		<result column="customerNo" property="customerno" jdbcType="VARCHAR" />
-		<result column="goodsSpecifications" property="goodsspecifications"
+		<result column="groupSpecifications" property="groupspecifications"
 			jdbcType="VARCHAR" />
 		<result column="quantity" property="quantity" jdbcType="DECIMAL" />
 		<result column="ifGroup" property="ifgroup" jdbcType="CHAR" />
@@ -20,7 +20,7 @@
 		<result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		no, goodsId, customerNo, goodsSpecifications, quantity, ifGroup, groupNo,
+		no, goodsId, customerNo, groupSpecifications, quantity, ifGroup, groupNo,
 		priceNo,
 		addCartTimestamp, addTimestamp, addUserKey, updTimestamp, updUserKey, updPgmId
 	</sql>
@@ -37,13 +37,13 @@
 	</delete>
 	<insert id="insert" parameterType="com.org.oztt.entity.TConsCart">
 		insert into t_cons_cart (no, goodsId, customerNo,
-		goodsSpecifications, quantity, ifGroup,
+		groupSpecifications, quantity, ifGroup,
 		groupNo, priceNo, addCartTimestamp,
 		addTimestamp, addUserKey, updTimestamp,
 		updUserKey, updPgmId)
 		values (#{no,jdbcType=BIGINT}, #{goodsid,jdbcType=VARCHAR},
 		#{customerno,jdbcType=VARCHAR},
-		#{goodsspecifications,jdbcType=VARCHAR}, #{quantity,jdbcType=DECIMAL},
+		#{groupspecifications,jdbcType=VARCHAR}, #{quantity,jdbcType=DECIMAL},
 		#{ifgroup,jdbcType=CHAR},
 		#{groupno,jdbcType=VARCHAR}, #{priceno,jdbcType=VARCHAR}, #{addcarttimestamp,jdbcType=TIMESTAMP},
 		#{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR},
@@ -62,8 +62,8 @@
 			<if test="customerno != null">
 				customerNo,
 			</if>
-			<if test="goodsspecifications != null">
-				goodsSpecifications,
+			<if test="groupspecifications != null">
+				groupSpecifications,
 			</if>
 			<if test="quantity != null">
 				quantity,
@@ -106,8 +106,8 @@
 			<if test="customerno != null">
 				#{customerno,jdbcType=VARCHAR},
 			</if>
-			<if test="goodsspecifications != null">
-				#{goodsspecifications,jdbcType=VARCHAR},
+			<if test="groupspecifications != null">
+				#{groupspecifications,jdbcType=VARCHAR},
 			</if>
 			<if test="quantity != null">
 				#{quantity,jdbcType=DECIMAL},
@@ -150,8 +150,8 @@
 			<if test="customerno != null">
 				customerNo = #{customerno,jdbcType=VARCHAR},
 			</if>
-			<if test="goodsspecifications != null">
-				goodsSpecifications = #{goodsspecifications,jdbcType=VARCHAR},
+			<if test="groupspecifications != null">
+				groupSpecifications = #{groupspecifications,jdbcType=VARCHAR},
 			</if>
 			<if test="quantity != null">
 				quantity = #{quantity,jdbcType=DECIMAL},
@@ -190,7 +190,7 @@
 		update t_cons_cart
 		set goodsId = #{goodsid,jdbcType=VARCHAR},
 		customerNo = #{customerno,jdbcType=VARCHAR},
-		goodsSpecifications = #{goodsspecifications,jdbcType=VARCHAR},
+		groupSpecifications = #{groupspecifications,jdbcType=VARCHAR},
 		quantity = #{quantity,jdbcType=DECIMAL},
 		ifGroup = #{ifgroup,jdbcType=CHAR},
 		groupNo = #{groupno,jdbcType=VARCHAR},
@@ -215,8 +215,8 @@
 		<if test="customerno != null">
 			and customerNo = #{customerno,jdbcType=VARCHAR}
 		</if>
-		<if test="goodsspecifications != null">
-			and goodsSpecifications = #{goodsspecifications,jdbcType=VARCHAR}
+		<if test="groupspecifications != null">
+			and groupSpecifications = #{groupspecifications,jdbcType=VARCHAR}
 		</if>
 	</select>
 	
@@ -224,6 +224,34 @@
 		delete from t_cons_cart
 		where customerNo = #{customerno,jdbcType=VARCHAR}
 	</delete>
+	
+	<select id="getAllContCart" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_cons_cart
+		where 1 = 1 and customerNo = #{customerno,jdbcType=VARCHAR}
+
+	</select>
+	
+	
+	<select id="getAllContCartForCookie" resultType="com.org.oztt.formDto.ContCartItemDto" parameterType="java.lang.String">
+		select
+		a.goodsId,
+		b.goodsName,
+		b.goodsThumbnail as goodsImage,
+		a.quantity as goodsQuantity,
+		(case when a.ifGroup = '1' then d.groupPrice 
+		      else  c.goodsClassValue
+		      end )* a.quantity  as  goodsPrice, 
+		a.groupSpecifications as goodsPropertiesDB
+		from t_cons_cart a
+		inner join t_goods b on a.goodsId = b.goodsId
+		inner join t_goods_price c on a.goodsId = c.goodsId
+		inner join t_goods_group d on a.goodsId = d.goodsId
+		where 1 = 1 and a.customerNo = #{customerno,jdbcType=VARCHAR}
+
+	</select>
+	
 	
 	
 </mapper>

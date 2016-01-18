@@ -453,6 +453,7 @@
 		from t_goods
 		where onSaleFlg= '1'
 		and goodsName like concat('%',#{goodsParam},'%')
+		limit 12
 	</select>
 	
 </mapper>

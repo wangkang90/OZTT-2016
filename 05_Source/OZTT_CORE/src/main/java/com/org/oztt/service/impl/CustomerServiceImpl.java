@@ -1,6 +1,8 @@
 package com.org.oztt.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -12,10 +14,12 @@ import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.dao.TCustomerBasicInfoDao;
 import com.org.oztt.dao.TCustomerLoginHisDao;
 import com.org.oztt.dao.TCustomerLoginInfoDao;
+import com.org.oztt.dao.TCustomerSecurityInfoDao;
 import com.org.oztt.dao.TNoCustomerDao;
 import com.org.oztt.entity.TCustomerBasicInfo;
 import com.org.oztt.entity.TCustomerLoginHis;
 import com.org.oztt.entity.TCustomerLoginInfo;
+import com.org.oztt.entity.TCustomerSecurityInfo;
 import com.org.oztt.entity.TNoCustomer;
 import com.org.oztt.formDto.OzTtTpFpDto;
 import com.org.oztt.formDto.OzTtTpReDto;
@@ -26,22 +30,25 @@ import com.org.oztt.service.CustomerService;
 public class CustomerServiceImpl extends BaseService implements CustomerService {
 
     @Resource
-    private TCustomerLoginInfoDao tCustomerLoginInfoDao;
+    private TCustomerLoginInfoDao    tCustomerLoginInfoDao;
 
     @Resource
-    private TCustomerLoginHisDao  tCustomerLoginHisDao;
+    private TCustomerLoginHisDao     tCustomerLoginHisDao;
 
     @Resource
-    private TNoCustomerDao        tNoCustomerDao;
+    private TNoCustomerDao           tNoCustomerDao;
 
     @Resource
-    private TCustomerBasicInfoDao tCustomerBasicInfoDao;
+    private TCustomerBasicInfoDao    tCustomerBasicInfoDao;
+
+    @Resource
+    private TCustomerSecurityInfoDao tCustomerSecurityInfoDao;
 
     public TCustomerLoginInfo userLogin(String loginId, String password) throws Exception {
-        TCustomerLoginInfo info = new TCustomerLoginInfo();
-        info.setLoginid(loginId);
-        info.setLoginpass(password);
-        return tCustomerLoginInfoDao.userLogin(info);
+        Map<String, String> paramMap = new HashMap<String, String>();
+        paramMap.put("username", loginId);
+        paramMap.put("password", password);
+        return tCustomerLoginInfoDao.userLogin(paramMap);
 
     }
 
@@ -68,14 +75,41 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
         return false;
     }
 
-    public boolean insertRegister(OzTtTpReDto ozTtTpReDto) throws Exception {
-        String maxCustomer = this.getMaxCustomerNo();
+    public String insertRegister(OzTtTpReDto ozTtTpReDto) throws Exception {
 
-        // 客户号最大值的保存
-        TNoCustomer tNoCustomer = new TNoCustomer();
-        tNoCustomer.setDate(DateFormatUtils.getNowTimeFormat("yyyyMMdd"));
-        tNoCustomer.setMaxno(maxCustomer);
-        tNoCustomerDao.insertSelective(tNoCustomer);
+        String maxCustomer = "";
+        // 获取最大的客户号
+        TNoCustomer maxTNoCustomer = this.getMaxCustomerNo();
+        String nowDateString = DateFormatUtils.getNowTimeFormat("yyyyMMdd");
+        Integer len = CommonConstants.FIRST_NUMBER.length();
+        if (maxTNoCustomer == null) {
+            maxCustomer = nowDateString + CommonConstants.FIRST_NUMBER;
+            // 客户号最大值的保存
+            TNoCustomer tNoCustomer = new TNoCustomer();
+            tNoCustomer.setDate(DateFormatUtils.getNowTimeFormat("yyyyMMdd"));
+            tNoCustomer.setMaxno(maxCustomer);
+            tNoCustomerDao.insertSelective(tNoCustomer);
+        }
+        else {
+            if (DateFormatUtils.getDateFormatStr(DateFormatUtils.PATTEN_YMD_NO_SEPRATE)
+                    .equals(maxTNoCustomer.getDate())) {
+                // 属于同一天
+                // 客户号最大值的保存
+                maxCustomer = nowDateString
+                        + StringUtils.leftPad(
+                                String.valueOf(Integer.valueOf(maxTNoCustomer.getMaxno().substring(8)) + 1), len, "0");
+                maxTNoCustomer.setMaxno(maxCustomer);
+                tNoCustomerDao.updateByPrimaryKeySelective(maxTNoCustomer);
+            }
+            else {
+                maxCustomer = nowDateString + CommonConstants.FIRST_NUMBER;
+                // 客户号最大值的保存
+                TNoCustomer tNoCustomer = new TNoCustomer();
+                tNoCustomer.setDate(DateFormatUtils.getNowTimeFormat("yyyyMMdd"));
+                tNoCustomer.setMaxno(maxCustomer);
+                tNoCustomerDao.insertSelective(tNoCustomer);
+            }
+        }
 
         // 可用登录信息的保存
         TCustomerLoginInfo tCustomerLoginInfo = new TCustomerLoginInfo();
@@ -85,6 +119,7 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
         tCustomerLoginInfo.setDeleteflg(CommonConstants.IS_NOT_DELETE);
         tCustomerLoginInfo.setLoginid(ozTtTpReDto.getEmail());
         tCustomerLoginInfo.setLoginpass(ozTtTpReDto.getPassword());
+        tCustomerLoginInfo.setCanlogin(CommonConstants.CANNOT_LOGIN);
         tCustomerLoginInfo.setLoginstatus(CommonConstants.LOGIN_STATUS_NORMAL);
         tCustomerLoginInfoDao.insertSelective(tCustomerLoginInfo);
 
@@ -110,20 +145,21 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
         tCustomerBasicInfo.setSex(ozTtTpReDto.getSex());
         tCustomerBasicInfoDao.insertSelective(tCustomerBasicInfo);
 
-        return true;
+        // 插入用户登陆表
+        TCustomerSecurityInfo tCustomerSecurityInfo = new TCustomerSecurityInfo();
+        tCustomerSecurityInfo.setAddtimestamp(new Date());
+        tCustomerSecurityInfo.setAdduserkey(maxCustomer);
+        tCustomerSecurityInfo.setCustomerno(maxCustomer);
+        tCustomerSecurityInfo.setTelno(ozTtTpReDto.getPhone());
+        tCustomerSecurityInfo.setEmailaddr(ozTtTpReDto.getEmail());
+        tCustomerSecurityInfoDao.insertSelective(tCustomerSecurityInfo);
+
+        return maxCustomer;
     }
 
-    public String getMaxCustomerNo() throws Exception {
-        String maxNo = tNoCustomerDao.getMaxCustomerNo();
-        String nowDateString = DateFormatUtils.getNowTimeFormat("yyyyMMdd");
-        Integer len = CommonConstants.FIRST_NUMBER.length();
-        if (maxNo == null) {
-            return nowDateString + CommonConstants.FIRST_NUMBER;
-        }
-        else {
-            return nowDateString
-                    + StringUtils.leftPad(String.valueOf(Integer.valueOf(maxNo.substring(len)) + 1), len, "0");
-        }
+    public TNoCustomer getMaxCustomerNo() throws Exception {
+        TNoCustomer maxCustomer = tNoCustomerDao.getMaxCustomerNo();
+        return maxCustomer;
     }
 
     public TCustomerLoginInfo selectByEmail(String email) throws Exception {
@@ -144,6 +180,27 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
         if (records == 0)
             return false;
         return true;
+    }
+
+    @Override
+    public boolean updateTCustomerLoginInfo(TCustomerLoginInfo tCustomerLoginInfo) throws Exception {
+        int upcount = tCustomerLoginInfoDao.updateByPrimaryKeySelective(tCustomerLoginInfo);
+        if (upcount > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public TCustomerBasicInfo selectBaseInfoByCustomerNo(String customerNo) throws Exception {
+        return tCustomerBasicInfoDao.selectBaseInfoByCustomerNo(customerNo);
+    }
+
+    @Override
+    public int updateTCustomerBasicInfo(TCustomerBasicInfo tCustomerBasicInfo) throws Exception {
+        return tCustomerBasicInfoDao.updateByPrimaryKeySelective(tCustomerBasicInfo);
     }
 
 }

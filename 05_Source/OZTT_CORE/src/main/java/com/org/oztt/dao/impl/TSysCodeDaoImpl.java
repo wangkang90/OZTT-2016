@@ -11,44 +11,44 @@ import com.org.oztt.entity.TSysCode;
 @Repository
 public class TSysCodeDaoImpl extends BaseDao implements TSysCodeDao {
 
-	public int deleteByPrimaryKey(Long no) {
-		
-		return 0;
-	}
+    public int deleteByPrimaryKey(Long no) {
 
-	public int insert(TSysCode record) {
-		
-		return 0;
-	}
+        return 0;
+    }
 
-	public int insertSelective(TSysCode record) {
-		
-		return 0;
-	}
+    public int insert(TSysCode record) {
 
-	public TSysCode selectByPrimaryKey(Long no) {
-		
-		return null;
-	}
+        return 0;
+    }
 
-	public int updateByPrimaryKeySelective(TSysCode record) {
-		
-		return 0;
-	}
+    public int insertSelective(TSysCode record) {
 
-	public int updateByPrimaryKey(TSysCode record) {
-		
-		return 0;
-	}
+        return 0;
+    }
 
-	public List<TSysCode> selectByCodeId(String codeId) {
-		
-		return select("selectByCodeId", codeId);
-	}
+    public TSysCode selectByPrimaryKey(Long no) {
 
-	public TSysCode selectByCodeIdADetailId(TSysCode record) {
-		
-		return selectOne("selectByCodeIdADetailId", record);
-	}
+        return null;
+    }
+
+    public int updateByPrimaryKeySelective(TSysCode record) {
+
+        return 0;
+    }
+
+    public int updateByPrimaryKey(TSysCode record) {
+
+        return 0;
+    }
+
+    public List<TSysCode> selectByCodeId(String codeId) {
+
+        return select("com.org.oztt.dao.TSysCodeDao.selectByCodeId", codeId);
+    }
+
+    public TSysCode selectByCodeIdADetailId(TSysCode record) {
+
+        return selectOne("com.org.oztt.dao.TSysCodeDao.selectByCodeIdADetailId", record);
+    }
 
 }

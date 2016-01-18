@@ -1,18 +1,20 @@
 package com.org.oztt.dao.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.org.oztt.base.dao.BaseDao;
 import com.org.oztt.dao.TConsCartDao;
 import com.org.oztt.entity.TConsCart;
+import com.org.oztt.formDto.ContCartItemDto;
 
 @Repository
 public class TConsCartDaoImpl extends BaseDao implements TConsCartDao {
 
     @Override
     public int deleteByPrimaryKey(Long no) {
-        // TODO Auto-generated method stub
-        return 0;
+        return update("com.org.oztt.dao.TConsCartDao.deleteByPrimaryKey", no);
     }
 
     @Override
@@ -23,8 +25,7 @@ public class TConsCartDaoImpl extends BaseDao implements TConsCartDao {
 
     @Override
     public int insertSelective(TConsCart record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return insert("com.org.oztt.dao.TConsCartDao.insertSelective", record);
     }
 
     @Override
@@ -41,8 +42,7 @@ public class TConsCartDaoImpl extends BaseDao implements TConsCartDao {
 
     @Override
     public int updateByPrimaryKey(TConsCart record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return update("com.org.oztt.dao.TConsCartDao.updateByPrimaryKey", record);
     }
 
     @Override
@@ -53,6 +53,16 @@ public class TConsCartDaoImpl extends BaseDao implements TConsCartDao {
     @Override
     public void deleteAllContCard(String customerNo) {
         update("com.org.oztt.dao.TConsCartDao.deleteAllContCard", customerNo);
+    }
+
+    @Override
+    public List<TConsCart> getAllContCart(String customerNo) {
+        return select("com.org.oztt.dao.TConsCartDao.getAllContCart", customerNo);
+    }
+
+    @Override
+    public List<ContCartItemDto> getAllContCartForCookie(String customerNo) {
+        return select("com.org.oztt.dao.TConsCartDao.getAllContCartForCookie", customerNo);
     }
 
 }

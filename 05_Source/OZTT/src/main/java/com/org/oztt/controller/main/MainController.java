@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.util.CollectionUtils;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class MainController extends BaseController {
      * @return
      */
     @RequestMapping(value = "init", method = RequestMethod.GET)
-    public String gotoMain(Model model) {
+    public String gotoMain(Model model, HttpSession session) {
         try {
             // 获取目录
             List<MyCategroy> myCategroyList = super.commonService.getMyCategroy();
@@ -45,7 +46,8 @@ public class MainController extends BaseController {
 
             if (!CollectionUtils.isEmpty(allGoodsList)) {
                 for (TGoods goods : allGoodsList) {
-                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT
+                            + goods.getGoodsthumbnail());
                 }
             }
 
@@ -55,12 +57,17 @@ public class MainController extends BaseController {
             List<TGoods> tgoodList = goodsService.getGoodsListForMain(mapParam);
             if (!CollectionUtils.isEmpty(tgoodList)) {
                 for (TGoods goods : tgoodList) {
-                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT
+                            + goods.getGoodsthumbnail());
                 }
             }
             model.addAttribute("menucategory", myCategroyList);
             model.addAttribute("allGoodsList", allGoodsList);
             model.addAttribute("tgoodList", tgoodList);
+
+            // 获取session中的值
+            model.addAttribute(CommonConstants.SESSION_CUSTOMERNO,
+                    session.getAttribute(CommonConstants.SESSION_CUSTOMERNO));
 
             return "/main/main";
         }
@@ -71,7 +78,7 @@ public class MainController extends BaseController {
         }
 
     }
-    
+
     /**
      * 首页检索显示
      * 
@@ -79,7 +86,7 @@ public class MainController extends BaseController {
      * @return
      */
     @RequestMapping(value = "searchGoods", method = RequestMethod.GET)
-    public String searchGoods(Model model, @RequestParam String goodsNameParam) {
+    public String searchGoods(Model model, HttpSession session, @RequestParam String goodsNameParam) {
         try {
             goodsNameParam = java.net.URLDecoder.decode(goodsNameParam, "UTF-8");
             // 获取目录
@@ -92,7 +99,8 @@ public class MainController extends BaseController {
 
             if (!CollectionUtils.isEmpty(newGoodsList)) {
                 for (TGoods goods : newGoodsList) {
-                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT
+                            + goods.getGoodsthumbnail());
                 }
             }
 
@@ -102,12 +110,17 @@ public class MainController extends BaseController {
             List<TGoods> tgoodList = goodsService.getGoodsBySearchParam(goodsNameParam);
             if (!CollectionUtils.isEmpty(tgoodList)) {
                 for (TGoods goods : tgoodList) {
-                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
+                    goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT
+                            + goods.getGoodsthumbnail());
                 }
             }
             model.addAttribute("menucategory", myCategroyList);
             model.addAttribute("allGoodsList", newGoodsList);
             model.addAttribute("tgoodList", tgoodList);
+
+            // 获取session中的值
+            model.addAttribute(CommonConstants.SESSION_CUSTOMERNO,
+                    session.getAttribute(CommonConstants.SESSION_CUSTOMERNO));
 
             return "/main/main";
         }

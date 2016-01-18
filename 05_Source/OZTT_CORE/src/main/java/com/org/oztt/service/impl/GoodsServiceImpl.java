@@ -29,6 +29,7 @@ import com.org.oztt.entity.TGoodsClassfication;
 import com.org.oztt.entity.TGoodsGroup;
 import com.org.oztt.entity.TGoodsPrice;
 import com.org.oztt.entity.TGoodsProperty;
+import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.formDto.GoodProertyDto;
 import com.org.oztt.service.BaseService;
@@ -104,8 +105,11 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
 
     @Override
     public GoodItemDto getGoodAllItemDto(String goodId) throws Exception {
+        
+        String imgUrl = MessageUtils.getApplicationMessage("saveImgUrl");
         // 取得当前商品的所有属性
         TGoods goods = getGoodsById(goodId);
+        goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
         // 原价   商品定价策略表中
         TGoodsPrice tGoodsPrice = new TGoodsPrice();
         tGoodsPrice.setGoodsid(goodId);
@@ -141,7 +145,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             }
         }
 
-        String imgUrl = MessageUtils.getApplicationMessage("saveImgUrl");
+        
         // 获取商品的图片
         List<String> goodPicList = new ArrayList<String>();
         if (goods.getGoodsnormalpic() != null) {
@@ -174,14 +178,14 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             return false;
         for (int i = 0; i < list.size(); i++) {
             Map<String, String> map = (Map<String, String>) list.get(i);
-            String goodId = map.get("goodId");
-            String goodProperties = map.get("properties");
-            String goodQuantity = map.get("quantity");
+            String goodId = map.get("goodsId");
+            String goodProperties = map.get("goodsProperties");
+            String goodQuantity = map.get("goodsQuantity");
             // 判断属性是不是相同，如果相同则数量相加
             TConsCart tConsCart = new TConsCart();
             tConsCart.setGoodsid(goodId);
             tConsCart.setCustomerno(customerNo);
-            tConsCart.setGoodsspecifications(goodProperties);
+            tConsCart.setGroupspecifications(goodProperties);
             tConsCart = tConsCartDao.selectByParams(tConsCart);
             if (tConsCart == null) {
                 // 没有数据则需要插入数据
@@ -191,7 +195,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
                 tConsCart.setAdduserkey(customerNo);
                 tConsCart.setCustomerno(customerNo);
                 tConsCart.setGoodsid(goodId);
-                tConsCart.setGoodsspecifications(goodProperties);
+                tConsCart.setGroupspecifications(goodProperties);
                 // 商品价格
                 TGoodsPrice tGoodsPrice = new TGoodsPrice();
                 tGoodsPrice.setGoodsid(goodId);
@@ -225,17 +229,26 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         return tGoodsDao.getFiveHotSeller(tGoods);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public boolean deleteContCart(String customerNo, Map<String, String> cartMap) throws Exception {
-        String goodId = cartMap.get("goodId");
-        String goodProperties = cartMap.get("properties");
-        // 判断属性是不是相同，如果相同则数量相加
-        TConsCart tConsCart = new TConsCart();
-        tConsCart.setGoodsid(goodId);
-        tConsCart.setCustomerno(customerNo);
-        tConsCart.setGoodsspecifications(goodProperties);
-        tConsCart = tConsCartDao.selectByParams(tConsCart);
-        tConsCartDao.deleteByPrimaryKey(tConsCart.getNo());
+    public boolean deleteContCart(String customerNo, List list) throws Exception {
+        if (list == null)
+            return false;
+        for (int i = 0; i < list.size(); i++) {
+            Map<String, String> map = (Map<String, String>) list.get(i);
+            String goodId = map.get("goodsId");
+            String goodProperties = map.get("goodsProperties");
+            // 判断属性是不是相同，如果相同则数量相加
+            TConsCart tConsCart = new TConsCart();
+            tConsCart.setGoodsid(goodId);
+            tConsCart.setCustomerno(customerNo);
+            tConsCart.setGroupspecifications(goodProperties);
+            tConsCart = tConsCartDao.selectByParams(tConsCart);
+            if (tConsCart != null){
+                tConsCartDao.deleteByPrimaryKey(tConsCart.getNo());
+            }
+        }
+        
         return true;
     }
 
@@ -248,6 +261,16 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
     @Override
     public List<TGoods> getGoodsBySearchParam(String goodsParam) throws Exception {
         return tGoodsDao.getGoodsBySearchParam(goodsParam);
+    }
+
+    @Override
+    public List<TConsCart> getAllContCart(String customerNo) throws Exception {
+        return tConsCartDao.getAllContCart(customerNo);
+    }
+
+    @Override
+    public List<ContCartItemDto> getAllContCartForCookie(String customerNo) throws Exception {
+        return tConsCartDao.getAllContCartForCookie(customerNo);
     }
     
 }

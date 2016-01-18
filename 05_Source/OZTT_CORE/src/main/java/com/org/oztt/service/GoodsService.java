@@ -5,12 +5,14 @@ import java.util.Map;
 
 import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
+import com.org.oztt.entity.TConsCart;
 import com.org.oztt.entity.TGoods;
 import com.org.oztt.entity.TGoodsAppendItems;
 import com.org.oztt.entity.TGoodsClassfication;
 import com.org.oztt.entity.TGoodsGroup;
 import com.org.oztt.entity.TGoodsPrice;
 import com.org.oztt.entity.TGoodsProperty;
+import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.GoodItemDto;
 
 /**
@@ -134,7 +136,8 @@ public interface GoodsService {
      * @return
      * @throws Exception
      */
-    public boolean deleteContCart(String customerNo, Map<String, String> cartMap) throws Exception;
+    @SuppressWarnings("rawtypes")
+    public boolean deleteContCart(String customerNo, List list) throws Exception;
     
     /**
      * 清空购物车
@@ -151,4 +154,20 @@ public interface GoodsService {
      * @throws Exception
      */
     public List<TGoods> getGoodsBySearchParam(String goodsParam) throws Exception;
+    
+    /**
+     * 取得DB中购物车的数据
+     * @param customerNo
+     * @return
+     * @throws Exception
+     */
+    public List<TConsCart> getAllContCart(String customerNo) throws Exception;
+    
+    /**
+     * 取得DB中购物车的数据给前台Cookie用
+     * @param customerNo
+     * @return
+     * @throws Exception
+     */
+    public List<ContCartItemDto> getAllContCartForCookie(String customerNo) throws Exception;
 }

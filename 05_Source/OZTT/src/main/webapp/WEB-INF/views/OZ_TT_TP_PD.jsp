@@ -84,6 +84,7 @@
                 <div class="col-md-6 col-sm-6">
                   <div class="product-main-image">
                     <img src="${goodItemDto.firstImg}" alt="${goodItemDto.goods.goodsname}" class="img-responsive" data-BigImgSrc="${goodItemDto.firstImg}" id="activeImage">
+                    <input type="hidden" value="${goodItemDto.goods.goodsthumbnail}" id="hiddenImage" />
                   </div>
                   <div class="product-other-images">
                   <c:forEach var="imgTh" items="${ goodItemDto.imgList }" varStatus="status">

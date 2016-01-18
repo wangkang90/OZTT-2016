@@ -14,7 +14,7 @@ public final class CommonConstants {
 
     public static final String HAS_LOGINED_STATUS  = "1";                                    //已经登录的状态
 
-    public static final String SESSION_CUSTOMERNO  = "sessionCustomerNO";                    // 用来保存的用户名
+    public static final String SESSION_CUSTOMERNO  = "sessionUserId";                        // 用来保存的用户名
 
     public static final String BELONG_FATHER_CLASS = "0C0000";                               // 父分类
 
@@ -37,5 +37,11 @@ public final class CommonConstants {
     public static final String IS_GROUP            = "1";                                    //是团购
 
     public static final String PATH_SPLIT          = "/";                                    //
+
+    public static final String MESSAGE_PARAM_ONE   = "{0}";
+
+    public static final String CAN_LOGIN           = "1";                                    // 可以登录
+
+    public static final String CANNOT_LOGIN        = "0";                                    // 不可以登录
 
 }

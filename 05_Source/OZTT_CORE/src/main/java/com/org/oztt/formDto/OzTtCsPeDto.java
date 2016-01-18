@@ -5,7 +5,7 @@ package com.org.oztt.formDto;
  * 
  * @author linliuan
  */
-public class OzTtTpReDto {
+public class OzTtCsPeDto {
 
     private String email;
 
@@ -40,12 +40,6 @@ public class OzTtTpReDto {
     private String password;
 
     private String conpassword;
-    
-    private String phone;
-    
-    private String verifyCode;
-    
-    private String customerNo;
 
     public String getCnsurname() {
         return cnsurname;
@@ -181,29 +175,5 @@ public class OzTtTpReDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getVerifyCode() {
-        return verifyCode;
-    }
-
-    public void setVerifyCode(String verifyCode) {
-        this.verifyCode = verifyCode;
-    }
-
-    public String getCustomerNo() {
-        return customerNo;
-    }
-
-    public void setCustomerNo(String customerNo) {
-        this.customerNo = customerNo;
     }
 }

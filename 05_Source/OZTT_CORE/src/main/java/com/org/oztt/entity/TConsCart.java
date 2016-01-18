@@ -9,7 +9,7 @@ public class TConsCart {
 
     private String customerno;
 
-    private String goodsspecifications;
+    private String groupspecifications;
 
     private Long quantity;
 
@@ -53,14 +53,6 @@ public class TConsCart {
 
     public void setCustomerno(String customerno) {
         this.customerno = customerno;
-    }
-
-    public String getGoodsspecifications() {
-        return goodsspecifications;
-    }
-
-    public void setGoodsspecifications(String goodsspecifications) {
-        this.goodsspecifications = goodsspecifications;
     }
 
     public Long getQuantity() {
@@ -141,5 +133,13 @@ public class TConsCart {
 
     public void setUpdpgmid(String updpgmid) {
         this.updpgmid = updpgmid;
+    }
+
+    public String getGroupspecifications() {
+        return groupspecifications;
+    }
+
+    public void setGroupspecifications(String groupspecifications) {
+        this.groupspecifications = groupspecifications;
     }
 }

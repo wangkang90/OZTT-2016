@@ -4,7 +4,7 @@
  * @param str
  *            字符串
  * @returns true 或 false; true表示为数字
- */0
+ */
 function checkIsEmpty(str) {
 	 if(str!=null&&typeof(str)=="string" ){
 		 str= str.trim(); 
@@ -556,4 +556,15 @@ function checkURL(str_url){
     }else{
         return (false);
     }
+}
+
+/**
+ * 检查输入的手机号码OZTT
+ * 
+ * @param str
+ *            字符串
+ * @returns true 或 false; true表示格式正确
+ */
+function checkMobilePhoneForOztt(str) {
+	return /^[+]\d*$/.test(str);
 }

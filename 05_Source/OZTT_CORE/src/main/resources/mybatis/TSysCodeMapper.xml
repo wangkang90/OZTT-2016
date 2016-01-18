@@ -90,4 +90,10 @@
       codeDetailName = #{codedetailname,jdbcType=VARCHAR}
     where no = #{no,jdbcType=BIGINT}
   </update>
+  <select id="selectByCodeId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_code
+    where codeId = #{codeId,jdbcType=VARCHAR}
+  </select>
 </mapper>

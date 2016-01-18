@@ -7,6 +7,7 @@
 		<result column="loginId" property="loginid" jdbcType="VARCHAR" />
 		<result column="loginPass" property="loginpass" jdbcType="VARCHAR" />
 		<result column="loginStatus" property="loginstatus" jdbcType="CHAR" />
+		<result column="canLogin" property="canlogin" jdbcType="CHAR" />
 		<result column="deleteFlg" property="deleteflg" jdbcType="CHAR" />
 		<result column="addTimestamp" property="addtimestamp" jdbcType="TIMESTAMP" />
 		<result column="addUserKey" property="adduserkey" jdbcType="VARCHAR" />
@@ -20,6 +21,7 @@
 		,loginId
 		,loginPass
 		,loginStatus
+		,canLogin
 		,deleteFlg
 		,addTimestamp
 		,addUserKey
@@ -43,6 +45,7 @@
 		t_customer_login_info (no, customerNo, 
 		loginId, loginPass,
 		loginStatus,
+		canLogin,
 		deleteFlg, addTimestamp, addUserKey,
 		updTimestamp,
 		updUserKey, updPgmId
@@ -51,6 +54,7 @@
 		#{customerno,jdbcType=VARCHAR},
 		#{loginid,jdbcType=VARCHAR}, #{loginpass,jdbcType=VARCHAR},
 		#{loginstatus,jdbcType=CHAR},
+		#{canlogin,jdbcType=CHAR},
 		#{deleteflg,jdbcType=CHAR},
 		#{addtimestamp,jdbcType=TIMESTAMP},
 		#{adduserkey,jdbcType=VARCHAR},
@@ -75,6 +79,9 @@
 			</if>
 			<if test="loginstatus != null">
 				loginStatus,
+			</if>
+			<if test="canlogin != null">
+				canLogin,
 			</if>
 			<if test="deleteflg != null">
 				deleteFlg,
@@ -111,6 +118,9 @@
 			<if test="loginstatus != null">
 				#{loginstatus,jdbcType=CHAR},
 			</if>
+			<if test="canlogin != null">
+				#{canlogin,jdbcType=CHAR},
+			</if>
 			<if test="deleteflg != null">
 				#{deleteflg,jdbcType=CHAR},
 			</if>
@@ -146,6 +156,9 @@
 			<if test="loginstatus != null">
 				loginStatus = #{loginstatus,jdbcType=CHAR},
 			</if>
+			<if test="canlogin != null">
+				canLogin = #{canlogin,jdbcType=CHAR},
+			</if>
 			<if test="deleteflg != null">
 				deleteFlg = #{deleteflg,jdbcType=CHAR},
 			</if>
@@ -171,31 +184,32 @@
 		update
 		t_customer_login_info
 		set customerNo = #{customerno,jdbcType=VARCHAR},
-		loginId =
-		#{loginid,jdbcType=VARCHAR},
+		loginId = #{loginid,jdbcType=VARCHAR},
 		loginPass = #{loginpass,jdbcType=VARCHAR},
-		loginStatus = #{loginstatus,jdbcType=CHAR},
-		deleteFlg =
-		#{deleteflg,jdbcType=CHAR},
-		addTimestamp =
-		#{addtimestamp,jdbcType=TIMESTAMP},
-		addUserKey =
-		#{adduserkey,jdbcType=VARCHAR},
-		updTimestamp =
-		#{updtimestamp,jdbcType=TIMESTAMP},
-		updUserKey =
-		#{upduserkey,jdbcType=VARCHAR},
+		loginPass = #{loginpass,jdbcType=VARCHAR},
+		canLogin = #{canlogin,jdbcType=CHAR},
+		deleteFlg = #{deleteflg,jdbcType=CHAR},
+		addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
+		addUserKey = #{adduserkey,jdbcType=VARCHAR},
+		updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
+		updUserKey = #{upduserkey,jdbcType=VARCHAR},
 		updPgmId = #{updpgmid,jdbcType=VARCHAR}
 		where no = #{no,jdbcType=BIGINT}
 	</update>
 
-	<select id="checkLoginSuccess" resultMap="BaseResultMap"
-		parameterType="com.org.oztt.entity.TCustomerLoginInfo">
+	<select id="checkLoginSuccess" resultMap="BaseResultMap" parameterType="map">
 		select
-		<include refid="Base_Column_List" />
-		from t_customer_login_info
-		where loginId = #{loginid,jdbcType=INTEGER}
-		and loginPass = #{loginpass,jdbcType=VARCHAR}
+		a.customerNo
+		,a.loginId
+		,a.loginPass
+		,a.loginStatus
+		,a.canLogin
+		from t_customer_login_info a
+		inner join t_customer_security_info b
+		on a.customerNo = b.customerNo
+		where (b.telNo = #{username,jdbcType=VARCHAR} or b.emailAddr = #{username,jdbcType=VARCHAR} or b.wechatNo = #{username,jdbcType=VARCHAR})
+		and a.loginPass = #{password,jdbcType=VARCHAR}
+		and a.deleteFlg = '0'
 	</select>
 
 	<select id="selectByEmail" resultMap="BaseResultMap"

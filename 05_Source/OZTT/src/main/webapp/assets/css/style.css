@@ -2087,6 +2087,7 @@ table .product-quantity .input-group {
 .product-pop-up {
 	padding: 0;
 	overflow-x: hidden;
+	overflow-y: hidden;
 	background: inherit;
 }
 .product-pop-up .product-quantity, .product-pop-up .product-quantity .input-group {

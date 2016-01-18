@@ -45,6 +45,8 @@ public abstract class BaseDao extends SqlSessionDaoSupport {
     public Integer insertForBbs(String statementName, Object entity) {
         return sqlSession.insert(statementName, entity);
     }
+    
+    
 
     /**
      * 更新考虑排他

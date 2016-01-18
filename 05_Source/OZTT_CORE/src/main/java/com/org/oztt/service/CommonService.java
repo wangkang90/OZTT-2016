@@ -15,6 +15,8 @@ public interface CommonService {
     public List<MyMap> getSex() throws Exception;
 
     public List<MyMap> getEducation() throws Exception;
+    
+    public List<MyMap> getIsMarried() throws Exception;
 
     /**
      * 检索出菜单项目
@@ -23,6 +25,22 @@ public interface CommonService {
      * @throws Exception
      */
     public List<MyCategroy> getMyCategroy() throws Exception;
+    
+    /**
+     * 获取手机验证码
+     * @param phone
+     * @return
+     * @throws Exception
+     */
+    public boolean getPhoneVerifyCode(String phone) throws Exception;
+    
+    /**
+     * 验证手机验证码
+     * @param phone
+     * @return
+     * @throws Exception
+     */
+    public boolean checkPhoneVerifyCode(String phone, String verifyCode) throws Exception;
     
 
 }

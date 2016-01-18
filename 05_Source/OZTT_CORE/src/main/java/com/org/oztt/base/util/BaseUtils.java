@@ -10,5 +10,5 @@ public class BaseUtils {
     /**
      * 日志工具
      */
-    protected static Logger LOG = Logger.getLogger(BaseUtils.class);
+    protected static Logger logger = Logger.getLogger(BaseUtils.class);
 }

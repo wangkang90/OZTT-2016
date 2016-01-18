@@ -24,8 +24,13 @@
 		$(obj).next().append(msg);
 	}
 	
-	function login(){
+	function tologin(){
 		location.href = "${pageContext.request.contextPath}/OZ_TT_TP_LG/init";
+	}
+	
+	function tologinOut(){
+		delCookie("contcart");
+		location.href = "${pageContext.request.contextPath}/OZ_TT_TP_LG/logout";
 	}
 	
 	function viewProductPopUp(goodsId){
@@ -41,7 +46,7 @@
 					var goodItemDto = data.goodItemDto;
 					$("#activeImage").attr("src", goodItemDto.firstImg);
 					$("#activeImage").attr("alt", goodItemDto.goods.goodsname);
-					
+					$("#hiddenImage").val(goodItemDto.goods.goodsthumbnail);
 					$("#productImage").empty();
 					
 					var imghtml = "";
@@ -121,7 +126,7 @@
 		// 取得商品的属性
 		var allDiv = $("#productOptions").find("div");
 		var goodsName = $("#goodsNameh1").html();
-		var goodsImage = $("#activeImage").attr("src");
+		var goodsImage = $("#hiddenImage").val();
 		var goodsQuantity = $("#product-quantity").val();
 		var goodsPrice = parseFloat($("#disPrice").html().replace('<fmt:message key="common_yuan"/>', ''))*parseFloat(goodsQuantity);
 		var oneGoodPropertiesList = [];
@@ -158,7 +163,7 @@
 			var contcartArray = eval(contcartJSON);
 			var hasGoods = false;
 			for(var i=0; i<contcartArray.length; i++){
-				if (contcartArray[i].goodsId == properties.goodsId && contcartArray[i].goodsProperties == properties.goodsProperties ) {
+				if (contcartArray[i].goodsId == properties.goodsId && JSON.stringify(contcartArray[i].goodsProperties) == properties.goodsProperties ) {
 					contcartArray[i].goodsQuantity = parseFloat(contcartArray[i].goodsQuantity) + parseFloat(properties.goodsQuantity);
 					contcartArray[i].goodsPrice = parseFloat(contcartArray[i].goodsPrice) + parseFloat(properties.goodsPrice);
 					hasGoods = true;
@@ -186,13 +191,16 @@
 		
 		// 需要公用设成List
 		var sessionUserId = '${sessionUserId}';
+		
 		if (sessionUserId != null && sessionUserId != "") {
-			jQuery.ajax({
-				type : 'POST',
-				contentType : 'application/json',
-				url : '${pageContext.request.contextPath}/COMMON/addConsCard',
-				dataType : 'json',
-				data : JSON.stringify(properties),
+			var inputList = [];
+			inputList.push(properties);
+			$.ajax({
+				type : "POST",
+				contentType:'application/json',
+				url : '${pageContext.request.contextPath}/COMMON/addConsCart',
+				dataType : "json",
+				data : JSON.stringify(inputList), 
 				success : function(data) {
 					if(!data.isException){
 						// 同步购物车成功
@@ -239,7 +247,7 @@
 					var goodsQuantity = contcartArray[i].goodsQuantity;
 					var goodsPrice = contcartArray[i].goodsPrice;
 					var goodsProperties = contcartArray[i].goodsProperties;
-					var goodsPropertiesEval = eval(JSON.parse(goodsProperties));
+					var goodsPropertiesEval = eval(goodsProperties);
 					var goodsPropertiesStr = "";
 					for(var j=0; j<goodsPropertiesEval.length; j++){
 						goodsPropertiesStr += goodsPropertiesEval[j].properName + ":" + goodsPropertiesEval[j].properValue + " ";
@@ -269,16 +277,15 @@
 	function addCookie(objName,objValue){
 	    var infostr = objName + '=' + escape(objValue);
 	    var date = new Date();
-	    date.setTime(date.getTime()+24*3600*1000);
+	    date.setTime(date.getTime()+8*3600*1000);
 	    infostr += ';expires =' + date.toGMTString() + ";path=/";
 	    document.cookie = infostr; //添加
 	}
 
 	// 删除COOKIE
 	function delCookie(objName){
-	    var date = new Date(); 
-	    date.setTime(date.getTime() - 10000); 
-	    document.cookie = objName + "=a; expires=" + date.toGMTString(); 
+		var newContCart = [];
+		addCookie(objName,JSON.stringify(newContCart));
 	}
 
 	function getCookie(name){ 
@@ -320,12 +327,23 @@
 			// 需要公用设成List
 			var sessionUserId = '${sessionUserId}';
 			if (sessionUserId != null && sessionUserId != "") {
-				jQuery.ajax({
+				var deleteData = {
+						"goodsId":deleteItem.goodsId,
+						"goodsName":deleteItem.goodsName,
+						"goodsImage":deleteItem.goodsImage,
+						"goodsQuantity":deleteItem.goodsQuantity,
+						"goodsPrice":deleteItem.goodsPrice,
+						"goodsProperties":JSON.stringify(deleteItem.goodsProperties)
+
+				}
+				var inputList = [];
+				inputList.push(deleteData);
+				$.ajax({
 					type : 'POST',
 					contentType : 'application/json',
-					url : '${pageContext.request.contextPath}/COMMON/deleteConsCard',
+					url : '${pageContext.request.contextPath}/COMMON/deleteConsCart',
 					dataType : 'json',
-					data : JSON.stringify(deleteItem),
+					data : JSON.stringify(inputList),
 					success : function(data) {
 						if(!data.isException){
 							// 同步购物车成功
@@ -379,7 +397,7 @@
 	}
 	
 	// 结算画面
-	function checkout(){
+	function toCheckout(){
 		var licount = $("#contcartScroller").find("li")
 		if (licount == null || licount.length == 0) return;
 		alert("checkout");
@@ -387,6 +405,65 @@
 	
 	// 画面初期化时加载
 	function initLoad(){
+		if ('${needSync}' == '1') {
+			var sessionUserId = '${sessionUserId}';
+			if (sessionUserId != null && sessionUserId != "") {
+				var needSyncData = getCookie("contcart");
+				if (getJsonSize(needSyncData) > 0) {
+					$.ajax({
+						type : "POST",
+						contentType:'application/json',
+						url : '${pageContext.request.contextPath}/COMMON/addConsCart',
+						dataType : "json",
+						data : needSyncData, 
+						success : function(data) {
+							if(!data.isException){
+								// 同步购物车成功
+								
+							} else {
+								// 同步购物车失败
+							}
+						},
+						error : function(data) {
+							
+						}
+					});
+				}
+				// 用户登录同步购物车里面的内容
+				var contCartFromDB = '${conscars}';
+				if (getJsonSize(contCartFromDB) > 0) {
+					var contcartJSONFromDB = JSON.parse(contCartFromDB);
+					var contcartArrayFromDB = eval(contCartFromDB);
+					var contcartFromCookie = getCookie("contcart");
+					if (getJsonSize(contcartFromCookie) == 0) {
+						// 如果Cookie购物车里面没有数据，更新购物车
+						var tempCookie = [];
+						for(var i=0; i<contcartArrayFromDB.length; i++){
+							tempCookie.push(contcartArrayFromDB[i]);
+						}
+						delCookie("contcart");
+						addCookie("contcart",JSON.stringify(tempCookie))
+					} else {
+						// 购物车中有数据
+						var contcartJSONFromCookie = JSON.parse(contcartFromCookie);
+						var contcartArrayFromCookie = eval(contcartJSONFromCookie);
+						for(var i=0; i<contcartArrayFromCookie.length; i++){
+							for(var j=0; j<contcartArrayFromDB.length; j++){
+								if (contcartArrayFromCookie[i].goodsId == contcartArrayFromDB[j].goodsId 
+										&& contcartArrayFromCookie[i].goodsProperties == JSON.stringify(contcartArrayFromDB[j].goodsProperties) ) {
+									contcartArrayFromCookie[i].goodsQuantity = parseFloat(contcartArrayFromCookie[i].goodsQuantity) + parseFloat(contcartArrayFromDB[j].goodsQuantity);
+									contcartArrayFromCookie[i].goodsPrice = parseFloat(contcartArrayFromCookie[i].goodsPrice) + parseFloat(contcartArrayFromDB[j].goodsPrice);
+								}
+							}
+						}
+						
+						delCookie("contcart");
+						addCookie("contcart",JSON.stringify(contcartJSONFromCookie))
+					}
+				}
+			}
+		}
+		
 		reflashCart();
 	}
 	
@@ -394,6 +471,29 @@
 		var goodsText = $("#goodsText").val();
 		location.href = "${pageContext.request.contextPath}/main/searchGoods?goodsNameParam="+encodeURI(encodeURI(goodsText));
 	}
+	
+	// 进入我的信息画面
+	function toMyTuantuan(){
+		location.href = "${pageContext.request.contextPath}/OZ_TT_CS_PE/init";
+	}
+	
+	// 注册画面
+	function toRegister(){
+		location.href = "${pageContext.request.contextPath}/OZ_TT_TP_RE/init";
+	}
+	
+	// 获取JSONlist的数量
+	function getJsonSize(str) {
+		if (str == null || str.length == 0){
+			return 0;
+		} else {
+			var strJSON = JSON.parse(str);
+			var strArray = eval(strJSON);
+			return strArray.length;
+		}
+	}
+	
+	// 将DB购物车的值放入到Cookie中
 	
 </script>
 
@@ -414,9 +514,17 @@
                 <!-- BEGIN TOP BAR MENU -->
                 <div class="col-md-6 col-sm-6 additional-nav">
                     <ul class="list-unstyled list-inline pull-right">
-                        <li><a href="#"><fmt:message key="header_myOztuantuan"/></a></li>
-                        <li><a href="checkout.html"><fmt:message key="header_checkout"/></a></li>
-                        <li><a onclick="login();return false;"><fmt:message key="header_welcomeLogin"/></a></li>
+                    	<c:if test="${ sessionUserId != null && sessionUserId != ''}">
+                    		<li><a onclick="toMyTuantuan()"><fmt:message key="header_myOztuantuan"/></a></li>
+                    	</c:if>
+                        <li><a onclick="toCheckout()"><fmt:message key="header_checkout"/></a></li>
+                        <c:if test="${ sessionUserId == null || sessionUserId == '' }">
+                        	<li><a onclick="tologin();return false;"><fmt:message key="header_welcomeLogin"/></a></li>
+                        </c:if>
+                        <c:if test="${ sessionUserId != null && sessionUserId != '' }">
+                        	<li><a onclick="tologinOut();return false;"><fmt:message key="header_logout"/></a></li>
+                        </c:if>
+                        <li><a onclick="toRegister()"><fmt:message key="header_register"/></a></li>
                     </ul>
                 </div>
                 <!-- END TOP BAR MENU -->
@@ -496,16 +604,15 @@
                         <span class="sep"></span>
                         <i class="fa fa-search search-btn"></i>
                         <div class="search-box">
-                            <form action="#">
-                                <div class="input-group">
-                                    <input type="text" placeholder="Search" class="form-control" id="goodsText">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="button" onclick="searchGoods()">
-                                        	<fmt:message key="indexSearch"/>
-                                        </button>
-                                    </span>
-                                </div>
-                            </form>
+                               <div class="input-group">
+                                   <input type="text" placeholder="Search" class="form-control" id="goodsText" 
+                                   	onkeydown="javascript:if(event.keyCode==13) searchGoods();">
+                                   <span class="input-group-btn">
+                                       <button class="btn btn-primary" type="submit" onclick="searchGoods()">
+                                       	<fmt:message key="indexSearch"/>
+                                       </button>
+                                   </span>
+                               </div>
                         </div> 
                     </li>
                     <!-- END TOP SEARCH -->

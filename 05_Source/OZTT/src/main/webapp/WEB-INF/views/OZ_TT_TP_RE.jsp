@@ -37,122 +37,54 @@
             <h1><fmt:message key="OZ_TT_TP_RE_h1"/></h1>
             <div class="content-form-page">
               <div class="row">
-                <div class="col-md-7 col-sm-7">
+                <div class="col-md-12 col-sm-12">
                   <form:form class="form-horizontal form-without-legend" role="form" id="ozTtTpReDto" modelAttribute="ozTtTpReDto"
 									commandName="ozTtTpReDto">
                     <fieldset>
                       <legend><fmt:message key="OZ_TT_TP_RE_presonInfo"/></legend>
-                      <div class="form-group">
-                        <label for="firstname" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_email"/> <span class="require">*</span></label>
-                        <div class="col-lg-8">
-                          <form:input type="text" path="email" class="form-control" id="email" />
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="firstname" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_surname"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:input type="text" path="cnsurname" class="form-control" id="cnsurname" maxlength="20"/>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="lastname" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_givenname"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:input type="text" path="cngivenname" class="form-control" id="cngivenname" maxlength="20"/>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_firstname"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:input type="text" path="enfirstname" class="form-control" id="enfirstname" />
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_middelname"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:input type="text" path="enmiddlename" class="form-control" id="enmiddlename" maxlength="50"/>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_lastname"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:input type="text" path="enlastname" class="form-control" id="enlastname" maxlength="50"/>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_idcardno"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:input type="text" path="idcardno" class="form-control" id="idcardno" maxlength="50"/>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_passportno"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:input type="text" path="passportno" class="form-control" id="passportno" maxlength="50"/>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_sex"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:radiobutton path="sex" value="0" id="sex1"/>&nbsp;<label for="sex1"><fmt:message key="OZ_TT_TP_RE_male" /></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   		  <form:radiobutton path="sex" value="1" id="sex2"/>&nbsp;<label for="sex2"><fmt:message key="OZ_TT_TP_RE_female" /></label>
-                   		
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_nickname"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
+                      <div class="form-group col-sm-12">
+                        <label for="nickname" class="col-lg-2 control-label"><fmt:message key="OZ_TT_TP_RE_nickname"/> <span class="require">*</span></label>
+                        <div class="col-lg-4">
                           <form:input type="text" path="nickname" class="form-control" id="nickname" />
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_birthday"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:input id="birthday" path="birthday" cssClass="inputDate input_date_box"/>
+                      <div class="form-group col-sm-12">
+                        <label for="email" class="col-lg-2 control-label"><fmt:message key="OZ_TT_TP_RE_email"/> <span class="require">*</span></label>
+                        <div class="col-lg-4">
+                          <form:input type="text" path="email" class="form-control" id="email" />
                         </div>
+                        <label class="col-lg-6 control-label" style="text-align:left;padding-left:30px"><span class="require">*<fmt:message key="OZ_TT_TP_RE_emailInfo"/></span></label>
                       </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_marriage"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:input type="text" path="marriage" class="form-control" id="marriage" />
+                      <div class="form-group col-sm-12">
+                        <label for="phone" class="col-lg-2 control-label"><fmt:message key="OZ_TT_TP_RE_phone"/> <span class="require">*</span></label>
+                        <div class="col-lg-4">
+                          <form:input type="text" path="phone" class="form-control" id="phone" />
                         </div>
+                        <label class="col-lg-6 control-label" style="text-align:left;padding-left:30px"><span class="require">*<fmt:message key="OZ_TT_TP_RE_phoneInfo"/></span></label>
                       </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_eduction"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:input type="text" path="education" class="form-control" id="education" />
+                      <div class="form-group col-sm-12">
+                        <label for="firstname" class="col-lg-2 control-label"><fmt:message key="OZ_TT_TP_RE_verify"/> <span class="require">*</span></label>
+                        <div class="col-lg-2">
+                          <form:input type="text" path="verifyCode" class="form-control" id="verifyCode" />
                         </div>
+                        <label class="col-lg-6" style="text-align:left">
+                        <button type="button" class="btn btn-primary" onclick="getVerifyCode()" id="buttonCode"><fmt:message key="OZ_TT_TP_RE_verifyCode"/></button>
+                      	</label>
                       </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_occpation"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          <form:input type="text" path="occupation" class="form-control" id="occupation" />
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_headpic"/> <span class="require">&nbsp;</span></label>
-                        <div class="col-lg-8">
-                          	<c:if test='${ ozTtTpReDto.headpic == "" or ozTtTpReDto.headpic == null }'>
-                        		<img alt="" src="<c:url value='/images/photo_size.png'/>" id='photo1' width="140px" height="140px"/>                        		
-                        	</c:if>
-                        	<c:if test='${ ozTtTpReDto.headpic != "" and ozTtTpReDto.headpic != null }'>
-								<img src="${pageContext.request.contextPath}/personalPhoto/${ozTtTpReDto.headpic }" width="140px" height="140px" id='photo1' />
-							</c:if>
-							<input type="file" name="uploadify" id="uploadify"/>
-							<button type="button" class="btn btn-default myselfcancel" onclick="picCancel()"><fmt:message key="common_cancel"/></button>
-                        </div>
-                      </div>
+                      
+                      
                     </fieldset>
                     <fieldset>
                       <legend><fmt:message key="OZ_TT_TP_RE_password"/></legend>
-                      <div class="form-group">
-                        <label for="password" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_password"/> <span class="require">*</span></label>
-                        <div class="col-lg-8">
+                      <div class="form-group col-sm-12">
+                        <label for="password" class="col-lg-2 control-label"><fmt:message key="OZ_TT_TP_RE_password"/> <span class="require">*</span></label>
+                        <div class="col-lg-4">
                           <form:input type="password" path="password" class="form-control" id="password" />
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label for="confirm-password" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_RE_conpassword"/> <span class="require">*</span></label>
-                        <div class="col-lg-8">
+                      <div class="form-group col-sm-12">
+                        <label for="confirm-password" class="col-lg-2 control-label"><fmt:message key="OZ_TT_TP_RE_conpassword"/> <span class="require">*</span></label>
+                        <div class="col-lg-4">
                           <form:input type="password" path="conpassword" class="form-control" id="conpassword" />
                         </div>
                       </div>
@@ -179,39 +111,10 @@
    <script type="text/javascript">
   		var E0004 = '<fmt:message key="E0004" />';
 		var E0002 = '<fmt:message key="E0002" />';
-	   $(document).ready(function() {
-		    $('.inputDate').datepicker({
-		    	format: "yyyy/mm/dd",
-		        clearBtn: true,
-		        orientation: "top right",
-		        autoclose: true,
-		        todayHighlight: true
-		    }); 
-		    
-		    $("#uploadify").uploadify({
-				'uploader'         : '${pageContext.request.contextPath}/servlet/Upload?folder=personalPhoto',//+folder,
-				'swf'              : '${pageContext.request.contextPath}/js/uploadify.swf',
-				'folder'           : 'upload',
-				'fileSizeLimit'    : '2MB',
-				'queueID'          : true,
-				'auto'             : true,
-				'multi'            : false,
-				'simUploadLimit'   : 1,
-				'removeCompleted'  : false,
-				'buttonText'       : '上传',
-				'buttonClass'      : 'btn btn-primary',
-				'width'            : 50,
-				'height'           : 35,
-				'fileTypeExts'     : '*.jpg;*.jpeg;*.png',
-				'onSelect': function (file) { },
-				'onUploadSuccess': function (file, data, response) {
-					var newName = data;
-					$("#photo1").attr("src", "${pageContext.request.contextPath}/personalPhoto/"+newName);
-					$("#photo1").css({cursor:'pointer'});
-					$("#headpic").val(newName);
-				},
-			});
-		});
+		var E0003 = '<fmt:message key="E0003" />';
+		var E0005 = '<fmt:message key="E0005" />';
+		var E0006 = '<fmt:message key="E0006" />';
+		var wait = 60;
 		function sureRegister(){
 			// 确认注册
 			if (!validateForm()) return;
@@ -223,12 +126,43 @@
 		
 		function validateForm(){
 			cleanFormError();
+			var nickname = $("#nickname").val();
+			if (nickname == "") {
+				var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_TP_RE_nickname" />')
+				showErrorSpan($("#nickname"), message);
+				return false;
+			}
 			var email = $("#email").val();
 			if (email == "") {
 				var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_TP_RE_email" />')
 				showErrorSpan($("#email"), message);
 				return false;
 			}
+			var phone = $("#phone").val();
+			if (phone == "") {
+				var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_TP_RE_phone" />')
+				showErrorSpan($("#phone"), message);
+				return false;
+			}
+			var verifyCode = $("#verifyCode").val();
+			if (verifyCode == "") {
+				var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_TP_RE_verify" />')
+				showErrorSpan($("#verifyCode"), message);
+				return false;
+			}
+			// 防止恶意攻击
+			if (checkQuote(nickname)){
+				var message = E0005.replace("{0}", '<fmt:message key="OZ_TT_TP_RE_nickname" />')
+				showErrorSpan($("#nickname"), message);
+				return false;
+			}
+			
+			if (!checkEmail(email)){
+				var message = E0003.replace("{0}", '<fmt:message key="OZ_TT_TP_RE_email" />')
+				showErrorSpan($("#email"), message);
+				return false;
+			}
+			
 			var password = $("#password").val();
 			var conpassword = $("#conpassword").val();
 			if (password == "") {
@@ -251,7 +185,7 @@
 		
 		function cancel(){
 			// 这里需要访问的是主画面并且确认是不是已经登录
-			
+			location.href = "${pageContext.request.contextPath}/main/init";
 		}
 		
 		// 取消图片上传
@@ -259,6 +193,58 @@
 			$("#photo1").attr("src", "${pageContext.request.contextPath}/images/photo_size.png");
 			$("#photo1").css({cursor:'default'});
 			$("#headpic").val("");
+		}
+		
+		function getVerifyCode(){
+			var phone = $("#phone").val();
+			if (phone == "") {
+				var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_TP_RE_phone" />')
+				showErrorSpan($("#phone"), message);
+				return false;
+			}
+			if (!checkMobilePhoneForOztt(phone)){
+				var message = E0003.replace("{0}", '<fmt:message key="OZ_TT_TP_RE_phone" />')
+				showErrorSpan($("#phone"), message);
+				return false;
+			}
+			
+			// 60s后重新发送
+			time();
+  			jQuery.ajax({
+				type : 'GET',
+				contentType : 'application/json',
+				url : '${pageContext.request.contextPath}/COMMON/getVerifyCode?phoneNumber='+encodeURI(encodeURI(phone)),
+				cache : false,
+				async : false,
+				dataType : 'json',
+				success : function(data) {
+					
+				},
+				error : function(data) {
+					
+				}
+			});
+	  	}
+		
+		function time() {
+			var o = document.getElementById("buttonCode");
+
+			if (wait == 0) {
+				o.removeAttribute("disabled");
+				$(o).text('<fmt:message key="OZ_TT_TP_RE_verifyCode"/>');
+				wait = 60;
+			} else {
+				o.setAttribute("disabled", true);
+				$(o).text(wait + '<fmt:message key="OZ_TT_TP_RE_sendAgain"/>');
+				wait--;
+				setTimeout(function() {
+					time();
+				}, 1000);
+			}
+		}
+		
+		if ("false" == "${phoneVerify}") {
+			showErrorSpan($("#verifyCode"), E0006);
 		}
 		
 	</script>

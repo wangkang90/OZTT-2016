@@ -5,6 +5,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-3">
                   <div class="product-main-image">
                     <img src="" alt="" class="img-responsive" id="activeImage">
+                    <input type="hidden" value="" id="hiddenImage" />
                   </div>
                   <div class="product-other-images" id="productImage">
                     

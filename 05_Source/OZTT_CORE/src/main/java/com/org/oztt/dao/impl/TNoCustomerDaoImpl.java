@@ -9,36 +9,36 @@ import com.org.oztt.entity.TNoCustomer;
 @Repository
 public class TNoCustomerDaoImpl extends BaseDao implements TNoCustomerDao {
 
-	public int deleteByPrimaryKey(Long no) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    public int deleteByPrimaryKey(Long no) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-	public int insert(TNoCustomer record) {
-		return insert("com.org.oztt.dao.TNoCustomerDao.insert", record);
-	}
+    public int insert(TNoCustomer record) {
+        return insert("com.org.oztt.dao.TNoCustomerDao.insert", record);
+    }
 
-	public int insertSelective(TNoCustomer record) {
-		return insert("com.org.oztt.dao.TNoCustomerDao.insertSelective", record);
-	}
+    public int insertSelective(TNoCustomer record) {
+        return insert("com.org.oztt.dao.TNoCustomerDao.insertSelective", record);
+    }
 
-	public TNoCustomer selectByPrimaryKey(Long no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public TNoCustomer selectByPrimaryKey(Long no) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public int updateByPrimaryKeySelective(TNoCustomer record) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    public int updateByPrimaryKeySelective(TNoCustomer record) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-	public int updateByPrimaryKey(TNoCustomer record) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    public int updateByPrimaryKey(TNoCustomer record) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-	public String getMaxCustomerNo() {
-		return selectOne("com.org.oztt.dao.TNoCustomerDao.selectMaxCustomerNo", null);
-	}
+    public TNoCustomer getMaxCustomerNo() {
+        return selectOne("com.org.oztt.dao.TNoCustomerDao.selectMaxCustomerNo", null);
+    }
 
 }

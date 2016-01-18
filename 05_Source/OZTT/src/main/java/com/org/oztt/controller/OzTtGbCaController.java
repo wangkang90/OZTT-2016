@@ -19,7 +19,6 @@ public class OzTtGbCaController extends BaseController {
     @RequestMapping(value = "init")
     public String init(Model model) {
         try {
-            
             return "/OZ_TT_GB_CA";
         }
         catch (Exception e) {

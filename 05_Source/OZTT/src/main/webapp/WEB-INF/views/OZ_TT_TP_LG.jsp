@@ -38,25 +38,25 @@
 									role="form" id="ozTtTpLgDto" modelAttribute="ozTtTpLgDto" name="ozTtTpLgDto"
 									commandName="ozTtTpLgDto">
 									<div class="form-group">
-										<label for="email" class="col-lg-3 control-label"><fmt:message key="OZ_TT_TP_LG_email"/>
+										<label for="email" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_LG_email"/>
 											<span class="require">*</span>
 										</label>
-										<div class="col-lg-8">
+										<div class="col-lg-7">
 											<form:input type="text" path="username" class="form-control"
 												id="email" />
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="password" class="col-lg-3 control-label"><fmt:message key="OZ_TT_TP_LG_password"/>
+										<label for="password" class="col-lg-4 control-label"><fmt:message key="OZ_TT_TP_LG_password"/>
 											<span class="require">*</span>
 										</label>
-										<div class="col-lg-8">
+										<div class="col-lg-7">
 											<form:input type="password" path="password"
 												class="form-control" id="password" />
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-lg-8 col-md-offset-3 padding-left-0">
+										<div class="col-lg-8 col-md-offset-4 padding-left-0">
 											<a onclick="toForgetPw()"><fmt:message key="OZ_TT_TP_LG_fp"/></a>
 										</div>
 									</div>

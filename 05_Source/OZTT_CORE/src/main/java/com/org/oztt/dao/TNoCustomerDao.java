@@ -37,5 +37,5 @@ public interface TNoCustomerDao {
      * 取得现有数据中最大的客户号
      * @return
      */
-    String getMaxCustomerNo();
+    TNoCustomer getMaxCustomerNo();
 }

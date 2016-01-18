@@ -1,6 +1,9 @@
 package com.org.oztt.dao;
 
+import java.util.List;
+
 import com.org.oztt.entity.TConsCart;
+import com.org.oztt.formDto.ContCartItemDto;
 
 public interface TConsCartDao {
     /**
@@ -41,8 +44,22 @@ public interface TConsCartDao {
     TConsCart selectByParams(TConsCart record);
     
     /**
-     * 
+     * 删除所有购物车的数据
      * @param customerNo 用户号
      */
     void deleteAllContCard(String customerNo);
+    
+    /**
+     * 取得所有购物车的数据
+     * @param customerNo
+     * @return
+     */
+    List<TConsCart> getAllContCart(String customerNo);
+    
+    /**
+     * 取得所有购物车的数据Cookie用
+     * @param customerNo
+     * @return
+     */
+    List<ContCartItemDto> getAllContCartForCookie(String customerNo);
 }
