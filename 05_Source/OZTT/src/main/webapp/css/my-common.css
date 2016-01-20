@@ -17,3 +17,16 @@
 .uploadify {
 	padding-top:10px;
 }
+
+.login-pop-up {
+	padding: 0;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	background: inherit;
+}
+
+.login-page {
+	background: #fff;
+	padding: 22px;
+	position: relative;
+}

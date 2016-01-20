@@ -14,6 +14,31 @@
 	function goOnToBuy(){
 		location.href = "${pageContext.request.contextPath}/main/init";
 	}
+	
+	function goOnToPay(){
+		$.ajax({
+			type : "GET",
+			contentType:'application/json',
+			url : '${pageContext.request.contextPath}/COMMON/checkIsLogin',
+			dataType : "json",
+			data : "", 
+			success : function(data) {
+				if(!data.isException) {
+					if (data.isLogin) {
+						// 已经登录,则跳转到运送方式选择画面
+						location.href = "${pageContext.request.contextPath}/OZ_TT_GB_SH/init";
+					} else {
+						// 没有登录
+						$("#loginCheckRes").click();
+					}
+				}
+			},
+			error : function(data) {
+
+			}
+		});
+	}
+	
 </script>
 </head>
 
@@ -55,9 +80,11 @@
 						<button class="btn btn-default" type="button" onclick="goOnToBuy()">
 							<fmt:message key="OZ_TT_GB_CA_buyagain"/> <i class="fa fa-shopping-cart"></i>
 						</button>
-						<button class="btn btn-primary" type="submit">
+						<button class="btn btn-primary" type="button" onclick="goOnToPay()">
 							<fmt:message key="OZ_TT_GB_CA_settle"/> <i class="fa fa-check"></i>
 						</button>
+						<a href="#login-pop-up" id="loginCheckRes" class="btn btn-default fancybox-fast-view" style="display:none">&nbsp;</a>
+						
 					</div>
 				</div>
 				<!-- END CONTENT -->
@@ -66,9 +93,15 @@
 
 		</div>
 	</div>
-
+	
+	<%@ include file="./commonlogin.jsp"%>
+	<%@ include file="./commonpopup.jsp"%>
 	<%@ include file="./commonjsFooter.jsp"%>
 	<script type="text/javascript">
+		
+		
+		initContCartList();
+		
 		//这里重新加载画面的高度
 		initResize();
 		
@@ -79,8 +112,6 @@
 				$("#mainDiv").height(viewHeight - offTop - 62);
 			}
 		}
-		
-		initContCartList();
 		
 		function initContCartList(){
 			// 先清空购物车一览的内容，再获取Cookie中的购物车
@@ -221,7 +252,9 @@
 			App.initTouchspin();
 		}
 		
-		
+		function toForgetPw(){
+			location.href = "${pageContext.request.contextPath}/OZ_TT_TP_FP/init";
+		}
 		
 	</script>
 </body>

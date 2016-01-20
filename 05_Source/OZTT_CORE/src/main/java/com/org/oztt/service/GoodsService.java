@@ -131,6 +131,15 @@ public interface GoodsService {
     public boolean addContCart(String customerNo, List list) throws Exception;
     
     /**
+     * 同步购物车（替代已经存在的物品）
+     * @param list
+     * @return
+     * @throws Exception
+     */
+    @SuppressWarnings("rawtypes")
+    public boolean purchaseAsyncContCart(String customerNo, List list) throws Exception;
+    
+    /**
      * 删除购物车
      * @param list
      * @return

@@ -272,5 +272,57 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
     public List<ContCartItemDto> getAllContCartForCookie(String customerNo) throws Exception {
         return tConsCartDao.getAllContCartForCookie(customerNo);
     }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public boolean purchaseAsyncContCart(String customerNo, List list) throws Exception {
+        if (list == null)
+            return false;
+        for (int i = 0; i < list.size(); i++) {
+            Map<String, String> map = (Map<String, String>) list.get(i);
+            String goodId = map.get("goodsId");
+            String goodProperties = map.get("goodsProperties");
+            String goodQuantity = map.get("goodsQuantity");
+            // 判断属性是不是相同，如果相同则数量相加
+            TConsCart tConsCart = new TConsCart();
+            tConsCart.setGoodsid(goodId);
+            tConsCart.setCustomerno(customerNo);
+            tConsCart.setGroupspecifications(goodProperties);
+            tConsCart = tConsCartDao.selectByParams(tConsCart);
+            if (tConsCart == null) {
+                // 没有数据则需要插入数据
+                tConsCart = new TConsCart();
+                tConsCart.setAddcarttimestamp(new Date());
+                tConsCart.setAddtimestamp(new Date());
+                tConsCart.setAdduserkey(customerNo);
+                tConsCart.setCustomerno(customerNo);
+                tConsCart.setGoodsid(goodId);
+                tConsCart.setGroupspecifications(goodProperties);
+                // 商品价格
+                TGoodsPrice tGoodsPrice = new TGoodsPrice();
+                tGoodsPrice.setGoodsid(goodId);
+                tGoodsPrice = this.getGoodPrice(tGoodsPrice);
+                tConsCart.setPriceno(tGoodsPrice.getPriceno());
+                // 商品团购
+                TGoodsGroup tGoodsGroup = new TGoodsGroup();
+                tGoodsGroup.setGoodsid(goodId);
+                tGoodsGroup = this.getGoodPrice(tGoodsGroup);
+                tConsCart.setGroupno(tGoodsGroup.getGroupno());
+                
+                tConsCart.setIfgroup(CommonConstants.IS_GROUP);
+                tConsCart.setQuantity(Long.valueOf(goodQuantity));
+                tConsCartDao.insertSelective(tConsCart);
+                
+            } else {
+                // 有数据则增加数量
+                tConsCart.setQuantity(Long.parseLong(goodQuantity));
+                tConsCart.setUpdpgmid(CommonConstants.UP_CART);
+                tConsCart.setUpdtimestamp(new Date());
+                tConsCart.setUpduserkey(customerNo);
+                tConsCartDao.updateByPrimaryKey(tConsCart);
+            }
+        }
+        return true;
+    }
     
 }

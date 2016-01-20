@@ -33,6 +33,100 @@
 		location.href = "${pageContext.request.contextPath}/OZ_TT_TP_LG/logout";
 	}
 	
+	var E0002 = '<fmt:message key="E0002" />';
+	var E0001 = '<fmt:message key="E0001" />';
+	function validateCheckLogin(){
+		cleanFormError();
+		var username = $("#username").val();
+		var password = $("#password").val();
+		if (username == "") {
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_TP_LG_email" />')
+			showErrorSpan($("#username"), message);
+			return false;
+		}
+		if (password == "") {
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_TP_LG_password" />')
+			showErrorSpan($("#password"), message);
+			return false;
+		}
+		return true;
+	}
+	
+	// 确认画面登录
+	function checkLogin(){
+		if (!validateCheckLogin()) return;
+		var username = $("#username").val();
+		var password = $("#password").val();
+		var dataJSON = {
+				"loginname":username,
+				"password":password
+		}
+		$.ajax({
+			type : "POST",
+			contentType:'application/json',
+			url : '${pageContext.request.contextPath}/COMMON/ajaxLogin',
+			dataType : "json",
+			data : JSON.stringify(dataJSON), 
+			success : function(data) {
+				if(!data.isException){
+
+					if (!data.canLogin) {
+						// 登录错误
+						showErrorSpan($("#username"), E0001);
+					} else {
+						// 登录成功
+						// 同步购物车的内容
+						var needSyncData = getCookie("contcart");
+						var contCartFromDB;
+						if (getJsonSize(needSyncData) > 0) {
+							$.ajax({
+								type : "POST",
+								contentType:'application/json',
+								url : '${pageContext.request.contextPath}/COMMON/purchaseAsyncContCart',
+								dataType : "json",
+								async:false,
+								data : needSyncData, 
+								success : function(data) {
+									if(!data.isException){
+										// 同步购物车成功
+										contCartFromDB = data.conscars;
+									} else {
+										// 同步购物车失败
+									}
+								},
+								error : function(data) {
+									
+								}
+							});
+						}
+						
+						// 用户登录同步购物车里面的内容
+						if (getJsonSize(contCartFromDB) > 0) {
+							var contcartJSONFromDB = JSON.parse(contCartFromDB);
+							var contcartArrayFromDB = eval(contCartFromDB);
+
+							// 如果Cookie购物车里面没有数据，更新购物车
+							var tempCookie = [];
+							for(var i=0; i<contcartArrayFromDB.length; i++){
+								tempCookie.push(contcartArrayFromDB[i]);
+							}
+							delCookie("contcart");
+							addCookie("contcart",JSON.stringify(tempCookie))
+						}
+						
+						location.href = "${pageContext.request.contextPath}/OZ_TT_GB_SH/init";
+					}
+					
+				} else {
+					// 系统异常
+				}
+			},
+			error : function(data) {
+				
+			}
+		});
+	}
+	
 	function viewProductPopUp(goodsId){
 		jQuery.ajax({
 			type : 'GET',
@@ -409,57 +503,39 @@
 			var sessionUserId = '${sessionUserId}';
 			if (sessionUserId != null && sessionUserId != "") {
 				var needSyncData = getCookie("contcart");
-				if (getJsonSize(needSyncData) > 0) {
-					$.ajax({
-						type : "POST",
-						contentType:'application/json',
-						url : '${pageContext.request.contextPath}/COMMON/addConsCart',
-						dataType : "json",
-						data : needSyncData, 
-						success : function(data) {
-							if(!data.isException){
-								// 同步购物车成功
-								
-							} else {
-								// 同步购物车失败
-							}
-						},
-						error : function(data) {
-							
+				var contCartFromDB;
+				$.ajax({
+					type : "POST",
+					contentType:'application/json',
+					url : '${pageContext.request.contextPath}/COMMON/addConsCart',
+					dataType : "json",
+					async: false,
+					data : needSyncData, 
+					success : function(data) {
+						if(!data.isException){
+							// 同步购物车成功
+							contCartFromDB = data.conscars;
+						} else {
+							// 同步购物车失败
 						}
-					});
-				}
+					},
+					error : function(data) {
+						
+					}
+				});
+
 				// 用户登录同步购物车里面的内容
-				var contCartFromDB = '${conscars}';
 				if (getJsonSize(contCartFromDB) > 0) {
 					var contcartJSONFromDB = JSON.parse(contCartFromDB);
 					var contcartArrayFromDB = eval(contCartFromDB);
-					var contcartFromCookie = getCookie("contcart");
-					if (getJsonSize(contcartFromCookie) == 0) {
-						// 如果Cookie购物车里面没有数据，更新购物车
-						var tempCookie = [];
-						for(var i=0; i<contcartArrayFromDB.length; i++){
-							tempCookie.push(contcartArrayFromDB[i]);
-						}
-						delCookie("contcart");
-						addCookie("contcart",JSON.stringify(tempCookie))
-					} else {
-						// 购物车中有数据
-						var contcartJSONFromCookie = JSON.parse(contcartFromCookie);
-						var contcartArrayFromCookie = eval(contcartJSONFromCookie);
-						for(var i=0; i<contcartArrayFromCookie.length; i++){
-							for(var j=0; j<contcartArrayFromDB.length; j++){
-								if (contcartArrayFromCookie[i].goodsId == contcartArrayFromDB[j].goodsId 
-										&& contcartArrayFromCookie[i].goodsProperties == JSON.stringify(contcartArrayFromDB[j].goodsProperties) ) {
-									contcartArrayFromCookie[i].goodsQuantity = parseFloat(contcartArrayFromCookie[i].goodsQuantity) + parseFloat(contcartArrayFromDB[j].goodsQuantity);
-									contcartArrayFromCookie[i].goodsPrice = parseFloat(contcartArrayFromCookie[i].goodsPrice) + parseFloat(contcartArrayFromDB[j].goodsPrice);
-								}
-							}
-						}
-						
-						delCookie("contcart");
-						addCookie("contcart",JSON.stringify(contcartJSONFromCookie))
+
+					// 如果Cookie购物车里面没有数据，更新购物车
+					var tempCookie = [];
+					for(var i=0; i<contcartArrayFromDB.length; i++){
+						tempCookie.push(contcartArrayFromDB[i]);
 					}
+					delCookie("contcart");
+					addCookie("contcart",JSON.stringify(tempCookie))
 				}
 			}
 		}

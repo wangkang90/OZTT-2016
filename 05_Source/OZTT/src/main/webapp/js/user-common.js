@@ -614,9 +614,11 @@ function makeMesDiv(obj){
 	callerTopPosition = callerTopPosition  -inputHeight + 33;
 
 	$(divFormError).css({
+		"z-index": 9999,
 		top:callerTopPosition,
 		left:callerleftPosition,
 		opacity:0
+		
 	});
 	$(divFormError).fadeTo("fast",0.8);
 }

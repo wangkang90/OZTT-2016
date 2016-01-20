@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.util.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +18,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.org.oztt.contants.CommonConstants;
+import com.org.oztt.entity.TCustomerLoginHis;
+import com.org.oztt.entity.TCustomerLoginInfo;
+import com.org.oztt.formDto.ContCartItemDto;
+import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.service.CommonService;
+import com.org.oztt.service.CustomerService;
 import com.org.oztt.service.GoodsService;
 
 /**
@@ -31,10 +39,13 @@ import com.org.oztt.service.GoodsService;
 public class CommonController extends BaseController {
 
     @Resource
-    private GoodsService goodsService;
-    
+    private GoodsService  goodsService;
+
     @Resource
     private CommonService commonService;
+    
+    @Resource
+    private CustomerService customerService;
 
     /**
      * 得到产品信息
@@ -82,6 +93,20 @@ public class CommonController extends BaseController {
                 return mapReturn;
             }
             goodsService.addContCart(customerNo, list);
+            
+            String imgUrl = super.getApplicationMessage("saveImgUrl");
+            
+            // 登陆成功以后取得购物车中的数据然后更新Cookie
+            List<ContCartItemDto> consCarts = goodsService.getAllContCartForCookie(customerNo);
+            if (!CollectionUtils.isEmpty(consCarts)) {
+                for (ContCartItemDto dto : consCarts) {
+                    dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                    dto.setGoodsPropertiesDB(StringUtils.EMPTY);
+                    dto.setGoodsImage(imgUrl + dto.getGoodsId() + CommonConstants.PATH_SPLIT + dto.getGoodsImage());
+                }
+            }
+
+            mapReturn.put("conscars", JSONObject.toJSONString(consCarts));
 
             // 后台维护的时候提示让以逗号隔开
             mapReturn.put("isException", false);
@@ -181,7 +206,138 @@ public class CommonController extends BaseController {
             return null;
         }
     }
+
+    /**
+     * 检查是否已经登录
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/checkIsLogin")
+    public Map<String, Object> checkIsLogin(HttpServletRequest request, HttpSession session) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            //获取Session中的客户号
+            String customerNo = (String) session.getAttribute(CommonConstants.SESSION_CUSTOMERNO);
+            if (customerNo != null && customerNo.length() > 0) {
+                mapReturn.put("isLogin", true);
+            }
+            else {
+                mapReturn.put("isLogin", false);
+            }
+
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return null;
+        }
+    }
+
+    /**
+     * ajax登录
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/ajaxLogin")
+    public Map<String, Object> ajaxLogin(HttpServletRequest request, HttpSession session,
+            @RequestBody Map<String, String> map) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            // 进入登录画面
+            String username = map.get("loginname");
+            String password = map.get("password");
+            TCustomerLoginInfo tCustomerLoginInfo = customerService.userLogin(username, password);
+            if (tCustomerLoginInfo == null) {
+                // 没有取到数据
+                mapReturn.put("canLogin", false);
+                mapReturn.put("isException", false);
+                return mapReturn;
+            }
+            else if (CommonConstants.CANNOT_LOGIN.equals(tCustomerLoginInfo.getCanlogin())) {
+                mapReturn.put("canLogin", false);
+                mapReturn.put("isException", false);
+                return mapReturn;
+            }
+
+            // 登录成功插入历史记录
+            if (CommonConstants.HAS_LOGINED_STATUS.equals(tCustomerLoginInfo.getLoginstatus())) {
+                // 用户已经登录着，这时不需要插入历史数据也不需要更新登录表
+
+            }
+            else {
+                // 插入历史登录数据并且更新登录状态
+                TCustomerLoginHis tCustomerLoginHis = new TCustomerLoginHis();
+                tCustomerLoginHis.setCustomerno(tCustomerLoginInfo.getCustomerno());
+                customerService.insertLoginHisAndUpdateStatus(tCustomerLoginHis);
+            }
+
+
+            // 可以取到数据，将所用的数据放入session 中
+            session.setAttribute(CommonConstants.SESSION_CUSTOMERNO, tCustomerLoginInfo.getCustomerno());
+            mapReturn.put("canLogin", true);
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return null;
+        }
+    }
     
     
+    /**
+     * 加入购物车()
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/purchaseAsyncContCart")
+    @ResponseBody
+    public Map<String, Object> purchaseAsyncContCart(HttpServletRequest request, HttpServletResponse response,
+            HttpSession session, @RequestBody List<Map<String, String>> list) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            // 加入购物车操作，判断所有的属性是不是相同，相同在添加
+            String customerNo = (String) session.getAttribute(CommonConstants.SESSION_CUSTOMERNO);
+            if (customerNo == null) {
+                return mapReturn;
+            }
+            goodsService.purchaseAsyncContCart(customerNo, list);
+            
+            String imgUrl = super.getApplicationMessage("saveImgUrl");
+
+            // 当前用户已经登录, 直接跳转到主菜单画面。
+            // 这里当用户已经登录的时候，就不需要再插入历史记录了。
+            // 登陆成功以后取得购物车中的数据然后更新Cookie
+            List<ContCartItemDto> consCarts = goodsService.getAllContCartForCookie(customerNo);
+            if (!CollectionUtils.isEmpty(consCarts)) {
+                for (ContCartItemDto dto : consCarts) {
+                    dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                    dto.setGoodsPropertiesDB(StringUtils.EMPTY);
+                    dto.setGoodsImage(imgUrl + dto.getGoodsId() + CommonConstants.PATH_SPLIT + dto.getGoodsImage());
+                }
+            }
+
+            mapReturn.put("conscars", JSONObject.toJSONString(consCarts));
+
+            // 后台维护的时候提示让以逗号隔开
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return null;
+        }
+
+    }
 
 }
