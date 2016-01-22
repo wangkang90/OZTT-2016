@@ -324,5 +324,10 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         }
         return true;
     }
+
+    @Override
+    public List<ContCartItemDto> getAllContCartForBuy(String customerNo) throws Exception {
+        return tConsCartDao.getAllContCartForBuy(customerNo);
+    }
     
 }

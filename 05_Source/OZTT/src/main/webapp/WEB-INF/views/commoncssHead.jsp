@@ -15,9 +15,9 @@
   <link rel="shortcut icon" href="${ctx}/favicon.ico"  type="image/x-icon" />
 
   <!-- Fonts START -->
-  <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=all" rel="stylesheet" type="text/css">
-  <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow&subset=all" rel="stylesheet" type="text/css">
-  <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900&subset=all" rel="stylesheet" type="text/css"><!--- fonts for slider on the index page -->
+  <link href="${ctx}/css/fontsopensans.css" rel="stylesheet" type="text/css">
+  <link href="${ctx}/css/fontsptnarrow.css" rel="stylesheet" type="text/css">
+  <link href="${ctx}/css/fontsanspro.css" rel="stylesheet" type="text/css"><!--- fonts for slider on the index page -->
   <!-- Fonts END -->
   <!-- Global styles START -->          
   <link href="<c:url value='/assets/plugins/font-awesome/css/font-awesome.min.css' />" rel="stylesheet" type="text/css">
@@ -26,7 +26,7 @@
    
   <!-- Page level plugin styles START -->
   <link href="<c:url value='/assets/plugins/fancybox/source/jquery.fancybox.css' />" rel="stylesheet">  
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"><!-- for slider-range -->
+  <link rel="stylesheet" href="${ctx}/css/jquery-ui.css"><!-- for slider-range -->
               
   <link href="<c:url value='/assets/plugins/bxslider/jquery.bxslider.css' />" rel="stylesheet">
   <link rel="stylesheet" href="<c:url value='/assets/plugins/layerslider/css/layerslider.css' />" type="text/css">

@@ -252,6 +252,23 @@
 
 	</select>
 	
-	
+	<select id="getAllContCartForBuy" resultType="com.org.oztt.formDto.ContCartItemDto" parameterType="java.lang.String">
+		select
+		a.goodsId,
+		b.goodsName,
+		b.goodsThumbnail as goodsImage,
+		a.quantity as goodsQuantity,
+		(case when a.ifGroup = '1' then d.groupPrice 
+		      else  c.goodsClassValue
+		      end )* a.quantity  as  goodsPrice, 
+		a.groupSpecifications as goodsPropertiesDB
+		from t_cons_cart a
+		inner join t_goods b on a.goodsId = b.goodsId
+		inner join t_goods_price c on a.goodsId = c.goodsId
+		inner join t_goods_group d on a.goodsId = d.goodsId
+		where 1 = 1 and a.customerNo = #{customerno,jdbcType=VARCHAR}
+
+	</select>
+
 	
 </mapper>

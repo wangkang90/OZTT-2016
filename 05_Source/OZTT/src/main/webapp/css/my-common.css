@@ -30,3 +30,42 @@
 	padding: 22px;
 	position: relative;
 }
+
+.address-pop-up {
+	padding: 0;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	background: inherit;
+}
+
+.address-page {
+	background: #fff;
+	padding: 22px;
+	position: relative;
+}
+
+
+.address-content ul {
+	margin: 0;
+	padding: 0 8px;
+}
+.address-content li {
+	
+	list-style: none;
+	margin: 10px 10px;
+	padding: 9px 5px;
+	width: 100%;
+	overflow: hidden;
+	font-size:2rem;
+	border:3px solid white;
+}
+
+.showli{
+	border:3px solid red;
+}
+
+.address-content li:hover,
+.address-content li:active,
+.address-content li:focus{
+	border:3px solid red;
+}

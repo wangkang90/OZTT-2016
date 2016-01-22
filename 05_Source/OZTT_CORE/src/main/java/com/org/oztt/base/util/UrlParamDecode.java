@@ -70,9 +70,9 @@ public class UrlParamDecode {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(paramEncode("1002"));
+		System.out.println(paramEncode("VITALITYORIGI002"));
 		System.out.println(paramEncode("2000"));
-		System.out.println(paramDecode(paramEncode("1002")));
+		System.out.println(paramDecode(paramEncode("VITALITYORIGI002")));
 		System.out.println(paramDecode(paramEncode("2000")));
     }
 }

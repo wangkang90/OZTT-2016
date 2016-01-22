@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.oztt.dao.TAddressInfoDao" >
+  <resultMap id="BaseResultMap" type="com.org.oztt.entity.TAddressInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="customerNo" property="customerno" jdbcType="VARCHAR" />
+    <result column="deliveryMethod" property="deliverymethod" jdbcType="VARCHAR" />
+    <result column="countryCode" property="countrycode" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="suburb" property="suburb" jdbcType="VARCHAR" />
+    <result column="addressDetails" property="addressdetails" jdbcType="VARCHAR" />
+    <result column="postCode" property="postcode" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="contactTel" property="contacttel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customerNo, deliveryMethod, countryCode, state, city, suburb, addressDetails, 
+    postCode, receiver, contactTel
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_address_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_address_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.org.oztt.entity.TAddressInfo" >
+    insert into t_address_info (id, customerNo, deliveryMethod, 
+      countryCode, state, city, 
+      suburb, addressDetails, postCode, 
+      receiver, contactTel)
+    values (#{id,jdbcType=BIGINT}, #{customerno,jdbcType=VARCHAR}, #{deliverymethod,jdbcType=VARCHAR}, 
+      #{countrycode,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{suburb,jdbcType=VARCHAR}, #{addressdetails,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, 
+      #{receiver,jdbcType=VARCHAR}, #{contacttel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.org.oztt.entity.TAddressInfo" >
+    insert into t_address_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerno != null" >
+        customerNo,
+      </if>
+      <if test="deliverymethod != null" >
+        deliveryMethod,
+      </if>
+      <if test="countrycode != null" >
+        countryCode,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="suburb != null" >
+        suburb,
+      </if>
+      <if test="addressdetails != null" >
+        addressDetails,
+      </if>
+      <if test="postcode != null" >
+        postCode,
+      </if>
+      <if test="receiver != null" >
+        receiver,
+      </if>
+      <if test="contacttel != null" >
+        contactTel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="customerno != null" >
+        #{customerno,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverymethod != null" >
+        #{deliverymethod,jdbcType=VARCHAR},
+      </if>
+      <if test="countrycode != null" >
+        #{countrycode,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="suburb != null" >
+        #{suburb,jdbcType=VARCHAR},
+      </if>
+      <if test="addressdetails != null" >
+        #{addressdetails,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttel != null" >
+        #{contacttel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TAddressInfo" >
+    update t_address_info
+    <set >
+      <if test="customerno != null" >
+        customerNo = #{customerno,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverymethod != null" >
+        deliveryMethod = #{deliverymethod,jdbcType=VARCHAR},
+      </if>
+      <if test="countrycode != null" >
+        countryCode = #{countrycode,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="suburb != null" >
+        suburb = #{suburb,jdbcType=VARCHAR},
+      </if>
+      <if test="addressdetails != null" >
+        addressDetails = #{addressdetails,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null" >
+        postCode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttel != null" >
+        contactTel = #{contacttel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TAddressInfo" >
+    update t_address_info
+    set customerNo = #{customerno,jdbcType=VARCHAR},
+      deliveryMethod = #{deliverymethod,jdbcType=VARCHAR},
+      countryCode = #{countrycode,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      suburb = #{suburb,jdbcType=VARCHAR},
+      addressDetails = #{addressdetails,jdbcType=VARCHAR},
+      postCode = #{postcode,jdbcType=VARCHAR},
+      receiver = #{receiver,jdbcType=VARCHAR},
+      contactTel = #{contacttel,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getAllAddress" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_address_info
+    where customerNo = #{customerno,jdbcType=VARCHAR}
+    and deliveryMethod = #{deliverymethod,jdbcType=VARCHAR}
+  </select>
+</mapper>

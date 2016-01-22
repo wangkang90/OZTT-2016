@@ -65,4 +65,9 @@ public class TConsCartDaoImpl extends BaseDao implements TConsCartDao {
         return select("com.org.oztt.dao.TConsCartDao.getAllContCartForCookie", customerNo);
     }
 
+    @Override
+    public List<ContCartItemDto> getAllContCartForBuy(String customerNo) {
+        return select("com.org.oztt.dao.TConsCartDao.getAllContCartForBuy", customerNo);
+    }
+
 }
