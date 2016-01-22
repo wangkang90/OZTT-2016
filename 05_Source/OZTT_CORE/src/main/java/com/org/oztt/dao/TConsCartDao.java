@@ -62,4 +62,13 @@ public interface TConsCartDao {
      * @return
      */
     List<ContCartItemDto> getAllContCartForCookie(String customerNo);
+    
+    /**
+     * 取得购物车中这次要买的内容
+     * @param customerNo
+     * @return
+     */
+    List<ContCartItemDto> getAllContCartForBuy(String customerNo);
+    
+    
 }

@@ -1,42 +1,93 @@
 
 <!-- BEGIN fast view of a product -->
-<div id="address-pop-up" style="display: none; width: 500px;height:300px">
-	<div class="login-page login-pop-up">
+<div id="address-pop-up" style="display: none; width: 700px;height:450px">
+	<div class="address-page address-pop-up">
 		<div>
 			<div style="text-align: center">
-			<h1 >
-				<fmt:message key="OZ_TT_TP_LG_h1" />
+			<h1 id="h1Msg">
+				
 			</h1>
 			</div>
 			<div class="content-form-page">
 				<div class="row">
 					<div class="col-md-12 col-sm-12">
-						<div class="form-group" style="padding-top: 15px;">
-							<label for="username" class="col-lg-4 control-label"><fmt:message
-									key="OZ_TT_TP_LG_email" /> <span class="require">*</span> </label>
-							<div class="col-lg-7">
-								<input type="text" class="form-control" id="username" />
+						<div class="form-group col-sm-12">
+							<label for="country" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
+								<fmt:message key="common_address_country" /> <span class="require">*</span> 
+							</label>
+							<div class="col-lg-4">
+								<input type="text" class="form-control" id="country" maxlength="20"/>
+							</div>
+							<label for="state" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
+								<fmt:message key="common_address_state" /> <span class="require">*</span> 
+							</label>
+							<div class="col-lg-4">
+								<input type="text" class="form-control" id="state" maxlength="50"/>
 							</div>
 						</div>
-						<div class="form-group" style="padding-top: 30px;">
-							<label for="password" class="col-lg-4 control-label"><fmt:message
-									key="OZ_TT_TP_LG_password" /> <span class="require">*</span> </label>
-							<div class="col-lg-7">
-								<input type="password" class="form-control" id="password" />
+						
+						<div class="form-group col-sm-12">
+							<label for="city" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
+								<fmt:message key="common_address_city" /> <span class="require">*</span> 
+							</label>
+							<div class="col-lg-4">
+								<input type="text" class="form-control" id="city" maxlength="50"/>
+							</div>
+							
+							<label for="suburb" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
+								<fmt:message key="common_address_suburb" /> <span class="require">*</span> 
+							</label>
+							<div class="col-lg-4">
+								<input type="text" class="form-control" id="suburb" maxlength="50"/>
 							</div>
 						</div>
-						<div class="row" style="padding-top: 30px;">
-							<div class="col-lg-8 col-md-offset-4 padding-left-0">
-								<a onclick="toForgetPw()"><fmt:message key="OZ_TT_TP_LG_fp" /></a>
+						
+						<div class="form-group col-sm-12">
+							<label for="details" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
+								<fmt:message key="common_address_details" /> <span class="require">*</span> 
+							</label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" id="details" maxlength="200"/>
 							</div>
 						</div>
+						
+						
+						<div class="form-group col-sm-12">
+							<label for="post" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
+								<fmt:message key="common_address_post" /> <span class="require">*</span> 
+							</label>
+							<div class="col-lg-4">
+								<input type="text" class="form-control" id="post" maxlength="20"/>
+							</div>
+							<div class="col-lg-6">
+							</div>
+						</div>
+						
+						<div class="form-group col-sm-12">
+							<label for="reveiver" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
+								<fmt:message key="common_address_reveiver" /> <span class="require">*</span> 
+							</label>
+							<div class="col-lg-4">
+								<input type="text" class="form-control" id="reveiver" maxlength="50"/>
+							</div>
+							
+							<label for="contacttel" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
+								<fmt:message key="common_address_contacttel" /> <span class="require">*</span> 
+							</label>
+							<div class="col-lg-4">
+								<input type="text" class="form-control" id="contacttel" maxlength="20"/>
+							</div>
+						</div>
+						
+
 						<div class="row">
 							<div
 								class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20">
-								<button type="button" class="btn btn-primary" onclick="checkLogin()">
-									<fmt:message key="OZ_TT_TP_LG_btlogin" />
+								<button type="button" class="btn btn-primary" onclick="submitAddress()">
+									<fmt:message key="common_address_btnsubmit" />
 								</button>
 							</div>
+							<input type="hidden" value="" id="hiddenAddressId" />
 						</div>
 
 					</div>

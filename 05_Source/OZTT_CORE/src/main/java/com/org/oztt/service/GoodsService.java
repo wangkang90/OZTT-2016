@@ -179,4 +179,12 @@ public interface GoodsService {
      * @throws Exception
      */
     public List<ContCartItemDto> getAllContCartForCookie(String customerNo) throws Exception;
+    
+    /**
+     * 取得DB中购物车的数据
+     * @param customerNo
+     * @return
+     * @throws Exception
+     */
+    public List<ContCartItemDto> getAllContCartForBuy(String customerNo) throws Exception;
 }

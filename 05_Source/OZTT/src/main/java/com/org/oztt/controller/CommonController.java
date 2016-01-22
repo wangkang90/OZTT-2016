@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.org.oztt.contants.CommonConstants;
+import com.org.oztt.entity.TAddressInfo;
 import com.org.oztt.entity.TCustomerLoginHis;
 import com.org.oztt.entity.TCustomerLoginInfo;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.GoodItemDto;
+import com.org.oztt.service.AddressService;
 import com.org.oztt.service.CommonService;
 import com.org.oztt.service.CustomerService;
 import com.org.oztt.service.GoodsService;
@@ -39,13 +41,16 @@ import com.org.oztt.service.GoodsService;
 public class CommonController extends BaseController {
 
     @Resource
-    private GoodsService  goodsService;
+    private GoodsService    goodsService;
 
     @Resource
-    private CommonService commonService;
-    
+    private CommonService   commonService;
+
     @Resource
     private CustomerService customerService;
+
+    @Resource
+    private AddressService  addressService;
 
     /**
      * 得到产品信息
@@ -93,9 +98,9 @@ public class CommonController extends BaseController {
                 return mapReturn;
             }
             goodsService.addContCart(customerNo, list);
-            
+
             String imgUrl = super.getApplicationMessage("saveImgUrl");
-            
+
             // 登陆成功以后取得购物车中的数据然后更新Cookie
             List<ContCartItemDto> consCarts = goodsService.getAllContCartForCookie(customerNo);
             if (!CollectionUtils.isEmpty(consCarts)) {
@@ -277,7 +282,6 @@ public class CommonController extends BaseController {
                 customerService.insertLoginHisAndUpdateStatus(tCustomerLoginHis);
             }
 
-
             // 可以取到数据，将所用的数据放入session 中
             session.setAttribute(CommonConstants.SESSION_CUSTOMERNO, tCustomerLoginInfo.getCustomerno());
             mapReturn.put("canLogin", true);
@@ -290,8 +294,7 @@ public class CommonController extends BaseController {
             return null;
         }
     }
-    
-    
+
     /**
      * 加入购物车()
      * 
@@ -311,7 +314,7 @@ public class CommonController extends BaseController {
                 return mapReturn;
             }
             goodsService.purchaseAsyncContCart(customerNo, list);
-            
+
             String imgUrl = super.getApplicationMessage("saveImgUrl");
 
             // 当前用户已经登录, 直接跳转到主菜单画面。
@@ -338,6 +341,162 @@ public class CommonController extends BaseController {
             return null;
         }
 
+    }
+    
+    
+
+    /**
+     * 提交地址
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/submitAddress")
+    @ResponseBody
+    public Map<String, Object> submitAddress(HttpServletRequest request, HttpServletResponse response,
+            HttpSession session, @RequestBody Map<String, String> reqMap) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            // 加入购物车操作，判断所有的属性是不是相同，相同在添加
+            String customerNo = (String) session.getAttribute(CommonConstants.SESSION_CUSTOMERNO);
+            if (customerNo == null) {
+                return mapReturn;
+            }
+            String addressId = reqMap.get("addressId");
+            // 更新或者增加地址
+            TAddressInfo info = new TAddressInfo();
+            
+            info.setAddressdetails(reqMap.get("details"));
+            info.setCity(reqMap.get("city"));
+            info.setContacttel(reqMap.get("contacttel"));
+            info.setCountrycode(reqMap.get("country"));
+            info.setCustomerno(customerNo);
+            info.setDeliverymethod(reqMap.get("deliverymethod"));
+            info.setPostcode(reqMap.get("post"));
+            info.setReceiver(reqMap.get("reveiver"));
+            info.setState(reqMap.get("state"));
+            info.setSuburb(reqMap.get("suburb"));
+            if (StringUtils.isEmpty(addressId)) {
+                // 插入数据
+                addressService.insertAddress(info);
+            }
+            else {
+                info.setId(Long.valueOf(addressId));
+                // 更新数据
+                addressService.updateAddress(info);
+            }
+            // 取得所有的地址，返回画面更新地址信息
+            // 获取所有的地址
+            List<TAddressInfo> infoList = addressService.getAllAddress(customerNo, reqMap.get("deliverymethod"));
+            mapReturn.put("adrList", infoList);
+
+            // 后台维护的时候提示让以逗号隔开
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return null;
+        }
+    }
+
+    /**
+     * 获取单个地址
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/getAddressById")
+    @ResponseBody
+    public Map<String, Object> getAddressById(HttpServletRequest request, HttpServletResponse response,
+            HttpSession session, @RequestParam String addressId) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            // 获取地址
+            TAddressInfo info = addressService.getAddressById(Long.valueOf(addressId));
+            mapReturn.put("item", info);
+            // 后台维护的时候提示让以逗号隔开
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return null;
+        }
+    }
+
+    /**
+     * 获取指定客户下所有的地址
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/getAllAddress")
+    @ResponseBody
+    public Map<String, Object> getAllAddress(HttpServletRequest request, HttpServletResponse response,
+            HttpSession session, @RequestParam String method) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            // 加入购物车操作，判断所有的属性是不是相同，相同在添加
+            String customerNo = (String) session.getAttribute(CommonConstants.SESSION_CUSTOMERNO);
+            if (customerNo == null) {
+                return mapReturn;
+            }
+            // 获取所有的地址
+            List<TAddressInfo> infoList = addressService.getAllAddress(customerNo, method);
+            mapReturn.put("adrList", infoList);
+            // 后台维护的时候提示让以逗号隔开
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return null;
+        }
+    }
+    
+    /**
+     * 删除地址
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/deleteAddressById")
+    @ResponseBody
+    public Map<String, Object> deleteAddressById(HttpServletRequest request, HttpServletResponse response,
+            HttpSession session, @RequestParam String addressId) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            // 加入购物车操作，判断所有的属性是不是相同，相同在添加
+            String customerNo = (String) session.getAttribute(CommonConstants.SESSION_CUSTOMERNO);
+            if (customerNo == null) {
+                return mapReturn;
+            }
+            // 获取地址
+            TAddressInfo info = addressService.getAddressById(Long.valueOf(addressId));
+
+            // 获取所有的地址
+            addressService.deleteAddress(Long.valueOf(addressId));
+            
+            // 获取所有的地址
+            List<TAddressInfo> infoList = addressService.getAllAddress(customerNo, info.getDeliverymethod());
+            mapReturn.put("adrList", infoList);
+            // 后台维护的时候提示让以逗号隔开
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return null;
+        }
     }
 
 }
