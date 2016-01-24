@@ -5,6 +5,7 @@ CREATE TABLE `t_customer_login_info` (
   `loginId` varchar(50) NOT NULL,
   `loginPass` varchar(255) NOT NULL,
   `loginStatus` char(1),
+  `canLogin` char(1),
   `deleteFlg` char(1) NOT NULL,
   `addTimestamp` timestamp NULL DEFAULT NULL,
   `addUserKey` varchar(40) DEFAULT NULL,
