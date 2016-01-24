@@ -1,4 +1,4 @@
-﻿DROP TABLE IF EXISTS `t_goods`;
+DROP TABLE IF EXISTS `t_goods`;
 CREATE TABLE `t_goods` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `goodsId` varchar(16) NOT NULL,
