@@ -227,7 +227,7 @@
     where orderNo = #{orderno,jdbcType=VARCHAR}
   </delete>
   
-  <select id="selectByOrderId" resultMap="com.org.oztt.formDto.ContCartItemDto" parameterType="java.lang.String" >
+  <select id="selectByOrderId" resultType="com.org.oztt.formDto.ContCartItemDto" parameterType="java.lang.String" >
     select 
     a.goodsId,
 	b.goodsName,

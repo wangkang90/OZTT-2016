@@ -251,7 +251,7 @@
     where orderNo = #{orderno,jdbcType=VARCHAR}
   </delete>
   
-  <select id="getOrderByParamForPage" resultMap="com.org.oztt.formDto.OrderInfoDto" parameterType="map">
+  <select id="getOrderByParamForPage" resultType="com.org.oztt.formDto.OrderInfoDto" parameterType="map">
 		SELECT
 		orderNo as orderId,
 		addTimestamp as orderDate
