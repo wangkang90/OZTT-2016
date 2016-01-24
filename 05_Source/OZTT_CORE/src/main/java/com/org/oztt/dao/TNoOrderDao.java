@@ -32,4 +32,11 @@ public interface TNoOrderDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TNoOrder record);
+    
+    /**
+     * 获取最大的订单号
+     * @return
+     */
+    TNoOrder getMaxOrderNo();
+
 }

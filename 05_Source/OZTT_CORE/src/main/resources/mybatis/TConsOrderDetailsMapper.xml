@@ -221,4 +221,22 @@
       updPgmId = #{updpgmid,jdbcType=VARCHAR}
     where no = #{no,jdbcType=BIGINT}
   </update>
+  
+  <delete id="deleteByOrderNo" parameterType="java.lang.String" >
+    delete from t_cons_order_details
+    where orderNo = #{orderno,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="selectByOrderId" resultMap="com.org.oztt.formDto.ContCartItemDto" parameterType="java.lang.String" >
+    select 
+    a.goodsId,
+	b.goodsName,
+	b.goodsThumbnail as goodsImage,
+	a.groupCurrentQuantity as goodsQuantity,
+	a.unitPrice as goodsPrice, 
+	a.groupMaxQuantity as goodsPropertiesDB
+    from t_cons_order_details a
+    inner join t_goods b on a.goodsId = b.goodsId
+    where a.orderNo = #{orderno,jdbcType=VARCHAR}
+  </select>
 </mapper>

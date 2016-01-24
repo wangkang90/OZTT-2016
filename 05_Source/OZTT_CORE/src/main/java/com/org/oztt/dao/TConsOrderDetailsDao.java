@@ -1,6 +1,9 @@
 package com.org.oztt.dao;
 
+import java.util.List;
+
 import com.org.oztt.entity.TConsOrderDetails;
+import com.org.oztt.formDto.ContCartItemDto;
 
 public interface TConsOrderDetailsDao {
     /**
@@ -32,4 +35,16 @@ public interface TConsOrderDetailsDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TConsOrderDetails record);
+    
+    /**
+     * 根据订单号删除记录
+     */
+    int deleteByOrderNo(String orderNo);
+    
+    /**
+     * 根据订单号检索订单详情
+     * @param orderId
+     * @return
+     */
+    List<ContCartItemDto> selectByOrderId(String orderId);
 }
