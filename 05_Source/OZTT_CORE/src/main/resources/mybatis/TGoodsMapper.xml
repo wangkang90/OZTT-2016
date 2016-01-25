@@ -353,22 +353,42 @@
 	<select id="getFirstThreeNewArravail" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from t_goods
+		from t_goods a
+		inner join t_goods_price b on a.goodsId = b.goodsId
+		inner join t_goods_group c on a.goodsId = c.goodsId
 		where newSaleFlg = '1' and onSaleFlg= '1'
 		limit 3
 	</select>
 
 	<select id="getAllNewArravail" resultMap="BaseResultMap">
 		select
-		<include refid="Base_Column_List" />
-		from t_goods
+		a.no, a.goodsId, a.classId, a.goodsBrand, a.goodsName, a.goodsDesc, a.goodsComments,
+		a.goodsThumbnail,
+		a.goodsSmallPic, a.goodsNormalPic, a.onSaleFlg, a.hotSaleFlg, a.newSaleFlg, 
+		(case when c.groupPrice is not null  then c.groupPrice 
+		      else  b.goodsClassValue
+		      end )  as  costPrice, 
+		a.sortOrder,
+		a.deleteFlg, a.addTimestamp, a.addUserKey, a.updTimestamp, a.updUserKey, a.updPgmId
+		from t_goods a 
+		inner join t_goods_price b on a.goodsId = b.goodsId
+		inner join t_goods_group c on a.goodsId = c.goodsId
 		where newSaleFlg = '1' and onSaleFlg= '1'
 	</select>
 
 	<select id="getGoodsListForMain" resultMap="BaseResultMap" parameterType="java.util.Map">
 		select
-		<include refid="Base_Column_List" />
-		from t_goods
+		a.no, a.goodsId, a.classId, a.goodsBrand, a.goodsName, a.goodsDesc, a.goodsComments,
+		a.goodsThumbnail,
+		a.goodsSmallPic, a.goodsNormalPic, a.onSaleFlg, a.hotSaleFlg, a.newSaleFlg, 
+		(case when c.groupPrice is not null  then c.groupPrice 
+		      else  b.goodsClassValue
+		      end )  as  costPrice, 
+		a.sortOrder,
+		a.deleteFlg, a.addTimestamp, a.addUserKey, a.updTimestamp, a.updUserKey, a.updPgmId
+		from t_goods a 
+		inner join t_goods_price b on a.goodsId = b.goodsId
+		inner join t_goods_group c on a.goodsId = c.goodsId
 		where onSaleFlg= '1'
 		<if test="classId != null">
 			and classId = #{classId,jdbcType=VARCHAR}
@@ -380,11 +400,20 @@
 	
 	<select id="getGoodsByParamForPage" resultMap="BaseResultMap">
 		select
-		<include refid="Base_Column_List" />
-		from t_goods
-		where onSaleFlg= '1'
+		a.no, a.goodsId, a.classId, a.goodsBrand, a.goodsName, a.goodsDesc, a.goodsComments,
+		a.goodsThumbnail,
+		a.goodsSmallPic, a.goodsNormalPic, a.onSaleFlg, a.hotSaleFlg, a.newSaleFlg, 
+		(case when c.groupPrice is not null  then c.groupPrice 
+		      else  b.goodsClassValue
+		      end )  as  costPrice, 
+		a.sortOrder,
+		a.deleteFlg, a.addTimestamp, a.addUserKey, a.updTimestamp, a.updUserKey, a.updPgmId
+		from t_goods a 
+		inner join t_goods_price b on a.goodsId = b.goodsId
+		inner join t_goods_group c on a.goodsId = c.goodsId
+		where a.onSaleFlg= '1'
 		<if test="classId != null">
-			and classId = #{classId,jdbcType=VARCHAR}
+			and a.classId = #{classId,jdbcType=VARCHAR}
 		</if>
 	</select>
 	
@@ -399,8 +428,17 @@
 	
 	<select id="getFiveHotSeller" resultMap="BaseResultMap" parameterType="com.org.oztt.entity.TGoods">
 		select
-		<include refid="Base_Column_List" />
-		from t_goods
+		a.no, a.goodsId, a.classId, a.goodsBrand, a.goodsName, a.goodsDesc, a.goodsComments,
+		a.goodsThumbnail,
+		a.goodsSmallPic, a.goodsNormalPic, a.onSaleFlg, a.hotSaleFlg, a.newSaleFlg, 
+		(case when c.groupPrice is not null  then c.groupPrice 
+		      else  b.goodsClassValue
+		      end )  as  costPrice, 
+		a.sortOrder,
+		a.deleteFlg, a.addTimestamp, a.addUserKey, a.updTimestamp, a.updUserKey, a.updPgmId
+		from t_goods a 
+		inner join t_goods_price b on a.goodsId = b.goodsId
+		inner join t_goods_group c on a.goodsId = c.goodsId
 		where 1=1
 		<if test="goodsid != null">
 			and goodsId = #{goodsid,jdbcType=VARCHAR}

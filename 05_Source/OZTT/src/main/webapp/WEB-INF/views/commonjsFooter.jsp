@@ -17,7 +17,7 @@
     <script src="${ctx}/assets/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
     <script type="text/javascript" src='${ctx}/assets/plugins/zoom/jquery.zoom.min.js'></script><!-- product zoom -->
     
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script><!-- for slider-range -->
+    <script src="${ctx}/js/jquery-ui.js"></script><!-- for slider-range -->
     <script src="${ctx}/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script> 
     
     <script src="${ctx}/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->

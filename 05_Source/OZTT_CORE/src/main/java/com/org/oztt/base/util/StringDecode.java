@@ -10,7 +10,7 @@ import org.apache.commons.lang.StringUtils;
  * author linliuan
  *
  */
-public class UrlParamDecode {
+public class StringDecode {
 	
 	private static String[] HEX_PARAM = {"a" , "b" , "c" , "d" , "e" , "f" , "g" , "h" ,
         "i" , "j" , "k" , "l" , "m" , "n" , "o" , "p" , "q" , "r" , "s" , "t" ,
@@ -28,7 +28,6 @@ public class UrlParamDecode {
 		int count = (cas.length - 1)/6;
 		for(int i = 0; i <= count; i++) {
 			long lc = (long)cas[i * 6];
-			lc = lc - 50;
 			char rlc = (char)lc;
 			sb.append(String.valueOf(rlc));
 		}
@@ -46,7 +45,6 @@ public class UrlParamDecode {
 		char[] cas = str.toCharArray();
 		for(int i = 0; i < cas.length; i++) {
 			long lc = (long)cas[i];
-			lc = lc + 50;
 			char rlc = (char)lc;
 			if (i == cas.length -1 ){
 				//最后一个
@@ -70,6 +68,6 @@ public class UrlParamDecode {
 	}
 	
 	public static void main(String[] args) {
-	    
+	    System.out.println(paramDecode("fgIkJC77WP9zFTcnanTawpLVCImuEfyUum6gW4waf0y"));
 	}
 }

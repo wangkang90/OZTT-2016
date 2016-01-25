@@ -9,7 +9,7 @@ public class TConsCart {
 
     private String customerno;
 
-    private String groupspecifications;
+    private String goodsspecifications;
 
     private Long quantity;
 
@@ -18,6 +18,8 @@ public class TConsCart {
     private String groupno;
 
     private String priceno;
+    
+    private String purchasecurrent;
 
     private Date addcarttimestamp;
 
@@ -135,11 +137,19 @@ public class TConsCart {
         this.updpgmid = updpgmid;
     }
 
-    public String getGroupspecifications() {
-        return groupspecifications;
+    public String getGoodsspecifications() {
+        return goodsspecifications;
     }
 
-    public void setGroupspecifications(String groupspecifications) {
-        this.groupspecifications = groupspecifications;
+    public void setGoodsspecifications(String goodsspecifications) {
+        this.goodsspecifications = goodsspecifications;
+    }
+
+    public String getPurchasecurrent() {
+        return purchasecurrent;
+    }
+
+    public void setPurchasecurrent(String purchasecurrent) {
+        this.purchasecurrent = purchasecurrent;
     }
 }

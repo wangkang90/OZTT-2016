@@ -1,6 +1,7 @@
 package com.org.oztt.service.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -138,7 +139,11 @@ public class OrderServiceImpl extends BaseService implements OrderService {
                 List<ContCartItemDto> detailList =  tConsOrderDetailsDao.selectByOrderId(orderDB.getOrderId());
                 if (!CollectionUtils.isEmpty(detailList)) {
                     for (ContCartItemDto dto : detailList) {
-                        dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                        if (StringUtils.isEmpty(dto.getGoodsPropertiesDB())) {
+                            dto.setGoodsProperties(new ArrayList<ContCartProItemDto>());
+                        } else {
+                            dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                        }
                         dto.setGoodsPropertiesDB(StringUtils.EMPTY);
                         dto.setGoodsImage(imgUrl + dto.getGoodsId() + CommonConstants.PATH_SPLIT + dto.getGoodsImage());
                     }

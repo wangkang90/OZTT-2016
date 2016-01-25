@@ -11,6 +11,7 @@ import org.apache.shiro.util.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.base.util.MessageUtils;
@@ -30,6 +31,7 @@ import com.org.oztt.entity.TGoodsGroup;
 import com.org.oztt.entity.TGoodsPrice;
 import com.org.oztt.entity.TGoodsProperty;
 import com.org.oztt.formDto.ContCartItemDto;
+import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.formDto.GoodProertyDto;
 import com.org.oztt.service.BaseService;
@@ -180,12 +182,18 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             Map<String, String> map = (Map<String, String>) list.get(i);
             String goodId = map.get("goodsId");
             String goodProperties = map.get("goodsProperties");
+            if (goodProperties != null) {
+                List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties, ContCartProItemDto.class);
+                if (concartContentList == null || concartContentList.size() == 0) {
+                    goodProperties = "";
+                }
+            }
             String goodQuantity = map.get("goodsQuantity");
             // 判断属性是不是相同，如果相同则数量相加
             TConsCart tConsCart = new TConsCart();
             tConsCart.setGoodsid(goodId);
             tConsCart.setCustomerno(customerNo);
-            tConsCart.setGroupspecifications(goodProperties);
+            tConsCart.setGoodsspecifications(goodProperties);
             tConsCart = tConsCartDao.selectByParams(tConsCart);
             if (tConsCart == null) {
                 // 没有数据则需要插入数据
@@ -195,7 +203,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
                 tConsCart.setAdduserkey(customerNo);
                 tConsCart.setCustomerno(customerNo);
                 tConsCart.setGoodsid(goodId);
-                tConsCart.setGroupspecifications(goodProperties);
+                tConsCart.setGoodsspecifications(goodProperties);
                 // 商品价格
                 TGoodsPrice tGoodsPrice = new TGoodsPrice();
                 tGoodsPrice.setGoodsid(goodId);
@@ -238,11 +246,17 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             Map<String, String> map = (Map<String, String>) list.get(i);
             String goodId = map.get("goodsId");
             String goodProperties = map.get("goodsProperties");
+            if (goodProperties != null) {
+                List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties, ContCartProItemDto.class);
+                if (concartContentList == null || concartContentList.size() == 0) {
+                    goodProperties = "";
+                }
+            }
             // 判断属性是不是相同，如果相同则数量相加
             TConsCart tConsCart = new TConsCart();
             tConsCart.setGoodsid(goodId);
             tConsCart.setCustomerno(customerNo);
-            tConsCart.setGroupspecifications(goodProperties);
+            tConsCart.setGoodsspecifications(goodProperties);
             tConsCart = tConsCartDao.selectByParams(tConsCart);
             if (tConsCart != null){
                 tConsCartDao.deleteByPrimaryKey(tConsCart.getNo());
@@ -282,12 +296,18 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             Map<String, String> map = (Map<String, String>) list.get(i);
             String goodId = map.get("goodsId");
             String goodProperties = map.get("goodsProperties");
+            if (goodProperties != null) {
+                List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties, ContCartProItemDto.class);
+                if (concartContentList == null || concartContentList.size() == 0) {
+                    goodProperties = "";
+                }
+            }
             String goodQuantity = map.get("goodsQuantity");
             // 判断属性是不是相同，如果相同则数量相加
             TConsCart tConsCart = new TConsCart();
             tConsCart.setGoodsid(goodId);
             tConsCart.setCustomerno(customerNo);
-            tConsCart.setGroupspecifications(goodProperties);
+            tConsCart.setGoodsspecifications(goodProperties);
             tConsCart = tConsCartDao.selectByParams(tConsCart);
             if (tConsCart == null) {
                 // 没有数据则需要插入数据
@@ -297,7 +317,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
                 tConsCart.setAdduserkey(customerNo);
                 tConsCart.setCustomerno(customerNo);
                 tConsCart.setGoodsid(goodId);
-                tConsCart.setGroupspecifications(goodProperties);
+                tConsCart.setGoodsspecifications(goodProperties);
                 // 商品价格
                 TGoodsPrice tGoodsPrice = new TGoodsPrice();
                 tGoodsPrice.setGoodsid(goodId);
@@ -311,11 +331,13 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
                 
                 tConsCart.setIfgroup(CommonConstants.IS_GROUP);
                 tConsCart.setQuantity(Long.valueOf(goodQuantity));
+                tConsCart.setPurchasecurrent(CommonConstants.CURRENT_BUY);
                 tConsCartDao.insertSelective(tConsCart);
                 
             } else {
-                // 有数据则增加数量
+                // 有数据
                 tConsCart.setQuantity(Long.parseLong(goodQuantity));
+                tConsCart.setPurchasecurrent(CommonConstants.CURRENT_BUY);
                 tConsCart.setUpdpgmid(CommonConstants.UP_CART);
                 tConsCart.setUpdtimestamp(new Date());
                 tConsCart.setUpduserkey(customerNo);

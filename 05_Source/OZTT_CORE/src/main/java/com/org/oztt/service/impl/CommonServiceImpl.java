@@ -1,6 +1,7 @@
 package com.org.oztt.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,14 +13,17 @@ import org.springframework.stereotype.Service;
 import com.org.oztt.base.common.MyCategroy;
 import com.org.oztt.base.common.MyMap;
 import com.org.oztt.base.util.CommonUtils;
+import com.org.oztt.base.util.DateFormatUtils;
 import com.org.oztt.base.util.MessageUtils;
 import com.org.oztt.base.util.SendSMS;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.contants.SysCodeConstants;
 import com.org.oztt.dao.TGoodsClassficationDao;
 import com.org.oztt.dao.TSysCodeDao;
+import com.org.oztt.dao.TSysValidateMessageDao;
 import com.org.oztt.entity.TGoodsClassfication;
 import com.org.oztt.entity.TSysCode;
+import com.org.oztt.entity.TSysValidateMessage;
 import com.org.oztt.service.BaseService;
 import com.org.oztt.service.CommonService;
 
@@ -37,6 +41,9 @@ public class CommonServiceImpl extends BaseService implements CommonService {
 
     @Resource
     private TGoodsClassficationDao tGoodsClassficationDao;
+
+    @Resource
+    private TSysValidateMessageDao tSysValidateMessageDao;
 
     @Override
     public List<MyMap> getSex() throws Exception {
@@ -123,9 +130,23 @@ public class CommonServiceImpl extends BaseService implements CommonService {
         String msg = MessageUtils.getMessage("MESSAGE_TEMP");
         String random = CommonUtils.getRandomNum(6);
         logger.info(random);
-        boolean sendStatus = SendSMS.SendMessages(phone, msg.replace(CommonConstants.MESSAGE_PARAM_ONE, random));
+        phone = phone.replaceAll(" ", "");
+        boolean sendStatus = SendSMS.SendMessages("+" + phone, msg.replace(CommonConstants.MESSAGE_PARAM_ONE, random));
         if (sendStatus) {
-            // 发送正确则插入数据//TODO
+            // 发送正确则插入数据
+            TSysValidateMessage tSysValidateMessage = tSysValidateMessageDao.getInfoByPhone("+" + phone);
+            if (tSysValidateMessage == null) {
+                tSysValidateMessage = new TSysValidateMessage();
+                tSysValidateMessage.setTelnumber("+" + phone);
+                tSysValidateMessage.setValidatecode(random);
+                tSysValidateMessage.setCreatetimestamp(new Date());
+                tSysValidateMessageDao.insertSelective(tSysValidateMessage);
+            } else {
+                tSysValidateMessage.setValidatecode(random);
+                tSysValidateMessage.setCreatetimestamp(new Date());
+                tSysValidateMessageDao.updateByPrimaryKeySelective(tSysValidateMessage);
+            }
+           
         }
         else {
             return false;
@@ -137,7 +158,17 @@ public class CommonServiceImpl extends BaseService implements CommonService {
     @Override
     public boolean checkPhoneVerifyCode(String phone, String verifyCode) throws Exception {
         //根据手机获取手机验证吗
-        String verifyCodeFormDB = "1234";//TODO
+        TSysValidateMessage messageInfo = tSysValidateMessageDao.getInfoByPhone(phone);
+        if (messageInfo == null)
+            return false;
+        String codeInvalidTime = super.getApplicationMessage("code_invalid_time");
+        Date date = DateFormatUtils.addMinute(messageInfo.getCreatetimestamp(), Integer.valueOf(codeInvalidTime));
+
+        //查询字段的服务器当前时间 - 最新记录时间 > 30分钟
+        if (DateFormatUtils.dateCompare(date, DateFormatUtils.getCurrentDate())) {
+            return false;
+        }
+        String verifyCodeFormDB = messageInfo.getValidatecode();
         if (verifyCode.equals(verifyCodeFormDB)) {
             return true;
         }

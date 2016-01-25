@@ -108,7 +108,16 @@
 							// 如果Cookie购物车里面没有数据，更新购物车
 							var tempCookie = [];
 							for(var i=0; i<contcartArrayFromDB.length; i++){
-								tempCookie.push(contcartArrayFromDB[i]);
+								var properties = {
+										"goodsId":contcartArrayFromDB[i].goodsId,
+										"goodsName":contcartArrayFromDB[i].goodsName,
+										"goodsImage":contcartArrayFromDB[i].goodsImage,
+										"goodsQuantity":contcartArrayFromDB[i].goodsQuantity,
+										"goodsPrice":contcartArrayFromDB[i].goodsPrice,
+										"goodsProperties":JSON.stringify(contcartArrayFromDB[i].goodsProperties)
+
+								}
+								tempCookie.push(properties);
 							}
 							delCookie("contcart");
 							addCookie("contcart",JSON.stringify(tempCookie))
@@ -427,7 +436,7 @@
 						"goodsImage":deleteItem.goodsImage,
 						"goodsQuantity":deleteItem.goodsQuantity,
 						"goodsPrice":deleteItem.goodsPrice,
-						"goodsProperties":JSON.stringify(deleteItem.goodsProperties)
+						"goodsProperties":deleteItem.goodsProperties
 
 				}
 				var inputList = [];
@@ -492,9 +501,64 @@
 	
 	// 结算画面
 	function toCheckout(){
-		var licount = $("#contcartScroller").find("li")
+		var licount = $("#contcartScroller").find("li");
 		if (licount == null || licount.length == 0) return;
-		alert("checkout");
+		var sessionUserId = '${sessionUserId}';
+		if (sessionUserId != null && sessionUserId != "") {
+
+			// 同步购物车的内容
+			var needSyncData = getCookie("contcart");
+			var contCartFromDB;
+			if (getJsonSize(needSyncData) > 0) {
+				$.ajax({
+					type : "POST",
+					contentType:'application/json',
+					url : '${pageContext.request.contextPath}/COMMON/purchaseAsyncContCart',
+					dataType : "json",
+					async:false,
+					data : needSyncData, 
+					success : function(data) {
+						if(!data.isException){
+							// 同步购物车成功
+							contCartFromDB = data.conscars;
+							// 用户登录同步购物车里面的内容
+							if (getJsonSize(contCartFromDB) > 0) {
+								var contcartJSONFromDB = JSON.parse(contCartFromDB);
+								var contcartArrayFromDB = eval(contCartFromDB);
+
+								// 如果Cookie购物车里面没有数据，更新购物车
+								var tempCookie = [];
+								for(var i=0; i<contcartArrayFromDB.length; i++){
+									var properties = {
+											"goodsId":contcartArrayFromDB[i].goodsId,
+											"goodsName":contcartArrayFromDB[i].goodsName,
+											"goodsImage":contcartArrayFromDB[i].goodsImage,
+											"goodsQuantity":contcartArrayFromDB[i].goodsQuantity,
+											"goodsPrice":contcartArrayFromDB[i].goodsPrice,
+											"goodsProperties":JSON.stringify(contcartArrayFromDB[i].goodsProperties)
+
+									}
+									tempCookie.push(properties);
+								}
+								delCookie("contcart");
+								addCookie("contcart",JSON.stringify(tempCookie))
+							}
+							
+							location.href = "${pageContext.request.contextPath}/OZ_TT_GB_SH/init";
+						} else {
+							// 同步购物车失败
+						}
+					},
+					error : function(data) {
+						
+					}
+				});
+			}
+			
+			
+		} else {
+			location.href = "${pageContext.request.contextPath}/OZ_TT_TP_LG/init";
+		}
 	}
 	
 	// 画面初期化时加载
@@ -532,7 +596,16 @@
 					// 如果Cookie购物车里面没有数据，更新购物车
 					var tempCookie = [];
 					for(var i=0; i<contcartArrayFromDB.length; i++){
-						tempCookie.push(contcartArrayFromDB[i]);
+						var properties = {
+								"goodsId":contcartArrayFromDB[i].goodsId,
+								"goodsName":contcartArrayFromDB[i].goodsName,
+								"goodsImage":contcartArrayFromDB[i].goodsImage,
+								"goodsQuantity":contcartArrayFromDB[i].goodsQuantity,
+								"goodsPrice":contcartArrayFromDB[i].goodsPrice,
+								"goodsProperties":JSON.stringify(contcartArrayFromDB[i].goodsProperties)
+
+						}
+						tempCookie.push(properties);
 					}
 					delCookie("contcart");
 					addCookie("contcart",JSON.stringify(tempCookie))
@@ -639,8 +712,8 @@
                       </li>
                     </ul>
                     <div class="text-right">
-                      <a onclick="viewcart()" class="btn btn-default"><fmt:message key="common_viewcart"/></a>
-                      <a onclick="checkout()" class="btn btn-primary"><fmt:message key="common_checkout"/></a>
+                      <a onclick="viewcart()" class="btn btn-primary"><fmt:message key="common_viewcart"/></a>
+                      <a onclick="toCheckout()" class="btn btn-primary"><fmt:message key="common_checkout"/></a>
                     </div>
                   </div>
                 </div>

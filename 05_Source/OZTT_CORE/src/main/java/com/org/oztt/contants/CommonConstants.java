@@ -43,4 +43,6 @@ public final class CommonConstants {
     public static final String CAN_LOGIN           = "1";                                    // 可以登录
 
     public static final String CANNOT_LOGIN        = "0";                                    // 不可以登录
+
+    public static final String CURRENT_BUY         = "1";                                    // 当此需购买
 }

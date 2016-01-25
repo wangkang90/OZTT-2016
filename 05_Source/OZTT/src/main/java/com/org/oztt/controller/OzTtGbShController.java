@@ -1,5 +1,6 @@
 package com.org.oztt.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -41,7 +42,11 @@ public class OzTtGbShController extends BaseController {
 
             if (!CollectionUtils.isEmpty(consCarts)) {
                 for (ContCartItemDto dto : consCarts) {
-                    dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                    if (StringUtils.isEmpty(dto.getGoodsPropertiesDB())) {
+                        dto.setGoodsProperties(new ArrayList<ContCartProItemDto>());
+                    } else {
+                        dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                    }
                     dto.setGoodsPropertiesDB(StringUtils.EMPTY);
                     dto.setGoodsImage(imgUrl + dto.getGoodsId() + CommonConstants.PATH_SPLIT + dto.getGoodsImage());
                 }
