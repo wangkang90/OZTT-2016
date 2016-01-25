@@ -67,7 +67,7 @@
                         <div class="col-lg-2">
                           <form:input type="text" path="verifyCode" class="form-control" id="verifyCode" />
                         </div>
-                        <label class="col-lg-6" style="text-align:left">
+                        <label class="col-lg-3" style="text-align:left">
                         <button type="button" class="btn btn-primary" onclick="getVerifyCode()" id="buttonCode"><fmt:message key="OZ_TT_TP_RE_verifyCode"/></button>
                       	</label>
                       </div>
@@ -196,6 +196,7 @@
 		}
 		
 		function getVerifyCode(){
+			cleanFormError();
 			var phone = $("#phone").val();
 			if (phone == "") {
 				var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_TP_RE_phone" />')

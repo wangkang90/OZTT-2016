@@ -69,3 +69,7 @@
 .address-content li:focus{
 	border:3px solid red;
 }
+
+.textright{
+	text-align: right
+}

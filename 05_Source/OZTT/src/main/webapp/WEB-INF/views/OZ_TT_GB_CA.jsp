@@ -70,10 +70,6 @@
 								<ul>
 									<li><em><fmt:message key="OZ_TT_GB_CA_xiaoji"/></em> <strong class="price" id="xiaoji"></strong>
 									</li>
-									<li><em><fmt:message key="OZ_TT_GB_CA_yunfei"/></em> <strong class="price" id="yunfei"></strong>
-									</li>
-									<li class="shopping-total-price"><em><fmt:message key="OZ_TT_GB_CA_heji"/></em> <strong
-										class="price" id="heji"></strong></li>
 								</ul>
 							</div>
 						</div>
@@ -117,8 +113,6 @@
 			// 先清空购物车一览的内容，再获取Cookie中的购物车
 			$("#shopCartFirstTr").nextAll().remove();
 			$("#xiaoji").html("");
-			$("#yunfei").html("");
-			$("#heji").html("");
 			var contcart = getCookie("contcart");
 			if(contcart != null && contcart.length > 0) {
 				var contcartJSON = JSON.parse(contcart);
@@ -158,8 +152,6 @@
 				}
 				$("#shopCartFirstTr").after(inHtml);
 				$("#xiaoji").html(money + '<fmt:message key="common_yuan"/>');
-				$("#yunfei").html('<fmt:message key="common_freight"/>');
-				$("#heji").html(money-parseFloat('<fmt:message key="common_freight"/>'));
 			}
 		}
 		

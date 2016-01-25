@@ -853,4 +853,60 @@ public class DateFormatUtils {
         SimpleDateFormat dt = new SimpleDateFormat(formartTo);
         return dt.format(df.parse(date));
     }
+    
+    /**
+     * 日期加分钟
+     * 
+     * @param date
+     *            日期
+     * @param spans
+     *            增加数量
+     * @return 加分钟后的日期
+     */
+    public static Date addMinute(Date date, int spans) {
+        return addDate(date, Calendar.MINUTE, spans);
+    }
+    
+    /**
+     * 日期加法计算
+     * 
+     * @param date
+     *            日期
+     * @param type
+     *            增加类型
+     * @param spans
+     *            增加数量
+     * @return 加法计算后的日期
+     */
+    public static Date addDate(Date date, int type, int spans) {
+        Calendar inputCalendar = Calendar.getInstance();
+        inputCalendar.setTime(date);
+        inputCalendar.add(type, spans);
+        return inputCalendar.getTime();
+    }
+    
+    /**
+     * 获取当前时间， 日期类型
+     * 
+     * @return java.util.Date
+     */
+    public static Date getCurrentDate() {
+        return new Date();
+    }
+    
+    /**
+     * 比较两个日期大小
+     * 
+     * @param startDate
+     *            开始日期
+     * @param endDate
+     *            结束日期
+     * @return 开始日期早于结束日期，返回true。否则返回false。相等，返回false
+     */
+    public static boolean dateCompare(Date startDate, Date endDate) {
+        if (startDate.before(endDate)) {
+            return true;
+        }
+        return false;
+    }
 }

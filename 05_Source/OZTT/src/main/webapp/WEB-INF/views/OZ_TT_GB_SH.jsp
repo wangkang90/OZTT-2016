@@ -37,9 +37,10 @@
 								<div class="form-group col-sm-12">
 									<div class="clearfix">
 										<div class="btn-group btn-group-solid" id="deliverymethod">
-                                            <button type="button" class="btn red" id="deliverymethod1" onclick="deliveryRadio(this,'1')" style="margin-left:50px"><fmt:message key="OZ_TT_GB_SH_selfpick" /></button>
-                                            <button type="button" class="btn red" id="deliverymethod2" onclick="deliveryRadio(this,'2')" style="margin-left:50px"><fmt:message key="OZ_TT_GB_SH_simpleexpress" /></button>
-                                            <button type="button" class="btn red" id="deliverymethod3" onclick="deliveryRadio(this,'3')" style="margin-left:50px"><fmt:message key="OZ_TT_GB_SH_con" /></button>
+											<button type="button" class="btn red" id="deliverymethod3" onclick="deliveryRadio(this,'3')" style="margin-left:50px"><fmt:message key="OZ_TT_GB_SH_con" /></button>
+<%--                                             <button type="button" class="btn red" id="deliverymethod1" onclick="deliveryRadio(this,'1')" style="margin-left:50px"><fmt:message key="OZ_TT_GB_SH_selfpick" /></button> --%>
+<%--                                             <button type="button" class="btn red" id="deliverymethod2" onclick="deliveryRadio(this,'2')" style="margin-left:50px"><fmt:message key="OZ_TT_GB_SH_simpleexpress" /></button> --%>
+                                            
                                         </div>
 									</div>
 								</div>
@@ -63,7 +64,7 @@
 							</fieldset>
 							<fieldset>
 								<legend>
-									<fmt:message key="OZ_TT_GB_CA_contcart"/>
+									<fmt:message key="OZ_TT_GB_SH_goodlist"/>
 								</legend>
 								<!-- BEGIN CONTENT -->
 								<div class="col-md-12 col-sm-12">
@@ -75,8 +76,8 @@
 														<th class="shopping-cart-image"></th>
 														<th class="shopping-cart-description"><fmt:message key="OZ_TT_GB_CA_goodsname"/></th>
 														<th class="shopping-cart-quantity"><fmt:message key="OZ_TT_GB_CA_quantity"/></th>
-														<th class="shopping-cart-price"><fmt:message key="OZ_TT_GB_CA_unitprice"/></th>
-														<th class="shopping-cart-total" colspan="2"><fmt:message key="OZ_TT_GB_CA_allprice"/></th>
+														<th class="shopping-cart-price textright"><fmt:message key="OZ_TT_GB_CA_unitprice"/></th>
+														<th class="shopping-cart-total textright"><fmt:message key="OZ_TT_GB_CA_allprice"/></th>
 													</tr>
 													
 												</table>
@@ -93,13 +94,21 @@
 												</ul>
 											</div>
 										</div>
-										<button class="btn btn-default" type="button" onclick="goOnToBuy()">
-											<fmt:message key="OZ_TT_GB_CA_buyagain"/> <i class="fa fa-shopping-cart"></i>
-										</button>
-										<button class="btn btn-primary" type="button" onclick="goOnToPay()">
-											<fmt:message key="OZ_TT_GB_CA_settle"/> <i class="fa fa-check"></i>
-										</button>
-										
+									</div>
+								</div>
+							<!-- END CONTENT -->
+							</fieldset>
+							<fieldset>
+								<!-- BEGIN CONTENT -->
+								<legend>
+									<fmt:message key="OZ_TT_GB_SH_paymethod" />
+								</legend>
+								<div class="form-group col-sm-12">
+									<div class="clearfix">
+										<div class="btn-group btn-group-solid" id="deliverymethod">
+												<img src="${ctx}/assets/img/payments/PayPal.jpg" onclick= "payByPaypal()" class="btn" alt="We accept PayPal" title="We accept PayPal" >
+												
+                                        </div>
 									</div>
 								</div>
 							<!-- END CONTENT -->
@@ -124,8 +133,8 @@
 
 		
 		
-		$("#deliverymethod1").addClass("active");
-		$("#deliverymethod1").click();
+		$("#deliverymethod3").addClass("active");
+		$("#deliverymethod3").click();
 		
 		// 显示购买的数据
 		initContCartList();
@@ -141,7 +150,7 @@
 			if (adrList != null && adrList.length > 0) {
 				var temp = "";
 				for (var i = 0 ; i < adrList.length; i++) {
-					temp += "<li onclick=\"addressLiClick(this)\"><span class=\"col-sm-8\">"
+					temp += "<li onclick=\"addressLiClick(this,'"+adrList[i].id+"')\"><span class=\"col-sm-8\">"
 					+adrList[i].countrycode+ "&nbsp;" + adrList[i].state+ "&nbsp;" + adrList[i].city+ "&nbsp;"
 					+adrList[i].addressdetails+ "&nbsp;" + adrList[i].receiver+ "&nbsp;" + adrList[i].contacttel+ "&nbsp;" +
 					"</span><span style=\"display:none\"class=\"col-sm-4\">"+
@@ -154,7 +163,7 @@
 			
 		}
 		
-		function addressLiClick(str){
+		function addressLiClick(str, addressId){
 			var allLi = $(str).parent().find("li");
 			$(str).parent().find("li").css({"border":"3px solid white"});
 			for(var i = 0; i < allLi.length;i++) {
@@ -163,6 +172,27 @@
 			}
 			$($(str).find("span")[1]).css("display","");
 			$(str).css({"border":"3px solid red"});
+			$.ajax({
+				type : "GET",
+				contentType:'application/json',
+				url : '${pageContext.request.contextPath}/COMMON/getFreight?addressId='+addressId,
+				dataType : "json",
+				async:false,
+				data : '', 
+				success : function(data) {
+					if(!data.isException){
+						var freight = data.freight;
+						$("#yunfei").html(freight);
+						$("#heji").html(parseFloat($("#xiaoji").html())-parseFloat(freight));
+					} else {
+						// 系统异常
+					}
+				},
+				error : function(data) {
+					
+				}
+			});
+			
 		}
 		
 		function deliveryRadio(str, method) {
@@ -370,7 +400,7 @@
 			// 先清空购物车一览的内容，再获取要购买的购物车内容
 			$("#shopCartFirstTr").nextAll().remove();
 			$("#xiaoji").html("");
-			$("#yunfei").html("");
+			$("#yunfei").html("0");
 			$("#heji").html("");
 			var contcart = '${conscars}';
 			if(contcart != null && contcart.length > 0) {
@@ -379,11 +409,10 @@
 				var temp1 = '<tr>';
 				var temp2 = '<td class="shopping-cart-image"><a><img src="{0}" alt="{1}"></a></td>';
 				var temp3 = '<td class="shopping-cart-description"><h3><a onclick="toItem(\'{0}\')">{1}</a></h3><p >{2}</p></td>';
-				var temp4 = '<td class="shopping-cart-quantity"><div class="product-quantity" id="quantity{0}"><input id="product-quantity" type="text" value="{1}" readonly class="form-control input-sm"></div></td>';
-				var temp5 = '<td class="shopping-cart-price"><strong>{0}</strong></td>';
-				var temp6 = '<td class="shopping-cart-total"><strong>{0}</strong></td>';
-				var temp7 = '<td class="del-goods-col"><a class="del-goods" onclick="deleteContCartList(this,\'{0}\',\'{1}\')"><i class="fa fa-times"></i></a></td>';
-				var temp8 = '</tr>';
+				var temp4 = '<td class="shopping-cart-quantity shopping-cart-price"><strong>{0}</strong></td>';
+				var temp5 = '<td class="shopping-cart-price textright" style="padding-right:0px"><strong>{0}</strong></td>';
+				var temp6 = '<td class="shopping-cart-total textright" style="padding-right:0px"><strong>{0}</strong></td>';
+				var temp7 = '</tr>';
 				var inHtml = "";
 				var money = 0;
 				for(var i=0; i<contcartArray.length; i++){
@@ -402,17 +431,16 @@
 					inHtml += temp1;
 					inHtml += temp2.replace("{0}",goodsImage).replace("{1}", goodsName);
 					inHtml += temp3.replace("{0}",goodsId).replace("{1}", goodsName).replace("{2}",goodsPropertiesStr);
-					inHtml += temp4.replace("{0}",i).replace("{1}",goodsQuantity);
+					inHtml += temp4.replace("{0}",goodsQuantity);
 					inHtml += temp5.replace("{0}",goodsUnitPrice + '<fmt:message key="common_yuan"/>');
 					inHtml += temp6.replace("{0}",goodsPrice + '<fmt:message key="common_yuan"/>');
-					inHtml += temp7.replace("{0}",goodsId).replace("{1}","ITEM" + i);
-					inHtml += temp8;
+					inHtml += temp7;
 					money = money + parseFloat(goodsPrice);
 				}
 				$("#shopCartFirstTr").after(inHtml);
 				$("#xiaoji").html(money + '<fmt:message key="common_yuan"/>');
-				$("#yunfei").html('<fmt:message key="common_freight"/>');
-				$("#heji").html(money-parseFloat('<fmt:message key="common_freight"/>'));
+				$("#yunfei").html('0');
+				$("#heji").html(money-parseFloat('0'));
 			}
 		}
 	</script>

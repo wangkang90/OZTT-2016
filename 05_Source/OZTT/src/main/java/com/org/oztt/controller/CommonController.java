@@ -1,5 +1,6 @@
 package com.org.oztt.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +106,11 @@ public class CommonController extends BaseController {
             List<ContCartItemDto> consCarts = goodsService.getAllContCartForCookie(customerNo);
             if (!CollectionUtils.isEmpty(consCarts)) {
                 for (ContCartItemDto dto : consCarts) {
-                    dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                    if (StringUtils.isEmpty(dto.getGoodsPropertiesDB())) {
+                        dto.setGoodsProperties(new ArrayList<ContCartProItemDto>());
+                    } else {
+                        dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                    }
                     dto.setGoodsPropertiesDB(StringUtils.EMPTY);
                     dto.setGoodsImage(imgUrl + dto.getGoodsId() + CommonConstants.PATH_SPLIT + dto.getGoodsImage());
                 }
@@ -302,7 +307,7 @@ public class CommonController extends BaseController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "/purchaseAsyncContCart")
+    @RequestMapping(value = "/purchaseAsyncContCart", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> purchaseAsyncContCart(HttpServletRequest request, HttpServletResponse response,
             HttpSession session, @RequestBody List<Map<String, String>> list) {
@@ -323,7 +328,11 @@ public class CommonController extends BaseController {
             List<ContCartItemDto> consCarts = goodsService.getAllContCartForCookie(customerNo);
             if (!CollectionUtils.isEmpty(consCarts)) {
                 for (ContCartItemDto dto : consCarts) {
-                    dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                    if (StringUtils.isEmpty(dto.getGoodsPropertiesDB())) {
+                        dto.setGoodsProperties(new ArrayList<ContCartProItemDto>());
+                    } else {
+                        dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                    }
                     dto.setGoodsPropertiesDB(StringUtils.EMPTY);
                     dto.setGoodsImage(imgUrl + dto.getGoodsId() + CommonConstants.PATH_SPLIT + dto.getGoodsImage());
                 }
@@ -342,8 +351,6 @@ public class CommonController extends BaseController {
         }
 
     }
-    
-    
 
     /**
      * 提交地址
@@ -428,7 +435,7 @@ public class CommonController extends BaseController {
             return null;
         }
     }
-
+   
     /**
      * 获取指定客户下所有的地址
      * 
@@ -498,5 +505,35 @@ public class CommonController extends BaseController {
             return null;
         }
     }
+    
+    /**
+     * 获取指定客户下所有的地址
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/getFreight")
+    @ResponseBody
+    public Map<String, Object> getFreight(HttpServletRequest request, HttpServletResponse response,
+            HttpSession session, @RequestParam String addressId) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            // 获取地址
+            TAddressInfo info = addressService.getAddressById(Long.valueOf(addressId));
+            //TODO 通过地址信息获取费用信息
+
+            mapReturn.put("freight", "15");
+            // 后台维护的时候提示让以逗号隔开
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return null;
+        }
+    }
+    
 
 }

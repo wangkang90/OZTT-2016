@@ -5,12 +5,13 @@
 		<id column="no" property="no" jdbcType="BIGINT" />
 		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
 		<result column="customerNo" property="customerno" jdbcType="VARCHAR" />
-		<result column="groupSpecifications" property="groupspecifications"
+		<result column="goodsSpecifications" property="goodsspecifications"
 			jdbcType="VARCHAR" />
 		<result column="quantity" property="quantity" jdbcType="DECIMAL" />
 		<result column="ifGroup" property="ifgroup" jdbcType="CHAR" />
 		<result column="groupNo" property="groupno" jdbcType="VARCHAR" />
 		<result column="priceNo" property="priceno" jdbcType="VARCHAR" />
+		<result column="purchaseCurrent" property="purchasecurrent" jdbcType="CHAR" />
 		<result column="addCartTimestamp" property="addcarttimestamp"
 			jdbcType="TIMESTAMP" />
 		<result column="addTimestamp" property="addtimestamp" jdbcType="TIMESTAMP" />
@@ -20,8 +21,8 @@
 		<result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		no, goodsId, customerNo, groupSpecifications, quantity, ifGroup, groupNo,
-		priceNo,
+		no, goodsId, customerNo, goodsSpecifications, quantity, ifGroup, groupNo,
+		priceNo,purchaseCurrent,
 		addCartTimestamp, addTimestamp, addUserKey, updTimestamp, updUserKey, updPgmId
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
@@ -37,15 +38,16 @@
 	</delete>
 	<insert id="insert" parameterType="com.org.oztt.entity.TConsCart">
 		insert into t_cons_cart (no, goodsId, customerNo,
-		groupSpecifications, quantity, ifGroup,
-		groupNo, priceNo, addCartTimestamp,
+		goodsSpecifications, quantity, ifGroup,
+		groupNo, priceNo, purchaseCurrent, addCartTimestamp,
 		addTimestamp, addUserKey, updTimestamp,
 		updUserKey, updPgmId)
 		values (#{no,jdbcType=BIGINT}, #{goodsid,jdbcType=VARCHAR},
 		#{customerno,jdbcType=VARCHAR},
-		#{groupspecifications,jdbcType=VARCHAR}, #{quantity,jdbcType=DECIMAL},
+		#{goodsspecifications,jdbcType=VARCHAR}, #{quantity,jdbcType=DECIMAL},
 		#{ifgroup,jdbcType=CHAR},
-		#{groupno,jdbcType=VARCHAR}, #{priceno,jdbcType=VARCHAR}, #{addcarttimestamp,jdbcType=TIMESTAMP},
+		#{groupno,jdbcType=VARCHAR}, #{priceno,jdbcType=VARCHAR},#{purchasecurrent,jdbcType=CHAR},
+		 #{addcarttimestamp,jdbcType=TIMESTAMP},
 		#{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR},
 		#{updtimestamp,jdbcType=TIMESTAMP},
 		#{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR})
@@ -62,8 +64,8 @@
 			<if test="customerno != null">
 				customerNo,
 			</if>
-			<if test="groupspecifications != null">
-				groupSpecifications,
+			<if test="goodsspecifications != null">
+				goodsSpecifications,
 			</if>
 			<if test="quantity != null">
 				quantity,
@@ -76,6 +78,9 @@
 			</if>
 			<if test="priceno != null">
 				priceNo,
+			</if>
+			<if test="purchasecurrent != null">
+				purchaseCurrent,
 			</if>
 			<if test="addcarttimestamp != null">
 				addCartTimestamp,
@@ -106,8 +111,8 @@
 			<if test="customerno != null">
 				#{customerno,jdbcType=VARCHAR},
 			</if>
-			<if test="groupspecifications != null">
-				#{groupspecifications,jdbcType=VARCHAR},
+			<if test="goodsspecifications != null">
+				#{goodsspecifications,jdbcType=VARCHAR},
 			</if>
 			<if test="quantity != null">
 				#{quantity,jdbcType=DECIMAL},
@@ -120,6 +125,9 @@
 			</if>
 			<if test="priceno != null">
 				#{priceno,jdbcType=VARCHAR},
+			</if>
+			<if test="purchasecurrent != null">
+				#{purchasecurrent,jdbcType=CHAR},
 			</if>
 			<if test="addcarttimestamp != null">
 				#{addcarttimestamp,jdbcType=TIMESTAMP},
@@ -150,8 +158,8 @@
 			<if test="customerno != null">
 				customerNo = #{customerno,jdbcType=VARCHAR},
 			</if>
-			<if test="groupspecifications != null">
-				groupSpecifications = #{groupspecifications,jdbcType=VARCHAR},
+			<if test="goodsspecifications != null">
+				goodsSpecifications = #{goodsspecifications,jdbcType=VARCHAR},
 			</if>
 			<if test="quantity != null">
 				quantity = #{quantity,jdbcType=DECIMAL},
@@ -164,6 +172,9 @@
 			</if>
 			<if test="priceno != null">
 				priceNo = #{priceno,jdbcType=VARCHAR},
+			</if>
+			<if test="purchasecurrent != null">
+				purchaseCurrent = #{purchasecurrent,jdbcType=CHAR},
 			</if>
 			<if test="addcarttimestamp != null">
 				addCartTimestamp = #{addcarttimestamp,jdbcType=TIMESTAMP},
@@ -190,11 +201,12 @@
 		update t_cons_cart
 		set goodsId = #{goodsid,jdbcType=VARCHAR},
 		customerNo = #{customerno,jdbcType=VARCHAR},
-		groupSpecifications = #{groupspecifications,jdbcType=VARCHAR},
+		goodsSpecifications = #{goodsspecifications,jdbcType=VARCHAR},
 		quantity = #{quantity,jdbcType=DECIMAL},
 		ifGroup = #{ifgroup,jdbcType=CHAR},
 		groupNo = #{groupno,jdbcType=VARCHAR},
 		priceNo = #{priceno,jdbcType=VARCHAR},
+		purchaseCurrent = #{purchasecurrent,jdbcType=CHAR},
 		addCartTimestamp = #{addcarttimestamp,jdbcType=TIMESTAMP},
 		addTimestamp = #{addtimestamp,jdbcType=TIMESTAMP},
 		addUserKey = #{adduserkey,jdbcType=VARCHAR},
@@ -215,8 +227,8 @@
 		<if test="customerno != null">
 			and customerNo = #{customerno,jdbcType=VARCHAR}
 		</if>
-		<if test="groupspecifications != null">
-			and groupSpecifications = #{groupspecifications,jdbcType=VARCHAR}
+		<if test="goodsspecifications != null">
+			and goodsSpecifications = #{goodsspecifications,jdbcType=VARCHAR}
 		</if>
 	</select>
 	
@@ -243,13 +255,12 @@
 		(case when a.ifGroup = '1' then d.groupPrice 
 		      else  c.goodsClassValue
 		      end )* a.quantity  as  goodsPrice, 
-		a.groupSpecifications as goodsPropertiesDB
+		a.goodsSpecifications as goodsPropertiesDB
 		from t_cons_cart a
 		inner join t_goods b on a.goodsId = b.goodsId
 		inner join t_goods_price c on a.goodsId = c.goodsId
 		inner join t_goods_group d on a.goodsId = d.goodsId
 		where 1 = 1 and a.customerNo = #{customerno,jdbcType=VARCHAR}
-
 	</select>
 	
 	<select id="getAllContCartForBuy" resultType="com.org.oztt.formDto.ContCartItemDto" parameterType="java.lang.String">
@@ -261,13 +272,13 @@
 		(case when a.ifGroup = '1' then d.groupPrice 
 		      else  c.goodsClassValue
 		      end )* a.quantity  as  goodsPrice, 
-		a.groupSpecifications as goodsPropertiesDB
+		a.goodsSpecifications as goodsPropertiesDB
 		from t_cons_cart a
 		inner join t_goods b on a.goodsId = b.goodsId
 		inner join t_goods_price c on a.goodsId = c.goodsId
 		inner join t_goods_group d on a.goodsId = d.goodsId
 		where 1 = 1 and a.customerNo = #{customerno,jdbcType=VARCHAR}
-
+		and a.purchaseCurrent = '1'
 	</select>
 
 	
