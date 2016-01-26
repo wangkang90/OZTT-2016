@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>404</title>
+<title><fmt:message key="CODNotice_title" /></title>
 <%@ include file="./commoncssHead.jsp"%>
 
 </head>
@@ -23,15 +23,12 @@
         <div class="row margin-bottom-40">
           <!-- BEGIN CONTENT -->
           <div class="col-md-12 col-sm-12">
-            <div class="content-page page-404">
-               <div class="number">
-                  404
-               </div>
+            <div class="content-page ozttNotice">
                <div class="details">
-                  <h3>you are lost</h3>
+                  <h3><fmt:message key="CODNotice_h3"/></h3>
                   <p>
-                     the page is not find<br>
-                     <a href="${ctx }/index.jsp" class="link">Back</a>
+                     <br>
+                     <a href="${ctx }/main/init" class="link"><fmt:message key="CODNotice_Back"/></a>
                   </p>
                </div>
             </div>

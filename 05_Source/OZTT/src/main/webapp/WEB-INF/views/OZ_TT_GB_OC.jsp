@@ -98,11 +98,22 @@
 								</div>
 							<!-- END CONTENT -->
 							</fieldset>
-
+							<fieldset>
+								<!-- BEGIN CONTENT -->
+								<legend>
+									<fmt:message key="OZ_TT_GB_SH_paymethod" />
+								</legend>
+								<div class="form-group col-sm-12">
+									<div class="clearfix">
+										<div class="btn-group btn-group-solid" id="deliverymethod">
+												<img src="${ctx}/assets/img/payments/PayPal.jpg" onclick= "payThisGoods('2')" class="btn" alt="We accept PayPal" title="We accept PayPal" >
+												
+                                        </div>
+									</div>
+								</div>
+							<!-- END CONTENT -->
+							</fieldset>
 						</div>
-						<button class="btn btn-primary" type="button" onclick="submitOrder()">
-							<fmt:message key="OZ_TT_GB_SH_chechout"/> <i class="fa fa-check"></i>
-						</button>
 					</div>
 				</div>
 
@@ -439,7 +450,7 @@
 			}
 		}
 		
-		function submitOrder(){
+		function payThisGoods(str){
 			//判断用户用的是什么样的运送方式
 			var isSelectDelivery = false;
 			var selectDelivery = "";
@@ -480,12 +491,13 @@
 			}
 			
 			if($("#shopCartTable").find("tr").length <= 1){
-				alert(E0009);
+				alert(E0008);
 				return;
 			}
 			
 			$("#hidDeliMethod").val(selectDelivery);
 			$("#hidAddressId").val(selectAddress);
+			$("#hidPayMethod").val(str);
 			
 			var targetform = document.forms['submitPay'];
 			targetform.action = "${pageContext.request.contextPath}/Pay/payment";

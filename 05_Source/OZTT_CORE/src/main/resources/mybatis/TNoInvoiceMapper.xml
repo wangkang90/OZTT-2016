@@ -68,4 +68,12 @@
       maxNo = #{maxno,jdbcType=VARCHAR}
     where no = #{no,jdbcType=BIGINT}
   </update>
+  
+  <select id="getMaxInvoiceNo" resultType="com.org.oztt.entity.TNoInvoice">
+		select
+		<include refid="Base_Column_List" />
+		from t_no_invoice
+		where maxNo = (select max(maxNo) from
+		t_no_invoice)
+	</select>
 </mapper>

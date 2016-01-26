@@ -26,8 +26,7 @@ public class TConsOrderDaoImpl extends BaseDao implements TConsOrderDao {
 
     @Override
     public int insertSelective(TConsOrder record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return insert("com.org.oztt.dao.TConsOrderDao.insertSelective", record);
     }
 
     @Override
@@ -38,8 +37,7 @@ public class TConsOrderDaoImpl extends BaseDao implements TConsOrderDao {
 
     @Override
     public int updateByPrimaryKeySelective(TConsOrder record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return update("com.org.oztt.dao.TConsOrderDao.updateByPrimaryKeySelective", record);
     }
 
     @Override
@@ -57,6 +55,11 @@ public class TConsOrderDaoImpl extends BaseDao implements TConsOrderDao {
     public PagingResult<OrderInfoDto> getOrderByParamForPage(Pagination pagination) {
         return selectPagination("com.org.oztt.dao.TConsOrderDao.getOrderByParamForPage",
                 "com.org.oztt.dao.TConsOrderDao.getOrderByParamForPageCount", pagination);
+    }
+
+    @Override
+    public TConsOrder selectByOrderId(String orderId) {
+        return selectOne("com.org.oztt.dao.TConsOrderDao.selectByOrderId", orderId);
     }
 
 }

@@ -281,5 +281,9 @@
 		and a.purchaseCurrent = '1'
 	</select>
 
+	<delete id="deleteCurrentBuyGoods" parameterType="java.lang.String">
+		delete from t_cons_cart
+		where customerNo = #{customerNo,jdbcType=VARCHAR} and purchaseCurrent = '1'
+	</delete>
 	
 </mapper>

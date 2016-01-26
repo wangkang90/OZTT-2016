@@ -200,7 +200,7 @@
 								"goodsImage":contcartArray[i].goodsImage,
 								"goodsQuantity":updateQuantity,
 								"goodsPrice":contcartArray[i].goodsPrice,
-								"goodsProperties":JSON.stringify(contcartArray[i].goodsProperties)
+								"goodsProperties":contcartArray[i].goodsProperties
 
 						}
 					}

@@ -73,3 +73,31 @@
 .textright{
 	text-align: right
 }
+
+/* ozttNotice */
+.ozttNotice {
+ 	text-align: center;
+ 	padding-top: 60px;
+ 	padding-bottom: 125px;
+}
+.ozttNotice .number {
+	position: relative;
+	top: 35px;
+	display: inline-block;
+	letter-spacing: -10px;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	line-height: 128px;
+	font-size: 128px;
+	font-weight: 300;
+	color: #E02222;
+	text-align: right;
+}
+.ozttNotice .details {
+	display: inline-block;
+	padding-top: 0px;
+	text-align: center;
+	top: 15px;
+	position: relative;
+	color: #E02222;
+}
