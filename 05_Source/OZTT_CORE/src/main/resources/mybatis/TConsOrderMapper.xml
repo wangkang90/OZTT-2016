@@ -266,4 +266,11 @@
 		WHERE handleFlg <![CDATA[ <> ]]> '9'
 		and customerNo = #{customerno,jdbcType=VARCHAR}
 	</select>
+	
+	<select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_cons_order
+		where orderNo = #{orderId,jdbcType=VARCHAR}
+	</select>
 </mapper>

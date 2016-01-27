@@ -34,7 +34,11 @@
 	}
 	
 	var E0002 = '<fmt:message key="E0002" />';
+	var E0007 = '<fmt:message key="E0007" />';
+	var E0008 = '<fmt:message key="E0008" />';
 	var E0001 = '<fmt:message key="E0001" />';
+	var E0009 = '<fmt:message key="E0009" />';
+	
 	function validateCheckLogin(){
 		cleanFormError();
 		var username = $("#username").val();

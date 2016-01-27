@@ -47,4 +47,11 @@ public interface TConsOrderDao {
      * @return
      */
     PagingResult<OrderInfoDto> getOrderByParamForPage(Pagination pagination);
+    
+    /**
+     * 通过订单号来取订单信息
+     * @param orderId
+     * @return
+     */
+    TConsOrder selectByOrderId(String orderId);
 }

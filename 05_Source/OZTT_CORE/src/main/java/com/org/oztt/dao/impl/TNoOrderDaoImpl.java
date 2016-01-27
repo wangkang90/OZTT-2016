@@ -23,8 +23,7 @@ public class TNoOrderDaoImpl extends BaseDao implements TNoOrderDao {
 
     @Override
     public int insertSelective(TNoOrder record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return insert("com.org.oztt.dao.TNoOrderDao.insertSelective", record);
     }
 
     @Override
@@ -35,8 +34,7 @@ public class TNoOrderDaoImpl extends BaseDao implements TNoOrderDao {
 
     @Override
     public int updateByPrimaryKeySelective(TNoOrder record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return update("com.org.oztt.dao.TNoOrderDao.updateByPrimaryKeySelective", record);
     }
 
     @Override

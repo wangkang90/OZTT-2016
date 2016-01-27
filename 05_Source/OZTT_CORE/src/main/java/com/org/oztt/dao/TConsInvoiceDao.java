@@ -1,8 +1,8 @@
 package com.org.oztt.dao;
 
-import com.org.oztt.entity.TNoInvoice;
+import com.org.oztt.entity.TConsInvoice;
 
-public interface TNoInvoiceDao {
+public interface TConsInvoiceDao {
     /**
      * 根据主键删除记录
      */
@@ -11,32 +11,26 @@ public interface TNoInvoiceDao {
     /**
      * 保存记录,不管记录里面的属性是否为空
      */
-    int insert(TNoInvoice record);
+    int insert(TConsInvoice record);
 
     /**
      * 保存属性不为空的记录
      */
-    int insertSelective(TNoInvoice record);
+    int insertSelective(TConsInvoice record);
 
     /**
      * 根据主键查询记录
      */
-    TNoInvoice selectByPrimaryKey(Long no);
+    TConsInvoice selectByPrimaryKey(Long no);
 
     /**
      * 根据主键更新属性不为空的记录
      */
-    int updateByPrimaryKeySelective(TNoInvoice record);
+    int updateByPrimaryKeySelective(TConsInvoice record);
 
     /**
      * 根据主键更新记录
      */
-    int updateByPrimaryKey(TNoInvoice record);
-    
-    /**
-     * 发票最大值
-     * @return
-     */
-    TNoInvoice getMaxInvoiceNo();
-    
+    int updateByPrimaryKey(TConsInvoice record);
+
 }

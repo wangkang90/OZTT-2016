@@ -70,5 +70,11 @@ public interface TConsCartDao {
      */
     List<ContCartItemDto> getAllContCartForBuy(String customerNo);
     
+    /**
+     * 生成订单时删除购物车中的数据
+     * @param customerNo
+     */
+    void deleteCurrentBuyGoods(String customerNo);
+    
     
 }

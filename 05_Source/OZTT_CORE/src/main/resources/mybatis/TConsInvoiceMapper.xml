@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.oztt.dao.TConsInvoiceDao" >
+  <resultMap id="BaseResultMap" type="com.org.oztt.entity.TConsInvoice" >
+    <id column="no" property="no" jdbcType="BIGINT" />
+    <result column="invoiceNo" property="invoiceno" jdbcType="VARCHAR" />
+    <result column="customerNo" property="customerno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    no, invoiceNo, customerNo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_cons_invoice
+    where no = #{no,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_cons_invoice
+    where no = #{no,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.org.oztt.entity.TConsInvoice" >
+    insert into t_cons_invoice (no, invoiceNo, customerNo
+      )
+    values (#{no,jdbcType=BIGINT}, #{invoiceno,jdbcType=VARCHAR}, #{customerno,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.org.oztt.entity.TConsInvoice" >
+    insert into t_cons_invoice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="invoiceno != null" >
+        invoiceNo,
+      </if>
+      <if test="customerno != null" >
+        customerNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        #{no,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceno != null" >
+        #{invoiceno,jdbcType=VARCHAR},
+      </if>
+      <if test="customerno != null" >
+        #{customerno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TConsInvoice" >
+    update t_cons_invoice
+    <set >
+      <if test="invoiceno != null" >
+        invoiceNo = #{invoiceno,jdbcType=VARCHAR},
+      </if>
+      <if test="customerno != null" >
+        customerNo = #{customerno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TConsInvoice" >
+    update t_cons_invoice
+    set invoiceNo = #{invoiceno,jdbcType=VARCHAR},
+      customerNo = #{customerno,jdbcType=VARCHAR}
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+</mapper>
