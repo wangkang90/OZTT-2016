@@ -13,6 +13,8 @@ public class OrderInfoDto {
     
     private String orderDate;
     
+    private String orderStatus;
+    
     private List<ContCartItemDto> itemList;
 
     public String getOrderId() {
@@ -37,5 +39,13 @@ public class OrderInfoDto {
 
     public void setItemList(List<ContCartItemDto> itemList) {
         this.itemList = itemList;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

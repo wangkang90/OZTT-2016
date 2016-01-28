@@ -254,17 +254,24 @@
   <select id="getOrderByParamForPage" resultType="com.org.oztt.formDto.OrderInfoDto" parameterType="map">
 		SELECT
 		orderNo as orderId,
-		addTimestamp as orderDate
+		addTimestamp as orderDate,
+		handleFlg as orderStatus
 		from t_cons_order
 		where handleFlg <![CDATA[ <> ]]> '9'
-		and customerNo = #{customerno,jdbcType=VARCHAR}
+		and customerNo = #{customerNo,jdbcType=VARCHAR}
+		<if test="orderNo != null" >
+        	and orderNo = #{orderNo,jdbcType=VARCHAR}
+      	</if>
 	</select>
 	
 	<select id="getOrderByParamForPageCount" resultType="int" parameterType="map">
 		SELECT count(1)
 		FROM t_cons_order 
 		WHERE handleFlg <![CDATA[ <> ]]> '9'
-		and customerNo = #{customerno,jdbcType=VARCHAR}
+		and customerNo = #{customerNo,jdbcType=VARCHAR}
+		<if test="orderNo != null" >
+        	and orderNo = #{orderNo,jdbcType=VARCHAR}
+      	</if>
 	</select>
 	
 	<select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String">
