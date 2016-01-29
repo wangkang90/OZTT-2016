@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50710
 File Encoding         : 65001
 
-Date: 2016-01-24 21:35:22
+Date: 2016-01-29 14:45:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,8 +23,7 @@ CREATE TABLE `t_address_info` (
   `customerNo` varchar(16) NOT NULL,
   `deliveryMethod` varchar(6) NOT NULL,
   `countryCode` varchar(20) DEFAULT NULL,
-  `state` varchar(50) DEFAULT NULL,
-  `city` varchar(50) DEFAULT NULL,
+  `state` varchar(100) DEFAULT NULL,
   `suburb` varchar(50) DEFAULT NULL,
   `addressDetails` varchar(200) DEFAULT NULL,
   `postCode` varchar(20) DEFAULT NULL,
@@ -159,9 +158,10 @@ CREATE TABLE `t_cons_order` (
   `handleFlg` varchar(6) DEFAULT NULL,
   `deliveryMethod` varchar(6) DEFAULT NULL,
   `addressId` bigint(18) DEFAULT NULL,
-  `accountNo` varchar(12) DEFAULT NULL,
+  `homeDeliveryTime` varchar(10) DEFAULT NULL,
+  `accountNo` varchar(16) DEFAULT NULL,
   `deliveryCost` decimal(12,2) DEFAULT NULL,
-  `transactionNo` varchar(16) NOT NULL,
+  `transactionNo` varchar(16) DEFAULT NULL,
   `addTimestamp` timestamp NULL DEFAULT NULL,
   `addUserKey` varchar(40) DEFAULT NULL,
   `updTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -796,6 +796,110 @@ CREATE TABLE `t_no_transaction` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `t_suburb_deliver_fee`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_suburb_deliver_fee`;
+CREATE TABLE `t_suburb_deliver_fee` (
+  `no` bigint(12) NOT NULL AUTO_INCREMENT,
+  `suburb` varchar(100) NOT NULL,
+  `deliverFee` decimal(12,2) NOT NULL,
+  PRIMARY KEY (`no`)
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_suburb_deliver_fee
+-- ----------------------------
+INSERT INTO `t_suburb_deliver_fee` VALUES ('1', 'Algester', '6.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('2', 'Annerley', '8.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('3', 'Acacia Ridge', '6.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('4', 'Auchenflower', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('5', 'Ascot', '18.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('6', 'Archerfield', '6.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('7', 'Browns Plains', '9.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('8', 'Bowen Hills', '14.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('9', 'Bridgeman Downs', '22.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('10', 'Bardon', '15.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('11', 'Bulimba', '15.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('12', 'Coopers Plains', '3.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('13', 'Calamvale', '6.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('14', 'Carindale', '10.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('15', 'Carina', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('16', 'City', '9.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('17', 'Coorparoo', '9.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('18', 'Camp Hill', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('19', 'Cannon Hill', '12.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('20', 'Chermside', '18.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('21', 'Chermside West', '18.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('22', 'Carseldine', '22.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('23', 'Drewvale', '8.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('24', 'Doolandella', '10.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('25', 'Daisy Hill', '14.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('26', 'Eight Mile Plains', '5.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('27', 'East Brisbane', '10.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('28', 'Fortitude Vally', '10.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('29', 'Forest Lake', '12.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('30', 'Greenslopes', '8.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('31', 'Herston', '12.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('32', 'Highgate Hill', '10.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('33', 'Hamilton', '15.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('34', 'Holland Park', '8.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('35', 'Holland Park West', '7.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('36', 'Hawthorne', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('37', 'Indooroopilly', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('38', 'Jimbooba', '16.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('39', 'Jindalee', '15.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('40', 'Lutwyche', '15.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('41', 'Kuraby', '6.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('42', 'Kelvin Grove', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('43', 'Kangaroo Point', '9.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('44', 'Macgregor', '4.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('45', 'Mt Gravatt', '6.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('46', 'Moorooka', '8.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('47', 'Mt Gravatt East', '7.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('48', 'Morningside', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('49', 'Milton', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('50', 'Mansfield', '7.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('51', 'Mitchelton', '15.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('52', 'Norman Park', '15.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('53', 'Newmarket', '13.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('54', 'Nundah', '20.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('55', 'New Farm', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('56', 'Oxley', '8.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('57', 'Parkinson', '7.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('58', 'Paddington', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('59', 'Robertson', '3.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('60', 'Runcorn', '5.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('61', 'Rochedale', '6.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('62', 'Rochedale South', '7.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('63', 'Rocklea', '7.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('64', 'Red Hill', '12.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('65', 'Salisbury', '3.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('66', 'Sunnybank', '4.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('67', 'Sunnybank Hills', '5.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('68', 'Streetton', '6.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('69', 'St Lucia', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('70', 'South Bank', '9.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('71', 'South Brisbane', '9.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('72', 'Spring Hill', '10.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('73', 'Stafford', '18.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('74', 'Slacks Creek', '12.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('75', 'Taringa', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('76', 'Toowong', '10.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('77', 'Tarragindi', '7.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('78', 'Teneriffe', '11.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('79', 'Underwood', '6.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('80', 'Upper Mt Gravatt', '4.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('81', 'Virginia', '20.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('82', 'Windsor', '13.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('83', 'Woolongabba', '9.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('84', 'Wishart', '6.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('85', 'West End', '9.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('86', 'Woodridge', '8.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('87', 'Wooloowin', '20.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('88', 'Wavell Heights', '18.00');
+INSERT INTO `t_suburb_deliver_fee` VALUES ('89', 'Yeronga', '9.00');
+
+-- ----------------------------
 -- Table structure for `t_sys_account`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_account`;
@@ -827,11 +931,47 @@ CREATE TABLE `t_sys_code` (
   `codeName` varchar(100) NOT NULL,
   `codeDetailName` varchar(100) NOT NULL,
   PRIMARY KEY (`no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_sys_code
 -- ----------------------------
+INSERT INTO `t_sys_code` VALUES ('1', 'COM001', '1', '性别', '男');
+INSERT INTO `t_sys_code` VALUES ('2', 'COM001', '2', '性别', '女');
+INSERT INTO `t_sys_code` VALUES ('3', 'COM001', '9', '性别', '保密');
+INSERT INTO `t_sys_code` VALUES ('4', 'COM002', '0', '婚姻状况', '未婚');
+INSERT INTO `t_sys_code` VALUES ('5', 'COM002', '1', '婚姻状况', '已婚');
+INSERT INTO `t_sys_code` VALUES ('6', 'COM002', '9', '婚姻状况', '保密');
+INSERT INTO `t_sys_code` VALUES ('7', 'COM003', '10', '教育程度', '初中');
+INSERT INTO `t_sys_code` VALUES ('8', 'COM003', '20', '教育程度', '高中');
+INSERT INTO `t_sys_code` VALUES ('9', 'COM003', '30', '教育程度', '中专');
+INSERT INTO `t_sys_code` VALUES ('10', 'COM003', '40', '教育程度', '大专');
+INSERT INTO `t_sys_code` VALUES ('11', 'COM003', '50', '教育程度', '本科');
+INSERT INTO `t_sys_code` VALUES ('12', 'COM003', '60', '教育程度', '硕士');
+INSERT INTO `t_sys_code` VALUES ('13', 'COM003', '70', '教育程度', '博士');
+INSERT INTO `t_sys_code` VALUES ('14', 'COM003', '80', '教育程度', '其他');
+INSERT INTO `t_sys_code` VALUES ('15', 'COM004', '0', '订单状态', '未付款');
+INSERT INTO `t_sys_code` VALUES ('16', 'COM004', '1', '订单状态', '已付款');
+INSERT INTO `t_sys_code` VALUES ('17', 'COM004', '2', '订单状态', '处理中');
+INSERT INTO `t_sys_code` VALUES ('18', 'COM004', '3', '订单状态', '处理完毕');
+INSERT INTO `t_sys_code` VALUES ('19', 'COM004', '9', '订单状态', '删除');
+INSERT INTO `t_sys_code` VALUES ('20', 'COM005', '1', '付款方式', 'Credit Card');
+INSERT INTO `t_sys_code` VALUES ('21', 'COM005', '2', '付款方式', 'Paypal');
+INSERT INTO `t_sys_code` VALUES ('22', 'COM005', '3', '付款方式', '支付宝');
+INSERT INTO `t_sys_code` VALUES ('23', 'COM005', '4', '付款方式', '微信支付');
+INSERT INTO `t_sys_code` VALUES ('24', 'COM006', '1', '交易类型', '订单支付');
+INSERT INTO `t_sys_code` VALUES ('25', 'COM006', '2', '交易类型', '手续费收取');
+INSERT INTO `t_sys_code` VALUES ('26', 'COM007', '0', '交易状态', '处理中');
+INSERT INTO `t_sys_code` VALUES ('27', 'COM007', '1', '交易状态', '处理成功');
+INSERT INTO `t_sys_code` VALUES ('28', 'COM007', '9', '交易状态', '处理失败');
+INSERT INTO `t_sys_code` VALUES ('29', 'COM008', '1', '运送方式', '来店自提');
+INSERT INTO `t_sys_code` VALUES ('30', 'COM008', '2', '运送方式', '普通快递');
+INSERT INTO `t_sys_code` VALUES ('31', 'COM008', '3', '运送方式', '货到付款');
+INSERT INTO `t_sys_code` VALUES ('32', 'COM009', '01', '送货上门时间段', '8:00～～10:00');
+INSERT INTO `t_sys_code` VALUES ('33', 'COM009', '02', '送货上门时间段', '10:00～～12:00');
+INSERT INTO `t_sys_code` VALUES ('34', 'COM009', '03', '送货上门时间段', '12:00～～14:00');
+INSERT INTO `t_sys_code` VALUES ('35', 'COM009', '04', '送货上门时间段', '14:00～～16:00');
+INSERT INTO `t_sys_code` VALUES ('36', 'COM009', '05', '送货上门时间段', '16:00～～18:00');
 
 -- ----------------------------
 -- Table structure for `t_sys_module`
