@@ -38,8 +38,8 @@
 									<div class="clearfix">
 										<div class="btn-group btn-group-solid" id="deliverymethod">
 											<button type="button" class="btn red" id="deliverymethod3" onclick="deliveryRadio(this,'3')" style="margin-left:50px"><fmt:message key="OZ_TT_GB_SH_con" /></button>
-<%--                                             <button type="button" class="btn red" id="deliverymethod1" onclick="deliveryRadio(this,'1')" style="margin-left:50px"><fmt:message key="OZ_TT_GB_SH_selfpick" /></button> --%>
-<%--                                             <button type="button" class="btn red" id="deliverymethod2" onclick="deliveryRadio(this,'2')" style="margin-left:50px"><fmt:message key="OZ_TT_GB_SH_simpleexpress" /></button> --%>
+                                            <button type="button" class="btn red" id="deliverymethod1" onclick="deliveryRadio(this,'1')" style="margin-left:50px"><fmt:message key="OZ_TT_GB_SH_selfpick" /></button>
+                                            <button type="button" class="btn red" id="deliverymethod2" onclick="deliveryRadio(this,'2')" style="margin-left:50px"><fmt:message key="OZ_TT_GB_SH_simpleexpress" /></button>
                                             
                                         </div>
 									</div>
@@ -51,7 +51,7 @@
 								</legend>
 								<div class="form-group col-sm-12">
 									<div class="col-sm-2 pull-right">
-										<a href="#address-pop-up" class="btn red fancybox-fast-view" onclick="newAddress()"><fmt:message key="OZ_TT_GB_SH_newAddress" /></a>
+										<a href="#address-pop-up" id="newaddressBtn" class="btn red fancybox-fast-view" onclick="newAddress()"><fmt:message key="OZ_TT_GB_SH_newAddress" /></a>
 									</div>
 								</div>
 								
@@ -141,6 +141,7 @@
 		}
 		
 		function reloadAddress(adrList) {
+			$("#newaddressBtn").css("display","");
 			$("#addressUl").empty();
 			if (adrList != null && adrList.length > 0) {
 				var temp = "";
@@ -193,6 +194,13 @@
 		function deliveryRadio(str, method) {
 			$(str).parent().find("button").removeClass("active");
 			$(str).addClass("active");
+			if (method == '1') {
+				// 是来店自提
+				$("#addressUl").empty();
+				$("#newaddressBtn").css("display","none");
+				$("#addressUl").append('<li><fmt:message key="common_myaddress" /></li>');
+				return;
+			}
 			$.ajax({
 				type : "GET",
 				contentType:'application/json',
@@ -486,11 +494,19 @@
 			
 			$("#hidDeliMethod").val(selectDelivery);
 			$("#hidAddressId").val(selectAddress);
+			if (selectDelivery == '1' || selectDelivery == '2') {
+				var targetform = document.forms['submitPay'];
+				targetform.action = "${pageContext.request.contextPath}/OZ_TT_GB_OC/init";
+				targetform.method = "POST";
+				targetform.submit();
+			} else {
+				var targetform = document.forms['submitPay'];
+				targetform.action = "${pageContext.request.contextPath}/Pay/payment";
+				targetform.method = "POST";
+				targetform.submit();
+			}
 			
-			var targetform = document.forms['submitPay'];
-			targetform.action = "${pageContext.request.contextPath}/Pay/payment";
-			targetform.method = "POST";
-			targetform.submit();
+			
 		}
 		
 	</script>

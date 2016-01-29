@@ -26,6 +26,29 @@
 				if(!data.isException) {
 					if (data.isLogin) {
 						// 已经登录,则跳转到运送方式选择画面
+						// 同步数据
+						// 同步购物车的内容
+						var needSyncData = getCookie("contcart");
+						if (getJsonSize(needSyncData) > 0) {
+							$.ajax({
+								type : "POST",
+								contentType:'application/json',
+								url : '${pageContext.request.contextPath}/COMMON/purchaseAsyncContCart',
+								dataType : "json",
+								async:false,
+								data : needSyncData, 
+								success : function(data) {
+									if(!data.isException){
+										// 同步购物车成功
+									} else {
+										// 同步购物车失败
+									}
+								},
+								error : function(data) {
+									
+								}
+							});
+						}
 						location.href = "${pageContext.request.contextPath}/OZ_TT_GB_SH/init";
 					} else {
 						// 没有登录

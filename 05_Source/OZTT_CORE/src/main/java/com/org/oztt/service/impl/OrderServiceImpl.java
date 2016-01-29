@@ -170,9 +170,11 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         tConsOrder.setPaymenttimestamp(null);//付款时间
         tConsOrder.setHandleflg(CommonEnum.HandleFlag.NOT_PAY.getCode());
         tConsOrder.setDeliverymethod(hidDeliMethod);
-        tConsOrder.setAddressid(Long.valueOf(hidAddressId));
+        
+        tConsOrder.setAddressid(hidAddressId == null ? 0L : Long.valueOf(hidAddressId));
         // TODO 这里需要取运费
-        tConsOrder.setDeliverycost(BigDecimal.ZERO);
+        BigDecimal deleveryCost = BigDecimal.ZERO;
+        tConsOrder.setDeliverycost(deleveryCost);
         tConsOrder.setAddtimestamp(new Date());
         tConsOrder.setAdduserkey(customerNo);
         tConsOrder.setAccountno(maxInvoiceNo);
@@ -190,7 +192,13 @@ public class OrderServiceImpl extends BaseService implements OrderService {
                 // 货到付款
                 PaypalParam paypalParam = new PaypalParam();
                 paypalParam.setOrderId(maxOrderNo);
-                paypalParam.setPrice(orderAmount.toString());
+                if (CommonEnum.DeliveryMethod.NORMAL.getCode().equals(hidDeliMethod)) {
+                    // 普通快递
+                    paypalParam.setPrice(orderAmount.add(deleveryCost).toString());
+                } else if(CommonEnum.DeliveryMethod.SELF_PICK.getCode().equals(hidDeliMethod)) {
+                    // 来店自提
+                    paypalParam.setPrice(orderAmount.toString());
+                }
                 paypalParam.setNotifyUrl(getApplicationMessage("notifyUrl") + maxOrderNo); //这里是不是通知画面，做一些对数据库的更新操作等
                 paypalParam.setCancelReturn(getApplicationMessage("cancelReturn"));//应该返回未完成订单画面订单画面
                 paypalParam.setOrderInfo(getApplicationMessage("orderInfo"));

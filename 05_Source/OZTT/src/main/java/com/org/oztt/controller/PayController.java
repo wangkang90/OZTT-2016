@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.org.oztt.contants.CommonConstants;
+import com.org.oztt.contants.CommonEnum;
 import com.org.oztt.service.OrderService;
 import com.org.oztt.service.PaypalService;
 
@@ -41,7 +42,7 @@ public class PayController extends BaseController {
                 response.getWriter().write(rb);
                 return null;
             }
-            if (CommonConstants.COD.equals(hidDeliMethod)){
+            if (CommonEnum.DeliveryMethod.COD.getCode().equals(hidDeliMethod)){
                 // 货到付款
                 return "redirect:/Notice/codNotice";
             }

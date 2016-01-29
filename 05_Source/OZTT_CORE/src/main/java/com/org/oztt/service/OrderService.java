@@ -28,7 +28,18 @@ public interface OrderService {
      */
     public void deleteOrderById(String id, String customerNo) throws Exception;
     
+    /**
+     * 更新订单信息
+     * @param tConsOrder
+     * @throws Exception
+     */
     public void updateOrderInfo(TConsOrder tConsOrder) throws Exception;
     
+    /**
+     * 取得当前的某个订单
+     * @param orderId
+     * @return
+     * @throws Exception
+     */
     public TConsOrder selectByOrderId(String orderId) throws Exception;
 }
