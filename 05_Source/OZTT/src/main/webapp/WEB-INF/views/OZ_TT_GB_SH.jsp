@@ -62,6 +62,25 @@
 								
 								</div>
 							</fieldset>
+							<fieldset id="homeTimeFieldSet">
+								<legend>
+									<fmt:message key="OZ_TT_GB_SH_hometime" />
+								</legend>
+								<div class="form-group col-sm-12">
+									<div class="col-sm-2">
+										<input type="text" class="form-control" id="homeDeliveryTimeId"></input>
+										
+										
+									</div>
+									<div class="col-sm-2">
+										<select class="form-control" id="deliveryTimeSelect">
+											<c:forEach var="seList" items="${ deliverySelect }">
+			                    				<option value="${ seList.key }">${ seList.value }</option>
+			                    			</c:forEach>
+										</select>
+									</div>
+								</div>
+							</fieldset>
 							<fieldset>
 								<legend>
 									<fmt:message key="OZ_TT_GB_SH_goodlist"/>
@@ -116,10 +135,13 @@
 		<input type="hidden" name="hidDeliMethod" id="hidDeliMethod" value="">
 		<input type="hidden" name="hidAddressId" id="hidAddressId" value="">
 		<input type="hidden" name="hidPayMethod" id="hidPayMethod" value="">
+		<input type="hidden" name="hidHomeDeliveryTime" id="hidHomeDeliveryTime" value="">
 	</form>
 
 	<%@ include file="./commonjsFooter.jsp"%>  
-	<script src="${ctx}/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>     
+	<script src="${ctx}/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<link href="${ctx}/bootstrap/css/bootstrap-datepicker.css" type="text/css" rel="stylesheet" />
+	<script src="${ctx}/bootstrap/js/bootstrap-datepicker.js" type="text/javascript"></script>    
 	<%@ include file="./commonaddress.jsp"%>
 	<script type="text/javascript">
 		// 更新地址
@@ -147,7 +169,7 @@
 				var temp = "";
 				for (var i = 0 ; i < adrList.length; i++) {
 					temp += "<li onclick=\"addressLiClick(this,'"+adrList[i].id+"')\"><span class=\"col-sm-8\">"
-					+adrList[i].countrycode+ "&nbsp;" + adrList[i].state+ "&nbsp;" + adrList[i].city+ "&nbsp;"
+					+adrList[i].countrycode+ "&nbsp;" + adrList[i].state+ "&nbsp;"
 					+adrList[i].addressdetails+ "&nbsp;" + adrList[i].receiver+ "&nbsp;" + adrList[i].contacttel+ "&nbsp;" +
 					"</span><span style=\"display:none\"class=\"col-sm-4\">"+
 					"<button type=\"button\" onclick=\"updAdrShowDia('"+adrList[i].id+"')\" class=\"btn red\" style=\"margin-left:25px\">"+updateLabel+"</button>"+
@@ -199,6 +221,7 @@
 				$("#addressUl").empty();
 				$("#newaddressBtn").css("display","none");
 				$("#addressUl").append('<li><fmt:message key="common_myaddress" /></li>');
+				$("#homeTimeFieldSet").css("display","none");
 				return;
 			}
 			$.ajax({
@@ -211,6 +234,20 @@
 				success : function(data) {
 					if(!data.isException){
 						reloadAddress(data.adrList);
+						$("#homeTimeFieldSet").css("display","none");
+						if (method == '3') {
+							//如果是货到付款，则需要填写期望货到时间
+							$("#homeTimeFieldSet").css("display","");
+							$("#homeDeliveryTimeId").datepicker({
+						    	format: "yyyy/mm/dd",
+						        clearBtn: true,
+						        orientation: "top right",
+						        startDate: " ",
+						        autoclose: true,
+						        todayHighlight: true
+						    }); 
+							$("#homeDeliveryTimeId").val("");
+						}
 					} else {
 						// 系统异常
 					}
@@ -233,7 +270,6 @@
 			var submitData = {
 				"country" : $("#country").val(),
 				"state" : $("#state").val(),
-				"city" : $("#city").val(),
 				"suburb" : $("#suburb").val(),
 				"details" : $("#details").val(),
 				"post" : $("#post").val(),
@@ -292,7 +328,6 @@
 		function clearDialog(){
 			$("#country").val("");
 			$("#state").val("");
-			$("#city").val("");
 			$("#suburb").val("");
 			$("#details").val("");
 			$("#post").val("");
@@ -305,7 +340,6 @@
 			cleanFormError();
 			var country = $("#country").val();
 			var state = $("#state").val();
-			var city = $("#city").val();
 			var suburb = $("#suburb").val();
 			var details = $("#details").val();
 			var post = $("#post").val();
@@ -320,11 +354,6 @@
 			if (state == "") {
 				var message = E0002.replace("{0}", '<fmt:message key="common_address_state" />')
 				showErrorSpan($("#state"), message);
-				return false;
-			}
-			if (city == "") {
-				var message = E0002.replace("{0}", '<fmt:message key="common_address_city" />')
-				showErrorSpan($("#country"), message);
 				return false;
 			}
 			if (suburb == "") {
@@ -379,7 +408,6 @@
 					if(!data.isException){
 						$("#country").val(data.item.countrycode);
 						$("#state").val(data.item.state);
-						$("#city").val(data.item.city);
 						$("#suburb").val(data.item.suburb);
 						$("#details").val(data.item.addressdetails);
 						$("#post").val(data.item.postcode);
@@ -492,8 +520,16 @@
 				return;
 			}
 			
+			if (selectDelivery == '3') {
+				if ($("#homeDeliveryTimeId").val() == "") {
+					alert(E0010);
+					return;
+				}
+			}
+			
 			$("#hidDeliMethod").val(selectDelivery);
 			$("#hidAddressId").val(selectAddress);
+			$("#hidHomeDeliveryTime").val($("#homeDeliveryTimeId").val() + "*" + $("#deliveryTimeSelect").val());
 			if (selectDelivery == '1' || selectDelivery == '2') {
 				var targetform = document.forms['submitPay'];
 				targetform.action = "${pageContext.request.contextPath}/OZ_TT_GB_OC/init";

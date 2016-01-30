@@ -17,6 +17,8 @@ public interface CommonService {
     public List<MyMap> getEducation() throws Exception;
     
     public List<MyMap> getIsMarried() throws Exception;
+    
+    public List<MyMap> getDeliveryTime() throws Exception;
 
     /**
      * 检索出菜单项目

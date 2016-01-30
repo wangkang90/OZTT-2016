@@ -30,11 +30,13 @@ import com.org.oztt.service.CommonService;
 @Service
 public class CommonServiceImpl extends BaseService implements CommonService {
 
-    private static List<MyMap>     sexMapList       = null;
+    private static List<MyMap>     sexMapList          = null;
 
-    private static List<MyMap>     educationMapList = null;
+    private static List<MyMap>     educationMapList    = null;
 
-    private static List<MyMap>     marriageMapList  = null;
+    private static List<MyMap>     marriageMapList     = null;
+
+    private static List<MyMap>     deliveryTimeMapList = null;
 
     @Resource
     private TSysCodeDao            tSysCodeDao;
@@ -67,6 +69,14 @@ public class CommonServiceImpl extends BaseService implements CommonService {
             marriageMapList = entityList2mapList(tSysCodeDao.selectByCodeId(SysCodeConstants.MARRIAGE_CODE));
         }
         return marriageMapList;
+    }
+
+    @Override
+    public List<MyMap> getDeliveryTime() throws Exception {
+        if (deliveryTimeMapList == null) {
+            deliveryTimeMapList = entityList2mapList(tSysCodeDao.selectByCodeId(SysCodeConstants.DELIVERY_TIME_CODE));
+        }
+        return deliveryTimeMapList;
     }
 
     private List<MyMap> entityList2mapList(List<TSysCode> list) {
@@ -141,12 +151,13 @@ public class CommonServiceImpl extends BaseService implements CommonService {
                 tSysValidateMessage.setValidatecode(random);
                 tSysValidateMessage.setCreatetimestamp(new Date());
                 tSysValidateMessageDao.insertSelective(tSysValidateMessage);
-            } else {
+            }
+            else {
                 tSysValidateMessage.setValidatecode(random);
                 tSysValidateMessage.setCreatetimestamp(new Date());
                 tSysValidateMessageDao.updateByPrimaryKeySelective(tSysValidateMessage);
             }
-           
+
         }
         else {
             return false;

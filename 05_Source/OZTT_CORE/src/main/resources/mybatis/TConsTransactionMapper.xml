@@ -281,4 +281,12 @@
       updPgmId = #{updpgmid,jdbcType=VARCHAR}
     where no = #{no,jdbcType=BIGINT}
   </update>
+  
+  <select id="selectLastTransaction" resultType="com.org.oztt.entity.TConsTransaction">
+		select
+		<include refid="Base_Column_List" />
+		from t_cons_transaction
+		where no = (select max(no) from
+		t_cons_transaction)
+	</select>
 </mapper>

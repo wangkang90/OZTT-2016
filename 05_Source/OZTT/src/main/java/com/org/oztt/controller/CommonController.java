@@ -375,7 +375,6 @@ public class CommonController extends BaseController {
             TAddressInfo info = new TAddressInfo();
             
             info.setAddressdetails(reqMap.get("details"));
-            info.setCity(reqMap.get("city"));
             info.setContacttel(reqMap.get("contacttel"));
             info.setCountrycode(reqMap.get("country"));
             info.setCustomerno(customerNo);

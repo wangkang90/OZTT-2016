@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.contants.CommonEnum;
+import com.org.oztt.entity.TConsOrder;
 import com.org.oztt.service.OrderService;
 import com.org.oztt.service.PaypalService;
 
@@ -65,11 +66,12 @@ public class PayController extends BaseController {
     @RequestMapping(value = "paypalNotify")
     public void paypalNotify(Model model, HttpServletResponse response, HttpSession session, @RequestParam String orderId) {
         try {
-            //String customerNo = (String) session.getAttribute(CommonConstants.SESSION_CUSTOMERNO);
-            // 先判断付款方式
+            // 检索当前订单，更新状态为已经付款
+            TConsOrder tConsOrder = orderService.selectByOrderId(orderId);
+            tConsOrder.setHandleflg(CommonEnum.HandleFlag.HAS_HANDLED.getCode());
+            orderService.updateOrderInfo(tConsOrder);
             
-            
-
+            // 下面生成入出账记录
         }
         catch (Exception e) {
             e.printStackTrace();
