@@ -38,6 +38,7 @@
 	var E0008 = '<fmt:message key="E0008" />';
 	var E0001 = '<fmt:message key="E0001" />';
 	var E0009 = '<fmt:message key="E0009" />';
+	var E0010 = '<fmt:message key="E0010" />';
 	
 	function validateCheckLogin(){
 		cleanFormError();

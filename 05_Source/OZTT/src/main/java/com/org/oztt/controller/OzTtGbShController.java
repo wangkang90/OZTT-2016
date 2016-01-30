@@ -39,6 +39,8 @@ public class OzTtGbShController extends BaseController {
             String imgUrl = super.getApplicationMessage("saveImgUrl");
             // 取得购物车里面选购的内容
             List<ContCartItemDto> consCarts = goodsService.getAllContCartForBuy(customerNo);
+            
+            
 
             if (!CollectionUtils.isEmpty(consCarts)) {
                 for (ContCartItemDto dto : consCarts) {
@@ -53,6 +55,7 @@ public class OzTtGbShController extends BaseController {
             }
 
             model.addAttribute("conscars", JSONObject.toJSONString(consCarts));
+            model.addAttribute("deliverySelect", commonService.getDeliveryTime());
             return "/OZ_TT_GB_SH";
         }
         catch (Exception e) {

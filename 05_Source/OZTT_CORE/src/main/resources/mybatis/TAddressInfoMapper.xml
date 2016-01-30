@@ -7,7 +7,6 @@
     <result column="deliveryMethod" property="deliverymethod" jdbcType="VARCHAR" />
     <result column="countryCode" property="countrycode" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="VARCHAR" />
-    <result column="city" property="city" jdbcType="VARCHAR" />
     <result column="suburb" property="suburb" jdbcType="VARCHAR" />
     <result column="addressDetails" property="addressdetails" jdbcType="VARCHAR" />
     <result column="postCode" property="postcode" jdbcType="VARCHAR" />
@@ -15,7 +14,7 @@
     <result column="contactTel" property="contacttel" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, customerNo, deliveryMethod, countryCode, state, city, suburb, addressDetails, 
+    id, customerNo, deliveryMethod, countryCode, state, suburb, addressDetails, 
     postCode, receiver, contactTel
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -30,11 +29,11 @@
   </delete>
   <insert id="insert" parameterType="com.org.oztt.entity.TAddressInfo" >
     insert into t_address_info (id, customerNo, deliveryMethod, 
-      countryCode, state, city, 
+      countryCode, state,
       suburb, addressDetails, postCode, 
       receiver, contactTel)
     values (#{id,jdbcType=BIGINT}, #{customerno,jdbcType=VARCHAR}, #{deliverymethod,jdbcType=VARCHAR}, 
-      #{countrycode,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{countrycode,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},
       #{suburb,jdbcType=VARCHAR}, #{addressdetails,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, 
       #{receiver,jdbcType=VARCHAR}, #{contacttel,jdbcType=VARCHAR})
   </insert>
@@ -55,9 +54,6 @@
       </if>
       <if test="state != null" >
         state,
-      </if>
-      <if test="city != null" >
-        city,
       </if>
       <if test="suburb != null" >
         suburb,
@@ -91,9 +87,6 @@
       <if test="state != null" >
         #{state,jdbcType=VARCHAR},
       </if>
-      <if test="city != null" >
-        #{city,jdbcType=VARCHAR},
-      </if>
       <if test="suburb != null" >
         #{suburb,jdbcType=VARCHAR},
       </if>
@@ -126,9 +119,6 @@
       <if test="state != null" >
         state = #{state,jdbcType=VARCHAR},
       </if>
-      <if test="city != null" >
-        city = #{city,jdbcType=VARCHAR},
-      </if>
       <if test="suburb != null" >
         suburb = #{suburb,jdbcType=VARCHAR},
       </if>
@@ -153,7 +143,6 @@
       deliveryMethod = #{deliverymethod,jdbcType=VARCHAR},
       countryCode = #{countrycode,jdbcType=VARCHAR},
       state = #{state,jdbcType=VARCHAR},
-      city = #{city,jdbcType=VARCHAR},
       suburb = #{suburb,jdbcType=VARCHAR},
       addressDetails = #{addressdetails,jdbcType=VARCHAR},
       postCode = #{postcode,jdbcType=VARCHAR},

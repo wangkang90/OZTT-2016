@@ -27,12 +27,6 @@
 						</div>
 						
 						<div class="form-group col-sm-12">
-							<label for="city" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
-								<fmt:message key="common_address_city" /> <span class="require">*</span> 
-							</label>
-							<div class="col-lg-4">
-								<input type="text" class="form-control" id="city" maxlength="50"/>
-							</div>
 							
 							<label for="suburb" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
 								<fmt:message key="common_address_suburb" /> <span class="require">*</span> 
@@ -40,6 +34,7 @@
 							<div class="col-lg-4">
 								<input type="text" class="form-control" id="suburb" maxlength="50"/>
 							</div>
+							<div class="col-lg-6"></div>
 						</div>
 						
 						<div class="form-group col-sm-12">

@@ -171,7 +171,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         tConsOrder.setHandleflg(CommonEnum.HandleFlag.NOT_PAY.getCode());
         tConsOrder.setDeliverymethod(hidDeliMethod);
         
-        tConsOrder.setAddressid(hidAddressId == null ? 0L : Long.valueOf(hidAddressId));
+        tConsOrder.setAddressid(StringUtils.isEmpty(hidAddressId) ? 0L : Long.valueOf(hidAddressId));
         // TODO 这里需要取运费
         BigDecimal deleveryCost = BigDecimal.ZERO;
         tConsOrder.setDeliverycost(deleveryCost);
