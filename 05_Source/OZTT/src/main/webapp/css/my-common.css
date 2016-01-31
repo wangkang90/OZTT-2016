@@ -74,6 +74,10 @@
 	text-align: right
 }
 
+.textcenter{
+	text-align: center
+}
+
 /* ozttNotice */
 .ozttNotice {
  	text-align: center;
@@ -100,4 +104,30 @@
 	top: 15px;
 	position: relative;
 	color: #E02222;
+}
+
+.anoline{
+	text-decoration:none
+}
+
+.defaultBackColor{
+	background-color: #e84d1c;
+}
+
+.table-order {
+	margin-bottom: 30px;
+}
+
+.table-order table{
+	background-color: #ffffff;
+}
+
+.table-order table td{
+	border-bottom: 2px solid #F9F9F9;
+}
+
+.table-order tr:first-child{
+	height:50px;
+	font-size: 1.6rem;
+	color:white;
 }

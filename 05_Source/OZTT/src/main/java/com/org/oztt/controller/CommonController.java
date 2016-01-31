@@ -519,7 +519,7 @@ public class CommonController extends BaseController {
         Map<String, Object> mapReturn = new HashMap<String, Object>();
         try {
             // 获取地址
-            TAddressInfo info = addressService.getAddressById(Long.valueOf(addressId));
+            //TAddressInfo info = addressService.getAddressById(Long.valueOf(addressId));
             //TODO 通过地址信息获取费用信息
 
             mapReturn.put("freight", "15");

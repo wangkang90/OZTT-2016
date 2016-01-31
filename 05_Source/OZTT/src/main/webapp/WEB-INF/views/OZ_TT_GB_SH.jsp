@@ -201,7 +201,7 @@
 					if(!data.isException){
 						var freight = data.freight;
 						$("#yunfei").html(freight);
-						$("#heji").html(parseFloat($("#xiaoji").html())-parseFloat(freight));
+						$("#heji").html(parseFloat($("#xiaoji").html()) + parseFloat(freight));
 					} else {
 						// 系统异常
 					}

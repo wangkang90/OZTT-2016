@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.alibaba.fastjson.JSONObject;
 import com.org.oztt.base.common.MyCategroy;
 import com.org.oztt.contants.CommonConstants;
+import com.org.oztt.entity.TCustomerBasicInfo;
 import com.org.oztt.entity.TCustomerLoginHis;
 import com.org.oztt.entity.TCustomerLoginInfo;
 import com.org.oztt.entity.TGoods;
@@ -129,6 +130,8 @@ public class OzTtTpLgController extends BaseController {
 
             // 可以取到数据，将所用的数据放入session 中
             session.setAttribute(CommonConstants.SESSION_CUSTOMERNO, tCustomerLoginInfo.getCustomerno());
+            TCustomerBasicInfo baseInfo = customerService.selectBaseInfoByCustomerNo(tCustomerLoginInfo.getCustomerno());
+            session.setAttribute(CommonConstants.SESSION_CUSTOMERNAME, baseInfo == null ? "" : baseInfo.getNickname());
 
             //=============================================================
             // 获取目录
@@ -161,6 +164,8 @@ public class OzTtTpLgController extends BaseController {
             // 获取session中的值
             model.addAttribute(CommonConstants.SESSION_CUSTOMERNO,
                     session.getAttribute(CommonConstants.SESSION_CUSTOMERNO));
+            model.addAttribute(CommonConstants.SESSION_CUSTOMERNAME,
+                    session.getAttribute(CommonConstants.SESSION_CUSTOMERNAME));
             //============================================================================
 
             return "/main/main";
@@ -185,6 +190,7 @@ public class OzTtTpLgController extends BaseController {
     @RequestMapping("logout")
     public String logout(Model model, HttpServletRequest request, HttpSession session) {
         session.removeAttribute(CommonConstants.SESSION_CUSTOMERNO);
+        session.removeAttribute(CommonConstants.SESSION_CUSTOMERNAME);
         session.invalidate();
         return "redirect:/main/init";
     }

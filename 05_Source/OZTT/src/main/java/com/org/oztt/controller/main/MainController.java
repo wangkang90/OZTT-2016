@@ -68,6 +68,8 @@ public class MainController extends BaseController {
             // 获取session中的值
             model.addAttribute(CommonConstants.SESSION_CUSTOMERNO,
                     session.getAttribute(CommonConstants.SESSION_CUSTOMERNO));
+            model.addAttribute(CommonConstants.SESSION_CUSTOMERNAME,
+                    session.getAttribute(CommonConstants.SESSION_CUSTOMERNAME));
 
             return "/main/main";
         }
@@ -121,6 +123,8 @@ public class MainController extends BaseController {
             // 获取session中的值
             model.addAttribute(CommonConstants.SESSION_CUSTOMERNO,
                     session.getAttribute(CommonConstants.SESSION_CUSTOMERNO));
+            model.addAttribute(CommonConstants.SESSION_CUSTOMERNAME,
+                    session.getAttribute(CommonConstants.SESSION_CUSTOMERNAME));
 
             return "/main/main";
         }

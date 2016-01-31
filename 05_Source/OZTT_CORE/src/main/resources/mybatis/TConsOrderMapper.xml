@@ -253,14 +253,16 @@
   
   <select id="getOrderByParamForPage" resultType="com.org.oztt.formDto.OrderInfoDto" parameterType="map">
 		SELECT
-		orderNo as orderId,
-		addTimestamp as orderDate,
-		handleFlg as orderStatus
-		from t_cons_order
-		where handleFlg <![CDATA[ <> ]]> '9'
-		and customerNo = #{customerNo,jdbcType=VARCHAR}
+		A.orderNo as orderId,
+		A.addTimestamp as orderDateDB,
+		A.handleFlg as orderStatus,
+		B.receiver as consignee
+		from t_cons_order A
+		left join t_address_info B on B.id = A.addressId
+		where A.handleFlg <![CDATA[ <> ]]> '9'
+		and A.customerNo = #{customerNo,jdbcType=VARCHAR}
 		<if test="orderNo != null" >
-        	and orderNo = #{orderNo,jdbcType=VARCHAR}
+        	and A.orderNo = #{orderNo,jdbcType=VARCHAR}
       	</if>
 	</select>
 	

@@ -631,6 +631,11 @@
 		location.href = "${pageContext.request.contextPath}/OZ_TT_CS_PE/init";
 	}
 	
+	// 进入我的订单画面
+	function toMyOrder(){
+		location.href = "${pageContext.request.contextPath}/OZ_TT_GB_OL/itemList";
+	}
+	
 	// 注册画面
 	function toRegister(){
 		location.href = "${pageContext.request.contextPath}/OZ_TT_TP_RE/init";
@@ -669,6 +674,8 @@
                 <div class="col-md-6 col-sm-6 additional-nav">
                     <ul class="list-unstyled list-inline pull-right">
                     	<c:if test="${ sessionUserId != null && sessionUserId != ''}">
+                    		<li><fmt:message key="header_welcome"/>${sessionUserName}</li>
+                    		<li><a onclick="toMyOrder()"><fmt:message key="header_myOrder"/></a></li>
                     		<li><a onclick="toMyTuantuan()"><fmt:message key="header_myOztuantuan"/></a></li>
                     	</c:if>
                         <li><a onclick="toCheckout()"><fmt:message key="header_checkout"/></a></li>

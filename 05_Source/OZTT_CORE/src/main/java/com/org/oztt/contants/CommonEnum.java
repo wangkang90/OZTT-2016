@@ -153,7 +153,7 @@ public final class CommonEnum {
      */
     public enum DeliveryMethod implements IEnum {
         /** 来店自提 */
-        SELF_PICK("未付款", "1"),
+        SELF_PICK("来店自提", "1"),
         /** 已付款 */
         NORMAL("普通快递", "2"),
         /** 处理中 */
@@ -411,5 +411,4 @@ public final class CommonEnum {
             return String.valueOf(this.label);
         }
     }
-
 }
