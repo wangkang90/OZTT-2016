@@ -3,11 +3,14 @@ package com.org.oztt.service;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.org.oztt.contants.CommonEnum;
 
 /**
  * @ClassName: BaseService
@@ -16,6 +19,14 @@ import org.slf4j.LoggerFactory;
 public class BaseService {
     
     protected static final Logger logger = LoggerFactory.getLogger(BaseService.class);
+    
+    public static BigDecimal getCostPercent(String payMethod) {
+        if (payMethod.equals(CommonEnum.PaymentMethod.PAYPAL.getCode())) {
+            // 用PayPal付款
+            return new BigDecimal(getApplicationMessage("PAYPAL_PECENT"));
+        }
+        return BigDecimal.ZERO;
+    }
 
     public static String getApplicationMessage(String key) {
         try {

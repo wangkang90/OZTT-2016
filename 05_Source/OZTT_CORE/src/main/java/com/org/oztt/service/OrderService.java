@@ -42,4 +42,11 @@ public interface OrderService {
      * @throws Exception
      */
     public TConsOrder selectByOrderId(String orderId) throws Exception;
+    
+    /**
+     * 订单付款成功后的一系列DB操作
+     * @param orderId
+     * @throws Exception
+     */
+    public void createPaySuccessInfo(String orderId) throws Exception;
 }

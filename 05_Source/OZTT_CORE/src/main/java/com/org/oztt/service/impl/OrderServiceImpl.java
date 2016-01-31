@@ -236,6 +236,9 @@ public class OrderServiceImpl extends BaseService implements OrderService {
                     }
                 }
                 orderDB.setItemList(detailList);
+                orderDB.setOrderDate(DateFormatUtils.date2StringWithFormat(orderDB.getOrderDateDB(), DateFormatUtils.PATTEN_HMS));
+                orderDB.setOrderStatus(CommonEnum.HandleFlag.getEnumLabel(orderDB.getOrderStatus()));
+                orderDB.setDeliveryMethod(CommonEnum.PaymentMethod.getEnumLabel(orderDB.getDeliveryMethod()));
             }
         }
         return orderDBInfoPage;
@@ -257,14 +260,24 @@ public class OrderServiceImpl extends BaseService implements OrderService {
 
     @Override
     public void updateOrderInfo(TConsOrder tConsOrder) throws Exception {
-        // TODO Auto-generated method stub
+        tConsOrderDao.updateByPrimaryKeySelective(tConsOrder);
 
     }
 
     @Override
     public TConsOrder selectByOrderId(String orderId) throws Exception {
-        // TODO Auto-generated method stub
-        return null;
+        return tConsOrderDao.selectByOrderId(orderId);
+    }
+
+    @Override
+    public void createPaySuccessInfo(String orderId) throws Exception {
+        // 更新订单状态
+        TConsOrder tConsOrder = this.selectByOrderId(orderId);
+        tConsOrder.setHandleflg(CommonEnum.HandleFlag.HAS_HANDLED.getCode());
+        this.updateOrderInfo(tConsOrder);
+        
+        //TODO 记录入出账
+        
     }
 
 }

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title><fmt:message key="OZ_TT_GB_OC_title"/></title>
+<title><fmt:message key="OZ_TT_GB_OL_title"/></title>
 <%@ include file="./commoncssHead.jsp"%>
 
 </head>
@@ -28,37 +28,52 @@
 
 			<!-- BEGIN CONTENT -->
           	<div class="col-md-12 col-sm-12">
-            <h1><fmt:message key="OZ_TT_GB_OC_h1"/></h1>
-            <div class="faq-page">
-            	<c:forEach var="orderlist" items="${ pageInfo.resultList }">
-	            <div class="panel panel-danger">
-	               <div class="panel-heading">
-	                  <h4 class="panel-title">
-	                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#accordion1_5">
-	                     	${orderlist.orderId}&nbsp;&nbsp;&nbsp;&nbsp;${orderlist.orderDate}
-	                     </a>
-	                  </h4>
-	               </div>
-	               <div id="accordion1_5" class="panel-collapse collapse">
-	                  <div class="panel-body">
-	                  	<div class="table-wrapper-responsive">
-	                  		<table summary="Shopping cart">
-	                  			<c:forEach var="itemList" items="${ orderlist.itemList }">
-	                  			<tr>
-									<td class="shopping-cart-image"><a><img src="${itemList.goodsImage}" alt="${itemList.goodsName}"></a></td>
-									<td class="shopping-cart-description"><h3><a onclick="toItem('${itemList.goodsId}')">${itemList.goodsName}</a></h3><p ></p></td>
-									<td class="shopping-cart-quantity shopping-cart-price"><strong>123</strong></td>
-									<td class="shopping-cart-price textright" style="padding-right:0px"><strong>123</strong></td>
-									<td class="shopping-cart-total textright" style="padding-right:0px"><strong>123123</strong></td>
-								</tr>
-								</c:forEach>
-	                  		</table>
-	                  	</div>
-	                  </div>
-	               </div>
-	            </div>
+            <h1><fmt:message key="OZ_TT_GB_OL_h1"/></h1>
+            <div class="row">
+            	<div style="margin-bottom:30px">
+            		<table class="col-sm-12">
+               			<tr>
+							<td class="col-sm-1 textcenter">
+								<select>
+									<option>所有订单</option>
+								</select>
+							</td>
+							<td class="col-sm-4 textcenter">订单详情</td>
+							<td class="col-sm-2 textcenter">收货人</td>
+							<td class="col-sm-1 textcenter" style="padding-right:0px">金额</td>
+							<td class="col-sm-2 textcenter" style="padding-right:0px">订单状态</td>
+							<td class="col-sm-2 textcenter" style="padding-right:0px">操作</td>
+						</tr>
+               		</table>
+            	</div>
+            	<c:forEach var="orderlist" items="${ pageInfo.resultList }" varStatus="status">
+                 	<div class="col-sm-12 table-order">
+                 		<table class="col-sm-12">
+                 			<tr class="defaultBackColor">
+								<td class="col-sm-5" colspan="2">${orderlist.orderDate} &nbsp;&nbsp;&nbsp;&nbsp;订单号：${orderlist.orderId}</td>
+								<td class="col-sm-2">${orderlist.consignee }</td>
+								<td class="col-sm-1"></td>
+								<td class="col-sm-2 textcenter">${orderlist.orderStatus}</td>
+								<td class="col-sm-2 textcenter"><a>详细</a></td>
+							</tr>
+                 			<c:forEach var="itemList" items="${ orderlist.itemList }">
+                 			<tr>
+								<td class="shopping-cart-image col-sm-1"><a><img src="${itemList.goodsImage}" alt="${itemList.goodsName}"></a></td>
+								<td class="col-sm-3"><a onclick="toItem('${itemList.goodsId}')">${itemList.goodsName}</a>&nbsp;&nbsp;&nbsp;&nbsp;X${itemList.goodsQuantity}<p></p></td>
+								<td class="col-sm-2 textcenter"></td>
+								<td class="col-sm-1 textcenter" style="padding-right:0px"><strong>${itemList.goodsPrice}</strong></td>
+								<td class="col-sm-2 textcenter" style="padding-right:0px"></td>
+								<td class="col-sm-2 textcenter" style="padding-right:0px"></td>
+							</tr>
+						</c:forEach>
+                 		</table>
+                 	</div>
+                 	
+                 	
+                 
 	            </c:forEach>
             </div>
+            </br>
             <!-- BEGIN PAGINATOR -->
             <c:if test="${pageInfo.firstPage > 0 || pageInfo.prevPage > 0 || pageInfo.nextPage > 0 || pageInfo.lastPage >0}">
             <div class="row">

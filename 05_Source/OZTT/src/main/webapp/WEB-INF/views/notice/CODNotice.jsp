@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <title><fmt:message key="CODNotice_title" /></title>
-<%@ include file="./commoncssHead.jsp"%>
+<%@ include file="../commoncssHead.jsp"%>
 
 </head>
 <!-- Head END -->
@@ -39,7 +39,7 @@
       </div>
 	</div>
 
-	<%@ include file="./commonjsFooter.jsp"%>
+	<%@ include file="../commonjsFooter.jsp"%>
 	<script type="text/javascript">
 
 	//这里重新加载画面的高度
@@ -47,6 +47,30 @@
 	var offTop = $("#mainDiv").offset().top;
 	if ($("#mainDiv").height() < viewHeight - offTop - 62) {
 		$("#mainDiv").height(viewHeight - offTop - 62);
+	}
+	
+	// 同步数据库购物车
+	var contCartFromDB = '${conscars}';
+	delCookie("contcart");
+	if (getJsonSize(contCartFromDB) > 0) {
+		var contcartJSONFromDB = JSON.parse(contCartFromDB);
+		var contcartArrayFromDB = eval(contCartFromDB);
+
+		// 如果Cookie购物车里面没有数据，更新购物车
+		var tempCookie = [];
+		for(var i=0; i<contcartArrayFromDB.length; i++){
+			var properties = {
+					"goodsId":contcartArrayFromDB[i].goodsId,
+					"goodsName":contcartArrayFromDB[i].goodsName,
+					"goodsImage":contcartArrayFromDB[i].goodsImage,
+					"goodsQuantity":contcartArrayFromDB[i].goodsQuantity,
+					"goodsPrice":contcartArrayFromDB[i].goodsPrice,
+					"goodsProperties":JSON.stringify(contcartArrayFromDB[i].goodsProperties)
+
+			}
+			tempCookie.push(properties);
+		}
+		addCookie("contcart",JSON.stringify(tempCookie))
 	}
 	
 	

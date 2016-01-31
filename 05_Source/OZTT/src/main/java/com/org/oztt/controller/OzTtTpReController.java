@@ -114,7 +114,7 @@ public class OzTtTpReController extends BaseController {
             TCustomerLoginInfo info = customerService.selectByCustomerNo(customerNo);
             info.setCanlogin(CommonConstants.CAN_LOGIN);
             customerService.updateTCustomerLoginInfo(info);
-            return "redirect:/OZ_TT_TP_LG/init";
+            return "/notice/EmailRegisterSuccessNotice";
         }
         catch (Exception e) {
             e.printStackTrace();

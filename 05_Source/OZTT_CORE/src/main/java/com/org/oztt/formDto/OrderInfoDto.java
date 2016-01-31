@@ -1,5 +1,6 @@
 package com.org.oztt.formDto;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +14,16 @@ public class OrderInfoDto {
     
     private String orderDate;
     
+    private Date orderDateDB;
+    
     private String orderStatus;
+    
+    private String deliveryMethod;
+    
+    @SuppressWarnings("unused")
+    private int detailCount;
+    
+    private String consignee; //收货人
     
     private List<ContCartItemDto> itemList;
 
@@ -47,5 +57,37 @@ public class OrderInfoDto {
 
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    public String getDeliveryMethod() {
+        return deliveryMethod;
+    }
+
+    public void setDeliveryMethod(String deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
+    }
+
+    public Date getOrderDateDB() {
+        return orderDateDB;
+    }
+
+    public void setOrderDateDB(Date orderDateDB) {
+        this.orderDateDB = orderDateDB;
+    }
+
+    public String getConsignee() {
+        return consignee;
+    }
+
+    public void setConsignee(String consignee) {
+        this.consignee = consignee;
+    }
+
+    public int getDetailCount() {
+        return itemList == null ? 0 : itemList.size();
+    }
+
+    public void setDetailCount(int detailCount) {
+        this.detailCount = detailCount;
     }
 }

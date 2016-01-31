@@ -66,6 +66,7 @@ public class PayController extends BaseController {
     @RequestMapping(value = "paypalNotify")
     public void paypalNotify(Model model, HttpServletResponse response, HttpSession session, @RequestParam String orderId) {
         try {
+            
             // 检索当前订单，更新状态为已经付款
             TConsOrder tConsOrder = orderService.selectByOrderId(orderId);
             tConsOrder.setHandleflg(CommonEnum.HandleFlag.HAS_HANDLED.getCode());

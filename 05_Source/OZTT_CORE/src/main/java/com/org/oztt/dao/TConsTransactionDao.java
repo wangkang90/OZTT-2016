@@ -32,4 +32,12 @@ public interface TConsTransactionDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TConsTransaction record);
+    
+    /**
+     * 最新的一条入出账记录
+     * @return
+     */
+    TConsTransaction selectLastTransaction();
+    
+    
 }

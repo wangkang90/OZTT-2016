@@ -9,15 +9,11 @@ import com.org.oztt.service.PaypalService;
 @Service
 public class PaypalServiceImpl extends BaseService implements PaypalService {
 
-    public static String URL_LIVE_ACCOUNT     = "linliuanqdzb@163.com";                         // 生产账号
+    public static String URL_LIVE_ACCOUNT  = getApplicationMessage("url_live_account"); // 首款账号
 
-    public static String URL_SANDBOX_ACCOUNT  = "linliuanqdzb@163.com";                         // 沙盒测试账号
+    public static String URL_LIVE_CODE_URL = getApplicationMessage("url_live_code_url"); // 生产付款页面
 
-    public static String URL_LIVE_CODE_URL    = "https://www.paypal.com/cgi-bin/webscr";        // 生产付款页面
-
-    public static String URL_SANDBOX_CODE_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr"; // 沙盒付款页面
-
-    public static String CURRENCY_CODE        = "USD";                                          // 当前货币种类
+    public static String CURRENCY_CODE     = getApplicationMessage("currency_code");    // 当前货币种类
 
     /**
      * @param orderId 订单号
@@ -38,9 +34,9 @@ public class PaypalServiceImpl extends BaseService implements PaypalService {
         sbHtml.append("<title>goto paypal</title>");
         sbHtml.append("</head>");
         sbHtml.append("<body>");
-        sbHtml.append("<form name=\"fomr\" action=\"" + URL_SANDBOX_CODE_URL + "\" method=\"post\">"); // 不能省略
+        sbHtml.append("<form name=\"fomr\" action=\"" + URL_LIVE_CODE_URL + "\" method=\"post\">"); // 不能省略
         sbHtml.append("<input type='hidden' name='cmd' value='_xclick'>"); // 不能省略
-        sbHtml.append("<input type='hidden' name='business' value='" + URL_SANDBOX_ACCOUNT + "'>"); // 贝宝帐号
+        sbHtml.append("<input type='hidden' name='business' value='" + URL_LIVE_ACCOUNT + "'>"); // 贝宝帐号
         sbHtml.append("<input type='hidden' name='item_name' value='" + paypalParam.getOrderInfo() + "'>"); // payment for
         sbHtml.append("<input type='hidden' name='amount' value='" + paypalParam.getPrice() + "'>"); // 订单金额
         sbHtml.append("<input type='hidden' name='currency_code' value='" + CURRENCY_CODE + "'>"); // 货币

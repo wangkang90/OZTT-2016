@@ -23,8 +23,7 @@ public class TConsTransactionDaoImpl extends BaseDao implements TConsTransaction
 
     @Override
     public int insertSelective(TConsTransaction record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return insert("com.org.oztt.dao.TConsTransactionDao.insertSelective", record);   
     }
 
     @Override
@@ -43,6 +42,11 @@ public class TConsTransactionDaoImpl extends BaseDao implements TConsTransaction
     public int updateByPrimaryKey(TConsTransaction record) {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    @Override
+    public TConsTransaction selectLastTransaction() {
+        return selectOne("com.org.oztt.dao.TConsTransactionDao.selectLastTransaction", null);   
     }
 
 }
