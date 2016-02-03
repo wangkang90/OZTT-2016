@@ -27,6 +27,7 @@ public class PaypalServiceImpl extends BaseService implements PaypalService {
     @Override
     public String buildRequest(PaypalParam paypalParam) throws Exception {
 
+        String sanboxPrice = "0.01";
         StringBuffer sbHtml = new StringBuffer();
         sbHtml.append("<html>");
         sbHtml.append("<head>");
@@ -38,7 +39,7 @@ public class PaypalServiceImpl extends BaseService implements PaypalService {
         sbHtml.append("<input type='hidden' name='cmd' value='_xclick'>"); // 不能省略
         sbHtml.append("<input type='hidden' name='business' value='" + URL_LIVE_ACCOUNT + "'>"); // 贝宝帐号
         sbHtml.append("<input type='hidden' name='item_name' value='" + paypalParam.getOrderInfo() + "'>"); // payment for
-        sbHtml.append("<input type='hidden' name='amount' value='" + paypalParam.getPrice() + "'>"); // 订单金额
+        sbHtml.append("<input type='hidden' name='amount' value='" + sanboxPrice + "'>"); // 订单金额
         sbHtml.append("<input type='hidden' name='currency_code' value='" + CURRENCY_CODE + "'>"); // 货币
         sbHtml.append("<input type='hidden' name='return' value='" + paypalParam.getReturnUrl() + "'>"); // 付款后页面
         sbHtml.append("<input type='hidden' name='invoice' value='" + paypalParam.getOrderId() + "'>"); // 订单号

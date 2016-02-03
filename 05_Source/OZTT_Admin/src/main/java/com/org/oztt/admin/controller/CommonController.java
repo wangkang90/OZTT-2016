@@ -104,7 +104,7 @@ public class CommonController extends BaseController {
             if (customerNo == null) {
                 return mapReturn;
             }
-            goodsService.deleteContCart(customerNo, paramMap);
+            //goodsService.deleteContCart(customerNo, paramMap);
             
 
             // 后台维护的时候提示让以逗号隔开
