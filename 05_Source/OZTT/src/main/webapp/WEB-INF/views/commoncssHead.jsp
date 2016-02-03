@@ -34,8 +34,6 @@
   
   <link href="${ctx}/assets/plugins/rateit/src/rateit.css" rel="stylesheet" type="text/css">
   <link href="${ctx}/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
-  
-  <link href="${ctx}/css/bootstrap-select.css" rel="stylesheet" type="text/css">
 
   <!-- Theme styles START -->
   <link href="<c:url value='/assets/css/style-metronic.css' />" rel="stylesheet" type="text/css">
