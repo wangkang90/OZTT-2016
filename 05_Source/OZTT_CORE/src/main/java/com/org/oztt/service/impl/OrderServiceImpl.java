@@ -17,12 +17,14 @@ import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.base.util.DateFormatUtils;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.contants.CommonEnum;
+import com.org.oztt.dao.TAddressInfoDao;
 import com.org.oztt.dao.TConsCartDao;
 import com.org.oztt.dao.TConsInvoiceDao;
 import com.org.oztt.dao.TConsOrderDao;
 import com.org.oztt.dao.TConsOrderDetailsDao;
 import com.org.oztt.dao.TNoInvoiceDao;
 import com.org.oztt.dao.TNoOrderDao;
+import com.org.oztt.entity.TAddressInfo;
 import com.org.oztt.entity.TConsInvoice;
 import com.org.oztt.entity.TConsOrder;
 import com.org.oztt.entity.TConsOrderDetails;
@@ -31,6 +33,7 @@ import com.org.oztt.entity.TNoOrder;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.OrderInfoDto;
+import com.org.oztt.formDto.OzTtGbOdDto;
 import com.org.oztt.formDto.PaypalParam;
 import com.org.oztt.service.BaseService;
 import com.org.oztt.service.OrderService;
@@ -59,6 +62,9 @@ public class OrderServiceImpl extends BaseService implements OrderService {
 
     @Resource
     private TConsInvoiceDao      tConsInvoiceDao;
+
+    @Resource
+    private TAddressInfoDao      tAddressInfoDao;
 
     @Override
     public String insertOrderInfo(String customerNo, String payMethod, String hidDeliMethod, String hidAddressId)
@@ -158,7 +164,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         tConsInvoice.setCustomerno(customerNo);
         tConsInvoice.setInvoiceno(maxInvoiceNo);
         tConsInvoiceDao.insertSelective(tConsInvoice);
-        
+
         // 生成订单表
         TConsOrder tConsOrder = new TConsOrder();
         tConsOrder.setOrderno(maxOrderNo);
@@ -170,7 +176,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         tConsOrder.setPaymenttimestamp(null);//付款时间
         tConsOrder.setHandleflg(CommonEnum.HandleFlag.NOT_PAY.getCode());
         tConsOrder.setDeliverymethod(hidDeliMethod);
-        
+
         tConsOrder.setAddressid(StringUtils.isEmpty(hidAddressId) ? 0L : Long.valueOf(hidAddressId));
         // TODO 这里需要取运费
         BigDecimal deleveryCost = BigDecimal.ZERO;
@@ -195,17 +201,18 @@ public class OrderServiceImpl extends BaseService implements OrderService {
                 if (CommonEnum.DeliveryMethod.NORMAL.getCode().equals(hidDeliMethod)) {
                     // 普通快递
                     paypalParam.setPrice(orderAmount.add(deleveryCost).toString());
-                } else if(CommonEnum.DeliveryMethod.SELF_PICK.getCode().equals(hidDeliMethod)) {
+                }
+                else if (CommonEnum.DeliveryMethod.SELF_PICK.getCode().equals(hidDeliMethod)) {
                     // 来店自提
                     paypalParam.setPrice(orderAmount.toString());
                 }
                 paypalParam.setNotifyUrl(getApplicationMessage("notifyUrl") + maxOrderNo); //这里是不是通知画面，做一些对数据库的更新操作等
-                paypalParam.setCancelReturn(getApplicationMessage("cancelReturn"));//应该返回未完成订单画面订单画面
+                paypalParam.setCancelReturn(getApplicationMessage("cancelReturn") + maxOrderNo);//应该返回未完成订单画面订单画面
                 paypalParam.setOrderInfo(getApplicationMessage("orderInfo"));
                 paypalParam.setReturnUrl(getApplicationMessage("returnUrl"));// 同样是当前订单画面
                 rb = paypalService.buildRequest(paypalParam);
             }
-           
+
         }
         return rb;
 
@@ -236,9 +243,11 @@ public class OrderServiceImpl extends BaseService implements OrderService {
                     }
                 }
                 orderDB.setItemList(detailList);
-                orderDB.setOrderDate(DateFormatUtils.date2StringWithFormat(orderDB.getOrderDateDB(), DateFormatUtils.PATTEN_HMS));
+                orderDB.setOrderStatusFlag(orderDB.getOrderStatus());
+                orderDB.setOrderDate(DateFormatUtils.date2StringWithFormat(orderDB.getOrderDateDB(),
+                        DateFormatUtils.PATTEN_HMS));
                 orderDB.setOrderStatus(CommonEnum.HandleFlag.getEnumLabel(orderDB.getOrderStatus()));
-                orderDB.setDeliveryMethod(CommonEnum.PaymentMethod.getEnumLabel(orderDB.getDeliveryMethod()));
+                orderDB.setDeliveryMethod(CommonEnum.DeliveryMethod.getEnumLabel(orderDB.getDeliveryMethod()));
             }
         }
         return orderDBInfoPage;
@@ -275,9 +284,60 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         TConsOrder tConsOrder = this.selectByOrderId(orderId);
         tConsOrder.setHandleflg(CommonEnum.HandleFlag.HAS_HANDLED.getCode());
         this.updateOrderInfo(tConsOrder);
-        
+
         //TODO 记录入出账
-        
+
     }
 
+    @Override
+    public OzTtGbOdDto getOrderDetailInfo(String orderId) throws Exception {
+        OzTtGbOdDto formDto = new OzTtGbOdDto();
+        // 取得订单信息
+        TConsOrder tConsOrder = this.selectByOrderId(orderId);
+        formDto.setOrderNo(tConsOrder.getOrderno());
+        formDto.setOrderStatus(tConsOrder.getHandleflg());
+        formDto.setOrderStatusView(CommonEnum.HandleFlag.getEnumLabel(tConsOrder.getHandleflg()));
+        // 取得地址信息
+        if (tConsOrder.getAddressid() != 0) {
+            TAddressInfo tAddressInfo = tAddressInfoDao.selectByPrimaryKey(tConsOrder.getAddressid());
+            formDto.setReceiver(tAddressInfo.getReceiver());
+            formDto.setReceiverAddress(tAddressInfo.getAddressdetails());
+            formDto.setReceiverPhone(tAddressInfo.getContacttel());
+        }
+        
+        // 支付和配送方式
+        formDto.setPaymethod(CommonEnum.PaymentMethod.getEnumLabel(tConsOrder.getPaymentmethod()));
+        formDto.setDeliveryCost(tConsOrder.getDeliverycost().toString());
+        String homeTime = tConsOrder.getHomedeliverytime();
+        if (homeTime != null && homeTime.length() > 9) {
+            formDto.setDeliveryDate(DateFormatUtils.dateFormatFromTo(homeTime.substring(0, 8),
+                    DateFormatUtils.PATTEN_YMD_NO_SEPRATE, DateFormatUtils.PATTEN_YMD));
+            formDto.setDeleveryTime(CommonEnum.DeliveryTime.getEnumLabel(homeTime.substring(8)));
+        }
+        String imgUrl = super.getApplicationMessage("saveImgUrl");
+        List<ContCartItemDto> detailList = tConsOrderDetailsDao.selectByOrderId(orderId);
+        if (!CollectionUtils.isEmpty(detailList)) {
+            for (ContCartItemDto dto : detailList) {
+                if (StringUtils.isEmpty(dto.getGoodsPropertiesDB())) {
+                    dto.setGoodsProperties(new ArrayList<ContCartProItemDto>());
+                }
+                else {
+                    dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                }
+                dto.setGoodsPropertiesDB(StringUtils.EMPTY);
+                dto.setGoodsUnitPrice(new BigDecimal(dto.getGoodsPrice()).divide(
+                        new BigDecimal(dto.getGoodsQuantity()), 2, BigDecimal.ROUND_UP).toString());
+                dto.setGoodsImage(imgUrl + dto.getGoodsId() + CommonConstants.PATH_SPLIT + dto.getGoodsImage());
+            }
+        }
+        
+        // 设定小计合计等值
+        formDto.setXiaoji(tConsOrder.getOrderamount().toString());
+        formDto.setYunfei(tConsOrder.getDeliverycost().toString());
+        formDto.setHeji(tConsOrder.getOrderamount().add(tConsOrder.getDeliverycost()).toString());
+
+        formDto.setGoodList(detailList);
+
+        return formDto;
+    }
 }

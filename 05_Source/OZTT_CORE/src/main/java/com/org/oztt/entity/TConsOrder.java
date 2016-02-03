@@ -23,6 +23,8 @@ public class TConsOrder {
     private String deliverymethod;
 
     private Long addressid;
+    
+    private String homedeliverytime;
 
     private String accountno;
 
@@ -183,4 +185,13 @@ public class TConsOrder {
     public void setUpdpgmid(String updpgmid) {
         this.updpgmid = updpgmid;
     }
+
+    public String getHomedeliverytime() {
+        return homedeliverytime;
+    }
+
+    public void setHomedeliverytime(String homedeliverytime) {
+        this.homedeliverytime = homedeliverytime;
+    }
+
 }

@@ -22,6 +22,8 @@ public class ContCartItemDto {
     private List<ContCartProItemDto> goodsProperties;
 
     private String                   goodsPropertiesDB;
+    
+    private String                   goodsUnitPrice;
 
     public String getGoodsId() {
         return goodsId;
@@ -77,6 +79,14 @@ public class ContCartItemDto {
 
     public void setGoodsProperties(List<ContCartProItemDto> goodsProperties) {
         this.goodsProperties = goodsProperties;
+    }
+
+    public String getGoodsUnitPrice() {
+        return goodsUnitPrice;
+    }
+
+    public void setGoodsUnitPrice(String goodsUnitPrice) {
+        this.goodsUnitPrice = goodsUnitPrice;
     }
 
 }

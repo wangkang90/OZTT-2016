@@ -18,6 +18,10 @@ public class OrderInfoDto {
     
     private String orderStatus;
     
+    private String orderStatusFlag;
+    
+    private String orderAmount;
+    
     private String deliveryMethod;
     
     @SuppressWarnings("unused")
@@ -89,5 +93,21 @@ public class OrderInfoDto {
 
     public void setDetailCount(int detailCount) {
         this.detailCount = detailCount;
+    }
+
+    public String getOrderAmount() {
+        return orderAmount;
+    }
+
+    public void setOrderAmount(String orderAmount) {
+        this.orderAmount = orderAmount;
+    }
+
+    public String getOrderStatusFlag() {
+        return orderStatusFlag;
+    }
+
+    public void setOrderStatusFlag(String orderStatusFlag) {
+        this.orderStatusFlag = orderStatusFlag;
     }
 }

@@ -10,7 +10,20 @@
 <meta charset="utf-8">
 <title><fmt:message key="OZ_TT_GB_OL_title"/></title>
 <%@ include file="./commoncssHead.jsp"%>
+<script type="text/javascript">
 
+function pageSelected(pageNo){
+	location.href = "${ctx}/OZ_TT_GB_OL/itemList?page="+pageNo;
+}
+
+function toOrderDetail(orderId) {
+	location.href = "${ctx}/OZ_TT_GB_OD/init?orderId="+orderId;
+}
+
+function toPay(orderId) {
+	location.href = "${ctx}/OZ_TT_GB_OD/toPay?orderId="+orderId;
+}
+</script>
 </head>
 <!-- Head END -->
 
@@ -38,32 +51,46 @@
 									<option>所有订单</option>
 								</select>
 							</td>
-							<td class="col-sm-4 textcenter">订单详情</td>
-							<td class="col-sm-2 textcenter">收货人</td>
-							<td class="col-sm-1 textcenter" style="padding-right:0px">金额</td>
-							<td class="col-sm-2 textcenter" style="padding-right:0px">订单状态</td>
-							<td class="col-sm-2 textcenter" style="padding-right:0px">操作</td>
+							<td class="col-sm-4 textcenter"><fmt:message key="OZ_TT_GB_OL_table_od"/></td>
+							<td class="col-sm-2 textcenter"><fmt:message key="OZ_TT_GB_OL_table_shr"/></td>
+							<td class="col-sm-1 textcenter"><fmt:message key="OZ_TT_GB_OL_table_je"/></td>
+							<td class="col-sm-1 textcenter"><fmt:message key="OZ_TT_GB_OL_table_ddzt"/></td>
+							<td class="col-sm-1 textcenter"><fmt:message key="OZ_TT_GB_OL_table_ysfs"/></td>
+							<td class="col-sm-2 textcenter"><fmt:message key="OZ_TT_GB_OL_table_cz"/></td>
 						</tr>
                		</table>
             	</div>
-            	<c:forEach var="orderlist" items="${ pageInfo.resultList }" varStatus="status">
+            	<c:forEach var="orderlist" items="${ pageInfo.resultList }" >
                  	<div class="col-sm-12 table-order">
                  		<table class="col-sm-12">
                  			<tr class="defaultBackColor">
-								<td class="col-sm-5" colspan="2">${orderlist.orderDate} &nbsp;&nbsp;&nbsp;&nbsp;订单号：${orderlist.orderId}</td>
-								<td class="col-sm-2">${orderlist.consignee }</td>
+								<td class="col-sm-5" colspan="2">${orderlist.orderDate} &nbsp;&nbsp;&nbsp;&nbsp;<fmt:message key="OZ_TT_GB_OL_detail_ddh"/>${orderlist.orderId}</td>
+								<td class="col-sm-2"></td>
 								<td class="col-sm-1"></td>
-								<td class="col-sm-2 textcenter">${orderlist.orderStatus}</td>
-								<td class="col-sm-2 textcenter"><a>详细</a></td>
+								<td class="col-sm-1 textcenter"></td>
+								<td class="col-sm-1 textcenter"></td>
+								<td class="col-sm-2 textcenter"></td>
 							</tr>
-                 			<c:forEach var="itemList" items="${ orderlist.itemList }">
+                 			<c:forEach var="itemList" items="${ orderlist.itemList }" varStatus="status">
                  			<tr>
 								<td class="shopping-cart-image col-sm-1"><a><img src="${itemList.goodsImage}" alt="${itemList.goodsName}"></a></td>
-								<td class="col-sm-3"><a onclick="toItem('${itemList.goodsId}')">${itemList.goodsName}</a>&nbsp;&nbsp;&nbsp;&nbsp;X${itemList.goodsQuantity}<p></p></td>
-								<td class="col-sm-2 textcenter"></td>
-								<td class="col-sm-1 textcenter" style="padding-right:0px"><strong>${itemList.goodsPrice}</strong></td>
-								<td class="col-sm-2 textcenter" style="padding-right:0px"></td>
-								<td class="col-sm-2 textcenter" style="padding-right:0px"></td>
+								<td class="col-sm-4 order_detail_nor_td"><a onclick="toItem('${itemList.goodsId}')">${itemList.goodsName}</a>&nbsp;&nbsp;&nbsp;&nbsp;X${itemList.goodsQuantity}<p></p></td>
+								<c:if test="${status.index == '0'}">
+									<td class="col-sm-2 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">${orderlist.consignee }</td>
+									<td class="col-sm-1 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top"><strong>${orderlist.orderAmount}</strong></td>
+									<td class="col-sm-1 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">${orderlist.orderStatus}</td>
+									<td class="col-sm-1 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">${orderlist.deliveryMethod}</td>
+									<td class="col-sm-2 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">
+										<a onclick="toOrderDetail('${orderlist.orderId}')"><fmt:message key="OZ_TT_GB_OL_detail_xxdj"/></a>
+										<c:if test="${orderlist.orderStatusFlag == '0'}">
+										</br>
+										<a onclick="toPay('${orderlist.orderId}')"><fmt:message key="OZ_TT_GB_OL_detail_qzf"/></a>
+										</c:if>
+										
+									</td>
+								</c:if>
+								
+								
 							</tr>
 						</c:forEach>
                  		</table>

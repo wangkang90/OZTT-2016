@@ -68,6 +68,6 @@ public class StringDecode {
 	}
 	
 	public static void main(String[] args) {
-	    System.out.println(paramDecode("fgIkJC77WP9zFTcnanTawpLVCImuEfyUum6gW4waf0y"));
+	    System.out.println(paramEncode("Oztuantuan888"));
 	}
 }
