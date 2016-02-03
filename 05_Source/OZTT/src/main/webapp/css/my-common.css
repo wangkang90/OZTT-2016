@@ -131,3 +131,12 @@
 	font-size: 1.6rem;
 	color:white;
 }
+
+.order_detail_nor_td{
+	border-right: 2px solid #F9F9F9;
+}
+
+.order_detail_rows_td{
+	border-right: 2px solid #F9F9F9;
+	padding-top:20px;
+}

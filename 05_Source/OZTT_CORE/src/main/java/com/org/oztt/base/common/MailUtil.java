@@ -22,6 +22,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import com.org.oztt.base.util.StringDecode;
+
 public class MailUtil {
 	private static String mailServer;
 	private static String mailAddress;
@@ -30,7 +32,7 @@ public class MailUtil {
 	static {
 		mailServer = getApplicationMessage("mailServer");
 		mailAddress = getApplicationMessage("mailAddress");
-		password = getApplicationMessage("password");
+		password = StringDecode.paramDecode(getApplicationMessage("password"));
 	}
 
 	public static void sendMail(SendMailDto sendMailDto, List<String> paramList) throws Exception {

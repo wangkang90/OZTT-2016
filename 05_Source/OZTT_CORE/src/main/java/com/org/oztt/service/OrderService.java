@@ -4,6 +4,7 @@ import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TConsOrder;
 import com.org.oztt.formDto.OrderInfoDto;
+import com.org.oztt.formDto.OzTtGbOdDto;
 
 
 public interface OrderService {
@@ -49,4 +50,14 @@ public interface OrderService {
      * @throws Exception
      */
     public void createPaySuccessInfo(String orderId) throws Exception;
+    
+    /**
+     * 获取订单的详细信息
+     * @param orderId
+     * @return
+     * @throws Exception
+     */
+    public OzTtGbOdDto getOrderDetailInfo(String orderId) throws Exception;
+    
+    
 }

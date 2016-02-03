@@ -12,6 +12,7 @@
     <result column="handleFlg" property="handleflg" jdbcType="VARCHAR" />
     <result column="deliveryMethod" property="deliverymethod" jdbcType="VARCHAR" />
     <result column="addressId" property="addressid" jdbcType="BIGINT" />
+    <result column="homeDeliveryTime" property="homedeliverytime" jdbcType="BIGINT" />
     <result column="accountNo" property="accountno" jdbcType="VARCHAR" />
     <result column="deliveryCost" property="deliverycost" jdbcType="DECIMAL" />
     <result column="transactionNo" property="transactionno" jdbcType="VARCHAR" />
@@ -23,7 +24,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     no, orderNo, customerNo, orderAmount, paymentMethod, orderTimestamp, paymentTimestamp, 
-    handleFlg, deliveryMethod, addressId, accountNo, deliveryCost, transactionNo, addTimestamp, 
+    handleFlg, deliveryMethod, addressId, accountNo, homeDeliveryTime, deliveryCost, transactionNo, addTimestamp, 
     addUserKey, updTimestamp, updUserKey, updPgmId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -40,14 +41,15 @@
     insert into t_cons_order (no, orderNo, customerNo, 
       orderAmount, paymentMethod, orderTimestamp, 
       paymentTimestamp, handleFlg, deliveryMethod, 
-      addressId, accountNo, deliveryCost, 
+      addressId, homeDeliveryTime, accountNo, deliveryCost, 
       transactionNo, addTimestamp, addUserKey, 
       updTimestamp, updUserKey, updPgmId
       )
     values (#{no,jdbcType=BIGINT}, #{orderno,jdbcType=VARCHAR}, #{customerno,jdbcType=VARCHAR}, 
       #{orderamount,jdbcType=DECIMAL}, #{paymentmethod,jdbcType=VARCHAR}, #{ordertimestamp,jdbcType=TIMESTAMP}, 
       #{paymenttimestamp,jdbcType=TIMESTAMP}, #{handleflg,jdbcType=VARCHAR}, #{deliverymethod,jdbcType=VARCHAR}, 
-      #{addressid,jdbcType=BIGINT}, #{accountno,jdbcType=VARCHAR}, #{deliverycost,jdbcType=DECIMAL}, 
+      #{addressid,jdbcType=BIGINT}, #{homedeliverytime,jdbcType=VARCHAR}, 
+      #{accountno,jdbcType=VARCHAR}, #{deliverycost,jdbcType=DECIMAL}, 
       #{transactionno,jdbcType=VARCHAR}, #{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR}, 
       #{updtimestamp,jdbcType=TIMESTAMP}, #{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR}
       )
@@ -84,6 +86,9 @@
       </if>
       <if test="addressid != null" >
         addressId,
+      </if>
+      <if test="homedeliverytime != null" >
+        homeDeliveryTime,
       </if>
       <if test="accountno != null" >
         accountNo,
@@ -141,6 +146,9 @@
       <if test="addressid != null" >
         #{addressid,jdbcType=BIGINT},
       </if>
+      <if test="homedeliverytime != null" >
+        #{homedeliverytime,jdbcType=VARCHAR},
+      </if>
       <if test="accountno != null" >
         #{accountno,jdbcType=VARCHAR},
       </if>
@@ -197,6 +205,9 @@
       <if test="addressid != null" >
         addressId = #{addressid,jdbcType=BIGINT},
       </if>
+      <if test="homedeliverytime != null" >
+        homeDeliveryTime = #{homedeliverytime,jdbcType=VARCHAR},
+      </if>
       <if test="accountno != null" >
         accountNo = #{accountno,jdbcType=VARCHAR},
       </if>
@@ -235,6 +246,7 @@
       handleFlg = #{handleflg,jdbcType=VARCHAR},
       deliveryMethod = #{deliverymethod,jdbcType=VARCHAR},
       addressId = #{addressid,jdbcType=BIGINT},
+      homeDeliveryTime = #{homedeliverytime,jdbcType=VARCHAR},
       accountNo = #{accountno,jdbcType=VARCHAR},
       deliveryCost = #{deliverycost,jdbcType=DECIMAL},
       transactionNo = #{transactionno,jdbcType=VARCHAR},
@@ -256,6 +268,8 @@
 		A.orderNo as orderId,
 		A.addTimestamp as orderDateDB,
 		A.handleFlg as orderStatus,
+		A.orderAmount as orderAmount,
+		A.deliveryMethod,
 		B.receiver as consignee
 		from t_cons_order A
 		left join t_address_info B on B.id = A.addressId
