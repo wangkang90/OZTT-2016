@@ -21,6 +21,9 @@
     <script src="${ctx}/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script> 
     
     <script src="${ctx}/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
+    
+    <script src="${ctx}/js/bootstrap-select.js" type="text/javascript"></script>
+    
 
     <!-- BEGIN LayerSlider -->
     <script src="${ctx}/assets/plugins/layerslider/jQuery/jquery-easing-1.3.js" type="text/javascript"></script>

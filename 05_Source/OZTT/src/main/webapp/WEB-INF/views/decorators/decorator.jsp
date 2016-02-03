@@ -666,7 +666,14 @@
                 <div class="col-md-6 col-sm-6 additional-shop-info">
                     <ul class="list-unstyled list-inline">
                         <li><i class="fa fa-phone"></i><span>+1 456 6717</span></li>
-                        
+                        <li class="langs-block">
+                            <a href="javascript:void(0);" class="current">中文 <i class="fa fa-angle-down"></i></a>
+                            <div class="langs-block-others-wrapper">
+	                            <div class="langs-block-others">
+	                              <a href="javascript:void(0);">English</a>
+	                            </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
                 <!-- END TOP BAR LEFT PART -->
@@ -676,7 +683,18 @@
                     	<c:if test="${ sessionUserId != null && sessionUserId != ''}">
                     		<li><fmt:message key="header_welcome"/>${sessionUserName}</li>
                     		<li><a onclick="toMyOrder()"><fmt:message key="header_myOrder"/></a></li>
-                    		<li><a onclick="toMyTuantuan()"><fmt:message key="header_myOztuantuan"/></a></li>
+                    		<li class="mytuantuan-block">
+	                    		<a href="javascript:void(0);"><fmt:message key="header_myOztuantuan"/><i class="fa fa-angle-down"></i></a>
+	                    		<div class="mytuantuan-block-others-wrapper">
+		                            <div class="mytuantuan-block-others">
+		                            	<div>
+		                            		<a onclick="toMyTuantuan()">我的个人信息</a>
+		                            	</div>
+		                            	
+		                            </div>
+	                            </div>
+                    		</li>
+                    		
                     	</c:if>
                         <li><a onclick="toCheckout()"><fmt:message key="header_checkout"/></a></li>
                         <c:if test="${ sessionUserId == null || sessionUserId == '' }">
