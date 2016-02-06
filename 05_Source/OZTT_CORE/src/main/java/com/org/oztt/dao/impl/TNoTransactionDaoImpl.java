@@ -17,8 +17,7 @@ public class TNoTransactionDaoImpl extends BaseDao implements TNoTransactionDao 
 
     @Override
     public int insert(TNoTransaction record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return insert("com.org.oztt.dao.TNoTransactionDao.insertSelective", record);
     }
 
     @Override
@@ -35,14 +34,18 @@ public class TNoTransactionDaoImpl extends BaseDao implements TNoTransactionDao 
 
     @Override
     public int updateByPrimaryKeySelective(TNoTransaction record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return update("com.org.oztt.dao.TNoTransactionDao.updateByPrimaryKeySelective", record);
     }
 
     @Override
     public int updateByPrimaryKey(TNoTransaction record) {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    @Override
+    public TNoTransaction getMaxTransactionNo() {
+        return selectOne("com.org.oztt.dao.TNoTransactionDao.getMaxTransactionNo", null);
     }
 
 }

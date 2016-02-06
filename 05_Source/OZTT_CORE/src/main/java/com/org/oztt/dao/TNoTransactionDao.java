@@ -32,4 +32,10 @@ public interface TNoTransactionDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TNoTransaction record);
+    
+    /**
+     * 入出账记录ID最大值
+     * @return
+     */
+    TNoTransaction getMaxTransactionNo();
 }

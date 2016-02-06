@@ -45,4 +45,12 @@ public interface AddressService {
      * @throws Exception
      */
     public void deleteAddress(Long id) throws Exception;
+    
+    /**
+     * 通过运费地址NO号来获取运费
+     * @param no
+     * @return
+     * @throws Exception
+     */
+    public String getFreightByNo(Long no) throws Exception;
 }

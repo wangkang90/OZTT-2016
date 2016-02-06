@@ -27,7 +27,11 @@ public class PaypalServiceImpl extends BaseService implements PaypalService {
     @Override
     public String buildRequest(PaypalParam paypalParam) throws Exception {
 
-        String sanboxPrice = "0.01";
+        String isTest = super.getApplicationMessage("IS_TEST_PAY");
+        String sanboxPrice = paypalParam.getPrice();
+        if (isTest.equals("1")) {
+            sanboxPrice = "0.01";
+        }
         StringBuffer sbHtml = new StringBuffer();
         sbHtml.append("<html>");
         sbHtml.append("<head>");
@@ -41,12 +45,12 @@ public class PaypalServiceImpl extends BaseService implements PaypalService {
         sbHtml.append("<input type='hidden' name='item_name' value='" + paypalParam.getOrderInfo() + "'>"); // payment for
         sbHtml.append("<input type='hidden' name='amount' value='" + sanboxPrice + "'>"); // 订单金额
         sbHtml.append("<input type='hidden' name='currency_code' value='" + CURRENCY_CODE + "'>"); // 货币
-        sbHtml.append("<input type='hidden' name='return' value='" + paypalParam.getReturnUrl() + "'>"); // 付款后页面
+        sbHtml.append("<input type='hidden' name='return' value='" + paypalParam.getReturnUrl() + paypalParam.getOrderId() + "'>"); // 付款后页面
         sbHtml.append("<input type='hidden' name='invoice' value='" + paypalParam.getOrderId() + "'>"); // 订单号
         sbHtml.append("<input type='hidden' name='charset' value='utf-8'>"); // 字符集
         sbHtml.append("<input type='hidden' name='no_shipping' value='1'>"); // 不要求客户提供收货地址
         sbHtml.append("<input type='hidden' name='no_note' value=''>"); // 付款说明
-        sbHtml.append("<input type='hidden' name='notify_url' value='" + paypalParam.getNotifyUrl() + "'>");
+        sbHtml.append("<input type='hidden' name='notify_url' value='" + paypalParam.getNotifyUrl() + paypalParam.getOrderId() + "'>");
         sbHtml.append("<input type='hidden' name='rm' value='2'>");
         sbHtml.append("<input type='hidden' name='cancel_return' value='" + paypalParam.getCancelReturn() + "'>");
         sbHtml.append("<input type='submit' style='display:none;' value='Go to Paypal'>"); // 按钮

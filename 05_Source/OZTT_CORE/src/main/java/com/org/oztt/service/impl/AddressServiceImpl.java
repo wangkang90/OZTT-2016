@@ -7,7 +7,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.org.oztt.dao.TAddressInfoDao;
+import com.org.oztt.dao.TSuburbDeliverFeeDao;
 import com.org.oztt.entity.TAddressInfo;
+import com.org.oztt.entity.TSuburbDeliverFee;
 import com.org.oztt.service.AddressService;
 import com.org.oztt.service.BaseService;
 
@@ -16,6 +18,9 @@ public class AddressServiceImpl extends BaseService implements AddressService {
 
     @Resource
     private TAddressInfoDao tAddressInfoDao;
+    
+    @Resource
+    private TSuburbDeliverFeeDao tSuburbDeliverFeeDao;
     
     @Override
     public List<TAddressInfo> getAllAddress(String customerno, String deliveryMethod) throws Exception {
@@ -41,6 +46,14 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     public void deleteAddress(Long id) throws Exception {
         tAddressInfoDao.deleteByPrimaryKey(id);
         
+    }
+
+    @Override
+    public String getFreightByNo(Long no) throws Exception {
+        TSuburbDeliverFee fee = tSuburbDeliverFeeDao.selectByPrimaryKey(no);
+        if (fee == null)
+            return "0";
+        return fee.getDeliverfee().toString();
     }
 
 }

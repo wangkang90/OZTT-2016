@@ -278,6 +278,7 @@
 		<if test="orderNo != null" >
         	and A.orderNo = #{orderNo,jdbcType=VARCHAR}
       	</if>
+      	order by addTimestamp desc
 	</select>
 	
 	<select id="getOrderByParamForPageCount" resultType="int" parameterType="map">

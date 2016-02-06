@@ -78,6 +78,10 @@
 	text-align: center
 }
 
+.textleft{
+	text-align: left
+}
+
 /* ozttNotice */
 .ozttNotice {
  	text-align: center;

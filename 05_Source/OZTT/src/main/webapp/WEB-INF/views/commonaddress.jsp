@@ -11,18 +11,13 @@
 			<div class="content-form-page">
 				<div class="row">
 					<div class="col-md-12 col-sm-12">
+					
 						<div class="form-group col-sm-12">
-							<label for="country" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
-								<fmt:message key="common_address_country" /> <span class="require">*</span> 
+							<label for="details" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
+								<fmt:message key="common_address_details" /> <span class="require">*</span> 
 							</label>
-							<div class="col-lg-4">
-								<input type="text" class="form-control" id="country" maxlength="20"/>
-							</div>
-							<label for="state" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
-								<fmt:message key="common_address_state" /> <span class="require">*</span> 
-							</label>
-							<div class="col-lg-4">
-								<input type="text" class="form-control" id="state" maxlength="50"/>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" id="details" maxlength="200"/>
 							</div>
 						</div>
 						
@@ -32,19 +27,40 @@
 								<fmt:message key="common_address_suburb" /> <span class="require">*</span> 
 							</label>
 							<div class="col-lg-4">
-								<input type="text" class="form-control" id="suburb" maxlength="50"/>
+								<select  class="form-control"  id="suburb" onchange="showYunfei()">
+									<option value=""></option>
+	                    			<c:forEach var="seList" items="${ suburbSelect }">
+	                    				<option value="${ seList.key }">${ seList.value }</option>
+	                    			</c:forEach>
+                    			</select>
+                    			
+                    			
+								
 							</div>
-							<div class="col-lg-6"></div>
+							<div class="col-lg-2 textleft" style="margin-top:5px"><span id="yunfeiSpan"></span></div>
+							<div class="col-lg-4"></div>
 						</div>
 						
 						<div class="form-group col-sm-12">
-							<label for="details" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
-								<fmt:message key="common_address_details" /> <span class="require">*</span> 
+							<label for="state" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
+								<fmt:message key="common_address_state" /> <span class="require">*</span> 
 							</label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="details" maxlength="200"/>
+							<div class="col-lg-4">
+								<input type="text" class="form-control" id="state" maxlength="50"/>
 							</div>
+							
+							<label for="country" class="col-lg-2 control-label" style="margin-top:5px;text-align:right">
+								<fmt:message key="common_address_country" /> <span class="require">*</span> 
+							</label>
+							<div class="col-lg-4">
+								<input type="text" class="form-control" id="country" maxlength="20" disabled="disabled" value="<fmt:message key="common_defaultCountry" />"/>
+							</div>
+							
 						</div>
+						
+						
+						
+						
 						
 						
 						<div class="form-group col-sm-12">

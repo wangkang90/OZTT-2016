@@ -19,9 +19,11 @@ import com.org.oztt.base.util.SendSMS;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.contants.SysCodeConstants;
 import com.org.oztt.dao.TGoodsClassficationDao;
+import com.org.oztt.dao.TSuburbDeliverFeeDao;
 import com.org.oztt.dao.TSysCodeDao;
 import com.org.oztt.dao.TSysValidateMessageDao;
 import com.org.oztt.entity.TGoodsClassfication;
+import com.org.oztt.entity.TSuburbDeliverFee;
 import com.org.oztt.entity.TSysCode;
 import com.org.oztt.entity.TSysValidateMessage;
 import com.org.oztt.service.BaseService;
@@ -38,6 +40,8 @@ public class CommonServiceImpl extends BaseService implements CommonService {
 
     private static List<MyMap>     deliveryTimeMapList = null;
 
+    private static List<MyMap>     suburbList          = null;
+
     @Resource
     private TSysCodeDao            tSysCodeDao;
 
@@ -46,6 +50,9 @@ public class CommonServiceImpl extends BaseService implements CommonService {
 
     @Resource
     private TSysValidateMessageDao tSysValidateMessageDao;
+
+    @Resource
+    private TSuburbDeliverFeeDao   tSuburbDeliverFeeDao;
 
     @Override
     public List<MyMap> getSex() throws Exception {
@@ -186,6 +193,25 @@ public class CommonServiceImpl extends BaseService implements CommonService {
         else {
             return false;
         }
+    }
+
+    @Override
+    public List<MyMap> getSuburbList() throws Exception {
+        if (suburbList == null) {
+            // 获取地址一览
+            List<TSuburbDeliverFee> feeList = tSuburbDeliverFeeDao.getAllTSuburbDeliverFee();
+            suburbList = new ArrayList<MyMap>();
+            if (feeList != null && feeList.size() > 0) {
+                for (int i = 0; i < feeList.size(); i++) {
+                    MyMap my = new MyMap();
+                    my.setKey(feeList.get(i).getNo().toString());
+                    my.setValue(feeList.get(i).getSuburb());
+                    suburbList.add(my);
+                }
+            }
+        }
+
+        return suburbList;
     }
 
 }
