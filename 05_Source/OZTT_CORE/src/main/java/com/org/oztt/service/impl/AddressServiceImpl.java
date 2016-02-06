@@ -56,4 +56,9 @@ public class AddressServiceImpl extends BaseService implements AddressService {
         return fee.getDeliverfee().toString();
     }
 
+    @Override
+    public TSuburbDeliverFee getTSuburbDeliverFeeById(Long no) throws Exception {
+        return tSuburbDeliverFeeDao.selectByPrimaryKey(no);
+    }
+
 }

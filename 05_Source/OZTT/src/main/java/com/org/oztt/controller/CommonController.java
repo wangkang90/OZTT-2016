@@ -455,6 +455,11 @@ public class CommonController extends BaseController {
             }
             // 获取所有的地址
             List<TAddressInfo> infoList = addressService.getAllAddress(customerNo, method);
+            if (!CollectionUtils.isEmpty(infoList)) {
+                for(TAddressInfo info : infoList) {
+                    info.setSuburb(addressService.getTSuburbDeliverFeeById(Long.valueOf(info.getSuburb())).getSuburb());
+                }
+            }
             mapReturn.put("adrList", infoList);
             // 后台维护的时候提示让以逗号隔开
             mapReturn.put("isException", false);

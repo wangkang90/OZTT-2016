@@ -26,6 +26,8 @@ public class OrderInfoDto {
     
     private String deliveryMethodFlag;
     
+    private String deliveryCost;
+    
     @SuppressWarnings("unused")
     private int detailCount;
     
@@ -119,5 +121,13 @@ public class OrderInfoDto {
 
     public void setDeliveryMethodFlag(String deliveryMethodFlag) {
         this.deliveryMethodFlag = deliveryMethodFlag;
+    }
+
+    public String getDeliveryCost() {
+        return deliveryCost;
+    }
+
+    public void setDeliveryCost(String deliveryCost) {
+        this.deliveryCost = deliveryCost;
     }
 }

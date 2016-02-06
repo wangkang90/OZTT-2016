@@ -3,6 +3,7 @@ package com.org.oztt.service;
 import java.util.List;
 
 import com.org.oztt.entity.TAddressInfo;
+import com.org.oztt.entity.TSuburbDeliverFee;
 
 public interface AddressService {
 
@@ -53,4 +54,12 @@ public interface AddressService {
      * @throws Exception
      */
     public String getFreightByNo(Long no) throws Exception;
+    
+    /**
+     * 通过ID来获取地址信息
+     * @param no
+     * @return
+     * @throws Exception
+     */
+    public TSuburbDeliverFee getTSuburbDeliverFeeById(Long no) throws Exception;
 }

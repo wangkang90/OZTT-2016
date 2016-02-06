@@ -77,7 +77,12 @@ function toPay(orderId) {
 								<td class="col-sm-4 order_detail_nor_td"><a onclick="toItem('${itemList.goodsId}')">${itemList.goodsName}</a>&nbsp;&nbsp;&nbsp;&nbsp;X${itemList.goodsQuantity}<p></p></td>
 								<c:if test="${status.index == '0'}">
 									<td class="col-sm-2 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">${orderlist.consignee }</td>
-									<td class="col-sm-1 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top"><strong>${orderlist.orderAmount}</strong></td>
+									<td class="col-sm-1 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">
+										<strong>${orderlist.orderAmount}</strong>
+										<c:if test="${orderlist.deliveryMethodFlag != 1}">
+											</br><strong>+${orderlist.deliveryCost}</strong>
+										</c:if>
+									</td>
 									<td class="col-sm-1 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">${orderlist.orderStatus}</td>
 									<td class="col-sm-1 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">${orderlist.deliveryMethod}</td>
 									<td class="col-sm-2 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">

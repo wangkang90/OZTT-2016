@@ -35,11 +35,11 @@ public class PayController extends BaseController {
      */
     @RequestMapping(value = "payment")
     public String payment(Model model, HttpServletResponse response, HttpSession session, String hidDeliMethod,
-            String hidAddressId, String hidPayMethod) {
+            String hidAddressId, String hidPayMethod, String hidHomeDeliveryTime) {
         try {
             String customerNo = (String) session.getAttribute(CommonConstants.SESSION_CUSTOMERNO);
             // 先判断付款方式
-            String rb = orderService.insertOrderInfo(customerNo, hidPayMethod, hidDeliMethod, hidAddressId);
+            String rb = orderService.insertOrderInfo(customerNo, hidPayMethod, hidDeliMethod, hidAddressId, hidHomeDeliveryTime);
             if (!StringUtils.isEmpty(rb)) {
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(rb);
