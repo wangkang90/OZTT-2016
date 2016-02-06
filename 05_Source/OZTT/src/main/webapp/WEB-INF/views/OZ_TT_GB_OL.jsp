@@ -82,7 +82,7 @@ function toPay(orderId) {
 									<td class="col-sm-1 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">${orderlist.deliveryMethod}</td>
 									<td class="col-sm-2 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">
 										<a onclick="toOrderDetail('${orderlist.orderId}')"><fmt:message key="OZ_TT_GB_OL_detail_xxdj"/></a>
-										<c:if test="${orderlist.orderStatusFlag == '0'}">
+										<c:if test="${orderlist.orderStatusFlag == '0' && orderlist.deliveryMethodFlag != 3}">
 										</br>
 										<a onclick="toPay('${orderlist.orderId}')"><fmt:message key="OZ_TT_GB_OL_detail_qzf"/></a>
 										</c:if>
@@ -156,6 +156,33 @@ function toPay(orderId) {
 	var offTop = $("#mainDiv").offset().top;
 	if ($("#mainDiv").height() < viewHeight - offTop - 62) {
 		$("#mainDiv").css("minHeight",viewHeight - offTop - 62);
+	}
+	
+	var clearCont = '${clearCont}';
+	if (clearCont == '1') {
+		// 同步数据库购物车
+		var contCartFromDB = '${conscars}';
+		delCookie("contcart");
+		if (getJsonSize(contCartFromDB) > 0) {
+			var contcartJSONFromDB = JSON.parse(contCartFromDB);
+			var contcartArrayFromDB = eval(contCartFromDB);
+
+			// 如果Cookie购物车里面没有数据，更新购物车
+			var tempCookie = [];
+			for(var i=0; i<contcartArrayFromDB.length; i++){
+				var properties = {
+						"goodsId":contcartArrayFromDB[i].goodsId,
+						"goodsName":contcartArrayFromDB[i].goodsName,
+						"goodsImage":contcartArrayFromDB[i].goodsImage,
+						"goodsQuantity":contcartArrayFromDB[i].goodsQuantity,
+						"goodsPrice":contcartArrayFromDB[i].goodsPrice,
+						"goodsProperties":JSON.stringify(contcartArrayFromDB[i].goodsProperties)
+
+				}
+				tempCookie.push(properties);
+			}
+			addCookie("contcart",JSON.stringify(tempCookie))
+		}
 	}
 </script>
 </body>

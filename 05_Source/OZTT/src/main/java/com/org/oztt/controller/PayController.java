@@ -113,20 +113,17 @@ public class PayController extends BaseController {
      * @return
      */
     @RequestMapping(value = "paypalNotify")
-    public void paypalNotify(Model model, HttpServletResponse response, HttpSession session,
+    public String paypalNotify(Model model, HttpServletResponse response, HttpSession session,
             @RequestParam String orderId) {
         try {
-
-            // 检索当前订单，更新状态为已经付款
-            TConsOrder tConsOrder = orderService.selectByOrderId(orderId);
-            tConsOrder.setHandleflg(CommonEnum.HandleFlag.HAS_HANDLED.getCode());
-            orderService.updateOrderInfo(tConsOrder);
-
-            // 下面生成入出账记录
+            String customerNo = (String) session.getAttribute(CommonConstants.SESSION_CUSTOMERNO);
+            orderService.updateRecordAfterPay(orderId, customerNo);
+            return "redirect:/OZ_TT_GB_OL/itemList?clearCont=1";
         }
         catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
+            return CommonConstants.ERROR_PAGE;
         }
     }
 

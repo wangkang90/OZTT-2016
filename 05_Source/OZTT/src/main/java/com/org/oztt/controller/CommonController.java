@@ -76,7 +76,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
     }
 
@@ -125,7 +125,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
 
     }
@@ -157,7 +157,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
     }
 
@@ -188,7 +188,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
     }
 
@@ -213,7 +213,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
     }
 
@@ -243,7 +243,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
     }
 
@@ -296,7 +296,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
     }
 
@@ -347,7 +347,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
 
     }
@@ -404,7 +404,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
     }
 
@@ -431,7 +431,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
     }
    
@@ -463,7 +463,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
     }
     
@@ -501,7 +501,7 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
         }
     }
     
@@ -519,10 +519,11 @@ public class CommonController extends BaseController {
         Map<String, Object> mapReturn = new HashMap<String, Object>();
         try {
             // 获取地址
-            //TAddressInfo info = addressService.getAddressById(Long.valueOf(addressId));
-            //TODO 通过地址信息获取费用信息
+            TAddressInfo info = addressService.getAddressById(Long.valueOf(addressId));
+            //通过地址信息获取费用信息
+            String freight = addressService.getFreightByNo(Long.valueOf(info.getSuburb()));
 
-            mapReturn.put("freight", "15");
+            mapReturn.put("freight", freight);
             // 后台维护的时候提示让以逗号隔开
             mapReturn.put("isException", false);
             return mapReturn;
@@ -530,7 +531,36 @@ public class CommonController extends BaseController {
         catch (Exception e) {
             logger.error(e.getMessage());
             mapReturn.put("isException", true);
-            return null;
+            return mapReturn;
+        }
+    }
+    
+    
+    /**
+     * 获取指定客户下所有的地址
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/getFreightBySuburb")
+    @ResponseBody
+    public Map<String, Object> getFreightBySuburb(HttpServletRequest request, HttpServletResponse response,
+            HttpSession session, @RequestParam String suburb) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            
+            //获取费用信息
+            String freight = addressService.getFreightByNo(Long.valueOf(suburb));
+            mapReturn.put("freight", freight);
+            // 后台维护的时候提示让以逗号隔开
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return mapReturn;
         }
     }
     

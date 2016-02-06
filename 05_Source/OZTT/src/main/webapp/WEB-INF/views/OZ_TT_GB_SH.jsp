@@ -139,9 +139,7 @@
 	</form>
 
 	<%@ include file="./commonjsFooter.jsp"%>  
-	<script src="${ctx}/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<link href="${ctx}/bootstrap/css/bootstrap-datepicker.css" type="text/css" rel="stylesheet" />
-	<script src="${ctx}/bootstrap/js/bootstrap-datepicker.js" type="text/javascript"></script>    
+	<script src="${ctx}/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>   
 	<%@ include file="./commonaddress.jsp"%>
 	<script type="text/javascript">
 		// 更新地址
@@ -162,6 +160,34 @@
 			$("#mainDiv").height(viewHeight - offTop - 62);
 		}
 		
+		// 初期化运费
+		function showYunfei(){
+			var suburbArea = $("#suburb").val();
+			$("#yunfeiSpan").text("");
+			if (suburbArea != "") {
+				$.ajax({
+					type : "GET",
+					contentType:'application/json',
+					url : '${pageContext.request.contextPath}/COMMON/getFreightBySuburb?suburb='+suburbArea,
+					dataType : "json",
+					async:false,
+					data : '', 
+					success : function(data) {
+						if(!data.isException){
+							var freight = data.freight;
+							$("#yunfeiSpan").text(freight);
+						} else {
+							// 系统异常
+						}
+					},
+					error : function(data) {
+						
+					}
+				});
+			}
+		}
+		
+		
 		function reloadAddress(adrList) {
 			$("#newaddressBtn").css("display","");
 			$("#addressUl").empty();
@@ -178,6 +204,7 @@
 				}
 				$("#addressUl").append(temp);
 			}
+			clearFreight();
 			
 		}
 		
@@ -222,6 +249,7 @@
 				$("#newaddressBtn").css("display","none");
 				$("#addressUl").append('<li><fmt:message key="common_myaddress" /></li>');
 				$("#homeTimeFieldSet").css("display","none");
+				clearFreight();
 				return;
 			}
 			$.ajax({
@@ -326,7 +354,7 @@
 		}
 		
 		function clearDialog(){
-			$("#country").val("");
+			//$("#country").val("");
 			$("#state").val("");
 			$("#suburb").val("");
 			$("#details").val("");
@@ -334,6 +362,7 @@
 			$("#reveiver").val("");
 			$("#contacttel").val("");
 			$("#hiddenAddressId").val("");
+			$("#yunfeiSpan").text("");
 		}
 		
 		function validateForm(){
@@ -345,15 +374,9 @@
 			var post = $("#post").val();
 			var reveiver = $("#reveiver").val();
 			var contacttel = $("#contacttel").val();
-			
-			if (country == "") {
-				var message = E0002.replace("{0}", '<fmt:message key="common_address_country" />')
-				showErrorSpan($("#country"), message);
-				return false;
-			}
-			if (state == "") {
-				var message = E0002.replace("{0}", '<fmt:message key="common_address_state" />')
-				showErrorSpan($("#state"), message);
+			if (details == "") {
+				var message = E0002.replace("{0}", '<fmt:message key="common_address_details" />')
+				showErrorSpan($("#details"), message);
 				return false;
 			}
 			if (suburb == "") {
@@ -361,9 +384,14 @@
 				showErrorSpan($("#suburb"), message);
 				return false;
 			}
-			if (details == "") {
-				var message = E0002.replace("{0}", '<fmt:message key="common_address_details" />')
-				showErrorSpan($("#details"), message);
+			if (state == "") {
+				var message = E0002.replace("{0}", '<fmt:message key="common_address_state" />')
+				showErrorSpan($("#state"), message);
+				return false;
+			}
+			if (country == "") {
+				var message = E0002.replace("{0}", '<fmt:message key="common_address_country" />')
+				showErrorSpan($("#country"), message);
 				return false;
 			}
 			if (post == "") {
@@ -422,7 +450,7 @@
 					
 				}
 			});
-			
+			showYunfei();
 			
 			$("#addressPopUp").click();
 		}
@@ -543,6 +571,12 @@
 			}
 			
 			
+		}
+		
+		// 初期化运费
+		function clearFreight(){
+			$("#yunfei").html('0');
+			$("#heji").html(parseFloat($("#xiaoji").html())-parseFloat('0'));
 		}
 		
 	</script>

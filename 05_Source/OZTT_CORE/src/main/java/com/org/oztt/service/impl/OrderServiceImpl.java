@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.util.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
@@ -22,14 +23,19 @@ import com.org.oztt.dao.TConsCartDao;
 import com.org.oztt.dao.TConsInvoiceDao;
 import com.org.oztt.dao.TConsOrderDao;
 import com.org.oztt.dao.TConsOrderDetailsDao;
+import com.org.oztt.dao.TConsTransactionDao;
 import com.org.oztt.dao.TNoInvoiceDao;
 import com.org.oztt.dao.TNoOrderDao;
+import com.org.oztt.dao.TNoTransactionDao;
+import com.org.oztt.dao.TSuburbDeliverFeeDao;
 import com.org.oztt.entity.TAddressInfo;
 import com.org.oztt.entity.TConsInvoice;
 import com.org.oztt.entity.TConsOrder;
 import com.org.oztt.entity.TConsOrderDetails;
+import com.org.oztt.entity.TConsTransaction;
 import com.org.oztt.entity.TNoInvoice;
 import com.org.oztt.entity.TNoOrder;
+import com.org.oztt.entity.TNoTransaction;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.OrderInfoDto;
@@ -49,6 +55,9 @@ public class OrderServiceImpl extends BaseService implements OrderService {
     private TConsOrderDao        tConsOrderDao;
 
     @Resource
+    private TConsTransactionDao  tConsTransactionDao;
+
+    @Resource
     private TNoOrderDao          tNoOrderDao;
 
     @Resource
@@ -61,10 +70,16 @@ public class OrderServiceImpl extends BaseService implements OrderService {
     private TNoInvoiceDao        tNoInvoiceDao;
 
     @Resource
+    private TNoTransactionDao    tNoTransactionDao;
+
+    @Resource
     private TConsInvoiceDao      tConsInvoiceDao;
 
     @Resource
     private TAddressInfoDao      tAddressInfoDao;
+
+    @Resource
+    private TSuburbDeliverFeeDao tSuburbDeliverFeeDao;
 
     @Override
     public String insertOrderInfo(String customerNo, String payMethod, String hidDeliMethod, String hidAddressId)
@@ -178,8 +193,12 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         tConsOrder.setDeliverymethod(hidDeliMethod);
 
         tConsOrder.setAddressid(StringUtils.isEmpty(hidAddressId) ? 0L : Long.valueOf(hidAddressId));
-        // TODO 这里需要取运费
+        TAddressInfo addressInfo = tAddressInfoDao.selectByPrimaryKey(tConsOrder.getAddressid());
+        //这里需要取运费
         BigDecimal deleveryCost = BigDecimal.ZERO;
+        if (addressInfo != null) {
+            deleveryCost = tSuburbDeliverFeeDao.selectByPrimaryKey(Long.valueOf(addressInfo.getSuburb())).getDeliverfee();
+        }
         tConsOrder.setDeliverycost(deleveryCost);
         tConsOrder.setAddtimestamp(new Date());
         tConsOrder.setAdduserkey(customerNo);
@@ -247,6 +266,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
                 orderDB.setOrderDate(DateFormatUtils.date2StringWithFormat(orderDB.getOrderDateDB(),
                         DateFormatUtils.PATTEN_HMS));
                 orderDB.setOrderStatus(CommonEnum.HandleFlag.getEnumLabel(orderDB.getOrderStatus()));
+                orderDB.setDeliveryMethodFlag(orderDB.getDeliveryMethod());
                 orderDB.setDeliveryMethod(CommonEnum.DeliveryMethod.getEnumLabel(orderDB.getDeliveryMethod()));
             }
         }
@@ -279,17 +299,6 @@ public class OrderServiceImpl extends BaseService implements OrderService {
     }
 
     @Override
-    public void createPaySuccessInfo(String orderId) throws Exception {
-        // 更新订单状态
-        TConsOrder tConsOrder = this.selectByOrderId(orderId);
-        tConsOrder.setHandleflg(CommonEnum.HandleFlag.HAS_HANDLED.getCode());
-        this.updateOrderInfo(tConsOrder);
-
-        //TODO 记录入出账
-
-    }
-
-    @Override
     public OzTtGbOdDto getOrderDetailInfo(String orderId) throws Exception {
         OzTtGbOdDto formDto = new OzTtGbOdDto();
         // 取得订单信息
@@ -304,7 +313,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
             formDto.setReceiverAddress(tAddressInfo.getAddressdetails());
             formDto.setReceiverPhone(tAddressInfo.getContacttel());
         }
-        
+
         // 支付和配送方式
         formDto.setPaymethod(CommonEnum.PaymentMethod.getEnumLabel(tConsOrder.getPaymentmethod()));
         formDto.setDeliveryCost(tConsOrder.getDeliverycost().toString());
@@ -330,7 +339,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
                 dto.setGoodsImage(imgUrl + dto.getGoodsId() + CommonConstants.PATH_SPLIT + dto.getGoodsImage());
             }
         }
-        
+
         // 设定小计合计等值
         formDto.setXiaoji(tConsOrder.getOrderamount().toString());
         formDto.setYunfei(tConsOrder.getDeliverycost().toString());
@@ -339,5 +348,102 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         formDto.setGoodList(detailList);
 
         return formDto;
+    }
+
+    @Override
+    public void updateRecordAfterPay(String orderId, String customerNo) throws Exception {
+        // 检索当前订单，更新状态为已经付款
+        TConsOrder tConsOrder = this.selectByOrderId(orderId);
+        tConsOrder.setHandleflg(CommonEnum.HandleFlag.PAYED.getCode());
+        this.updateOrderInfo(tConsOrder);
+        // 生成入出账记录
+        // 取得最新的入出账记录
+        TConsTransaction tConsTransactionLast = tConsTransactionDao.selectLastTransaction();
+
+        // 生成发票数据
+        // 产生入出账号
+        String maxTranctionNo = "";
+        // 获取最大的客户号
+        TNoTransaction maxTNoTransaction = tNoTransactionDao.getMaxTransactionNo();
+        String nowDateString = DateFormatUtils.getNowTimeFormat("yyyyMMdd");
+        Integer len = CommonConstants.FIRST_NUMBER.length();
+        if (maxTNoTransaction == null) {
+            maxTranctionNo = nowDateString + CommonConstants.FIRST_NUMBER;
+            // 入出账号号最大值的保存
+            TNoTransaction tNoTransaction = new TNoTransaction();
+            tNoTransaction.setDate(DateFormatUtils.getNowTimeFormat("yyyyMMdd"));
+            tNoTransaction.setMaxno(maxTranctionNo);
+            tNoTransactionDao.insertSelective(tNoTransaction);
+        }
+        else {
+            if (DateFormatUtils.getDateFormatStr(DateFormatUtils.PATTEN_YMD_NO_SEPRATE).equals(
+                    maxTNoTransaction.getDate())) {
+                // 属于同一天
+                // 入出账号号最大值的保存
+                maxTranctionNo = nowDateString
+                        + StringUtils.leftPad(
+                                String.valueOf(Integer.valueOf(maxTNoTransaction.getMaxno().substring(8)) + 1), len,
+                                "0");
+                maxTNoTransaction.setMaxno(maxTranctionNo);
+                tNoTransactionDao.updateByPrimaryKeySelective(maxTNoTransaction);
+            }
+            else {
+                maxTranctionNo = nowDateString + CommonConstants.FIRST_NUMBER;
+                // 入出账号最大值的保存
+                TNoTransaction tNoTransaction = new TNoTransaction();
+                tNoTransaction.setDate(DateFormatUtils.getNowTimeFormat("yyyyMMdd"));
+                tNoTransaction.setMaxno(maxTranctionNo);
+                tNoTransactionDao.insertSelective(tNoTransaction);
+            }
+        }
+
+        // 第一次生成入出账记录
+        TConsTransaction tConsTransaction = new TConsTransaction();
+        tConsTransaction.setAccountno("linliuan");//TODO
+        tConsTransaction.setAddtimestamp(new Date());
+        tConsTransaction.setAdduserkey(customerNo);
+        tConsTransaction.setCustomerno(customerNo);
+
+        tConsTransaction.setTransactioncomments("");
+        tConsTransaction.setTransactionno(maxTranctionNo);
+        tConsTransaction.setTransactionmethod(tConsOrder.getPaymentmethod());//付款方式（PayPal）
+        tConsTransaction.setTransactionoperator(customerNo);
+        tConsTransaction.setTransactionstatus("1");// 处理成功
+        tConsTransaction.setTransactiontimestamp(new Date());
+
+        TConsTransaction tConsTransactionIn = new TConsTransaction();
+        BeanUtils.copyProperties(tConsTransaction, tConsTransactionIn);
+        // 入账记录
+        tConsTransactionIn.setInoutflg("1");//入账
+        tConsTransactionIn.setTransactionamount(tConsOrder.getOrderamount());
+        tConsTransactionIn.setTransactionbeforeamount(tConsTransactionLast == null ? BigDecimal.ZERO
+                : tConsTransactionLast.getTransactionafteramount());
+        tConsTransactionIn.setTransactionafteramount(tConsOrder.getOrderamount().add(
+                tConsTransactionIn.getTransactionbeforeamount()));
+        tConsTransactionIn.setTransactiontype("1");// 交易类型（订单支付还是手续费收取）
+        tConsTransactionDao.insertSelective(tConsTransactionIn);
+        // 出账记录
+        TConsTransaction tConsTransactionOut = new TConsTransaction();
+        BeanUtils.copyProperties(tConsTransaction, tConsTransactionOut);
+        tConsTransactionOut.setInoutflg("2");//入账
+        tConsTransactionOut.setTransactionbeforeamount(tConsTransactionIn.getTransactionafteramount());
+        tConsTransactionOut.setTransactionamount(getCostMoney(tConsTransactionIn.getTransactionafteramount()));
+        tConsTransactionOut.setTransactionafteramount(tConsTransactionIn.getTransactionafteramount().subtract(
+                tConsTransactionOut.getTransactionamount()));
+        tConsTransactionOut.setTransactiontype("2");// 交易类型（订单支付还是手续费收取）
+        tConsTransactionDao.insertSelective(tConsTransactionOut);
+
+    }
+
+    /**
+     * 得到PAYPAL的扣款比率
+     * 
+     * @param amount
+     * @return
+     */
+    private BigDecimal getCostMoney(BigDecimal amount) {
+        String percent = super.getApplicationMessage("PAYPAL_PECENT");
+        String additional = super.getApplicationMessage("PAYPAL_ADDITIONAL");
+        return amount.multiply(new BigDecimal(percent)).add(new BigDecimal(additional));
     }
 }

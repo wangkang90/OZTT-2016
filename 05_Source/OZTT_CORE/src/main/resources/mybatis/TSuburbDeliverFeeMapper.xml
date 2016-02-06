@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.oztt.dao.TSuburbDeliverFeeDao" >
+  <resultMap id="BaseResultMap" type="com.org.oztt.entity.TSuburbDeliverFee" >
+    <id column="no" property="no" jdbcType="BIGINT" />
+    <result column="suburb" property="suburb" jdbcType="VARCHAR" />
+    <result column="deliverFee" property="deliverfee" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    no, suburb, deliverFee
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_suburb_deliver_fee
+    where no = #{no,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_suburb_deliver_fee
+    where no = #{no,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.org.oztt.entity.TSuburbDeliverFee" >
+    insert into t_suburb_deliver_fee (no, suburb, deliverFee
+      )
+    values (#{no,jdbcType=BIGINT}, #{suburb,jdbcType=VARCHAR}, #{deliverfee,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.org.oztt.entity.TSuburbDeliverFee" >
+    insert into t_suburb_deliver_fee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="suburb != null" >
+        suburb,
+      </if>
+      <if test="deliverfee != null" >
+        deliverFee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        #{no,jdbcType=BIGINT},
+      </if>
+      <if test="suburb != null" >
+        #{suburb,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverfee != null" >
+        #{deliverfee,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TSuburbDeliverFee" >
+    update t_suburb_deliver_fee
+    <set >
+      <if test="suburb != null" >
+        suburb = #{suburb,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverfee != null" >
+        deliverFee = #{deliverfee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TSuburbDeliverFee" >
+    update t_suburb_deliver_fee
+    set suburb = #{suburb,jdbcType=VARCHAR},
+      deliverFee = #{deliverfee,jdbcType=DECIMAL}
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getAllTSuburbDeliverFee" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_suburb_deliver_fee
+  </select>
+  
+</mapper>

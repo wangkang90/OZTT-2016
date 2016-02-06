@@ -44,5 +44,12 @@ public interface CommonService {
      */
     public boolean checkPhoneVerifyCode(String phone, String verifyCode) throws Exception;
     
+    /**
+     * 获取地区下拉列表
+     * @return
+     * @throws Exception
+     */
+    public List<MyMap> getSuburbList() throws Exception;
+    
 
 }

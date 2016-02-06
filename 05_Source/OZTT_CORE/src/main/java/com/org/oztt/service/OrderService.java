@@ -45,19 +45,19 @@ public interface OrderService {
     public TConsOrder selectByOrderId(String orderId) throws Exception;
     
     /**
-     * 订单付款成功后的一系列DB操作
-     * @param orderId
-     * @throws Exception
-     */
-    public void createPaySuccessInfo(String orderId) throws Exception;
-    
-    /**
      * 获取订单的详细信息
      * @param orderId
      * @return
      * @throws Exception
      */
     public OzTtGbOdDto getOrderDetailInfo(String orderId) throws Exception;
+    
+    /**
+     * 付款结束后，更新订单，生成入出账记录
+     * @param orderId
+     * @throws Exception
+     */
+    public void updateRecordAfterPay(String orderId, String customerNo) throws Exception;
     
     
 }

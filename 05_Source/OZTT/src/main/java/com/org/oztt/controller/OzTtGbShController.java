@@ -53,7 +53,7 @@ public class OzTtGbShController extends BaseController {
                     dto.setGoodsImage(imgUrl + dto.getGoodsId() + CommonConstants.PATH_SPLIT + dto.getGoodsImage());
                 }
             }
-
+            model.addAttribute("suburbSelect", commonService.getSuburbList());
             model.addAttribute("conscars", JSONObject.toJSONString(consCarts));
             model.addAttribute("deliverySelect", commonService.getDeliveryTime());
             return "/OZ_TT_GB_SH";
