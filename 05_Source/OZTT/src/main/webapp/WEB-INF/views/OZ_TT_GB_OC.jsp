@@ -62,6 +62,7 @@
 		<input type="hidden" name="hidDeliMethod" id="hidDeliMethod" value="${hidDeliMethod}">
 		<input type="hidden" name="hidAddressId" id="hidAddressId" value="${hidAddressId}">
 		<input type="hidden" name="hidPayMethod" id="hidPayMethod">
+		<input type="hidden" name="hidHomeDeliveryTime" id="hidHomeDeliveryTime" value="${hidHomeDeliveryTime }">
 	</form>
 
 	<%@ include file="./commonjsFooter.jsp"%>  

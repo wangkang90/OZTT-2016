@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONObject;
+import com.org.oztt.base.util.DateFormatUtils;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.ContCartProItemDto;
@@ -56,6 +57,8 @@ public class OzTtGbShController extends BaseController {
             model.addAttribute("suburbSelect", commonService.getSuburbList());
             model.addAttribute("conscars", JSONObject.toJSONString(consCarts));
             model.addAttribute("deliverySelect", commonService.getDeliveryTime());
+            //明天
+            model.addAttribute("tomorrow", DateFormatUtils.getTomorrow(DateFormatUtils.PATTEN_YMD2));
             return "/OZ_TT_GB_SH";
         }
         catch (Exception e) {

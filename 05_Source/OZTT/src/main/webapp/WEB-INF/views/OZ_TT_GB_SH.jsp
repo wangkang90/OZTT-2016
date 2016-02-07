@@ -129,6 +129,7 @@
 			<!-- END SIDEBAR & CONTENT -->
 		</div>
 		<a href="#address-pop-up" id="addressPopUp" class="btn btn-default fancybox-fast-view" style="display:none">&nbsp;</a>
+		<input type="hidden" value="${tomorrow }" id="fromdate">
 	</div>
 	
 	<form id="submitPay" name="submitPay">
@@ -195,8 +196,12 @@
 				var temp = "";
 				for (var i = 0 ; i < adrList.length; i++) {
 					temp += "<li onclick=\"addressLiClick(this,'"+adrList[i].id+"')\"><span class=\"col-sm-8\">"
-					+adrList[i].countrycode+ "&nbsp;" + adrList[i].state+ "&nbsp;"
-					+adrList[i].addressdetails+ "&nbsp;" + adrList[i].receiver+ "&nbsp;" + adrList[i].contacttel+ "&nbsp;" +
+					+adrList[i].addressdetails+ "&nbsp;" 
+					+adrList[i].suburb+ "&nbsp;"
+					+adrList[i].state+ "&nbsp;"
+					+adrList[i].countrycode+ "&nbsp;"
+					+adrList[i].receiver+ "&nbsp;" 
+					+adrList[i].contacttel+ "&nbsp;" +
 					"</span><span style=\"display:none\"class=\"col-sm-4\">"+
 					"<button type=\"button\" onclick=\"updAdrShowDia('"+adrList[i].id+"')\" class=\"btn red\" style=\"margin-left:25px\">"+updateLabel+"</button>"+
 					"<button type=\"button\" onclick=\"delAddress('"+adrList[i].id+"')\" class=\"btn red\" style=\"margin-left:25px\">"+deleteLabel+"</button>"+
@@ -270,7 +275,7 @@
 						    	format: "yyyy/mm/dd",
 						        clearBtn: true,
 						        orientation: "top right",
-						        startDate: " ",
+						        startDate: $("#fromdate").val(),
 						        autoclose: true,
 						        todayHighlight: true
 						    }); 
@@ -557,7 +562,7 @@
 			
 			$("#hidDeliMethod").val(selectDelivery);
 			$("#hidAddressId").val(selectAddress);
-			$("#hidHomeDeliveryTime").val($("#homeDeliveryTimeId").val() + "*" + $("#deliveryTimeSelect").val());
+			$("#hidHomeDeliveryTime").val($("#homeDeliveryTimeId").val() + $("#deliveryTimeSelect").val());
 			if (selectDelivery == '1' || selectDelivery == '2') {
 				var targetform = document.forms['submitPay'];
 				targetform.action = "${pageContext.request.contextPath}/OZ_TT_GB_OC/init";

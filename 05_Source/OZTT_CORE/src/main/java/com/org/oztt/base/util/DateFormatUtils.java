@@ -909,4 +909,16 @@ public class DateFormatUtils {
         }
         return false;
     }
+    
+    /**
+     * 指定形式获取明天
+     * @param format
+     * @return
+     */
+    public static String getTomorrow(String format) {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 1);
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(c.getTime());
+    }
 }

@@ -27,11 +27,12 @@ public class OzTtGbOcController extends BaseController {
      * @return
      */
     @RequestMapping(value = "init")
-    public String init(Model model, HttpSession session, String hidDeliMethod, String hidAddressId, String hidPayMethod) {
+    public String init(Model model, HttpSession session, String hidDeliMethod, String hidAddressId, String hidPayMethod, String hidHomeDeliveryTime) {
         try {
             model.addAttribute("hidDeliMethod", hidDeliMethod);
             model.addAttribute("hidAddressId", hidAddressId);
             model.addAttribute("hidPayMethod", hidPayMethod);
+            model.addAttribute("hidHomeDeliveryTime", hidHomeDeliveryTime);
             return "/OZ_TT_GB_OC";
         }
         catch (Exception e) {

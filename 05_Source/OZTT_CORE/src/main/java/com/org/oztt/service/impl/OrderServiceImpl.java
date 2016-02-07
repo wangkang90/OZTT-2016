@@ -82,8 +82,8 @@ public class OrderServiceImpl extends BaseService implements OrderService {
     private TSuburbDeliverFeeDao tSuburbDeliverFeeDao;
 
     @Override
-    public String insertOrderInfo(String customerNo, String payMethod, String hidDeliMethod, String hidAddressId)
-            throws Exception {
+    public String insertOrderInfo(String customerNo, String payMethod, String hidDeliMethod, String hidAddressId,
+            String hidHomeDeliveryTime) throws Exception {
         List<ContCartItemDto> payList = tConsCartDao.getAllContCartForBuy(customerNo);
         if (payList == null)
             return null;
@@ -191,13 +191,15 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         tConsOrder.setPaymenttimestamp(null);//付款时间
         tConsOrder.setHandleflg(CommonEnum.HandleFlag.NOT_PAY.getCode());
         tConsOrder.setDeliverymethod(hidDeliMethod);
+        tConsOrder.setHomedeliverytime(hidHomeDeliveryTime.replaceAll("/", ""));
 
         tConsOrder.setAddressid(StringUtils.isEmpty(hidAddressId) ? 0L : Long.valueOf(hidAddressId));
         TAddressInfo addressInfo = tAddressInfoDao.selectByPrimaryKey(tConsOrder.getAddressid());
         //这里需要取运费
         BigDecimal deleveryCost = BigDecimal.ZERO;
         if (addressInfo != null) {
-            deleveryCost = tSuburbDeliverFeeDao.selectByPrimaryKey(Long.valueOf(addressInfo.getSuburb())).getDeliverfee();
+            deleveryCost = tSuburbDeliverFeeDao.selectByPrimaryKey(Long.valueOf(addressInfo.getSuburb()))
+                    .getDeliverfee();
         }
         tConsOrder.setDeliverycost(deleveryCost);
         tConsOrder.setAddtimestamp(new Date());
@@ -310,7 +312,9 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         if (tConsOrder.getAddressid() != 0) {
             TAddressInfo tAddressInfo = tAddressInfoDao.selectByPrimaryKey(tConsOrder.getAddressid());
             formDto.setReceiver(tAddressInfo.getReceiver());
-            formDto.setReceiverAddress(tAddressInfo.getAddressdetails());
+            formDto.setReceiverAddress(tAddressInfo.getAddressdetails() + " "
+                    + tSuburbDeliverFeeDao.selectByPrimaryKey(Long.valueOf(tAddressInfo.getSuburb())).getSuburb() + " "
+                    + tAddressInfo.getState() + " " + tAddressInfo.getCountrycode());
             formDto.setReceiverPhone(tAddressInfo.getContacttel());
         }
 

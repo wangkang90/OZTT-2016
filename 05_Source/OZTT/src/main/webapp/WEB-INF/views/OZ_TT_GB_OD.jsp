@@ -62,7 +62,7 @@
 										<fmt:message key="OZ_TT_GB_OD_receiver_address" />
 									</label>
 									<div class="col-md-11">
-		                                 ${ozTtGbOdDto.receiverAddress }
+		                                ${ozTtGbOdDto.receiverAddress }
 		                              </div>
 		                        </div>
 		                        <div class="form-group col-sm-12">
