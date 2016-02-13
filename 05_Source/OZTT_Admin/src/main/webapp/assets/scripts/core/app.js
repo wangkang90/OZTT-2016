@@ -838,7 +838,7 @@ var App = function () {
         }
 
         $('.sidebar-option', panel).val("default");
-        $('.header-option', panel).val("fixed");
+        $('.header-option', panel).val("default");
         $('.footer-option', panel).val("default");
         if ( $('.sidebar-pos-option').attr("disabled") === false) {
             $('.sidebar-pos-option', panel).val(App.isRTL() ? 'right' : 'left');
@@ -880,7 +880,7 @@ var App = function () {
 
             if (sidebarOption == "fixed" && headerOption == "default") {
                 alert('Default Header with Fixed Sidebar option is not supported. Proceed with Fixed Header with Fixed Sidebar.');
-                $('.header-option', panel).val("fixed");
+                $('.header-option', panel).val("default");
                 $('.sidebar-option', panel).val("fixed");
                 sidebarOption = 'fixed';
                 headerOption = 'fixed';
@@ -964,7 +964,7 @@ var App = function () {
         // handle theme colors
         var setColor = function (color) {
             var color_ = (App.isRTL() ? color + '-rtl' : color);
-            $('#style_color').attr("href", "assets/css/themes/" + color_ + ".css");
+            $('#style_color').attr("href", "../assets/css/themes/" + color_ + ".css");
             if ($.cookie) {                
                 $.cookie('style_color', color);
             }
