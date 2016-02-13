@@ -9,11 +9,20 @@
 
 .myselfcancel {
 	position: absolute;
-	top:150px; right:150px;
-	width:50px;
+	top: 150px;
+	right: 150px;
+	width: 50px;
 }
 
-
 .uploadify {
-	padding-top:10px;
+	padding-top: 10px;
+}
+
+#index_main_right_box {
+	width: 85%;
+	height: 100%;
+	overflow: hidden;
+	display: inline;
+	float: left;
+	padding-bottom: 10px
 }
