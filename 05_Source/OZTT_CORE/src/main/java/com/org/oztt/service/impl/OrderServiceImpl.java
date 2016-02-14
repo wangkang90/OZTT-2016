@@ -24,6 +24,7 @@ import com.org.oztt.dao.TConsInvoiceDao;
 import com.org.oztt.dao.TConsOrderDao;
 import com.org.oztt.dao.TConsOrderDetailsDao;
 import com.org.oztt.dao.TConsTransactionDao;
+import com.org.oztt.dao.TGoodsGroupDao;
 import com.org.oztt.dao.TNoInvoiceDao;
 import com.org.oztt.dao.TNoOrderDao;
 import com.org.oztt.dao.TNoTransactionDao;
@@ -33,6 +34,7 @@ import com.org.oztt.entity.TConsInvoice;
 import com.org.oztt.entity.TConsOrder;
 import com.org.oztt.entity.TConsOrderDetails;
 import com.org.oztt.entity.TConsTransaction;
+import com.org.oztt.entity.TGoodsGroup;
 import com.org.oztt.entity.TNoInvoice;
 import com.org.oztt.entity.TNoOrder;
 import com.org.oztt.entity.TNoTransaction;
@@ -80,6 +82,9 @@ public class OrderServiceImpl extends BaseService implements OrderService {
 
     @Resource
     private TSuburbDeliverFeeDao tSuburbDeliverFeeDao;
+    
+    @Resource
+    private TGoodsGroupDao tGoodsGroupDao;
 
     @Override
     public String insertOrderInfo(String customerNo, String payMethod, String hidDeliMethod, String hidAddressId,
@@ -140,6 +145,15 @@ public class OrderServiceImpl extends BaseService implements OrderService {
             tConsOrderDetails.setAdduserkey(customerNo);
             tConsOrderDetailsDao.insertSelective(tConsOrderDetails);
             orderAmount = orderAmount.add(tConsOrderDetails.getSumamount());
+            
+            // 生成明细订单的时候
+            TGoodsGroup tGoodsGroup = new TGoodsGroup();
+            tGoodsGroup.setGoodsid(itemDto.getGoodsId());
+            tGoodsGroup.setGroupcurrentquantity(tConsOrderDetails.getGroupcurrentquantity());
+            tGoodsGroup.setUpdtimestamp(new Date());
+            tGoodsGroup.setUpdpgmid("PAY");
+            tGoodsGroup.setUpduserkey(customerNo);
+            tGoodsGroupDao.updateCurrentQuantity(tGoodsGroup);
         }
 
         // 生成发票数据
@@ -209,6 +223,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
 
         // 将购物车中的数据删除
         tConsCartDao.deleteCurrentBuyGoods(customerNo);
+        
 
         String rb = "";
         if (CommonEnum.DeliveryMethod.COD.getCode().equals(hidDeliMethod)) {

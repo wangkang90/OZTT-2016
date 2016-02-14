@@ -39,4 +39,11 @@ public interface TGoodsGroupDao {
      * @return
      */
     TGoodsGroup selectByParams(TGoodsGroup record);
+    
+    /**
+     * 购买产品后更新团购信息
+     * @param record
+     * @return
+     */
+    int updateCurrentQuantity(TGoodsGroup record);
 }

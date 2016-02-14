@@ -1,13 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html>
-<!-- 
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.1.1
-Version: 2.0.2
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
@@ -16,94 +16,101 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8"/>
-<title>Metronic | Admin Dashboard Template</title>
+<title><fmt:message key="OZ_TT_AD_LG_title" /></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="" name="description"/>
 <meta content="" name="author"/>
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
-<link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL STYLES -->
-<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2.css"/>
-<link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2-metronic.css"/>
+<link rel="stylesheet" type="text/css" href="${ctx}/assets/plugins/select2/select2.css"/>
+<link rel="stylesheet" type="text/css" href="${ctx}/assets/plugins/select2/select2-metronic.css"/>
 <!-- END PAGE LEVEL SCRIPTS -->
 <!-- BEGIN THEME STYLES -->
-<link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
-<link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
-<link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
-<link href="assets/css/plugins.css" rel="stylesheet" type="text/css"/>
-<link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
-<link href="assets/css/pages/login.css" rel="stylesheet" type="text/css"/>
-<link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="${ctx}/assets/css/pages/login.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/assets/css/custom.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/css/user-common.css" rel="stylesheet" type="text/css">
+<link href="${ctx}/css/my-common.css" rel="stylesheet" type="text/css">
 <!-- END THEME STYLES -->
-<link rel="shortcut icon" href="favicon.ico"/>
+<link rel="shortcut icon" href="${ctx}/favicon.ico"/>
+
+<script type="text/javascript">
+	var E0001 = '<fmt:message key="E0001" />';
+	var E0002 = '<fmt:message key="E0002" />';
+	function adminLogin(){
+		if (!validateForm()) return;
+		var targetForm = document.forms['loginForm'];
+		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_LG/login";
+		targetForm.method = "POST";
+		targetForm.submit();
+	}
+	
+	function validateForm(){
+		cleanFormError();
+		var username = $("#username").val();
+		var password = $("#password").val();
+		if (username == "") {
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_LG_username" />')
+			showErrorSpan($("#username"), message);
+			return false;
+		}
+		if (password == "") {
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_LG_password" />')
+			showErrorSpan($("#password"), message);
+			return false;
+		}
+		return true;
+	}
+	
+	
+
+</script>
 </head>
 <!-- BEGIN BODY -->
 <body class="login">
 <!-- BEGIN LOGO -->
 <div class="logo">
-	<a href="index.html">
-		<img src="assets/img/logo-big.png" alt=""/>
+	<a href="#">
+		<img src="${ctx}/images/logo-letter.png" alt=""/>
 	</a>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
 <div class="content">
 	<!-- BEGIN LOGIN FORM -->
-	<form class="login-form" action="index.html" method="post">
-		<h3 class="form-title">Login to your account</h3>
-		<div class="alert alert-danger display-hide">
-			<button class="close" data-close="alert"></button>
-			<span>
-				 Enter any username and password.
-			</span>
-		</div>
+	<form:form class="login-form" action="" method="post" id="loginForm" modelAttribute="ozTtAdLgDto" commandName="ozTtAdLgDto">
+		<h3 class="form-title"><fmt:message key="OZ_TT_AD_LG_h3" /></h3>
 		<div class="form-group">
 			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-			<label class="control-label visible-ie8 visible-ie9">Username</label>
+			<label class="control-label visible-ie8 visible-ie9"><fmt:message key="OZ_TT_AD_LG_username" /></label>
 			<div class="input-icon">
 				<i class="fa fa-user"></i>
-				<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username"/>
+				<form:input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" path="username" id="username"/>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label visible-ie8 visible-ie9">Password</label>
+			<label class="control-label visible-ie8 visible-ie9"><fmt:message key="OZ_TT_AD_LG_password" /></label>
 			<div class="input-icon">
 				<i class="fa fa-lock"></i>
-				<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password"/>
+				<form:input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" path="password" id="password"/>
 			</div>
 		</div>
 		<div class="form-actions">
 			<label class="checkbox">
-			<input type="checkbox" name="remember" value="1"/> Remember me </label>
-			<button type="submit" class="btn green pull-right">
-			Login <i class="m-icon-swapright m-icon-white"></i>
+			<input type="checkbox" name="remember" value="1"/><fmt:message key="OZ_TT_AD_LG_remember" /></label>
+			<button type="button" class="btn green pull-right" onclick="adminLogin()">
+			<fmt:message key="OZ_TT_AD_LG_loginbtn" /> <i class="m-icon-swapright m-icon-white"></i>
 			</button>
-		</div>
-		<div class="login-options">
-			<h4>Or login with</h4>
-			<ul class="social-icons">
-				<li>
-					<a class="facebook" data-original-title="facebook" href="#">
-					</a>
-				</li>
-				<li>
-					<a class="twitter" data-original-title="Twitter" href="#">
-					</a>
-				</li>
-				<li>
-					<a class="googleplus" data-original-title="Goole Plus" href="#">
-					</a>
-				</li>
-				<li>
-					<a class="linkedin" data-original-title="Linkedin" href="#">
-					</a>
-				</li>
-			</ul>
 		</div>
 		<div class="forget-password">
 			<h4>Forgot your password ?</h4>
@@ -123,7 +130,7 @@ License: You must have a valid license purchased only from themeforest(the above
 				</a>
 			</p>
 		</div>
-	</form>
+	</form:form>
 	<!-- END LOGIN FORM -->
 	<!-- BEGIN FORGOT PASSWORD FORM -->
 	<form class="forget-form" action="index.html" method="post">
@@ -481,31 +488,41 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE PLUGINS -->
 <!--[if lt IE 9]>
-	<script src="assets/plugins/respond.min.js"></script>
-	<script src="assets/plugins/excanvas.min.js"></script> 
+	<script src="${ctx}/assets/plugins/respond.min.js"></script>
+	<script src="${ctx}/assets/plugins/excanvas.min.js"></script> 
 	<![endif]-->
-<script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
-<script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-<script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-<script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-<script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-<script src="assets/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-<script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
-<script src="assets/plugins/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
+<script src="${ctx}/assets/plugins/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="${ctx}/assets/plugins/select2/select2.min.js"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="assets/scripts/core/app.js" type="text/javascript"></script>
-<script src="assets/scripts/custom/login.js" type="text/javascript"></script>
+<script src="${ctx}/assets/scripts/core/app.js" type="text/javascript"></script>
+<script src="${ctx}/assets/scripts/custom/login.js" type="text/javascript"></script>
+<script type="text/javascript" src="${ctx}/js/user-common.js"></script>
+<script type="text/javascript" src="${ctx}/js/common_validate.js"></script>
+<script type="text/javascript" src="${ctx}/js/my-common.js"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 		jQuery(document).ready(function() {     
 		  App.init();
 		  Login.init();
 		});
+		
+		
+		var loginStatus = ${cannotLogin};
+		if ("1" == loginStatus) {
+			// 登录出错
+			showErrorSpan($("#username"), E0001);
+		}
 	</script>
 <!-- END JAVASCRIPTS -->
 </body>

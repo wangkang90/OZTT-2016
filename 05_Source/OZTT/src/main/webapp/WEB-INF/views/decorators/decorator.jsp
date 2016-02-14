@@ -39,6 +39,7 @@
 	var E0001 = '<fmt:message key="E0001" />';
 	var E0009 = '<fmt:message key="E0009" />';
 	var E0010 = '<fmt:message key="E0010" />';
+	var E0011 = '<fmt:message key="E0011" />';
 	
 	function validateCheckLogin(){
 		cleanFormError();
@@ -174,8 +175,20 @@
 					$("#disPrice").html(goodItemDto.disPrice + '<fmt:message key="common_yuan"/>');
 					$("#nowPrice").html(goodItemDto.nowPrice + '<fmt:message key="common_yuan"/>');
 					
-					$("#prodectDesc").html(goodItemDto.goods.goodsdesc)
+					$("#prodectTime").html(goodItemDto.validPeriodStart + "~" +goodItemDto.validPeriodEnd)
+					var isOver = goodItemDto.isOver;
+					var isOverTime = goodItemDto.isOverTime;
+					if (isOver == "1" || isOverTime == "1") {
+						$("#groupPercent").html('<fmt:message key="common_tuangouover"/>');
+						$("#addCart").css("display","none");
+						$("#productQuantityDiv").css("display","none");
+					} else {
+						$("#groupPercent").html('<fmt:message key="common_hasTuanQan"/>' + goodItemDto.groupCurrent + "/" + goodItemDto.groupMax);
+						$("#addCart").css("display","");
+						$("#productQuantityDiv").css("display","");
+					}
 					
+					$("#prodectDesc").html(goodItemDto.goods.goodsdesc)
 					$("#productOptions").empty();
 
 					$("#detail").attr("onclick", "toItem('"+goodItemDto.goods.goodsid+"')");
@@ -264,6 +277,38 @@
 
 		}
 		
+		var checkGroup = [];
+		checkGroup.push(properties);
+		var checkOver = true;
+		$.ajax({
+			type : "POST",
+			contentType:'application/json',
+			url : '${pageContext.request.contextPath}/COMMON/checkIsOverGroup',
+			dataType : "json",
+			async : false,
+			data : JSON.stringify(checkGroup), 
+			success : function(data) {
+				if(!data.isException){
+					// 同步购物车成功
+					if (data.isOver) {
+						alert(E0011);
+						checkOver = true;
+						return;
+					} else {
+						checkOver = false;
+					}
+				} else {
+					// 同步购物车失败
+					return;
+				}
+			},
+			error : function(data) {
+				
+			}
+		});
+		
+		if (checkOver) return;
+		
 		// 首先得到购物车里面的所有的东西
 		var contcart = getCookie("contcart");
 		if(contcart != null && contcart.length > 0) {
@@ -308,6 +353,7 @@
 				contentType:'application/json',
 				url : '${pageContext.request.contextPath}/COMMON/addConsCart',
 				dataType : "json",
+				async : false,
 				data : JSON.stringify(inputList), 
 				success : function(data) {
 					if(!data.isException){

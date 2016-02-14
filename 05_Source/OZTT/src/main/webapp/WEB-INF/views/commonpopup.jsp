@@ -19,8 +19,12 @@
                       <em><span id="nowPrice"></span></em>
                     </div>
                     <div class="availability">
-                      <fmt:message key="OZ_TT_TP_PD_youhuo"/>
+<!--                       <fmt:message key="OZ_TT_TP_PD_youhuo"/> -->
+						<span id="groupPercent"></span>
                     </div>
+                  </div>
+                  <div class="description">
+                    <p id="prodectTime"></p>
                   </div>
                   <div class="description">
                     <p id="prodectDesc"></p>
@@ -29,7 +33,7 @@
                     
                   </div>
                   <div class="product-page-cart">
-                    <div class="product-quantity">
+                    <div class="product-quantity" id="productQuantityDiv">
                         <input id="product-quantity" type="text" value="1" readonly name="product-quantity" class="form-control input-sm">
                     </div>
                     <button class="btn btn-primary" type="button" id="addCart" onclick=""><fmt:message key="common_addtocart"/></button>

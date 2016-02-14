@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.org.oztt.base.util.DateFormatUtils;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.entity.TAddressInfo;
 import com.org.oztt.entity.TCustomerLoginHis;
 import com.org.oztt.entity.TCustomerLoginInfo;
+import com.org.oztt.entity.TGoodsGroup;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.GoodItemDto;
@@ -93,6 +95,7 @@ public class CommonController extends BaseController {
             HttpSession session, @RequestBody List<Map<String, String>> list) {
         Map<String, Object> mapReturn = new HashMap<String, Object>();
         try {
+            // 判断当前产品加入购物车
             // 加入购物车操作，判断所有的属性是不是相同，相同在添加
             String customerNo = (String) session.getAttribute(CommonConstants.SESSION_CUSTOMERNO);
             if (customerNo == null) {
@@ -108,8 +111,10 @@ public class CommonController extends BaseController {
                 for (ContCartItemDto dto : consCarts) {
                     if (StringUtils.isEmpty(dto.getGoodsPropertiesDB())) {
                         dto.setGoodsProperties(new ArrayList<ContCartProItemDto>());
-                    } else {
-                        dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                    }
+                    else {
+                        dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(),
+                                ContCartProItemDto.class));
                     }
                     dto.setGoodsPropertiesDB(StringUtils.EMPTY);
                     dto.setGoodsImage(imgUrl + dto.getGoodsId() + CommonConstants.PATH_SPLIT + dto.getGoodsImage());
@@ -330,8 +335,10 @@ public class CommonController extends BaseController {
                 for (ContCartItemDto dto : consCarts) {
                     if (StringUtils.isEmpty(dto.getGoodsPropertiesDB())) {
                         dto.setGoodsProperties(new ArrayList<ContCartProItemDto>());
-                    } else {
-                        dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(), ContCartProItemDto.class));
+                    }
+                    else {
+                        dto.setGoodsProperties(JSONObject.parseArray(dto.getGoodsPropertiesDB(),
+                                ContCartProItemDto.class));
                     }
                     dto.setGoodsPropertiesDB(StringUtils.EMPTY);
                     dto.setGoodsImage(imgUrl + dto.getGoodsId() + CommonConstants.PATH_SPLIT + dto.getGoodsImage());
@@ -373,7 +380,7 @@ public class CommonController extends BaseController {
             String addressId = reqMap.get("addressId");
             // 更新或者增加地址
             TAddressInfo info = new TAddressInfo();
-            
+
             info.setAddressdetails(reqMap.get("details"));
             info.setContacttel(reqMap.get("contacttel"));
             info.setCountrycode(reqMap.get("country"));
@@ -434,7 +441,7 @@ public class CommonController extends BaseController {
             return mapReturn;
         }
     }
-   
+
     /**
      * 获取指定客户下所有的地址
      * 
@@ -456,7 +463,7 @@ public class CommonController extends BaseController {
             // 获取所有的地址
             List<TAddressInfo> infoList = addressService.getAllAddress(customerNo, method);
             if (!CollectionUtils.isEmpty(infoList)) {
-                for(TAddressInfo info : infoList) {
+                for (TAddressInfo info : infoList) {
                     info.setSuburb(addressService.getTSuburbDeliverFeeById(Long.valueOf(info.getSuburb())).getSuburb());
                 }
             }
@@ -471,7 +478,7 @@ public class CommonController extends BaseController {
             return mapReturn;
         }
     }
-    
+
     /**
      * 删除地址
      * 
@@ -495,7 +502,7 @@ public class CommonController extends BaseController {
 
             // 获取所有的地址
             addressService.deleteAddress(Long.valueOf(addressId));
-            
+
             // 获取所有的地址
             List<TAddressInfo> infoList = addressService.getAllAddress(customerNo, info.getDeliverymethod());
             mapReturn.put("adrList", infoList);
@@ -509,7 +516,7 @@ public class CommonController extends BaseController {
             return mapReturn;
         }
     }
-    
+
     /**
      * 获取指定客户下所有的地址
      * 
@@ -539,8 +546,7 @@ public class CommonController extends BaseController {
             return mapReturn;
         }
     }
-    
-    
+
     /**
      * 获取指定客户下所有的地址
      * 
@@ -554,7 +560,7 @@ public class CommonController extends BaseController {
             HttpSession session, @RequestParam String suburb) {
         Map<String, Object> mapReturn = new HashMap<String, Object>();
         try {
-            
+
             //获取费用信息
             String freight = addressService.getFreightByNo(Long.valueOf(suburb));
             mapReturn.put("freight", freight);
@@ -568,6 +574,99 @@ public class CommonController extends BaseController {
             return mapReturn;
         }
     }
-    
+
+    /**
+     * 获取指定商品指定数量是否超过团购数量
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/checkIsOverGroup")
+    @ResponseBody
+    public Map<String, Object> checkIsOverGroup(HttpServletRequest request, HttpServletResponse response,
+            HttpSession session, @RequestBody List<Map<String, String>> list) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            boolean isOver = true;
+            Map<String, String> mapParam = new HashMap<String, String>();
+            if (list != null && list.size() > 0) {
+                mapParam = list.get(0);
+                TGoodsGroup tGoodsGroup = new TGoodsGroup();
+                tGoodsGroup.setGoodsid(mapParam.get("goodsId"));
+                tGoodsGroup = goodsService.getGoodPrice(tGoodsGroup);
+                Long checkQuantity = Long.valueOf(mapParam.get("goodsQuantity"));
+                if (checkQuantity + tGoodsGroup.getGroupcurrentquantity() <= tGoodsGroup.getGroupmaxquantity()) {
+                    isOver = false;
+                }
+            }
+
+            mapReturn.put("isOver", isOver);
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return mapReturn;
+        }
+    }
+
+    /**
+     * 判断购物车数量是否超过团购数量
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/checkCantIsOverGroup")
+    @ResponseBody
+    public Map<String, Object> checkCantIsOverGroup(HttpServletRequest request, HttpServletResponse response,
+            HttpSession session) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            boolean isOver = false;
+            boolean isOverTime = false;
+            String customerNo = (String) session.getAttribute(CommonConstants.SESSION_CUSTOMERNO);
+            if (customerNo == null) {
+                return mapReturn;
+            }
+
+            List<ContCartItemDto> needBuyItems = goodsService.getAllContCartForBuy(customerNo);
+            if (!CollectionUtils.isEmpty(needBuyItems)) {
+                for (ContCartItemDto itemDto : needBuyItems) {
+                    TGoodsGroup tGoodsGroup = new TGoodsGroup();
+                    tGoodsGroup.setGoodsid(itemDto.getGoodsId());
+                    tGoodsGroup = goodsService.getGoodPrice(tGoodsGroup);
+                    if (Long.valueOf(itemDto.getGoodsQuantity()) + tGoodsGroup.getGroupcurrentquantity() > tGoodsGroup
+                            .getGroupmaxquantity()) {
+                        isOver = true;
+                        mapReturn.put("isOverMsg", itemDto.getGoodsName() + super.getMessage("E0012"));
+                        break;
+                    }
+                    if (DateFormatUtils.getCurrentDate().before(tGoodsGroup.getValidperiodstart())
+                            || DateFormatUtils.getCurrentDate().after(tGoodsGroup.getValidperiodend())) {
+                        // 当前时间不在团购时间范围内
+                        isOverTime = true;
+                        mapReturn.put(
+                                "isOverTimeMsg",
+                                super.getMessage("E0013").replace(CommonConstants.MESSAGE_PARAM_ONE,
+                                        itemDto.getGoodsName()));
+                        break;
+                    }
+                }
+            }
+
+            mapReturn.put("isOver", isOver);
+            mapReturn.put("isOverTime", isOverTime);
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return mapReturn;
+        }
+    }
 
 }

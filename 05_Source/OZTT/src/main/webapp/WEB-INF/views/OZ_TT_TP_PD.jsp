@@ -105,8 +105,19 @@
                       <em><span id="nowPrice">${goodItemDto.nowPrice}<fmt:message key="common_yuan"/></span></em>
                     </div>
                     <div class="availability">
-                      <fmt:message key="OZ_TT_TP_PD_youhuo"/>
+<!--                       <fmt:message key="OZ_TT_TP_PD_youhuo"/> -->
+						<span id="groupPercent">
+							<c:if test="${goodItemDto.isOver == '1' }">
+								<fmt:message key="common_tuangouover"/>
+							</c:if>
+							<c:if test="${goodItemDto.isOver == '0' }">
+								<fmt:message key="common_hasTuanQan"/>${goodItemDto.groupCurrent}/${goodItemDto.groupMax}
+							</c:if>
+						</span>
                     </div>
+                  </div>
+                  <div class="description">
+                    <p>${goodItemDto.validPeriodStart}~${goodItemDto.validPeriodEnd}</p>
                   </div>
                   <div class="description">
                     <p>${goodItemDto.goods.goodsdesc}</p>
@@ -117,11 +128,17 @@
 
                   </div>
                   <div class="product-page-cart">
-                    <div class="product-quantity">
-                        <input id="product-quantity" type="text" value="1" readonly class="form-control input-sm">
-                    </div>
-                    <button class="btn btn-primary" type="botton" onclick="addToCart('${goodItemDto.goods.goodsid}')"><fmt:message key="common_addtocart"/></button>
-                  </div>
+                    
+                    <c:if test="${goodItemDto.isOver == '0' && goodItemDto.isOverTime == '0'}">
+                    	<div class="product-quantity">
+	                        <input id="product-quantity" type="text" value="1" readonly class="form-control input-sm">
+	                    </div>
+                    	<button class="btn btn-primary" type="botton" onclick="addToCart('${goodItemDto.goods.goodsid}')"><fmt:message key="common_addtocart"/></button>
+                    </c:if>
+                    <c:if test="${goodItemDto.isOver == '1' || goodItemDto.isOver == '1'}">
+                    	<div style="height:38px"></div>
+                    </c:if>
+                 </div>
                   
                 </div>
 
