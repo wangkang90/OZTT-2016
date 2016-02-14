@@ -273,4 +273,25 @@
 			and openFlg = #{openflg,jdbcType=CHAR}
 		</if>
 	</select>
+	
+	<update id="updateCurrentQuantity" parameterType="com.org.oztt.entity.TGoodsGroup">
+		update t_goods_group
+		<set>
+			<if test="groupcurrentquantity != null">
+				groupCurrentQuantity = groupCurrentQuantity + #{groupcurrentquantity,jdbcType=DECIMAL},
+			</if>
+			<if test="updtimestamp != null">
+				updTimestamp = #{updtimestamp,jdbcType=TIMESTAMP},
+			</if>
+			<if test="upduserkey != null">
+				updUserKey = #{upduserkey,jdbcType=VARCHAR},
+			</if>
+			<if test="updpgmid != null">
+				updPgmId = #{updpgmid,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where goodsId = #{goodsid,jdbcType=VARCHAR}
+	</update>
+	
+	
 </mapper>

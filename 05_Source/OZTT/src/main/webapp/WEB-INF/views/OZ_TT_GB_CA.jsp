@@ -16,6 +16,7 @@
 	}
 	
 	function goOnToPay(){
+		
 		$.ajax({
 			type : "GET",
 			contentType:'application/json',

@@ -20,6 +20,18 @@ public class GoodItemDto {
     
     private String disPrice;// 折扣价格
     
+    private String groupMax;//团购最大数量
+    
+    private String groupCurrent;//团购现在数量
+    
+    private String validPeriodStart;// 适用期开始
+    
+    private String validPeriodEnd;// 适用期
+    
+    private String isOver;//是否已经打到团购上线
+    
+    private String isOverTime;// 是否已经超过时间
+    
     private String productInfo; // 商品详情
     
     private String productDesc; // 商品描述
@@ -98,5 +110,53 @@ public class GoodItemDto {
 
     public void setProperties(String properties) {
         this.properties = properties;
+    }
+
+    public String getGroupMax() {
+        return groupMax;
+    }
+
+    public void setGroupMax(String groupMax) {
+        this.groupMax = groupMax;
+    }
+
+    public String getGroupCurrent() {
+        return groupCurrent;
+    }
+
+    public void setGroupCurrent(String groupCurrent) {
+        this.groupCurrent = groupCurrent;
+    }
+
+    public String getIsOver() {
+        return isOver;
+    }
+
+    public void setIsOver(String isOver) {
+        this.isOver = isOver;
+    }
+
+    public String getValidPeriodStart() {
+        return validPeriodStart;
+    }
+
+    public void setValidPeriodStart(String validPeriodStart) {
+        this.validPeriodStart = validPeriodStart;
+    }
+
+    public String getValidPeriodEnd() {
+        return validPeriodEnd;
+    }
+
+    public void setValidPeriodEnd(String validPeriodEnd) {
+        this.validPeriodEnd = validPeriodEnd;
+    }
+
+    public String getIsOverTime() {
+        return isOverTime;
+    }
+
+    public void setIsOverTime(String isOverTime) {
+        this.isOverTime = isOverTime;
     }
 }

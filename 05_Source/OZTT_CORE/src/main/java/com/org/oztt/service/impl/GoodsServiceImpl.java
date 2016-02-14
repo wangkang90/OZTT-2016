@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
+import com.org.oztt.base.util.DateFormatUtils;
 import com.org.oztt.base.util.MessageUtils;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.dao.TConsCartDao;
@@ -168,6 +169,23 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         goodItemDto.setProductInfo(tGoodsGroup.getGroupcomments());
         goodItemDto.setProductDesc(tGoodsGroup.getGroupdesc());
         goodItemDto.setSellerRule(tGoodsGroup.getShopperrules());
+        goodItemDto.setGroupMax(String.valueOf(tGoodsGroup.getGroupmaxquantity()));
+        if (tGoodsGroup.getGroupcurrentquantity() >= tGoodsGroup.getGroupmaxquantity()) {
+            goodItemDto.setGroupCurrent(String.valueOf(tGoodsGroup.getGroupmaxquantity()));
+            goodItemDto.setIsOver(CommonConstants.OVER_GROUP_YES);
+        } else {
+            goodItemDto.setGroupCurrent(String.valueOf(tGoodsGroup.getGroupcurrentquantity()));
+            goodItemDto.setIsOver(CommonConstants.OVER_GROUP_NO);
+        }
+        goodItemDto.setValidPeriodStart(DateFormatUtils.date2StringWithFormat(tGoodsGroup.getValidperiodstart(), DateFormatUtils.PATTEN_YMD));
+        goodItemDto.setValidPeriodEnd(DateFormatUtils.date2StringWithFormat(tGoodsGroup.getValidperiodend(), DateFormatUtils.PATTEN_YMD));
+        if (DateFormatUtils.getCurrentDate().before(tGoodsGroup.getValidperiodstart())
+                || DateFormatUtils.getCurrentDate().after(tGoodsGroup.getValidperiodend())) {
+            // 不在范围内
+            goodItemDto.setIsOverTime(CommonConstants.OVERTIME_GROUP_YES);
+        } else {
+            goodItemDto.setIsOverTime(CommonConstants.OVERTIME_GROUP_NO);
+        }
         goodItemDto.setProperties(JSON.toJSONString(propertiesFormList));
 
         return goodItemDto;

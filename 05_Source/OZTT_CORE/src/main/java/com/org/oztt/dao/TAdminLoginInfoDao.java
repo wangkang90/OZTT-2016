@@ -1,5 +1,7 @@
 package com.org.oztt.dao;
 
+import java.util.Map;
+
 import com.org.oztt.entity.TAdminLoginInfo;
 
 public interface TAdminLoginInfoDao {
@@ -32,4 +34,19 @@ public interface TAdminLoginInfoDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TAdminLoginInfo record);
+    
+    /**
+     * 检查用户输入的账户名和密码是否正确
+     * @param username
+     * @param password
+     * @return
+     */
+    TAdminLoginInfo userLogin(Map<String, String> map);
+    
+    /**
+     * 通过客户号取得用户号
+     * @param email
+     * @return
+     */
+    TAdminLoginInfo selectByAdminNo(String adminNo);
 }

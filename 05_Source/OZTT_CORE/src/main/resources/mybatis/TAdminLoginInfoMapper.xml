@@ -150,4 +150,23 @@
       updPgmId = #{updpgmid,jdbcType=VARCHAR}
     where no = #{no,jdbcType=BIGINT}
   </update>
+  
+  <select id="checkLoginSuccess" resultMap="BaseResultMap" parameterType="map">
+		select
+		adminNo
+		,loginPass
+		,loginStatus
+		from t_admin_login_info
+		where adminNo = #{username,jdbcType=VARCHAR}
+		and loginPass = #{password,jdbcType=VARCHAR}
+		and deleteFlg = '0'
+	</select>
+	
+	<select id="selectByAdminNo" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_admin_login_info
+		where adminNo = #{adminNo,jdbcType=VARCHAR}
+	</select>
 </mapper>

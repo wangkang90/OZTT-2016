@@ -25,7 +25,7 @@
 	<div class="header-inner">
 		<!-- BEGIN LOGO -->
 		<a class="navbar-brand" href="index.html">
-			<img src="${ctx}/assets/img/logo.png" alt="logo" class="img-responsive"/>
+			<img src="${ctx}/images/logo-letter.png" alt="logo" class="img-responsive" width="80px"/>
 		</a>
 		<!-- END LOGO -->
 		<!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -49,17 +49,17 @@
 				<ul class="dropdown-menu">
 					<li>
 						<a href="extra_profile.html">
-							<i class="fa fa-user"></i> My Profile
+							<i class="fa fa-user"></i> <fmt:message key="OZ_TT_AD_MN_myprofile" />
 						</a>
 					</li>
 					<li>
 						<a href="javascript:;" id="trigger_fullscreen">
-							<i class="fa fa-arrows"></i> Full Screen
+							<i class="fa fa-arrows"></i> <fmt:message key="OZ_TT_AD_MN_fullScreen" />
 						</a>
 					</li>
 					<li>
 						<a href="login.html">
-							<i class="fa fa-key"></i> Log Out
+							<i class="fa fa-key"></i> <fmt:message key="OZ_TT_AD_MN_logout" />
 						</a>
 					</li>
 				</ul>
@@ -95,95 +95,72 @@
 			</li>
 
 			<li class="start">
-
 				<a href="${ctx}/main/init">
-
 					<i class="fa fa-home"></i>
-
 					<span class="title">
-
-						我的信息
-
+						<fmt:message key="OZ_TT_AD_MN_myinfo" />
 					</span>
-
 				</a>
-
 			</li>
-
-			<li>
-
+			<li id="orderLi">
 				<a href="javascript:;">
-
 					<i class="fa fa-shopping-cart"></i>
-
 					<span class="title">
-
-						E-Commerce
-
+						<fmt:message key="OZ_TT_AD_MN_order" />
 					</span>
-
 					<span class="arrow ">
-
 					</span>
-
 				</a>
-
 				<ul class="sub-menu">
-
-					<li class="active">
-
+					<li>
 						<a href="ecommerce_orders.html">
-
 							<i class="fa fa-shopping-cart"></i>
-
-							Orders
-
+							<fmt:message key="OZ_TT_AD_MN_orderList" />
 						</a>
-
 					</li>
-
-					<li>
-
-						<a href="ecommerce_orders_view.html">
-
-							<i class="fa fa-tags"></i>
-
-							Order View
-
-						</a>
-
-					</li>
-
-					<li>
-
-						<a href="ecommerce_products.html">
-
-							<i class="fa fa-sitemap"></i>
-
-							Products
-
-						</a>
-
-					</li>
-
-					<li>
-
-						<a href="ecommerce_products_edit.html">
-
-							<i class="fa fa-file-o"></i>
-
-							Product Edit
-
-						</a>
-
-					</li>
-
 				</ul>
-
 			</li>
-
+			<li>
+				<a href="javascript:;">
+					<i class="fa fa-shopping-cart"></i>
+					<span class="title">
+						<fmt:message key="OZ_TT_AD_MN_goods" />
+					</span>
+					<span class="arrow ">
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;">
+					<i class="fa fa-shopping-cart"></i>
+					<span class="title">
+						<fmt:message key="OZ_TT_AD_MN_classfication" />
+					</span>
+					<span class="arrow ">
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;">
+					<i class="fa fa-shopping-cart"></i>
+					<span class="title">
+						<fmt:message key="OZ_TT_AD_MN_group" />
+					</span>
+					<span class="arrow ">
+					</span>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:;">
+					<i class="fa fa-shopping-cart"></i>
+					<span class="title">
+						<fmt:message key="OZ_TT_AD_MN_member" />
+					</span>
+					<span class="arrow ">
+					</span>
+				</a>
+			</li>
 		</ul>
-
 		<!-- END SIDEBAR MENU -->
 
 	</div>
@@ -198,5 +175,13 @@
 	<%@ include file="../commonjsFooter.jsp"%> 
 </body>
 <!-- END BODY -->
+<script type="text/javascript">
+	var currentPath = window.location.pathname;
+	if (currentPath.indexOf("OZ_TT_AD_OL") > 0) {
+		$("#orderLi").find("span.arrow").addClass("open");
+		$("#orderLi").addClass("active")
+		$("#orderLi").click();
+	}
 
+</script>
 </html>

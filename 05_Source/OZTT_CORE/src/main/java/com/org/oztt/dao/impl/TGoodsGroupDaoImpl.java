@@ -50,4 +50,9 @@ public class TGoodsGroupDaoImpl extends BaseDao implements TGoodsGroupDao {
         return selectOne("com.org.oztt.dao.TGoodsGroupDao.selectByParams", record);
     }
 
+    @Override
+    public int updateCurrentQuantity(TGoodsGroup record) {
+        return update("com.org.oztt.dao.TGoodsGroupDao.updateCurrentQuantity", record);
+    }
+
 }

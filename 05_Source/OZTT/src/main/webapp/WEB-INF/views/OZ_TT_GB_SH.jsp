@@ -560,6 +560,40 @@
 				}
 			}
 			
+			// 判断用户购买的商品有没有超出团购上线
+			$.ajax({
+				type : "GET",
+				contentType:'application/json',
+				url : '${pageContext.request.contextPath}/COMMON/checkCantIsOverGroup',
+				dataType : "json",
+				async : false,
+				data : '', 
+				success : function(data) {
+					if(!data.isException){
+						// 同步购物车成功
+						if (data.isOver) {
+							checkOver = true;
+							alert(data.isOverMsg);
+							return;
+						} else if (data.isOverTime){
+							checkOver = true;
+							alert(data.isOverTimeMsg);
+							return;
+						} else {
+							checkOver = false;
+						}
+					} else {
+						// 同步购物车失败
+						return;
+					}
+				},
+				error : function(data) {
+					
+				}
+			});
+			
+			if (checkOver) return;
+			
 			$("#hidDeliMethod").val(selectDelivery);
 			$("#hidAddressId").val(selectAddress);
 			$("#hidHomeDeliveryTime").val($("#homeDeliveryTimeId").val() + $("#deliveryTimeSelect").val());

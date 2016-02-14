@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 	<!-- BEGIN CONTENT -->
 
 	<div class="page-content-wrapper">
@@ -10,19 +10,19 @@
 						<li>
 							<i class="fa fa-home"></i>
 							<a href="#">
-								Home
+								<fmt:message key="COMMON_HOME" />
 							</a>
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
 							<a href="#">
-								UI Components
+								<fmt:message key="OZ_TT_AD_MN_order" />
 							</a>
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
 							<a href="#">
-								Pickers
+								<fmt:message key="OZ_TT_AD_OL_orderlist" />
 							</a>
 						</li>
 					</ul>

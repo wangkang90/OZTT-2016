@@ -1,37 +1,41 @@
 package com.org.oztt.admin.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.org.oztt.contants.CommonConstants;
 
 /**
- * 菜单画面
+ * 订单一览画面
+ * 
  * @author linliuan
- *
  */
 @Controller
-@RequestMapping("/OZ_TT_AD_MN")
-public class OzTtAdMnController extends BaseController {
+@RequestMapping("/OZ_TT_AD_OL")
+public class OzTtAdOlController extends BaseController {
     
     /**
-     * 首页显示
+     * 订单一览画面
      * 
-     * @param model
+     * @param request
+     * @param session
      * @return
      */
-    @RequestMapping(value = "init", method = RequestMethod.GET)
-    public String init(Model model) {
+    @RequestMapping(value = "/init")
+    public String init(Model model, HttpServletRequest request, HttpSession session) {
+
         try {
-            return "OZ_TT_AD_MN";
+            return "OZ_TT_AD_OL";
         }
         catch (Exception e) {
-            e.printStackTrace();
             logger.error(e.getMessage());
             return CommonConstants.ERROR_PAGE;
         }
-
     }
+    
+    
 }

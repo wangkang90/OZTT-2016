@@ -77,6 +77,32 @@
 		<property name="maxInMemorySize" value="40960" />
 	</bean>
 	
+		<!-- session timeout interceptor -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*/*" />
+			<bean class="com.org.oztt.admin.interceptor.SessionTimeoutInterceptor" >
+				<property name="allowUrls">
+			        <list>
+			          <value>/OZ_TT_AD_LG/init</value>
+			          <value>/OZ_TT_AD_LG/login</value>
+			          <value>/OZ_TT_AD_LG/logout</value>
+			        </list>
+		     	</property>
+		    </bean>
+		</mvc:interceptor>
+	
+	</mvc:interceptors>
+	
+	<!-- exception handler -->
+	<bean id="handlerExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" >
+		<property name="exceptionMappings">
+			<props>
+				<prop key="com.org.oztt.admin.exception.SessionTimeoutException">redirect:/OZ_TT_AD_LG/init</prop>
+			</props>
+		</property>
+	</bean>
+	
 	<import resource="spring-mvc-shiro.xml"/>
 
 </beans>
