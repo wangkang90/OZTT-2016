@@ -58,7 +58,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="login.html">
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_LG/logout">
 							<i class="fa fa-key"></i> <fmt:message key="OZ_TT_AD_MN_logout" />
 						</a>
 					</li>
@@ -113,7 +113,7 @@
 				</a>
 				<ul class="sub-menu">
 					<li>
-						<a href="ecommerce_orders.html">
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_OL/init">
 							<i class="fa fa-shopping-cart"></i>
 							<fmt:message key="OZ_TT_AD_MN_orderList" />
 						</a>

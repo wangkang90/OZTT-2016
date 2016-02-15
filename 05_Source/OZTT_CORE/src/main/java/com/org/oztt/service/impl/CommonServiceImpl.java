@@ -42,6 +42,12 @@ public class CommonServiceImpl extends BaseService implements CommonService {
 
     private static List<MyMap>     suburbList          = null;
 
+    private static List<MyMap>     orderStatusList     = null;
+
+    private static List<MyMap>     paymentList         = null;
+
+    private static List<MyMap>     deliveryList        = null;
+
     @Resource
     private TSysCodeDao            tSysCodeDao;
 
@@ -84,6 +90,30 @@ public class CommonServiceImpl extends BaseService implements CommonService {
             deliveryTimeMapList = entityList2mapList(tSysCodeDao.selectByCodeId(SysCodeConstants.DELIVERY_TIME_CODE));
         }
         return deliveryTimeMapList;
+    }
+    
+    @Override
+    public List<MyMap> getOrderStatus() throws Exception {
+        if (orderStatusList == null) {
+            orderStatusList = entityList2mapList(tSysCodeDao.selectByCodeId(SysCodeConstants.ORDER_STATUS));
+        }
+        return orderStatusList;
+    }
+
+    @Override
+    public List<MyMap> getPayment() throws Exception {
+        if (paymentList == null) {
+            paymentList = entityList2mapList(tSysCodeDao.selectByCodeId(SysCodeConstants.PAYMETHOD));
+        }
+        return paymentList;
+    }
+
+    @Override
+    public List<MyMap> getDelivery() throws Exception {
+        if (deliveryList == null) {
+            deliveryList = entityList2mapList(tSysCodeDao.selectByCodeId(SysCodeConstants.DELIVERY_METHOD));
+        }
+        return deliveryList;
     }
 
     private List<MyMap> entityList2mapList(List<TSysCode> list) {

@@ -298,4 +298,64 @@
 		from t_cons_order
 		where orderNo = #{orderId,jdbcType=VARCHAR}
 	</select>
+	
+	
+	<select id="getAllOrderInfoForAdmin" resultType="com.org.oztt.formDto.OzTtAdOlListDto" parameterType="map">
+		SELECT
+		A.customerNo as customerNo,
+		A.orderNo as orderNo,
+		DATE_FORMAT(A.addTimestamp,'%Y/%m/%d') as orderTime,
+		A.handleFlg as orderStatusView,
+		A.orderAmount as orderAmount,
+		A.deliveryMethod as deliveryMethodView,
+		A.paymentMethod as paymentMethod,
+		A.deliveryCost as deliveryCost,
+		B.receiver as address
+		from t_cons_order A
+		left join t_address_info B on B.id = A.addressId
+		where 1=1
+		<if test="customerNo != null and customerNo != ''" >
+			and A.customerNo like '%' || #{customerNo,jdbcType=VARCHAR} || '%'
+		</if>
+		<if test="orderStatus != null and orderStatus != ''" >
+        	and A.handleFlg = #{orderStatus,jdbcType=VARCHAR}
+      	</if>
+      	<if test="payment != null and payment != ''" >
+        	and A.paymentMethod = #{payment,jdbcType=VARCHAR}
+      	</if>
+      	<if test="deliveryMethod != null and deliveryMethod != ''" >
+        	and A.deliveryMethod = #{deliveryMethod,jdbcType=VARCHAR}
+      	</if>
+      	<if test="dataFrom != null and dataFrom != ''" >
+        	<![CDATA[and (DATE_FORMAT(A.orderTimestamp,'%Y/%m/%d')) >= #{dataFrom,jdbcType=VARCHAR}]]>
+      	</if>
+      	<if test="dataTo != null and dataTo != ''" >
+        	<![CDATA[and (DATE_FORMAT(A.orderTimestamp,'%Y/%m/%d')) <= #{dataTo,jdbcType=VARCHAR}]]>
+      	</if>
+      	order by A.addTimestamp desc
+	</select>
+	
+	<select id="getAllOrderInfoForAdminCount" resultType="int" parameterType="map">
+		SELECT count(1)
+		FROM t_cons_order A
+		where 1=1
+		<if test="customerNo != null and customerNo != ''" >
+			and A.customerNo like '%' || #{customerNo,jdbcType=VARCHAR} || '%'
+		</if>
+		<if test="orderStatus != null and orderStatus != ''" >
+        	and A.handleFlg = #{orderStatus,jdbcType=VARCHAR}
+      	</if>
+      	<if test="payment != null and payment != ''" >
+        	and A.paymentMethod = #{payment,jdbcType=VARCHAR}
+      	</if>
+      	<if test="deliveryMethod != null and deliveryMethod != ''" >
+        	and A.deliveryMethod = #{deliveryMethod,jdbcType=VARCHAR}
+      	</if>
+      	<if test="dataFrom != null and dataFrom != ''" >
+        	<![CDATA[and (DATE_FORMAT(A.orderTimestamp,'%Y/%m/%d')) >= #{dataFrom,jdbcType=VARCHAR}]]>
+      	</if>
+      	<if test="dataTo != null and dataTo != ''" >
+        	<![CDATA[and (DATE_FORMAT(A.orderTimestamp,'%Y/%m/%d')) <= #{dataTo,jdbcType=VARCHAR}]]>
+      	</if>
+	</select>
 </mapper>

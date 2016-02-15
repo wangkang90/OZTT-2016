@@ -41,6 +41,7 @@ import com.org.oztt.entity.TNoTransaction;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.OrderInfoDto;
+import com.org.oztt.formDto.OzTtAdOlListDto;
 import com.org.oztt.formDto.OzTtGbOdDto;
 import com.org.oztt.formDto.PaypalParam;
 import com.org.oztt.service.BaseService;
@@ -464,5 +465,10 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         String percent = super.getApplicationMessage("PAYPAL_PECENT");
         String additional = super.getApplicationMessage("PAYPAL_ADDITIONAL");
         return amount.multiply(new BigDecimal(percent)).add(new BigDecimal(additional));
+    }
+
+    @Override
+    public PagingResult<OzTtAdOlListDto> getAllOrderInfoForAdmin(Pagination pagination) throws Exception {
+        return tConsOrderDao.getAllOrderInfoForAdmin(pagination);
     }
 }
