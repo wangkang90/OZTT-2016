@@ -41,6 +41,8 @@ import com.org.oztt.entity.TNoTransaction;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.OrderInfoDto;
+import com.org.oztt.formDto.OzTtAdOdDto;
+import com.org.oztt.formDto.OzTtAdOdListDto;
 import com.org.oztt.formDto.OzTtAdOlListDto;
 import com.org.oztt.formDto.OzTtGbOdDto;
 import com.org.oztt.formDto.PaypalParam;
@@ -83,9 +85,9 @@ public class OrderServiceImpl extends BaseService implements OrderService {
 
     @Resource
     private TSuburbDeliverFeeDao tSuburbDeliverFeeDao;
-    
+
     @Resource
-    private TGoodsGroupDao tGoodsGroupDao;
+    private TGoodsGroupDao       tGoodsGroupDao;
 
     @Override
     public String insertOrderInfo(String customerNo, String payMethod, String hidDeliMethod, String hidAddressId,
@@ -146,7 +148,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
             tConsOrderDetails.setAdduserkey(customerNo);
             tConsOrderDetailsDao.insertSelective(tConsOrderDetails);
             orderAmount = orderAmount.add(tConsOrderDetails.getSumamount());
-            
+
             // 生成明细订单的时候
             TGoodsGroup tGoodsGroup = new TGoodsGroup();
             tGoodsGroup.setGoodsid(itemDto.getGoodsId());
@@ -224,7 +226,6 @@ public class OrderServiceImpl extends BaseService implements OrderService {
 
         // 将购物车中的数据删除
         tConsCartDao.deleteCurrentBuyGoods(customerNo);
-        
 
         String rb = "";
         if (CommonEnum.DeliveryMethod.COD.getCode().equals(hidDeliMethod)) {
@@ -470,5 +471,40 @@ public class OrderServiceImpl extends BaseService implements OrderService {
     @Override
     public PagingResult<OzTtAdOlListDto> getAllOrderInfoForAdmin(Pagination pagination) throws Exception {
         return tConsOrderDao.getAllOrderInfoForAdmin(pagination);
+    }
+
+    @Override
+    public OzTtAdOdDto getOrderDetailForAdmin(String orderNo) throws Exception {
+        // 获取订单
+        TConsOrder tConsOrder = this.selectByOrderId(orderNo);
+        // 获取订单明细
+        List<ContCartItemDto> detailList = tConsOrderDetailsDao.selectByOrderId(orderNo);
+
+        OzTtAdOdDto dto = new OzTtAdOdDto();
+        dto.setOrderNo(orderNo);
+        dto.setCustomerNo(tConsOrder.getCustomerno());
+        dto.setOrderStatusView(tConsOrder.getHandleflg());
+        dto.setOrderStatus(tConsOrder.getHandleflg());
+
+        if (!CollectionUtils.isEmpty(detailList)) {
+            List<OzTtAdOdListDto> itemList = new ArrayList<OzTtAdOdListDto>();
+
+            for (ContCartItemDto item : detailList) {
+                OzTtAdOdListDto odDto = new OzTtAdOdListDto();
+                odDto.setGoodsId(item.getGoodsId());
+                odDto.setGoodsName(item.getGoodsName());
+                odDto.setGoodsPic(item.getGoodsImage());
+                odDto.setGoodsPrice(new BigDecimal(item.getGoodsPrice()).divide(
+                        new BigDecimal(item.getGoodsQuantity()), 2, BigDecimal.ROUND_DOWN).toString());
+                odDto.setGoodsProperties(item.getGoodsPropertiesDB());
+                odDto.setGoodsQuantity(item.getGoodsQuantity());
+                odDto.setGoodsTotalAmount(item.getGoodsPrice());
+                itemList.add(odDto);
+            }
+
+            dto.setItemList(itemList);
+        }
+        return dto;
+
     }
 }

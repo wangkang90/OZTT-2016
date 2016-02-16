@@ -14,6 +14,7 @@ import com.org.oztt.entity.TGoodsPrice;
 import com.org.oztt.entity.TGoodsProperty;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.GoodItemDto;
+import com.org.oztt.formDto.OzTtAdClDto;
 
 /**
  * 商品的服务
@@ -187,4 +188,11 @@ public interface GoodsService {
      * @throws Exception
      */
     public List<ContCartItemDto> getAllContCartForBuy(String customerNo) throws Exception;
+    
+    /**
+     * 获取所有的商品分类
+     * @return
+     * @throws Exception
+     */
+    public List<OzTtAdClDto> getAllClassficationForAdmin() throws Exception;
 }

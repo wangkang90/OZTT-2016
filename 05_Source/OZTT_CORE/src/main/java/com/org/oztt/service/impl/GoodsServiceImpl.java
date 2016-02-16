@@ -35,6 +35,7 @@ import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.formDto.GoodProertyDto;
+import com.org.oztt.formDto.OzTtAdClDto;
 import com.org.oztt.service.BaseService;
 import com.org.oztt.service.GoodsService;
 
@@ -368,6 +369,12 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
     @Override
     public List<ContCartItemDto> getAllContCartForBuy(String customerNo) throws Exception {
         return tConsCartDao.getAllContCartForBuy(customerNo);
+    }
+
+    @Override
+    public List<OzTtAdClDto> getAllClassficationForAdmin() throws Exception {
+        // TODO Auto-generated method stub
+        return null;
     }
     
 }

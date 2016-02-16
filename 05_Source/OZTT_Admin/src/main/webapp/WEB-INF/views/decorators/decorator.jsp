@@ -114,7 +114,7 @@
 				<ul class="sub-menu">
 					<li>
 						<a href="${pageContext.request.contextPath}/OZ_TT_AD_OL/init">
-							<i class="fa fa-shopping-cart"></i>
+							<i class="fa fa-list-ol"></i>
 							<fmt:message key="OZ_TT_AD_MN_orderList" />
 						</a>
 					</li>
@@ -122,7 +122,7 @@
 			</li>
 			<li>
 				<a href="javascript:;">
-					<i class="fa fa-shopping-cart"></i>
+					<i class="fa fa-barcode"></i>
 					<span class="title">
 						<fmt:message key="OZ_TT_AD_MN_goods" />
 					</span>
@@ -132,17 +132,31 @@
 			</li>
 			<li>
 				<a href="javascript:;">
-					<i class="fa fa-shopping-cart"></i>
+					<i class="fa fa-sitemap"></i>
 					<span class="title">
 						<fmt:message key="OZ_TT_AD_MN_classfication" />
 					</span>
 					<span class="arrow ">
 					</span>
 				</a>
+				<ul class="sub-menu">
+					<li>
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_CL/init">
+							<i class="fa fa-list-ol"></i>
+							<fmt:message key="OZ_TT_AD_CL_title" />
+						</a>
+					</li>
+					<li>
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_CD/new">
+							<i class="fa fa-plus"></i>
+							<fmt:message key="OZ_TT_AD_CD_title" />
+						</a>
+					</li>
+				</ul>
 			</li>
 			<li>
 				<a href="javascript:;">
-					<i class="fa fa-shopping-cart"></i>
+					<i class="fa fa-group"></i>
 					<span class="title">
 						<fmt:message key="OZ_TT_AD_MN_group" />
 					</span>
@@ -152,7 +166,7 @@
 			</li>
 			<li>
 				<a href="javascript:;">
-					<i class="fa fa-shopping-cart"></i>
+					<i class="fa fa-user"></i>
 					<span class="title">
 						<fmt:message key="OZ_TT_AD_MN_member" />
 					</span>
