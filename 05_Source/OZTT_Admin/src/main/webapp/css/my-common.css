@@ -26,3 +26,53 @@
 	float: left;
 	padding-bottom: 10px
 }
+
+.textright{
+	text-align: right
+}
+
+.textcenter{
+	text-align: center
+}
+
+.textleft{
+	text-align: left
+}
+
+.form_oztt{
+	padding-bottom: 35px
+}
+
+.mybtn{
+	margin-right:15px;
+}
+
+/* paginations */
+.pagination {
+	border-radius: 0;
+	margin: 0;
+}
+.pagination > li {
+    display: inline-block;
+    margin-left: 5px;
+}
+.pagination > li > a, .pagination > li > span,
+.pagination > li:first-child > a, .pagination > li:first-child > span,
+.pagination > li:last-child > a, .pagination > li:last-child > span {
+	border-radius: 25px !important;
+	border: none;
+	color: #868c93;
+}
+.pagination > li > span,
+.pagination > li > span:hover {
+	background: #555;
+	color: #fff;
+}
+.pagination > li:first-child > a,
+.pagination > li:last-child > a {
+	padding: 4px 12px 8px;
+}
+.items-info {
+	padding-top: 7px;
+	color: #868c93;
+}

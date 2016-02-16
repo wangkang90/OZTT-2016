@@ -4,6 +4,7 @@ import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TConsOrder;
 import com.org.oztt.formDto.OrderInfoDto;
+import com.org.oztt.formDto.OzTtAdOlListDto;
 
 public interface TConsOrderDao {
     /**
@@ -54,4 +55,11 @@ public interface TConsOrderDao {
      * @return
      */
     TConsOrder selectByOrderId(String orderId);
+    
+    /**
+     * 分页获取订单信息(后台)
+     * @param pagination
+     * @return
+     */
+    PagingResult<OzTtAdOlListDto> getAllOrderInfoForAdmin(Pagination pagination);
 }

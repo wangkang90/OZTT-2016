@@ -8,6 +8,7 @@ import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.dao.TConsOrderDao;
 import com.org.oztt.entity.TConsOrder;
 import com.org.oztt.formDto.OrderInfoDto;
+import com.org.oztt.formDto.OzTtAdOlListDto;
 
 @Repository
 public class TConsOrderDaoImpl extends BaseDao implements TConsOrderDao {
@@ -60,6 +61,12 @@ public class TConsOrderDaoImpl extends BaseDao implements TConsOrderDao {
     @Override
     public TConsOrder selectByOrderId(String orderId) {
         return selectOne("com.org.oztt.dao.TConsOrderDao.selectByOrderId", orderId);
+    }
+
+    @Override
+    public PagingResult<OzTtAdOlListDto> getAllOrderInfoForAdmin(Pagination pagination) {
+        return selectPagination("com.org.oztt.dao.TConsOrderDao.getAllOrderInfoForAdmin",
+                "com.org.oztt.dao.TConsOrderDao.getAllOrderInfoForAdminCount", pagination);
     }
 
 }

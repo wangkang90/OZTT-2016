@@ -14,15 +14,18 @@
 <link href="${ctx}/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
 <link href="${ctx}/assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
 <link href="${ctx}/assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"/>
+
+<link rel="stylesheet" href="${ctx}/assets/plugins/data-tables/DT_bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="${ctx}/assets/plugins/bootstrap-datepicker/css/datepicker.css"/>
+<link rel="stylesheet" type="text/css" href="${ctx}/assets/plugins/bootstrap-datetimepicker/css/datetimepicker.css"/>
+
 <!-- END PAGE LEVEL PLUGIN STYLES -->
 <!-- BEGIN THEME STYLES -->
 <link href="${ctx}/assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
 <link href="${ctx}/assets/css/style.css" rel="stylesheet" type="text/css"/>
 <link href="${ctx}/assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
 <link href="${ctx}/assets/css/plugins.css" rel="stylesheet" type="text/css"/>
-<link href="${ctx}/assets/css/pages/tasks.css" rel="stylesheet" type="text/css"/>
 <link href="${ctx}/assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
-<link href="${ctx}/assets/css/print.css" rel="stylesheet" type="text/css" media="print"/>
 <link href="${ctx}/assets/css/custom.css" rel="stylesheet" type="text/css"/>
 <link href="${ctx}/css/my-common.css" rel="stylesheet" type="text/css">
 <!-- END THEME STYLES -->

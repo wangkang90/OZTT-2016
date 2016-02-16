@@ -4,6 +4,7 @@ import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TConsOrder;
 import com.org.oztt.formDto.OrderInfoDto;
+import com.org.oztt.formDto.OzTtAdOlListDto;
 import com.org.oztt.formDto.OzTtGbOdDto;
 
 public interface OrderService {
@@ -65,5 +66,13 @@ public interface OrderService {
      * @throws Exception
      */
     public void updateRecordAfterPay(String orderId, String customerNo) throws Exception;
+    
+    /**
+     * admin端所有订单的获取
+     * @param pagination
+     * @return
+     * @throws Exception
+     */
+    public PagingResult<OzTtAdOlListDto> getAllOrderInfoForAdmin(Pagination pagination) throws Exception;
 
 }
