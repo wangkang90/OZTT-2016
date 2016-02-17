@@ -25,7 +25,11 @@
   	}
   	
   	function toDetail(orderNo){
-  		alert("TODETAIL");
+  		var pageNo = $("#pageNo").val();
+  		var targetForm = document.forms['olForm'];
+		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_OD/init?orderNo="+orderNo+"&pageNo="+pageNo;
+		targetForm.method = "POST";
+		targetForm.submit();
   	}
   
   </script>
@@ -250,7 +254,7 @@
             </div>
             </c:if>
             <!-- END PAGINATOR -->
-			<input type="hidden" value="${page.currentPage}" id="pageNo">
+			<input type="hidden" value="${pageInfo.currentPage}" id="pageNo">
 			</c:if>
 			</form:form>
 		</div>

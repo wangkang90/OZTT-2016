@@ -4,6 +4,7 @@ import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TConsOrder;
 import com.org.oztt.formDto.OrderInfoDto;
+import com.org.oztt.formDto.OzTtAdOdDto;
 import com.org.oztt.formDto.OzTtAdOlListDto;
 import com.org.oztt.formDto.OzTtGbOdDto;
 
@@ -74,5 +75,13 @@ public interface OrderService {
      * @throws Exception
      */
     public PagingResult<OzTtAdOlListDto> getAllOrderInfoForAdmin(Pagination pagination) throws Exception;
+    
+    /**
+     * admin端获取订单详情
+     * @param orderNo
+     * @return
+     * @throws Exception
+     */
+    public OzTtAdOdDto getOrderDetailForAdmin(String orderNo) throws Exception;
 
 }
