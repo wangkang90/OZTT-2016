@@ -147,7 +147,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="${pageContext.request.contextPath}/OZ_TT_AD_CD/new">
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_CD/detail">
 							<i class="fa fa-plus"></i>
 							<fmt:message key="OZ_TT_AD_CD_title" />
 						</a>

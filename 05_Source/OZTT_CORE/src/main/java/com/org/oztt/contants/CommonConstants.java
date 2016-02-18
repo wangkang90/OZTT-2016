@@ -20,6 +20,10 @@ public final class CommonConstants {
 
     public static final String BELONG_FATHER_CLASS   = "0C0000";                               // 父分类
 
+    public static final String FATHER_CLASS          = "1C";                                   // 父分类
+
+    public static final String CHILDREN_CLASS        = "2C";                                   // 父分类
+
     public static final String LIMIT_PARAM           = "limitParam";                           // SQL文中的限制参数
 
     public static final String MAIN_LIST_COUNT       = "12";                                   // 主页面中显示的个数
@@ -59,5 +63,13 @@ public final class CommonConstants {
     //##############admin端常量#################//
 
     public static final String SESSION_ADMIN_USER_ID = "sessionUserId";
+
+    public static final String OPEN                  = "开放";
+
+    public static final String NO_OPEN               = "不开放";
+
+    public static final String NO_OPEN_VALUE         = "1";
+
+    public static final String ADMIN_USERKEY         = "ADMIN";
 
 }
