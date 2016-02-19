@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.util.CollectionUtils;
 import org.springframework.stereotype.Service;
 
@@ -109,7 +110,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
 
     @Override
     public GoodItemDto getGoodAllItemDto(String goodId) throws Exception {
-        
+
         String imgUrl = MessageUtils.getApplicationMessage("saveImgUrl");
         // 取得当前商品的所有属性
         TGoods goods = getGoodsById(goodId);
@@ -149,7 +150,6 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             }
         }
 
-        
         // 获取商品的图片
         List<String> goodPicList = new ArrayList<String>();
         if (goods.getGoodsnormalpic() != null) {
@@ -174,17 +174,21 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         if (tGoodsGroup.getGroupcurrentquantity() >= tGoodsGroup.getGroupmaxquantity()) {
             goodItemDto.setGroupCurrent(String.valueOf(tGoodsGroup.getGroupmaxquantity()));
             goodItemDto.setIsOver(CommonConstants.OVER_GROUP_YES);
-        } else {
+        }
+        else {
             goodItemDto.setGroupCurrent(String.valueOf(tGoodsGroup.getGroupcurrentquantity()));
             goodItemDto.setIsOver(CommonConstants.OVER_GROUP_NO);
         }
-        goodItemDto.setValidPeriodStart(DateFormatUtils.date2StringWithFormat(tGoodsGroup.getValidperiodstart(), DateFormatUtils.PATTEN_YMD));
-        goodItemDto.setValidPeriodEnd(DateFormatUtils.date2StringWithFormat(tGoodsGroup.getValidperiodend(), DateFormatUtils.PATTEN_YMD));
+        goodItemDto.setValidPeriodStart(DateFormatUtils.date2StringWithFormat(tGoodsGroup.getValidperiodstart(),
+                DateFormatUtils.PATTEN_YMD));
+        goodItemDto.setValidPeriodEnd(DateFormatUtils.date2StringWithFormat(tGoodsGroup.getValidperiodend(),
+                DateFormatUtils.PATTEN_YMD));
         if (DateFormatUtils.getCurrentDate().before(tGoodsGroup.getValidperiodstart())
                 || DateFormatUtils.getCurrentDate().after(tGoodsGroup.getValidperiodend())) {
             // 不在范围内
             goodItemDto.setIsOverTime(CommonConstants.OVERTIME_GROUP_YES);
-        } else {
+        }
+        else {
             goodItemDto.setIsOverTime(CommonConstants.OVERTIME_GROUP_NO);
         }
         goodItemDto.setProperties(JSON.toJSONString(propertiesFormList));
@@ -202,7 +206,8 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             String goodId = map.get("goodsId");
             String goodProperties = map.get("goodsProperties");
             if (goodProperties != null) {
-                List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties, ContCartProItemDto.class);
+                List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties,
+                        ContCartProItemDto.class);
                 if (concartContentList == null || concartContentList.size() == 0) {
                     goodProperties = "";
                 }
@@ -233,12 +238,13 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
                 tGoodsGroup.setGoodsid(goodId);
                 tGoodsGroup = this.getGoodPrice(tGoodsGroup);
                 tConsCart.setGroupno(tGoodsGroup.getGroupno());
-                
+
                 tConsCart.setIfgroup(CommonConstants.IS_GROUP);
                 tConsCart.setQuantity(Long.valueOf(goodQuantity));
                 tConsCartDao.insertSelective(tConsCart);
-                
-            } else {
+
+            }
+            else {
                 // 有数据则增加数量
                 tConsCart.setQuantity(Long.parseLong(goodQuantity) + tConsCart.getQuantity());
                 tConsCart.setUpdpgmid(CommonConstants.UP_CART);
@@ -247,7 +253,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
                 tConsCartDao.updateByPrimaryKey(tConsCart);
             }
         }
-        
+
         return true;
     }
 
@@ -266,7 +272,8 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             String goodId = map.get("goodsId");
             String goodProperties = map.get("goodsProperties");
             if (goodProperties != null) {
-                List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties, ContCartProItemDto.class);
+                List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties,
+                        ContCartProItemDto.class);
                 if (concartContentList == null || concartContentList.size() == 0) {
                     goodProperties = "";
                 }
@@ -277,11 +284,11 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             tConsCart.setCustomerno(customerNo);
             tConsCart.setGoodsspecifications(goodProperties);
             tConsCart = tConsCartDao.selectByParams(tConsCart);
-            if (tConsCart != null){
+            if (tConsCart != null) {
                 tConsCartDao.deleteByPrimaryKey(tConsCart.getNo());
             }
         }
-        
+
         return true;
     }
 
@@ -316,7 +323,8 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             String goodId = map.get("goodsId");
             String goodProperties = map.get("goodsProperties");
             if (goodProperties != null) {
-                List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties, ContCartProItemDto.class);
+                List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties,
+                        ContCartProItemDto.class);
                 if (concartContentList == null || concartContentList.size() == 0) {
                     goodProperties = "";
                 }
@@ -347,13 +355,14 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
                 tGoodsGroup.setGoodsid(goodId);
                 tGoodsGroup = this.getGoodPrice(tGoodsGroup);
                 tConsCart.setGroupno(tGoodsGroup.getGroupno());
-                
+
                 tConsCart.setIfgroup(CommonConstants.IS_GROUP);
                 tConsCart.setQuantity(Long.valueOf(goodQuantity));
                 tConsCart.setPurchasecurrent(CommonConstants.CURRENT_BUY);
                 tConsCartDao.insertSelective(tConsCart);
-                
-            } else {
+
+            }
+            else {
                 // 有数据
                 tConsCart.setQuantity(Long.parseLong(goodQuantity));
                 tConsCart.setPurchasecurrent(CommonConstants.CURRENT_BUY);
@@ -373,8 +382,74 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
 
     @Override
     public List<OzTtAdClDto> getAllClassficationForAdmin() throws Exception {
-        // TODO Auto-generated method stub
-        return null;
+        List<OzTtAdClDto> dtoList = tGoodsClassficationDao.getAllClassficationForAdmin();
+        if (!CollectionUtils.isEmpty(dtoList)) {
+            for (OzTtAdClDto dto : dtoList) {
+                dto.setOpenFlgView("0".equals(dto.getOpenFlg()) ? CommonConstants.OPEN : CommonConstants.NO_OPEN);
+            }
+        }
+        return dtoList;
+
     }
-    
+
+    @Override
+    public TGoodsClassfication getClassficationByNo(Long no) throws Exception {
+        return tGoodsClassficationDao.selectByPrimaryKey(no);
+    }
+
+    @Override
+    public List<TGoodsClassfication> getChildrenClassfication(String classId) throws Exception {
+        return tGoodsClassficationDao.getChildrenKey(classId);
+    }
+
+    @Override
+    public List<TGoodsClassfication> getNotChildrenClassfication(String classId) throws Exception {
+        List<TGoodsClassfication> origin = tGoodsClassficationDao.getChildrenKey(CommonConstants.BELONG_FATHER_CLASS);
+        List<TGoodsClassfication> dest = new ArrayList<TGoodsClassfication>();
+        if (!CollectionUtils.isEmpty(origin)) {
+            for (TGoodsClassfication ori : origin) {
+                if (!classId.equals(ori.getClassid())) {
+                    dest.add(ori);
+                }
+            }
+        }
+        return dest;
+    }
+
+    @Override
+    public void saveClassFication(TGoodsClassfication tGoodsClassfication) throws Exception {
+        tGoodsClassficationDao.insertSelective(tGoodsClassfication);
+
+    }
+
+    @Override
+    public void updateClassFication(TGoodsClassfication tGoodsClassfication) throws Exception {
+        tGoodsClassficationDao.updateByPrimaryKeySelective(tGoodsClassfication);
+    }
+
+    @Override
+    public String getMaxClassNo(String fatherId) throws Exception {
+        String maxClassID = tGoodsClassficationDao.getMaxClassNo(fatherId);
+        if (StringUtils.isEmpty(fatherId)) {
+            // 父分类
+            if (StringUtils.isEmpty(maxClassID)) {
+                return CommonConstants.FATHER_CLASS + StringUtils.leftPad("1", 4, "0");
+            }
+            else {
+                return CommonConstants.FATHER_CLASS
+                        + StringUtils.leftPad(String.valueOf(Integer.valueOf(maxClassID.substring(2)) + 1), 4, "0");
+            }
+        }
+        else {
+            // 子分类
+            if (StringUtils.isEmpty(maxClassID)) {
+                return CommonConstants.CHILDREN_CLASS + StringUtils.leftPad("1", 4, "0");
+            }
+            else {
+                return CommonConstants.CHILDREN_CLASS
+                        + StringUtils.leftPad(String.valueOf(Integer.valueOf(maxClassID.substring(2)) + 1), 4, "0");
+            }
+        }
+    }
+
 }

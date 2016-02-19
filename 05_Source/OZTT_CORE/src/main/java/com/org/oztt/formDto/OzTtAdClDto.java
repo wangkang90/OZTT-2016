@@ -20,6 +20,8 @@ public class OzTtAdClDto {
     private String fatherClassName;
 
     private String openFlg;
+    
+    private String openFlgView;
 
     public String getNo() {
         return no;
@@ -75,5 +77,13 @@ public class OzTtAdClDto {
 
     public void setOpenFlg(String openFlg) {
         this.openFlg = openFlg;
+    }
+
+    public String getOpenFlgView() {
+        return openFlgView;
+    }
+
+    public void setOpenFlgView(String openFlgView) {
+        this.openFlgView = openFlgView;
     }
 }

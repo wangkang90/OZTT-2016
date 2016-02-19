@@ -10,8 +10,14 @@
   <title><fmt:message key="OZ_TT_AD_CL_title" /></title>
   
   <script type="text/javascript">
-	
-  
+		function toDetail(classId) {
+			location.href = "${pageContext.request.contextPath}/OZ_TT_AD_CD/detail?classNo="+classId;
+		}
+		
+		function newClassfication(){
+			location.href = "${pageContext.request.contextPath}/OZ_TT_AD_CD/detail";
+		}
+  	
   </script>
 </head>
 <body>
@@ -77,6 +83,9 @@
 						<th scope="col">
 							 <fmt:message key="OZ_TT_AD_OL_DE_openFlg" />
 						</th>
+						<th scope="col">
+							 <fmt:message key="OZ_TT_AD_OL_DE_control" />
+						</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -98,7 +107,12 @@
 							 ${item.fatherClassName }
 						</td>
 						<td>
-							 ${item.openFlg }
+							 ${item.openFlgView }
+						</td>
+						<td>
+							 <button type="button" class="btn green mybtn" onclick="toDetail('${item.no}')">
+								<i class="fa fa-info"></i>&nbsp;<fmt:message key="COMMON_MODIFY" />
+							</button>
 						</td>	
 					</tr>
 					</c:forEach>

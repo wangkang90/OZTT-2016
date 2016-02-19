@@ -3,6 +3,7 @@ package com.org.oztt.dao;
 import java.util.List;
 
 import com.org.oztt.entity.TGoodsClassfication;
+import com.org.oztt.formDto.OzTtAdClDto;
 
 public interface TGoodsClassficationDao {
     /**
@@ -51,4 +52,16 @@ public interface TGoodsClassficationDao {
      * @return
      */
     TGoodsClassfication getGoodsClassficationByClassId(String classId);
+    
+    /**
+     * admin端获取所有分类
+     * @return
+     */
+    List<OzTtAdClDto> getAllClassficationForAdmin();
+    
+    /**
+     * 获取最大分类最大值
+     * @param fatherId
+     */
+    String getMaxClassNo(String fatherId);
 }

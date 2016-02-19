@@ -180,4 +180,32 @@
 	WHERE
 		classId = #{classid,jdbcType=VARCHAR}
   </select>
+  
+  <select id="getAllClassficationForAdmin" resultType="com.org.oztt.formDto.OzTtAdClDto">
+    select 
+    A.no, 
+    A.classId, 
+    A.className, 
+    A.sortOrder, 
+    A.fatherClassId, 
+    B.className as fatherClassName,
+    A.openFlg
+	FROM
+		t_goods_classification A
+	left join t_goods_classification B
+	ON A.fatherClassId = B.classId
+  </select>
+  
+  <select id="getMaxClassNo" resultType="java.lang.String" parameterType="map">
+    select 
+    max(classId) as maxClassID
+	FROM
+		t_goods_classification
+	<if test="fatherId == null or fatherId == ''" >
+	where fatherClassId = '0C0000'
+	</if>
+	
+  </select>
+  
+  
 </mapper>

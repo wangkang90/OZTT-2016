@@ -1,5 +1,7 @@
 package com.org.oztt.admin.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.org.oztt.contants.CommonConstants;
+import com.org.oztt.formDto.OzTtAdClDto;
 import com.org.oztt.service.GoodsService;
 
 /**
@@ -32,7 +35,8 @@ public class OzTtAdClController extends BaseController {
     @RequestMapping(value = "/init")
     public String init(Model model, HttpServletRequest request, HttpSession session) {
         try {
-            
+            List<OzTtAdClDto> dtoList = goodsService.getAllClassficationForAdmin();
+            model.addAttribute("itemList", dtoList);
             return "OZ_TT_AD_CL";
         }
         catch (Exception e) {
