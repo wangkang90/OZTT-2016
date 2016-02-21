@@ -41,6 +41,7 @@
 <!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
 <script src="${ctx}/assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js" type="text/javascript"></script>
 <script src="${ctx}/assets/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+<script src="${ctx}/assets/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript" ></script>
 <script src="${ctx}/assets/plugins/plupload/js/plupload.full.min.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->

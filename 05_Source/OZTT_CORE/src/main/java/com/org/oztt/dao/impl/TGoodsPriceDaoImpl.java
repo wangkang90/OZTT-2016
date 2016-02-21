@@ -23,8 +23,7 @@ public class TGoodsPriceDaoImpl extends BaseDao implements TGoodsPriceDao {
 
     @Override
     public int insertSelective(TGoodsPrice record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return insert("com.org.oztt.dao.TGoodsPriceDao.insertSelective", record);
     }
 
     @Override
@@ -35,8 +34,7 @@ public class TGoodsPriceDaoImpl extends BaseDao implements TGoodsPriceDao {
 
     @Override
     public int updateByPrimaryKeySelective(TGoodsPrice record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return update("com.org.oztt.dao.TGoodsPriceDao.updateByPrimaryKeySelective", record);
     }
 
     @Override

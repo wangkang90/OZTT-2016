@@ -207,5 +207,13 @@
 	
   </select>
   
+  <select id="getSecondClassfication" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+	FROM
+		t_goods_classification
+	WHERE
+		fatherClassId <![CDATA[ <> ]]> #{classId,jdbcType=VARCHAR}
+  </select>
   
 </mapper>

@@ -494,4 +494,53 @@
 		limit 12
 	</select>
 	
+	<select id="getAllGoodsPriceInfoForAdmin" resultType="com.org.oztt.formDto.OzTtAdPlListDto">
+		select
+		A.goodsId as goodsId,
+	    A.goodsName as goodsName,
+	    A.goodsThumbnail as goodsPic,
+	    A.costPrice as goodsCost,
+	    A.onSaleFlg as onsale,
+	    A.hotSaleFlg as hotsale,
+	    A.newSaleFlg as newsale,
+	    (case when B.goodsClassValue is null then '0' 
+	    	 else '1' end) as isSetPrice
+	    from t_goods A
+	    left join t_goods_price B
+	    on A.goodsId = B.goodsId
+		WHERE A.deleteFlg <![CDATA[ <> '1' ]]>
+		<if test="goodsName != null and goodsName != ''">
+			and A.goodsName like concat('%',#{goodsName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="isHotSale != null and isHotSale != ''">
+			and A.hotSaleFlg = #{isHotSale,jdbcType=VARCHAR}
+		</if>
+		<if test="isNewSale != null and isNewSale != ''">
+			and A.newSaleFlg = #{isNewSale,jdbcType=VARCHAR}
+		</if>
+		<if test="isSetPrice == '1'">
+			and B.goodsClassValue is not null
+		</if>
+	</select>
+	
+	<select id="getAllGoodsPriceInfoForAdminCount" resultType="int" >
+		SELECT count(1)
+		FROM t_goods A 
+		left join t_goods_price B
+	    on A.goodsId = B.goodsId
+		WHERE A.deleteFlg <![CDATA[ <> '1' ]]>
+		<if test="goodsName != null and goodsName != ''">
+			and A.goodsName like concat('%',#{goodsName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="isHotSale != null and isHotSale != ''">
+			and A.hotSaleFlg = #{isHotSale,jdbcType=VARCHAR}
+		</if>
+		<if test="isNewSale != null and isNewSale != ''">
+			and A.newSaleFlg = #{isNewSale,jdbcType=VARCHAR}
+		</if>
+		<if test="isSetPrice == '1'">
+			and B.goodsClassValue is not null
+		</if>
+	</select>
+	
 </mapper>

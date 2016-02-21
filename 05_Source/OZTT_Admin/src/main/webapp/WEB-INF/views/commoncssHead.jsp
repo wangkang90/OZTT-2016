@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="${ctx}/assets/plugins/data-tables/DT_bootstrap.css"/>
 <link rel="stylesheet" type="text/css" href="${ctx}/assets/plugins/bootstrap-datepicker/css/datepicker.css"/>
 <link rel="stylesheet" type="text/css" href="${ctx}/assets/plugins/bootstrap-datetimepicker/css/datetimepicker.css"/>
-
+<link href="${ctx}/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL PLUGIN STYLES -->
 <!-- BEGIN THEME STYLES -->
 <link href="${ctx}/assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>

@@ -6,6 +6,8 @@ public final class CommonConstants {
 
     public static final String FIRST_NUMBER          = "00000001";
 
+    public static final String ADD_NUMBER            = "000001";
+
     public static final String IS_NOT_DELETE         = "0";                                    // 不是删除
 
     public static final String IS_DELETE             = "1";                                    //删除
@@ -71,5 +73,9 @@ public final class CommonConstants {
     public static final String NO_OPEN_VALUE         = "1";
 
     public static final String ADMIN_USERKEY         = "ADMIN";
+
+    public static final String PRICE_NO_SIGN         = "PR";
+    
+    public static final String GROUP_NO_SIGN         = "GP";
 
 }

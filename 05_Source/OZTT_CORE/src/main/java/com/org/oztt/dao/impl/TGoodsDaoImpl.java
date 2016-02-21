@@ -10,6 +10,7 @@ import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.dao.TGoodsDao;
 import com.org.oztt.entity.TGoods;
+import com.org.oztt.formDto.OzTtAdPlListDto;
 
 @Repository
 public class TGoodsDaoImpl extends BaseDao implements TGoodsDao {
@@ -77,6 +78,12 @@ public class TGoodsDaoImpl extends BaseDao implements TGoodsDao {
     @Override
     public List<TGoods> getGoodsBySearchParam(String goodsParam) {
         return select("com.org.oztt.dao.TGoodsDao.getGoodsBySearchParam", goodsParam);
+    }
+
+    @Override
+    public PagingResult<OzTtAdPlListDto> getAllGoodsPriceInfoForAdmin(Pagination pagination) {
+        return selectPagination("com.org.oztt.dao.TGoodsDao.getAllGoodsPriceInfoForAdmin",
+                "com.org.oztt.dao.TGoodsDao.getAllGoodsPriceInfoForAdminCount", pagination);
     }
 
 }

@@ -25,6 +25,8 @@ import com.org.oztt.dao.TGoodsDao;
 import com.org.oztt.dao.TGoodsGroupDao;
 import com.org.oztt.dao.TGoodsPriceDao;
 import com.org.oztt.dao.TGoodsPropertyDao;
+import com.org.oztt.dao.TNoGroupDao;
+import com.org.oztt.dao.TNoPriceDao;
 import com.org.oztt.entity.TConsCart;
 import com.org.oztt.entity.TGoods;
 import com.org.oztt.entity.TGoodsAppendItems;
@@ -32,11 +34,14 @@ import com.org.oztt.entity.TGoodsClassfication;
 import com.org.oztt.entity.TGoodsGroup;
 import com.org.oztt.entity.TGoodsPrice;
 import com.org.oztt.entity.TGoodsProperty;
+import com.org.oztt.entity.TNoGroup;
+import com.org.oztt.entity.TNoPrice;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.formDto.GoodProertyDto;
 import com.org.oztt.formDto.OzTtAdClDto;
+import com.org.oztt.formDto.OzTtAdPlListDto;
 import com.org.oztt.service.BaseService;
 import com.org.oztt.service.GoodsService;
 
@@ -63,6 +68,12 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
 
     @Resource
     private TConsCartDao           tConsCartDao;
+
+    @Resource
+    private TNoPriceDao            tNoPriceDao;
+
+    @Resource
+    private TNoGroupDao            tNoGroupDao;
 
     public TGoods getGoodsById(String goodsId) throws Exception {
         return tGoodsDao.selectByGoodsId(goodsId);
@@ -450,6 +461,108 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
                         + StringUtils.leftPad(String.valueOf(Integer.valueOf(maxClassID.substring(2)) + 1), 4, "0");
             }
         }
+    }
+
+    @Override
+    public List<TGoodsClassfication> getSecondClassfication(String classId) throws Exception {
+        return tGoodsClassficationDao.getSecondClassfication(classId);
+    }
+
+    @Override
+    public PagingResult<OzTtAdPlListDto> getAllGoodsPriceInfoForAdmin(Pagination pagination) throws Exception {
+        PagingResult<OzTtAdPlListDto> dtoList = tGoodsDao.getAllGoodsPriceInfoForAdmin(pagination);
+        return dtoList;
+
+    }
+
+    @Override
+    public TGoodsPrice getGoodsSetPriceInfo(String goodsId) throws Exception {
+        TGoodsPrice param = new TGoodsPrice();
+        param.setGoodsid(goodsId);
+        return tGoodsPriceDao.selectByParams(param);
+    }
+
+    @Override
+    public void saveGoodsSetPrice(TGoodsPrice tGoodsPrice) throws Exception {
+        //获取最大的priceNo
+        TNoPrice maxTNoPrice = tNoPriceDao.getMaxPriceNo();
+        String nowDateString = DateFormatUtils.getNowTimeFormat("yyyyMMdd");
+        Integer len = CommonConstants.ADD_NUMBER.length();
+        String maxPriceNo;
+        if (maxTNoPrice == null) {
+            maxPriceNo = CommonConstants.PRICE_NO_SIGN + nowDateString + CommonConstants.ADD_NUMBER;
+            // 订单号最大值的保存
+            TNoPrice tNoPrice = new TNoPrice();
+            tNoPrice.setDate(DateFormatUtils.getNowTimeFormat("yyyyMMdd"));
+            tNoPrice.setMaxno(maxPriceNo);
+            tNoPriceDao.insertSelective(tNoPrice);
+        }
+        else {
+            if (DateFormatUtils.getDateFormatStr(DateFormatUtils.PATTEN_YMD_NO_SEPRATE).equals(maxTNoPrice.getDate())) {
+                // 属于同一天
+                // 订单号最大值的保存
+                maxPriceNo = CommonConstants.PRICE_NO_SIGN
+                        + nowDateString
+                        + StringUtils.leftPad(
+                                String.valueOf(Integer.valueOf(maxTNoPrice.getMaxno().substring(10)) + 1), len, "0");
+                maxTNoPrice.setMaxno(maxPriceNo);
+                tNoPriceDao.updateByPrimaryKeySelective(maxTNoPrice);
+            }
+            else {
+                maxPriceNo = CommonConstants.PRICE_NO_SIGN + nowDateString + CommonConstants.ADD_NUMBER;
+                // 订单号最大值的保存
+                TNoPrice tNoPrice = new TNoPrice();
+                tNoPrice.setDate(DateFormatUtils.getNowTimeFormat("yyyyMMdd"));
+                tNoPrice.setMaxno(maxPriceNo);
+                tNoPriceDao.insertSelective(tNoPrice);
+            }
+        }
+        tGoodsPrice.setPriceno(maxPriceNo);
+        tGoodsPriceDao.insertSelective(tGoodsPrice);
+    }
+
+    @Override
+    public void updateGoodsSetPrice(TGoodsPrice tGoodsPrice) throws Exception {
+        tGoodsPriceDao.updateByPrimaryKeySelective(tGoodsPrice);
+    }
+
+    @Override
+    public void saveGoodsSetGroup(TGoodsGroup tGoodsGroup) throws Exception {
+        //获取最大的groupNo
+        TNoGroup maxTNoGroup = tNoGroupDao.getMaxGroupNo();
+        String nowDateString = DateFormatUtils.getNowTimeFormat("yyyyMMdd");
+        Integer len = CommonConstants.ADD_NUMBER.length();
+        String maxGroupNo;
+        if (maxTNoGroup == null) {
+            maxGroupNo = CommonConstants.GROUP_NO_SIGN + nowDateString + CommonConstants.ADD_NUMBER;
+            // 订单号最大值的保存
+            TNoGroup tNoGroup = new TNoGroup();
+            tNoGroup.setDate(DateFormatUtils.getNowTimeFormat("yyyyMMdd"));
+            tNoGroup.setMaxno(maxGroupNo);
+            tNoGroupDao.insertSelective(tNoGroup);
+        }
+        else {
+            if (DateFormatUtils.getDateFormatStr(DateFormatUtils.PATTEN_YMD_NO_SEPRATE).equals(maxTNoGroup.getDate())) {
+                // 属于同一天
+                // 订单号最大值的保存
+                maxGroupNo = CommonConstants.GROUP_NO_SIGN
+                        + nowDateString
+                        + StringUtils.leftPad(
+                                String.valueOf(Integer.valueOf(maxTNoGroup.getMaxno().substring(10)) + 1), len, "0");
+                maxTNoGroup.setMaxno(maxGroupNo);
+                tNoGroupDao.updateByPrimaryKeySelective(maxTNoGroup);
+            }
+            else {
+                maxGroupNo = CommonConstants.GROUP_NO_SIGN + nowDateString + CommonConstants.ADD_NUMBER;
+                // 订单号最大值的保存
+                TNoGroup tNoGroup = new TNoGroup();
+                tNoGroup.setDate(DateFormatUtils.getNowTimeFormat("yyyyMMdd"));
+                tNoGroup.setMaxno(maxGroupNo);
+                tNoGroupDao.insertSelective(tNoGroup);
+            }
+        }
+        tGoodsGroup.setGroupno(maxGroupNo);
+        tGoodsGroupDao.insertSelective(tGoodsGroup);
     }
 
 }

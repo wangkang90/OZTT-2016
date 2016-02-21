@@ -32,4 +32,10 @@ public interface TNoPriceDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TNoPrice record);
+    
+    /**
+     * 获取最大的定价编号
+     * @return
+     */
+    TNoPrice getMaxPriceNo();
 }
