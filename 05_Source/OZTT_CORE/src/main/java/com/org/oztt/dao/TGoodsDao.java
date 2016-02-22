@@ -6,6 +6,7 @@ import java.util.Map;
 import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TGoods;
+import com.org.oztt.formDto.OzTtAdPlListDto;
 
 public interface TGoodsDao {
     /**
@@ -88,5 +89,12 @@ public interface TGoodsDao {
      * @return
      */
     List<TGoods> getGoodsBySearchParam(String goodsParam);
+    
+    /**
+     * 商品定价admin端获取
+     * @param pagination
+     * @return
+     */
+    PagingResult<OzTtAdPlListDto> getAllGoodsPriceInfoForAdmin(Pagination pagination);
      
 }

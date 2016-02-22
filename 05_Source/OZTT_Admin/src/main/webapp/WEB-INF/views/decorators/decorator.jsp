@@ -53,11 +53,6 @@
 						</a>
 					</li>
 					<li>
-						<a href="javascript:;" id="trigger_fullscreen">
-							<i class="fa fa-arrows"></i> <fmt:message key="OZ_TT_AD_MN_fullScreen" />
-						</a>
-					</li>
-					<li>
 						<a href="${pageContext.request.contextPath}/OZ_TT_AD_LG/logout">
 							<i class="fa fa-key"></i> <fmt:message key="OZ_TT_AD_MN_logout" />
 						</a>
@@ -93,16 +88,8 @@
 				<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
 
 			</li>
-
-			<li class="start">
-				<a href="${ctx}/main/init">
-					<i class="fa fa-home"></i>
-					<span class="title">
-						<fmt:message key="OZ_TT_AD_MN_myinfo" />
-					</span>
-				</a>
-			</li>
-			<li id="orderLi">
+			</br>
+			<li id="orderLi" class="start">
 				<a href="javascript:;">
 					<i class="fa fa-shopping-cart"></i>
 					<span class="title">
@@ -154,6 +141,24 @@
 					</li>
 				</ul>
 			</li>
+			<li id="priceLi">
+				<a href="javascript:;">
+					<i class="fa fa-money"></i>
+					<span class="title">
+						<fmt:message key="OZ_TT_AD_MN_price" />
+					</span>
+					<span class="arrow ">
+					</span>
+				</a>
+				<ul class="sub-menu">
+					<li>
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_PL/init">
+							<i class="fa fa-list-ol"></i>
+							<fmt:message key="OZ_TT_AD_PL_title" />
+						</a>
+					</li>
+				</ul>
+			</li>
 			<li>
 				<a href="javascript:;">
 					<i class="fa fa-group"></i>
@@ -195,6 +200,12 @@
 		$("#orderLi").find("span.arrow").addClass("open");
 		$("#orderLi").addClass("active")
 		$("#orderLi").click();
+	}
+	
+	if (currentPath.indexOf("OZ_TT_AD_PL") > 0) {
+		$("#priceLi").find("span.arrow").addClass("open");
+		$("#priceLi").addClass("active")
+		$("#priceLi").click();
 	}
 
 </script>

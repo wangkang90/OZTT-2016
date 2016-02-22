@@ -32,4 +32,10 @@ public interface TNoGroupDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TNoGroup record);
+    
+    /**
+     * 获取最大的团购编号
+     * @return
+     */
+    TNoGroup getMaxGroupNo();
 }

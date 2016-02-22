@@ -66,4 +66,9 @@ public class TGoodsClassficationDaoImpl extends BaseDao implements TGoodsClassfi
         return selectOne("com.org.oztt.dao.TGoodsClassficationDao.getMaxClassNo", param);
     }
 
+    @Override
+    public List<TGoodsClassfication> getSecondClassfication(String classId) {
+        return select("com.org.oztt.dao.TGoodsClassficationDao.getSecondClassfication", classId);
+    }
+
 }

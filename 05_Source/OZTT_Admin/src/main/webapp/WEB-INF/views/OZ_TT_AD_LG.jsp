@@ -106,13 +106,13 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<label class="checkbox">
-			<input type="checkbox" name="remember" value="1"/><fmt:message key="OZ_TT_AD_LG_remember" /></label>
-			<button type="button" class="btn green pull-right" onclick="adminLogin()">
+<!-- 			<label class="checkbox"> -->
+<%-- 			<input type="checkbox" name="remember" value="1"/><fmt:message key="OZ_TT_AD_LG_remember" /></label> --%>
+			<button type="submit" class="btn green pull-right" onclick="adminLogin()">
 			<fmt:message key="OZ_TT_AD_LG_loginbtn" /> <i class="m-icon-swapright m-icon-white"></i>
 			</button>
 		</div>
-		<div class="forget-password">
+		<!-- <div class="forget-password">
 			<h4>Forgot your password ?</h4>
 			<p>
 				 no worries, click
@@ -129,7 +129,7 @@
 					 Create an account
 				</a>
 			</p>
-		</div>
+		</div> -->
 	</form:form>
 	<!-- END LOGIN FORM -->
 	<!-- BEGIN FORGOT PASSWORD FORM -->

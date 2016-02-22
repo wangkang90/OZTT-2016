@@ -64,4 +64,11 @@ public interface TGoodsClassficationDao {
      * @param fatherId
      */
     String getMaxClassNo(String fatherId);
+    
+    /**
+     * 
+     * @param classId
+     * @return
+     */
+    List<TGoodsClassfication> getSecondClassfication(String classId);
 }

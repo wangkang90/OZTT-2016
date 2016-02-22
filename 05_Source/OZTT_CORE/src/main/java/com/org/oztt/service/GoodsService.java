@@ -15,6 +15,7 @@ import com.org.oztt.entity.TGoodsProperty;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.formDto.OzTtAdClDto;
+import com.org.oztt.formDto.OzTtAdPlListDto;
 
 /**
  * 商品的服务
@@ -260,4 +261,49 @@ public interface GoodsService {
      * @throws Exception
      */
     public String getMaxClassNo(String fatherId) throws Exception;
+    
+    /**
+     * 获取二级分类
+     * @param classId
+     * @return
+     * @throws Exception
+     */
+    public List<TGoodsClassfication> getSecondClassfication(String classId) throws Exception;
+    
+    /**
+     * admin端所有商品定价的获取
+     * @param pagination
+     * @return
+     * @throws Exception
+     */
+    public PagingResult<OzTtAdPlListDto> getAllGoodsPriceInfoForAdmin(Pagination pagination) throws Exception;
+    
+    /**
+     * 获取商品定价信息
+     * @param goodsId
+     * @return
+     * @throws Exception
+     */
+    public TGoodsPrice getGoodsSetPriceInfo(String goodsId) throws Exception;
+    
+    /**
+     * 商品定价保存
+     * @param tGoodsPrice
+     * @throws Exception
+     */
+    public void saveGoodsSetPrice(TGoodsPrice tGoodsPrice) throws Exception;
+    
+    /**
+     * 商品定价更新
+     * @param tGoodsPrice
+     * @throws Exception
+     */
+    public void updateGoodsSetPrice(TGoodsPrice tGoodsPrice) throws Exception;
+    
+    /**
+     * 商品团购保存
+     * @param tGoodsGroup
+     * @throws Exception
+     */
+    public void saveGoodsSetGroup(TGoodsGroup tGoodsGroup) throws Exception;
 }

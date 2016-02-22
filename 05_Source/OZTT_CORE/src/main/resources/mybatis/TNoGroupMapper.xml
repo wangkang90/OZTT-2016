@@ -68,4 +68,12 @@
       maxNo = #{maxno,jdbcType=VARCHAR}
     where no = #{no,jdbcType=BIGINT}
   </update>
+  
+  <select id="getMaxGroupNo" resultType="com.org.oztt.entity.TNoGroup">
+		select
+		<include refid="Base_Column_List" />
+		from t_no_group
+		where maxNo = (select max(maxNo) from
+		t_no_group)
+	</select>
 </mapper>

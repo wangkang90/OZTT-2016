@@ -23,8 +23,7 @@ public class TGoodsGroupDaoImpl extends BaseDao implements TGoodsGroupDao {
 
     @Override
     public int insertSelective(TGoodsGroup record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return insert("com.org.oztt.dao.TGoodsGroupDao.insertSelective", record);
     }
 
     @Override
