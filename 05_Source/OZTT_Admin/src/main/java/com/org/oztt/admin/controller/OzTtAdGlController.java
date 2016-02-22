@@ -22,6 +22,7 @@ import com.org.oztt.base.util.DateFormatUtils;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.entity.TGoodsGroup;
 import com.org.oztt.entity.TGoodsPrice;
+import com.org.oztt.formDto.OzTtAdGlDto;
 import com.org.oztt.formDto.OzTtAdPlDto;
 import com.org.oztt.formDto.OzTtAdPlListDto;
 import com.org.oztt.service.CommonService;
@@ -29,13 +30,13 @@ import com.org.oztt.service.GoodsService;
 import com.org.oztt.service.OrderService;
 
 /**
- * 定价管理
+ * 商品管理
  * 
  * @author linliuan
  */
 @Controller
-@RequestMapping("/OZ_TT_AD_PL")
-public class OzTtAdPlController extends BaseController {
+@RequestMapping("/OZ_TT_AD_GL")
+public class OzTtAdGlController extends BaseController {
 
     @Resource
     private CommonService commonService;
@@ -47,7 +48,7 @@ public class OzTtAdPlController extends BaseController {
     private GoodsService  goodsService;
 
     /**
-     * 商品定价一览画面
+     * 商品管理一览画面
      * 
      * @param request
      * @param session
@@ -56,9 +57,9 @@ public class OzTtAdPlController extends BaseController {
     @RequestMapping(value = "/init")
     public String init(Model model, HttpServletRequest request, HttpSession session) {
         try {
-            model.addAttribute("ozTtAdPlDto", new OzTtAdPlDto());
+            model.addAttribute("ozTtAdGlDto", new OzTtAdGlDto());
             model.addAttribute("pageInfo", new PagingResult<OzTtAdPlListDto>());
-            return "OZ_TT_AD_PL";
+            return "OZ_TT_AD_GL";
         }
         catch (Exception e) {
             logger.error(e.getMessage());

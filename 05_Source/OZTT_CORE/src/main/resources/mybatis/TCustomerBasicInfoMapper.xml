@@ -328,5 +328,35 @@
 		from t_customer_basic_info
 		where customerNo = #{customerno,jdbcType=VARCHAR}
 	</select>
+	
+	<select id="getAllCustomerInfoForAdminForPage" resultType="com.org.oztt.formDto.OzTtAdRlListDto">
+		select
+		A.customerNo,
+		A.cnSurname,
+		A.cnGivenname,
+		A.enFirstName,
+		A.enMiddleName,
+		A.enLastName,
+		A.idCardNo,
+		A.passportNo,
+		A.sex,
+		A.nickName,
+		A.birthday,
+		A.marriage,
+		A.education,
+		A.occupation,
+		A.deleteFlg,
+		B.canLogin
+		from t_customer_basic_info A
+		inner join t_customer_login_info B
+		on A.customerNo = B.customerNo
+	</select>
+	
+	<select id="getAllCustomerInfoForAdminForPageCount" resultType="int">
+		SELECT count(1)
+		FROM t_customer_basic_info A
+		inner join t_customer_login_info B
+		on A.customerNo = B.customerNo
+	</select>
 
 </mapper>
