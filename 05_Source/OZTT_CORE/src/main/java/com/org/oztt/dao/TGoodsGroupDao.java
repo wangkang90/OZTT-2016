@@ -1,6 +1,9 @@
 package com.org.oztt.dao;
 
+import com.org.oztt.base.page.Pagination;
+import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TGoodsGroup;
+import com.org.oztt.formDto.OzTtAdGcListDto;
 
 public interface TGoodsGroupDao {
     /**
@@ -46,4 +49,11 @@ public interface TGoodsGroupDao {
      * @return
      */
     int updateCurrentQuantity(TGoodsGroup record);
+    
+    /**
+     * 
+     * @param pagination
+     * @return
+     */
+    PagingResult<OzTtAdGcListDto> getAllGroupsInfoForAdmin(Pagination pagination);
 }

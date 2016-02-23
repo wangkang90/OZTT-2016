@@ -269,6 +269,9 @@
 		<if test="goodsid != null">
 			and goodsId = #{goodsid,jdbcType=VARCHAR}
 		</if>
+		<if test="groupno != null">
+			and groupNo = #{groupno,jdbcType=VARCHAR}
+		</if>
 		<if test="openflg != null">
 			and openFlg = #{openflg,jdbcType=CHAR}
 		</if>
@@ -293,5 +296,65 @@
 		where goodsId = #{goodsid,jdbcType=VARCHAR}
 	</update>
 	
+	
+	<select id="getAllGroupsInfoForAdmin" resultType="com.org.oztt.formDto.OzTtAdGcListDto" parameterType="map">
+		select
+			A.groupNo as groupId,
+			A.goodsId as goodsId,
+			A.groupPrice as goodsPrice,
+			A.groupMaxQuantity as goodsMax,
+			A.groupCurrentQuantity as goodsCurr,
+			A.openFlg as isOpen,
+			DATE_FORMAT(A.validPeriodStart,'%Y/%m/%d') as validDateFrom,
+			DATE_FORMAT(A.validPeriodEnd,'%Y/%m/%d') as validDateTo,
+			B.goodsName as goodsName,
+			C.goodsClassValue as cost
+	    from t_goods_group A
+	    inner join t_goods B
+	    on A.goodsId = B.goodsId
+	    inner join t_goods_price C
+	    on A.goodsId = C.goodsId
+		WHERE 1 = 1
+		<if test="goodsName != null and goodsName != ''" >
+			and B.goodsName like concat('%',#{goodsName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="goodsId != null and goodsId != ''" >
+        	and A.goodsId = #{goodsId,jdbcType=VARCHAR}
+      	</if>
+      	<if test="isOpenFlag != null and isOpenFlag != ''" >
+        	and A.openFlg = #{isOpenFlag,jdbcType=VARCHAR}
+      	</if>
+      	<if test="dateFrom != null and dateFrom != ''" >
+        	<![CDATA[and (DATE_FORMAT(A.validPeriodStart,'%Y/%m/%d')) >= #{dateFrom,jdbcType=VARCHAR}]]>
+      	</if>
+      	<if test="dateTo != null and dateTo != ''" >
+        	<![CDATA[and (DATE_FORMAT(A.validPeriodEnd,'%Y/%m/%d')) <= #{dateTo,jdbcType=VARCHAR}]]>
+      	</if>
+	</select>
+	
+	<select id="getAllGroupsInfoForAdminCount" resultType="int" parameterType="map">
+		SELECT count(1)
+		from t_goods_group A
+	    inner join t_goods B
+	    on A.goodsId = B.goodsId
+	    inner join t_goods_price C
+	    on A.goodsId = C.goodsId
+		WHERE 1 = 1
+		<if test="goodsName != null and goodsName != ''" >
+			and B.goodsName like concat('%',#{goodsName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="goodsId != null and goodsId != ''" >
+        	and A.goodsId = #{goodsId,jdbcType=VARCHAR}
+      	</if>
+      	<if test="isOpenFlag != null and isOpenFlag != ''" >
+        	and A.openFlg = #{isOpenFlag,jdbcType=VARCHAR}
+      	</if>
+      	<if test="dateFrom != null and dateFrom != ''" >
+        	<![CDATA[and (DATE_FORMAT(A.validPeriodStart,'%Y/%m/%d')) >= #{dateFrom,jdbcType=VARCHAR}]]>
+      	</if>
+      	<if test="dateTo != null and dateTo != ''" >
+        	<![CDATA[and (DATE_FORMAT(A.validPeriodEnd,'%Y/%m/%d')) <= #{dateTo,jdbcType=VARCHAR}]]>
+      	</if>
+	</select>
 	
 </mapper>

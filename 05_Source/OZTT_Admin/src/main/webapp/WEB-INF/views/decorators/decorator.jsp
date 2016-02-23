@@ -182,6 +182,14 @@
 					<span class="arrow ">
 					</span>
 				</a>
+				<ul class="sub-menu">
+					<li>
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_GC/init">
+							<i class="fa fa-list-ol"></i>
+							<fmt:message key="OZ_TT_AD_GC_title" />
+						</a>
+					</li>
+				</ul>
 			</li>
 			<li id="memberLi">
 				<a href="javascript:;">
