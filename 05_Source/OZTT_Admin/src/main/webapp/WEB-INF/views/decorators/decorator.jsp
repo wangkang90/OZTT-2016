@@ -116,6 +116,20 @@
 					<span class="arrow ">
 					</span>
 				</a>
+				<ul class="sub-menu">
+					<li>
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_GL/init">
+							<i class="fa fa-list-ol"></i>
+							<fmt:message key="OZ_TT_AD_GL_title" />
+						</a>
+					</li>
+					<li>
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_GD/detail">
+							<i class="fa fa-plus"></i>
+							<fmt:message key="OZ_TT_AD_GD_title" />
+						</a>
+					</li>
+				</ul>
 			</li>
 			<li>
 				<a href="javascript:;">
@@ -169,7 +183,7 @@
 					</span>
 				</a>
 			</li>
-			<li>
+			<li id="memberLi">
 				<a href="javascript:;">
 					<i class="fa fa-user"></i>
 					<span class="title">
@@ -178,6 +192,14 @@
 					<span class="arrow ">
 					</span>
 				</a>
+				<ul class="sub-menu">
+					<li>
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_RL/search">
+							<i class="fa fa-list-ol"></i>
+							<fmt:message key="OZ_TT_AD_RL_title" />
+						</a>
+					</li>
+				</ul>
 			</li>
 		</ul>
 		<!-- END SIDEBAR MENU -->
@@ -207,6 +229,14 @@
 		$("#priceLi").addClass("active")
 		$("#priceLi").click();
 	}
+	
+	if (currentPath.indexOf("OZ_TT_AD_RL") > 0) {
+		$("#memberLi").find("span.arrow").addClass("open");
+		$("#memberLi").addClass("active")
+		$("#memberLi").click();
+	}
+	
+	
 
 </script>
 </html>

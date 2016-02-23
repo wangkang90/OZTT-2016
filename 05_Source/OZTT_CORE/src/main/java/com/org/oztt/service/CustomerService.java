@@ -1,9 +1,12 @@
 package com.org.oztt.service;
 
+import com.org.oztt.base.page.Pagination;
+import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TCustomerBasicInfo;
 import com.org.oztt.entity.TCustomerLoginHis;
 import com.org.oztt.entity.TCustomerLoginInfo;
 import com.org.oztt.entity.TNoCustomer;
+import com.org.oztt.formDto.OzTtAdRlListDto;
 import com.org.oztt.formDto.OzTtTpFpDto;
 import com.org.oztt.formDto.OzTtTpReDto;
 
@@ -46,5 +49,13 @@ public interface CustomerService {
     
     // 更新用户基本信息
     public int updateTCustomerBasicInfo(TCustomerBasicInfo tCustomerBasicInfo) throws Exception;
+    
+    /**
+     * 获取所有用户的信息
+     * @param pagination
+     * @return
+     * @throws Exception
+     */
+    public PagingResult<OzTtAdRlListDto> getAllCustomerInfoForAdmin(Pagination pagination) throws Exception;
 
 }

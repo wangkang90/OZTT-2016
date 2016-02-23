@@ -1,6 +1,9 @@
 package com.org.oztt.dao;
 
+import com.org.oztt.base.page.Pagination;
+import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TCustomerBasicInfo;
+import com.org.oztt.formDto.OzTtAdRlListDto;
 
 public interface TCustomerBasicInfoDao {
     /**
@@ -37,4 +40,11 @@ public interface TCustomerBasicInfoDao {
      * 根据主键查询记录
      */
     TCustomerBasicInfo selectBaseInfoByCustomerNo(String customerNo);
+    
+    /**
+     * 获取用户一览信息
+     * @param pagination
+     * @return
+     */
+    PagingResult<OzTtAdRlListDto> getAllCustomerInfoForAdmin(Pagination pagination);
 }

@@ -7,10 +7,14 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.util.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import com.org.oztt.base.page.Pagination;
+import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.base.util.DateFormatUtils;
 import com.org.oztt.contants.CommonConstants;
+import com.org.oztt.contants.CommonEnum;
 import com.org.oztt.dao.TCustomerBasicInfoDao;
 import com.org.oztt.dao.TCustomerLoginHisDao;
 import com.org.oztt.dao.TCustomerLoginInfoDao;
@@ -21,6 +25,7 @@ import com.org.oztt.entity.TCustomerLoginHis;
 import com.org.oztt.entity.TCustomerLoginInfo;
 import com.org.oztt.entity.TCustomerSecurityInfo;
 import com.org.oztt.entity.TNoCustomer;
+import com.org.oztt.formDto.OzTtAdRlListDto;
 import com.org.oztt.formDto.OzTtTpFpDto;
 import com.org.oztt.formDto.OzTtTpReDto;
 import com.org.oztt.service.BaseService;
@@ -201,6 +206,22 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
     @Override
     public int updateTCustomerBasicInfo(TCustomerBasicInfo tCustomerBasicInfo) throws Exception {
         return tCustomerBasicInfoDao.updateByPrimaryKeySelective(tCustomerBasicInfo);
+    }
+
+    @Override
+    public PagingResult<OzTtAdRlListDto> getAllCustomerInfoForAdmin(Pagination pagination) throws Exception {
+        PagingResult<OzTtAdRlListDto> page = tCustomerBasicInfoDao.getAllCustomerInfoForAdmin(pagination);
+        if (!CollectionUtils.isEmpty(page.getResultList())) {
+            for (OzTtAdRlListDto dto : page.getResultList()) {
+                dto.setBirthday(DateFormatUtils.date2StringWithFormat(
+                        DateFormatUtils.string2DateWithFormat(dto.getBirthday(), DateFormatUtils.PATTEN_YMD_NO_SEPRATE),
+                        DateFormatUtils.PATTEN_YMD2));
+                dto.setSex(CommonEnum.SexStatus.getEnumLabel(dto.getSex()));
+                dto.setMarriage(CommonEnum.MarriageStatus.getEnumLabel(dto.getMarriage()));
+                dto.setEducation(CommonEnum.EducationStatus.getEnumLabel(dto.getEducation()));
+            }
+        }
+        return page;
     }
 
 }
