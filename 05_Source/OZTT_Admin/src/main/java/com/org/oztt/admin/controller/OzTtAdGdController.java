@@ -10,14 +10,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.org.oztt.contants.CommonConstants;
-import com.org.oztt.contants.CommonEnum;
-import com.org.oztt.entity.TConsOrder;
-import com.org.oztt.formDto.OzTtAdOdDto;
-import com.org.oztt.service.CommonService;
-import com.org.oztt.service.OrderService;
+import com.org.oztt.entity.TGoods;
+import com.org.oztt.formDto.OzTtAdGdDto;
+import com.org.oztt.service.GoodsService;
 
 /**
- * 订单详细画面
+ * 商品详细画面
  * 
  * @author linliuan
  */
@@ -26,57 +24,43 @@ import com.org.oztt.service.OrderService;
 public class OzTtAdGdController extends BaseController {
 
     @Resource
-    private CommonService commonService;
-
-    @Resource
-    private OrderService  orderService;
+    private GoodsService goodsService;
 
     /**
-     * 订单详细画面
+     * 商品详细画面
      * 
      * @param request
      * @param session
      * @return
      */
     @RequestMapping(value = "/init")
-    public String init(Model model, HttpServletRequest request, HttpSession session, String orderNo, String pageNo) {
+    public String init(Model model, HttpServletRequest request, HttpSession session, String goodsId, String pageNo) {
         try {
-            OzTtAdOdDto ozTtAdOdDto = orderService.getOrderDetailForAdmin(orderNo);
-            model.addAttribute("ozTtAdOdDto", ozTtAdOdDto);
-            model.addAttribute("pageNo", pageNo);
-            return "OZ_TT_AD_OD";
-        }
-        catch (Exception e) {
-            logger.error(e.getMessage());
-            return CommonConstants.ERROR_PAGE;
-        }
-    }
-
-    /**
-     * 订单改变状态
-     * 
-     * @param request
-     * @param session
-     * @return
-     */
-    @RequestMapping(value = "/changeStatus")
-    public String changeStatus(Model model, HttpServletRequest request, HttpSession session, String orderNo,
-            String status, String pageNo) {
-        try {
-            if (StringUtils.isEmpty(orderNo) || StringUtils.isEmpty(status)) {
-                throw new Exception();
-            }
-            if (CommonEnum.HandleFlag.NOT_PAY.getCode().equals(status)) {
-                // 如果是未付款的情况下
-                orderService.updateRecordAfterPay(orderNo, "ADMIN");
+            if (StringUtils.isEmpty(goodsId) || StringUtils.isEmpty(pageNo)) {
+                model.addAttribute("ozTtAdGdDto", new OzTtAdGdDto());
             }
             else {
-                // 检索当前订单，更新状态为已经付款
-                TConsOrder tConsOrder = orderService.selectByOrderId(orderNo);
-                tConsOrder.setHandleflg(status);
-                orderService.updateOrderInfo(tConsOrder);
+                TGoods tGoods = goodsService.getGoodsById(goodsId);
+                OzTtAdGdDto ozTtAdGdDto = new OzTtAdGdDto();
+                ozTtAdGdDto.setNo(tGoods.getNo());
+                ozTtAdGdDto.setGoodsId(tGoods.getGoodsid());
+                ozTtAdGdDto.setClassId(tGoods.getClassid());
+                ozTtAdGdDto.setGoodsBrand(tGoods.getGoodsbrand());
+                ozTtAdGdDto.setGoodsName(tGoods.getGoodsname());
+                ozTtAdGdDto.setGoodsDesc(tGoods.getGoodsdesc());
+                ozTtAdGdDto.setGoodsComments(tGoods.getGoodscomments());
+                ozTtAdGdDto.setGoodsThumbnail(tGoods.getGoodsthumbnail());
+                ozTtAdGdDto.setGoodsSmallPic(tGoods.getGoodssmallpic());
+                ozTtAdGdDto.setGoodsNormalPic(tGoods.getGoodsnormalpic());
+                ozTtAdGdDto.setOnSaleFlg(tGoods.getOnsaleflg());
+                ozTtAdGdDto.setHotSaleFlg(tGoods.getHotsaleflg());
+                ozTtAdGdDto.setNewSaleFlg(tGoods.getNewsaleflg());
+                ozTtAdGdDto.setCostPrice(tGoods.getCostprice().toString());
+                ozTtAdGdDto.setSortOrder(tGoods.getSortorder().toString());
+                ozTtAdGdDto.setPageNo(Integer.valueOf(pageNo));
+                model.addAttribute("ozTtAdGdDto", ozTtAdGdDto);
             }
-            return "redirect:/OZ_TT_AD_OD/init?orderNo=" + orderNo + "&pageNo=" + pageNo;
+            return "OZ_TT_AD_GD";
         }
         catch (Exception e) {
             logger.error(e.getMessage());

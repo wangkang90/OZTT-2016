@@ -42,6 +42,7 @@ import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.formDto.GoodProertyDto;
 import com.org.oztt.formDto.OzTtAdClDto;
 import com.org.oztt.formDto.OzTtAdGcListDto;
+import com.org.oztt.formDto.OzTtAdGlListDto;
 import com.org.oztt.formDto.OzTtAdPlListDto;
 import com.org.oztt.service.BaseService;
 import com.org.oztt.service.GoodsService;
@@ -574,6 +575,11 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
     @Override
     public void updateGoodsSetGroup(TGoodsGroup tGoodsGroup) throws Exception {
         tGoodsGroupDao.updateByPrimaryKeySelective(tGoodsGroup);
+    }
+
+    @Override
+    public PagingResult<OzTtAdGlListDto> getAllGoodsInfoForAdmin(Pagination pagination) throws Exception {
+        return tGoodsDao.getAllGoodsInfoForAdmin(pagination);
     }
 
 }
