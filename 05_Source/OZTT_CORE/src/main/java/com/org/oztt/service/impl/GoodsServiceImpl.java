@@ -41,6 +41,7 @@ import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.formDto.GoodProertyDto;
 import com.org.oztt.formDto.OzTtAdClDto;
+import com.org.oztt.formDto.OzTtAdGcListDto;
 import com.org.oztt.formDto.OzTtAdPlListDto;
 import com.org.oztt.service.BaseService;
 import com.org.oztt.service.GoodsService;
@@ -563,6 +564,16 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         }
         tGoodsGroup.setGroupno(maxGroupNo);
         tGoodsGroupDao.insertSelective(tGoodsGroup);
+    }
+
+    @Override
+    public PagingResult<OzTtAdGcListDto> getAllGroupsInfoForAdmin(Pagination pagination) throws Exception {
+        return tGoodsGroupDao.getAllGroupsInfoForAdmin(pagination);
+    }
+
+    @Override
+    public void updateGoodsSetGroup(TGoodsGroup tGoodsGroup) throws Exception {
+        tGoodsGroupDao.updateByPrimaryKeySelective(tGoodsGroup);
     }
 
 }

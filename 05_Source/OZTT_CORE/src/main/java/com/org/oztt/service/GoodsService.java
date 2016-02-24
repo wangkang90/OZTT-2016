@@ -15,6 +15,7 @@ import com.org.oztt.entity.TGoodsProperty;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.formDto.OzTtAdClDto;
+import com.org.oztt.formDto.OzTtAdGcListDto;
 import com.org.oztt.formDto.OzTtAdPlListDto;
 
 /**
@@ -306,4 +307,19 @@ public interface GoodsService {
      * @throws Exception
      */
     public void saveGoodsSetGroup(TGoodsGroup tGoodsGroup) throws Exception;
+    
+    /**
+     * 商品团购更新
+     * @param tGoodsGroup
+     * @throws Exception
+     */
+    public void updateGoodsSetGroup(TGoodsGroup tGoodsGroup) throws Exception;
+    
+    /**
+     * 商品团购一览
+     * @param pagination
+     * @return
+     * @throws Exception
+     */
+    public PagingResult<OzTtAdGcListDto> getAllGroupsInfoForAdmin(Pagination pagination) throws Exception;
 }
