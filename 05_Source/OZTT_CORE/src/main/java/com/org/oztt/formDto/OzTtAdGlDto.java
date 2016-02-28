@@ -1,7 +1,5 @@
 package com.org.oztt.formDto;
 
-import org.springframework.util.StringUtils;
-
 /**
  * @author linliuan
  */
@@ -13,9 +11,7 @@ public class OzTtAdGlDto {
 
     private String isNewSale;
 
-    private String isSetPrice;
-
-    public String  goodsClass;
+    private String goodsClass;
 
     public String getGoodsName() {
         return goodsName;
@@ -26,7 +22,7 @@ public class OzTtAdGlDto {
     }
 
     public String getIsHotSale() {
-        return StringUtils.isEmpty(isHotSale) ? "" : isHotSale;
+        return isHotSale;
     }
 
     public void setIsHotSale(String isHotSale) {
@@ -34,19 +30,11 @@ public class OzTtAdGlDto {
     }
 
     public String getIsNewSale() {
-        return StringUtils.isEmpty(isNewSale) ? "" : isNewSale;
+        return isNewSale;
     }
 
     public void setIsNewSale(String isNewSale) {
         this.isNewSale = isNewSale;
-    }
-
-    public String getIsSetPrice() {
-        return StringUtils.isEmpty(isSetPrice) ? "" : isSetPrice;
-    }
-
-    public void setIsSetPrice(String isSetPrice) {
-        this.isSetPrice = isSetPrice;
     }
 
     public String getGoodsClass() {

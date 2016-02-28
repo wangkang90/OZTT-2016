@@ -16,6 +16,7 @@ import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.formDto.OzTtAdClDto;
 import com.org.oztt.formDto.OzTtAdGcListDto;
+import com.org.oztt.formDto.OzTtAdGlListDto;
 import com.org.oztt.formDto.OzTtAdPlListDto;
 
 /**
@@ -322,4 +323,12 @@ public interface GoodsService {
      * @throws Exception
      */
     public PagingResult<OzTtAdGcListDto> getAllGroupsInfoForAdmin(Pagination pagination) throws Exception;
+    
+    /**
+     * 商品内容一览
+     * @param pagination
+     * @return
+     * @throws Exception
+     */
+    public PagingResult<OzTtAdGlListDto> getAllGoodsInfoForAdmin(Pagination pagination) throws Exception;
 }
