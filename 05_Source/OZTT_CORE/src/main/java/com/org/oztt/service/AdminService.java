@@ -1,5 +1,6 @@
 package com.org.oztt.service;
 
+import com.org.oztt.entity.TAdminBasicInfo;
 import com.org.oztt.entity.TAdminLoginHis;
 import com.org.oztt.entity.TAdminLoginInfo;
 
@@ -32,7 +33,7 @@ public interface AdminService {
     //public boolean updateTAdminLoginInfo(TAdminLoginInfo tAdminLoginInfo) throws Exception;
     
     // 取得用户
-    //public TAdminBasicInfo selectBaseInfoByAdminNo(String adminNo) throws Exception;
+    public TAdminBasicInfo selectBaseInfoByAdminNo(String adminNo) throws Exception;
     
     // 更新用户基本信息
     //public int updateTAdminBasicInfo(TAdminBasicInfo tAdminBasicInfo) throws Exception;

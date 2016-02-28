@@ -518,7 +518,7 @@
 		});
 		
 		
-		var loginStatus = ${cannotLogin};
+		var loginStatus = '${cannotLogin}';
 		if ("1" == loginStatus) {
 			// 登录出错
 			showErrorSpan($("#username"), E0001);

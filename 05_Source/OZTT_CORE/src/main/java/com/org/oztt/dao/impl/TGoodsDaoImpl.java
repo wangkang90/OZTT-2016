@@ -27,8 +27,7 @@ public class TGoodsDaoImpl extends BaseDao implements TGoodsDao {
     }
 
     public int insertSelective(TGoods record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return insert("com.org.oztt.dao.TGoodsDao.insertSelective", record);
     }
 
     public TGoods selectByPrimaryKey(Long no) {
@@ -37,8 +36,7 @@ public class TGoodsDaoImpl extends BaseDao implements TGoodsDao {
     }
 
     public int updateByPrimaryKeySelective(TGoods record) {
-        // TODO Auto-generated method stub
-        return 0;
+        return update("com.org.oztt.dao.TGoodsDao.updateByPrimaryKeySelective", record);
     }
 
     public int updateByPrimaryKey(TGoods record) {

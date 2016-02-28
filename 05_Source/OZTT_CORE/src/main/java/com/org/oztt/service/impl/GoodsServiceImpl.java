@@ -582,4 +582,14 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         return tGoodsDao.getAllGoodsInfoForAdmin(pagination);
     }
 
+    @Override
+    public void saveGoodsForAdmin(TGoods tGoods) throws Exception {
+        tGoodsDao.insertSelective(tGoods);
+    }
+
+    @Override
+    public void updateGoodsForAdmin(TGoods tGoods) throws Exception {
+        tGoodsDao.updateByPrimaryKeySelective(tGoods);
+    }
+
 }

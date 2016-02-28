@@ -1,5 +1,6 @@
 package com.org.oztt.base.util;
 
+import java.io.File;
 import java.util.Random;
 
 import org.springframework.util.StringUtils;
@@ -36,5 +37,24 @@ public class CommonUtils {
         if (StringUtils.isEmpty(str))
             return "";
         return str.replace(PLUS, "");
+    }
+    
+    /**
+     * 删除文件
+     * @param filePath
+     */
+    public static void deleteFile(String filePath) {
+        File file = new File(filePath);
+        if (file.exists() && file.isFile()) {
+            file.delete();
+        }
+    }
+    
+    /**
+     * 将零时文件夹里面的文件复制到文件服务器中
+     * @param filePath
+     */
+    public static void saveFile(String filePath) {
+        
     }
 }

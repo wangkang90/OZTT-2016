@@ -75,7 +75,9 @@ public final class CommonConstants {
     public static final String ADMIN_USERKEY         = "ADMIN";
 
     public static final String PRICE_NO_SIGN         = "PR";
-    
+
     public static final String GROUP_NO_SIGN         = "GP";
+
+    public static final String FILE_SPLIT            = ".";
 
 }

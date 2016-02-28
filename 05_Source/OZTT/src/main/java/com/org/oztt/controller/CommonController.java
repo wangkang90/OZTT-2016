@@ -3,6 +3,7 @@ package com.org.oztt.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import com.alibaba.fastjson.JSONObject;
 import com.org.oztt.base.util.DateFormatUtils;
@@ -659,6 +661,39 @@ public class CommonController extends BaseController {
 
             mapReturn.put("isOver", isOver);
             mapReturn.put("isOverTime", isOverTime);
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return mapReturn;
+        }
+    }
+
+    /**
+     * 改变当前的语言环境
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/changeLocale")
+    public Map<String, Object> changeLocale(HttpServletRequest request, HttpServletResponse response,
+            HttpSession session, String local) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            Locale currentLocale = null;
+            if ("zh".equals(local)) {
+                currentLocale = new Locale("zh", "CN");
+            }
+            else if ("en".equals(local)) {
+                currentLocale = new Locale("en", "US");
+            }
+            else {
+                currentLocale = new Locale("zh", "CN");
+            }
+            session.setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, currentLocale);
             mapReturn.put("isException", false);
             return mapReturn;
         }

@@ -7,7 +7,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>首页</title>
+  <title><fmt:message key="TITLE_MAIN"/></title>
   <%@ include file="../commoncssHead.jsp"%>
   <!-- Head END -->
   <script>

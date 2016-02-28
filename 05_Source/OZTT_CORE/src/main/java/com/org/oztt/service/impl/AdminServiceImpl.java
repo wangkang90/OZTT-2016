@@ -9,8 +9,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.org.oztt.contants.CommonConstants;
+import com.org.oztt.dao.TAdminBasicInfoDao;
 import com.org.oztt.dao.TAdminLoginHisDao;
 import com.org.oztt.dao.TAdminLoginInfoDao;
+import com.org.oztt.entity.TAdminBasicInfo;
 import com.org.oztt.entity.TAdminLoginHis;
 import com.org.oztt.entity.TAdminLoginInfo;
 import com.org.oztt.service.AdminService;
@@ -21,11 +23,13 @@ public class AdminServiceImpl extends BaseService implements AdminService {
 
     @Resource
     private TAdminLoginInfoDao tAdminLoginInfoDao;
-    
+
     @Resource
-    private TAdminLoginHisDao tAdminLoginHisDao;
-    
-    
+    private TAdminLoginHisDao  tAdminLoginHisDao;
+
+    @Resource
+    private TAdminBasicInfoDao tAdminBasicInfoDao;
+
     @Override
     public TAdminLoginInfo userLogin(String loginId, String password) throws Exception {
         Map<String, String> paramMap = new HashMap<String, String>();
@@ -62,6 +66,11 @@ public class AdminServiceImpl extends BaseService implements AdminService {
     @Override
     public TAdminLoginInfo selectByAdminNo(String adminNo) throws Exception {
         return tAdminLoginInfoDao.selectByAdminNo(adminNo);
+    }
+
+    @Override
+    public TAdminBasicInfo selectBaseInfoByAdminNo(String adminNo) throws Exception {
+        return tAdminBasicInfoDao.selectBaseInfoByAdminNo(adminNo);
     }
 
 }

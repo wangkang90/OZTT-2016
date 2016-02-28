@@ -185,4 +185,11 @@
       updPgmId = #{updpgmid,jdbcType=VARCHAR}
     where no = #{no,jdbcType=BIGINT}
   </update>
+  
+  <select id="selectBaseInfoByAdminNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_admin_basic_info
+    where adminNo = #{adminNo,jdbcType=VARCHAR}
+  </select>
 </mapper>

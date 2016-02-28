@@ -20,6 +20,8 @@ public class OzTtAdGdDto {
     private String goodsComments;
 
     private String goodsThumbnail;
+    
+    private String goodsThumbnailSrc;
 
     private String goodsSmallPic;
 
@@ -164,6 +166,15 @@ public class OzTtAdGdDto {
     public void setPageNo(Integer pageNo) {
         this.pageNo = pageNo;
     }
+
+    public String getGoodsThumbnailSrc() {
+        return goodsThumbnailSrc;
+    }
+
+    public void setGoodsThumbnailSrc(String goodsThumbnailSrc) {
+        this.goodsThumbnailSrc = goodsThumbnailSrc;
+    }
+
     
     
 
