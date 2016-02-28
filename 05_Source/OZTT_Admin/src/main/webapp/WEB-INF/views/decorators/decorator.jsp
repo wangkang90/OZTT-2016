@@ -40,9 +40,8 @@
 			<!-- BEGIN USER LOGIN DROPDOWN -->
 			<li class="dropdown user">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" src="${ctx}/assets/img/avatar1_small.jpg"/>
 					<span class="username">
-						 Bob Nilson
+						 ${userName}
 					</span>
 					<i class="fa fa-angle-down"></i>
 				</a>
@@ -124,7 +123,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="${pageContext.request.contextPath}/OZ_TT_AD_GD/detail">
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_GD/init">
 							<i class="fa fa-plus"></i>
 							<fmt:message key="OZ_TT_AD_GD_title" />
 						</a>
@@ -226,6 +225,7 @@
 <!-- END BODY -->
 <script type="text/javascript">
 	var currentPath = window.location.pathname;
+	var saveImgUrl = '<fmt:message key="saveImgUrl" />';
 	if (currentPath.indexOf("OZ_TT_AD_OL") > 0) {
 		$("#orderLi").find("span.arrow").addClass("open");
 		$("#orderLi").addClass("active")
@@ -242,6 +242,100 @@
 		$("#memberLi").find("span.arrow").addClass("open");
 		$("#memberLi").addClass("active")
 		$("#memberLi").click();
+	}
+	
+	if (currentPath.indexOf("OZ_TT_AD_GD") > 0) {
+		$("#fileNormalPic").fileinput({
+	        uploadUrl: '${pageContext.request.contextPath}/COMMON/uploadThumbFile?goodId='+goodsId,
+	        allowedFileExtensions : ['jpg', 'png','gif'],
+	        uploadAsync: true,  
+			showCaption: true,  
+			showUpload: true,//是否显示上传按钮
+			showRemove: false,//是否显示删除按钮  
+			showCaption: true,//是否显示输入框
+			showPreview:true,   
+			showCancel:true,  
+			dropZoneEnabled: false,
+			minFileCount: 1,
+			maxFileCount: 1,
+			initialPreviewShowDelete:true,  
+			initialPreview: previewThumbJson,  
+	        allowedFileTypes: ['image'],
+	        initialPreviewConfig: preConfigList,  
+	        slugCallback: function(filename) {
+	            return filename.replace('(', '_').replace(']', '_');
+	        }
+		}).on("fileuploaded", function(event, outData) {  
+            //文件上传成功后返回的数据， 此处我只保存返回文件的id  
+            var result = outData.fileId;  
+            // 对应的input 赋值  
+            $('#fileNormalPic').val(result).change();
+            
+            if (normalImagesStr == "") {
+            	$("#goodsNormalPic").val(result);
+            } else {
+            	$("#goodsNormalPic").val("," + result);
+            }
+     	});
+	    // 以上是缩略图
+	    
+	    // 以下是商品图
+		var normalImagesStr = $("#goodsNormalPic").val();
+		var goodsId = $("#goodsId").val();
+	    var imagesArr = normalImagesStr.split(",");
+	    var preList = new Array();
+	    for (var i = 0; i < imagesArr.length; i++) {
+	    	var tempImg = '<img src="{0}" class="file-preview-image" style="width:auto;height:160px;"/>';
+	    	preList[i] = tempImg.replace('{0}',saveImgUrl + goodsId + '/' + imagesArr[i]);
+	    }
+	    
+	    var previewJson = preList;
+	    
+	 	// 与上面 预览图片json数据组 对应的config数据  
+	     var preConfigList = new Array();  
+	     for ( var i = 0; i < imagesArr.length; i++) {  
+	        var array_element = imagesArr[i];  
+	        var tjson = {caption: "文件名", // 展示的文件名  
+	                    width: '120px',   
+	                    url: '${ctx}/COMMON/deleteFile', // 删除url  
+	                    key: array_element, // 删除是Ajax向后台传递的参数  
+	                    extra: {fileId: array_element, goodId:goodsId}  
+	                    };  
+	        preConfigList[i] = tjson;  
+	     }  
+		
+		$("#fileNormalPic").fileinput({
+	        uploadUrl: '${pageContext.request.contextPath}/COMMON/uploadFile?goodId='+goodsId,
+	        allowedFileExtensions : ['jpg', 'png','gif'],
+	        uploadAsync:true,  
+			showCaption: true,  
+			showUpload: true,//是否显示上传按钮  
+			showRemove: false,//是否显示删除按钮  
+			showCaption: true,//是否显示输入框  
+			showPreview:true,   
+			showCancel:true,  
+			dropZoneEnabled: false,  
+			minFileCount:1,
+			maxFileCount: 10, 
+			initialPreviewShowDelete:true,  
+			initialPreview: previewJson,  
+	        allowedFileTypes: ['image'],
+	        initialPreviewConfig: preConfigList,  
+	        slugCallback: function(filename) {
+	            return filename.replace('(', '_').replace(']', '_');
+	        }
+		}).on("fileuploaded", function(event, outData) {  
+            //文件上传成功后返回的数据， 此处我只保存返回文件的id  
+            var result = outData.fileId;  
+            // 对应的input 赋值  
+            $('#fileNormalPic').val(result).change();
+            
+            if (normalImagesStr == "") {
+            	$("#goodsNormalPic").val(result);
+            } else {
+            	$("#goodsNormalPic").val("," + result);
+            }
+     	});
 	}
 	
 	

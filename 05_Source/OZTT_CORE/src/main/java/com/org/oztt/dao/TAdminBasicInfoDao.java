@@ -32,4 +32,11 @@ public interface TAdminBasicInfoDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TAdminBasicInfo record);
+    
+    /**
+     * 查询管理信息
+     * @param adminNo
+     * @return
+     */
+    TAdminBasicInfo selectBaseInfoByAdminNo(String adminNo);
 }

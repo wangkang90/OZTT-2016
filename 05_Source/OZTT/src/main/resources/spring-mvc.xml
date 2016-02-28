@@ -23,10 +23,9 @@
 			</list>
 		</property>
 	</bean>
-	
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
-	
+
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	
 	<mvc:interceptors>
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 	</mvc:interceptors>
@@ -79,6 +78,14 @@
 		<!-- 内存中的最大值 -->
 		<property name="maxInMemorySize" value="40960" />
 	</bean>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*/*" />
+			<bean class="com.org.oztt.interceptor.ResponseInterceptor" ></bean>
+		</mvc:interceptor>
+	
+	</mvc:interceptors>
 	
 	<import resource="spring-mvc-shiro.xml"/>
 

@@ -331,4 +331,18 @@ public interface GoodsService {
      * @throws Exception
      */
     public PagingResult<OzTtAdGlListDto> getAllGoodsInfoForAdmin(Pagination pagination) throws Exception;
+    
+    /**
+     * 商品保存
+     * @param tGoods
+     * @throws Exception
+     */
+    public void saveGoodsForAdmin(TGoods tGoods) throws Exception;
+    
+    /**
+     * 商品保存
+     * @param tGoods
+     * @throws Exception
+     */
+    public void updateGoodsForAdmin(TGoods tGoods) throws Exception;
 }

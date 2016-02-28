@@ -50,6 +50,8 @@
 <script src="${ctx}/assets/scripts/custom/tasks.js" type="text/javascript"></script>
 <script src="${ctx}/assets/scripts/core/datatable.js"></script>
 <script src="${ctx}/assets/scripts/custom/ecommerce-products-edit.js"></script>
+<script type="text/javascript" src='${ctx}/js/jquery.uploadify.min.js'></script>
+<script type="text/javascript" src='${ctx}/js/fileinput.js'></script>
 <script type="text/javascript" src="${ctx}/js/user-common.js"></script>
 <script type="text/javascript" src="${ctx}/js/common_validate.js"></script>
 <script type="text/javascript" src="${ctx}/js/my-common.js"></script>

@@ -27,6 +27,8 @@
 <link href="${ctx}/assets/css/plugins.css" rel="stylesheet" type="text/css"/>
 <link href="${ctx}/assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="${ctx}/assets/css/custom.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/css/uploadify.css" type="text/css" rel="stylesheet" />
+<link href="${ctx}/css/fileinput.css" type="text/css" rel="stylesheet" />
 <link href="${ctx}/css/user-common.css" rel="stylesheet" type="text/css">
 <link href="${ctx}/css/my-common.css" rel="stylesheet" type="text/css">
 <!-- END THEME STYLES -->

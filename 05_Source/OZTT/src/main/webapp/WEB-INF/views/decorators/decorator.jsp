@@ -33,13 +33,13 @@
 		location.href = "${pageContext.request.contextPath}/OZ_TT_TP_LG/logout";
 	}
 	
-	var E0002 = '<fmt:message key="E0002" />';
-	var E0007 = '<fmt:message key="E0007" />';
-	var E0008 = '<fmt:message key="E0008" />';
-	var E0001 = '<fmt:message key="E0001" />';
-	var E0009 = '<fmt:message key="E0009" />';
-	var E0010 = '<fmt:message key="E0010" />';
-	var E0011 = '<fmt:message key="E0011" />';
+	var E0002 = "<fmt:message key='E0002' />";
+	var E0007 = "<fmt:message key='E0007' />";
+	var E0008 = "<fmt:message key='E0008' />";
+	var E0001 = "<fmt:message key='E0001' />";
+	var E0009 = "<fmt:message key='E0009' />";
+	var E0010 = "<fmt:message key='E0010' />";
+	var E0011 = "<fmt:message key='E0011' />";
 	
 	function validateCheckLogin(){
 		cleanFormError();
@@ -700,6 +700,24 @@
 	
 	// 将DB购物车的值放入到Cookie中
 	
+	
+	function changeLocale(local) {
+		$.ajax({
+			type : "GET",
+			contentType:'application/json',
+			url : '${pageContext.request.contextPath}/COMMON/changeLocale?local='+local,
+			dataType : "json",
+			async:false,
+			data : '', 
+			success : function(data) {
+			},
+			error : function(data) {
+				
+			}
+		});
+		window.location.reload();
+	}
+	
 </script>
 
 <!-- Body BEGIN -->
@@ -713,12 +731,23 @@
                     <ul class="list-unstyled list-inline">
                         <li><i class="fa fa-phone"></i><span>+1 456 6717</span></li>
                         <li class="langs-block">
-                            <a href="javascript:void(0);" class="current">中文 <i class="fa fa-angle-down"></i></a>
-                            <div class="langs-block-others-wrapper">
-	                            <div class="langs-block-others">
-	                              <a href="javascript:void(0);">English</a>
+                        	<c:if test="${languageSelf == 'zh_CN' }">
+                        		<a href="javascript:void(0);" class="current">中文 <i class="fa fa-angle-down"></i></a>
+	                            <div class="langs-block-others-wrapper">
+		                            <div class="langs-block-others">
+		                              <a href="" onclick="changeLocale('en')">English</a>
+		                            </div>
 	                            </div>
-                            </div>
+                        	</c:if>
+                        	<c:if test="${languageSelf == 'en_US' }">
+                        		<a href="javascript:void(0);" class="current">English <i class="fa fa-angle-down"></i></a>
+	                            <div class="langs-block-others-wrapper">
+		                            <div class="langs-block-others">
+		                              <a href="" onclick="changeLocale('zh')">中文</a>
+		                            </div>
+	                            </div>
+                        	</c:if>
+                            
                         </li>
                     </ul>
                 </div>

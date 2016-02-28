@@ -25,7 +25,7 @@ public class OzTtAdMnController extends BaseController {
     @RequestMapping(value = "init", method = RequestMethod.GET)
     public String init(Model model) {
         try {
-            return "OZ_TT_AD_MN";
+            return "redirect:/OZ_TT_AD_OL/init";
         }
         catch (Exception e) {
             e.printStackTrace();
