@@ -25,6 +25,7 @@ import com.org.oztt.dao.TGoodsDao;
 import com.org.oztt.dao.TGoodsGroupDao;
 import com.org.oztt.dao.TGoodsPriceDao;
 import com.org.oztt.dao.TGoodsPropertyDao;
+import com.org.oztt.dao.TNoGoodsDao;
 import com.org.oztt.dao.TNoGroupDao;
 import com.org.oztt.dao.TNoPriceDao;
 import com.org.oztt.entity.TConsCart;
@@ -34,6 +35,7 @@ import com.org.oztt.entity.TGoodsClassfication;
 import com.org.oztt.entity.TGoodsGroup;
 import com.org.oztt.entity.TGoodsPrice;
 import com.org.oztt.entity.TGoodsProperty;
+import com.org.oztt.entity.TNoGoods;
 import com.org.oztt.entity.TNoGroup;
 import com.org.oztt.entity.TNoPrice;
 import com.org.oztt.formDto.ContCartItemDto;
@@ -76,6 +78,9 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
 
     @Resource
     private TNoGroupDao            tNoGroupDao;
+
+    @Resource
+    private TNoGoodsDao            tNoGoodsDao;
 
     public TGoods getGoodsById(String goodsId) throws Exception {
         return tGoodsDao.selectByGoodsId(goodsId);
@@ -583,8 +588,43 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
     }
 
     @Override
-    public void saveGoodsForAdmin(TGoods tGoods) throws Exception {
+    public String saveGoodsForAdmin(TGoods tGoods) throws Exception {
+        //获取最大的GoodId
+        TNoGoods maxTNoGoods = tNoGoodsDao.getMaxGoodsNo();
+        String nowDateString = DateFormatUtils.getNowTimeFormat("yyyyMMdd");
+        Integer len = CommonConstants.ADD_NUMBER.length();
+        String maxGoodsNo;
+        if (maxTNoGoods == null) {
+            maxGoodsNo = CommonConstants.GOODS_NO_SIGN + nowDateString + CommonConstants.ADD_NUMBER;
+            // 商品号最大值的保存
+            TNoGoods tNoGoods = new TNoGoods();
+            tNoGoods.setDate(DateFormatUtils.getNowTimeFormat("yyyyMMdd"));
+            tNoGoods.setMaxno(maxGoodsNo);
+            tNoGoodsDao.insertSelective(tNoGoods);
+        }
+        else {
+            if (DateFormatUtils.getDateFormatStr(DateFormatUtils.PATTEN_YMD_NO_SEPRATE).equals(maxTNoGoods.getDate())) {
+                // 属于同一天
+                // 订单号最大值的保存
+                maxGoodsNo = CommonConstants.GOODS_NO_SIGN
+                        + nowDateString
+                        + StringUtils.leftPad(
+                                String.valueOf(Integer.valueOf(maxTNoGoods.getMaxno().substring(10)) + 1), len, "0");
+                maxTNoGoods.setMaxno(maxGoodsNo);
+                tNoGoodsDao.updateByPrimaryKeySelective(maxTNoGoods);
+            }
+            else {
+                maxGoodsNo = CommonConstants.GOODS_NO_SIGN + nowDateString + CommonConstants.ADD_NUMBER;
+                // 商品号最大值的保存
+                TNoGoods tNoGoods = new TNoGoods();
+                tNoGoods.setDate(DateFormatUtils.getNowTimeFormat("yyyyMMdd"));
+                tNoGoods.setMaxno(maxGoodsNo);
+                tNoGoodsDao.insertSelective(tNoGoods);
+            }
+        }
+        tGoods.setGoodsid(maxGoodsNo);
         tGoodsDao.insertSelective(tGoods);
+        return maxGoodsNo;
     }
 
     @Override

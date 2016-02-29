@@ -1,6 +1,9 @@
 package com.org.oztt.admin.controller;
 
+import java.io.File;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.org.oztt.base.util.CommonUtils;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.entity.TGoods;
 import com.org.oztt.formDto.OzTtAdGdDto;
@@ -40,7 +44,11 @@ public class OzTtAdGdController extends BaseController {
     public String init(Model model, HttpServletRequest request, HttpSession session, String goodsId, String pageNo) {
         try {
             if (StringUtils.isEmpty(goodsId) || StringUtils.isEmpty(pageNo)) {
-                model.addAttribute("ozTtAdGdDto", new OzTtAdGdDto());
+                OzTtAdGdDto ozTtAdGdDto = new OzTtAdGdDto();
+                ozTtAdGdDto.setHotSaleFlg("0");
+                ozTtAdGdDto.setOnSaleFlg("1");
+                ozTtAdGdDto.setNewSaleFlg("0");
+                model.addAttribute("ozTtAdGdDto", ozTtAdGdDto);
             }
             else {
                 TGoods tGoods = goodsService.getGoodsById(goodsId);
@@ -98,12 +106,55 @@ public class OzTtAdGdController extends BaseController {
             tGoods.setOnsaleflg(ozTtAdGdDto.getOnSaleFlg());
             tGoods.setHotsaleflg(ozTtAdGdDto.getHotSaleFlg());
             tGoods.setNewsaleflg(ozTtAdGdDto.getNewSaleFlg());
+            tGoods.setDeleteflg(CommonConstants.IS_NOT_DELETE);
             tGoods.setCostprice(new BigDecimal(ozTtAdGdDto.getCostPrice()));
             tGoods.setSortorder(Integer.valueOf(ozTtAdGdDto.getSortOrder()));
+
+            String distImgPath = super.getApplicationMessage("DistImgPath");
             if (tGoods.getNo() == null) {
-                goodsService.saveGoodsForAdmin(tGoods);
-            } else {
+                String goodId = goodsService.saveGoodsForAdmin(tGoods);
+                tGoods.setGoodsid(goodId);
+            }
+            else {
+                TGoods orignGoods = goodsService.getGoodsById(ozTtAdGdDto.getGoodsId());
+                // 先将先前不用的图片删除
+                if (!orignGoods.getGoodsthumbnail().equals(ozTtAdGdDto.getGoodsThumbnail())) {
+                    CommonUtils.deleteFile(distImgPath + ozTtAdGdDto.getGoodsId() + CommonConstants.PATH_SPLIT
+                            + orignGoods.getGoodsthumbnail());
+                }
+                // 取的不用的缩略图
+                String[] preNormalPicArr = orignGoods.getGoodsnormalpic().split(",");
+                List<String> needDeleteFile = new ArrayList<String>();
+                for (int i = 0; i < preNormalPicArr.length; i++) {
+                    if (!ozTtAdGdDto.getGoodsNormalPic().contains(preNormalPicArr[i])) {
+                        needDeleteFile.add(preNormalPicArr[i]);
+                    }
+                }
+                for (int i = 0; i < needDeleteFile.size(); i++) {
+                    CommonUtils.deleteFile(distImgPath + ozTtAdGdDto.getGoodsId() + CommonConstants.PATH_SPLIT
+                            + needDeleteFile.get(i));
+                }
                 goodsService.updateGoodsForAdmin(tGoods);
+            }
+
+            // 更新数据库后将数据
+            String goodId = tGoods.getGoodsid();
+            String orginPath = System.getProperty("java.io.tmpdir") + CommonConstants.PATH_SPLIT
+                    + CommonConstants.OZTT_ADMIN_PROJECT;
+            String destPath = distImgPath + goodId;
+            File fileDictory = new File(destPath);
+            if (!fileDictory.exists()) {
+                fileDictory.mkdirs();
+            }
+            // 复制商品缩略图
+            CommonUtils.copyFile(orginPath + CommonConstants.PATH_SPLIT + tGoods.getGoodsthumbnail(), destPath
+                    + CommonConstants.PATH_SPLIT + tGoods.getGoodsthumbnail());
+
+            // 复制商品图
+            String[] normalPicArr = tGoods.getGoodsnormalpic().split(",");
+            for (int i = 0; i < normalPicArr.length; i++) {
+                CommonUtils.copyFile(orginPath + CommonConstants.PATH_SPLIT + normalPicArr[i], destPath
+                        + CommonConstants.PATH_SPLIT + normalPicArr[i]);
             }
 
             if (StringUtils.isEmpty(ozTtAdGdDto.getNo())) {

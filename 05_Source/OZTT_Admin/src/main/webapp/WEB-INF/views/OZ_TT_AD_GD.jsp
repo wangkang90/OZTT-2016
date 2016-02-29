@@ -8,6 +8,72 @@
 <head>
   <meta charset="utf-8">
   <title><fmt:message key="OZ_TT_AD_GD_title" /></title>
+  <script type="text/javascript">
+  
+  	function backToGoodsList(){
+		var pageNo = $("#pageNo").val();
+		if (pageNo == "") {
+			location.href= "${pageContext.request.contextPath}/OZ_TT_AD_GL/init";
+		} else {
+			location.href= "${pageContext.request.contextPath}/OZ_TT_AD_GL/pageSearch?pageNo="+pageNo;
+		}
+		
+	}
+  	function saveGoods(){
+  		if (!validateForm()) return;
+  		var targetForm = document.forms['olForm'];
+		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_GD/save";
+		targetForm.method = "POST";
+		targetForm.submit();
+  	}
+  	
+  	var E0002 = '<fmt:message key="E0002" />';
+  	function validateForm(){
+		cleanFormError();
+		var goodsName = $("#goodsName").val();
+		var classId = $("#classId").val();
+		var goodsThumbnail = $("#goodsThumbnail").val();
+		var goodsNormalPic = $("#goodsNormalPic").val();
+		var costPrice = $("#costPrice").val();
+		var sortOrder = $("#sortOrder").val();
+		if (goodsName == "") {
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_goodsname" />')
+			showErrorSpan($("#goodsName"), message);
+			return false;
+		}
+		if (classId == "") {
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_class" />')
+			showErrorSpan($("#classId"), message);
+			return false;
+		}
+		if (goodsThumbnail == "") {
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_goodsThumbnail" />')
+			//showErrorSpan($("#goodsThumbnailDiv"), message);
+			return false;
+		}
+		if (goodsNormalPic == "") {
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_goodsNormalPic" />')
+			//showErrorSpan($("#goodsNormalPicDiv"), message);
+			return false;
+		}
+		if (costPrice == "") {
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_costPrice" />')
+			showErrorSpan($("#costPrice"), message);
+			return false;
+		}
+		if (sortOrder == "") {
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_sortOrder" />')
+			showErrorSpan($("#sortOrder"), message);
+			return false;
+		}
+		return true;
+	}
+  	
+  	function outfileDelete(fileId){
+  		alert(fileId);
+  	}
+  
+  </script>
 </head>
 <body>
 	<!-- BEGIN CONTENT -->
@@ -158,7 +224,7 @@
 				<h4 class="form-section"></h4>
 				<div class="form-group">
 					 <div class="col-md-6 textleft">
-						<button type="button" class="btn green mybtn" onclick="back()">
+						<button type="button" class="btn green mybtn" onclick="backToGoodsList()">
 								<i class="fa fa-reply"></i>&nbsp;<fmt:message key="COMMON_BACK" />
 						</button>
 					 </div>

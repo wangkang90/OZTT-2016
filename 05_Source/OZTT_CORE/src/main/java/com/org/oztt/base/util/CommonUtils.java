@@ -1,8 +1,10 @@
 package com.org.oztt.base.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.util.StringUtils;
 
 public class CommonUtils {
@@ -53,8 +55,15 @@ public class CommonUtils {
     /**
      * 将零时文件夹里面的文件复制到文件服务器中
      * @param filePath
+     * @throws IOException 
      */
-    public static void saveFile(String filePath) {
-        
+    public static void copyFile(String orignFile, String destFile) throws IOException {
+        File fileOrigin = new File(orignFile);
+        File fileDest = new File(destFile);
+        if (fileOrigin.exists() && !fileDest.exists()) {
+            FileUtils.copyFile(fileOrigin, new File(destFile));
+        } 
     }
+    
+    
 }

@@ -31,6 +31,13 @@
 		targetForm.method = "POST";
 		targetForm.submit();
   	}
+  	
+  	function newGoods(){
+  		var targetForm = document.forms['olForm'];
+		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_GD/init";
+		targetForm.method = "POST";
+		targetForm.submit();
+  	}
   
   </script>
 </head>

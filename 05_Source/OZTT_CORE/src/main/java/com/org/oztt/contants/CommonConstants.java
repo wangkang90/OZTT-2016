@@ -66,6 +66,8 @@ public final class CommonConstants {
 
     public static final String SESSION_ADMIN_USER_ID = "sessionUserId";
 
+    public static final String OZTT_ADMIN_PROJECT    = "OZTT_ADMIN";
+
     public static final String OPEN                  = "开放";
 
     public static final String NO_OPEN               = "不开放";
@@ -77,6 +79,8 @@ public final class CommonConstants {
     public static final String PRICE_NO_SIGN         = "PR";
 
     public static final String GROUP_NO_SIGN         = "GP";
+    
+    public static final String GOODS_NO_SIGN         = "GD";
 
     public static final String FILE_SPLIT            = ".";
 

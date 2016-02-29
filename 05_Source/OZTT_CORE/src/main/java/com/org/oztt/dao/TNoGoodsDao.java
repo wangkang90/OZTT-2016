@@ -32,4 +32,10 @@ public interface TNoGoodsDao {
      * 根据主键更新记录
      */
     int updateByPrimaryKey(TNoGoods record);
+    
+    /**
+     * 获取最大的商品编号
+     * @return
+     */
+    TNoGoods getMaxGoodsNo();
 }

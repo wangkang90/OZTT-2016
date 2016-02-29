@@ -1,7 +1,6 @@
 package com.org.oztt.admin.controller;
 
 import java.io.File;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -18,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.org.oztt.base.util.CommonUtils;
 import com.org.oztt.contants.CommonConstants;
-import com.org.oztt.entity.TGoods;
 import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.service.GoodsService;
 
@@ -74,16 +71,17 @@ public class CommonController extends BaseController {
     public Map<String, Object> deleteFile(HttpServletRequest request, HttpSession session, String fileId, String goodId) {
         Map<String, Object> mapReturn = new HashMap<String, Object>();
         try {
-            TGoods tGoods = goodsService.getGoodsById(goodId);
-            if (tGoods != null) {
-                tGoods.setGoodsnormalpic(tGoods.getGoodsnormalpic().replace("," + fileId, "").replace(fileId + ",", "")
-                        .replace(fileId, ""));
-                tGoods.setUpdpgmid("COMMON");
-                tGoods.setUpdtimestamp(new Date());
-                tGoods.setUpduserkey(CommonConstants.ADMIN_USERKEY);
-                goodsService.updateGoodsForAdmin(tGoods);
-            }
-            CommonUtils.deleteFile(super.getApplicationMessage("DistImgPath") + goodId + "/" + fileId);
+            //            TGoods tGoods = goodsService.getGoodsById(goodId);
+            //            if (tGoods != null) {
+            //                tGoods.setGoodsnormalpic(tGoods.getGoodsnormalpic().replace("," + fileId, "").replace(fileId + ",", "")
+            //                        .replace(fileId, ""));
+            //                tGoods.setUpdpgmid("COMMON");
+            //                tGoods.setUpdtimestamp(new Date());
+            //                tGoods.setUpduserkey(CommonConstants.ADMIN_USERKEY);
+            //                goodsService.updateGoodsForAdmin(tGoods);
+            //            }
+            //            CommonUtils.deleteFile(super.getApplicationMessage("DistImgPath") + goodId + "/" + fileId);
+            mapReturn.put("fileId", fileId);
             mapReturn.put("isException", false);
             return mapReturn;
         }
@@ -104,8 +102,13 @@ public class CommonController extends BaseController {
             String filename = file.getOriginalFilename();
             String fileType = filename.substring(filename.lastIndexOf(CommonConstants.FILE_SPLIT));
             String uid = "OZTT" + "_" + UUID.randomUUID().toString();
-            String fileFullPath = super.getApplicationMessage("DistImgPath") + goodId + "/" + uid + fileType;
-            
+            String tempUrl = System.getProperty("java.io.tmpdir");
+            String fileFullPath = tempUrl + CommonConstants.PATH_SPLIT + CommonConstants.OZTT_ADMIN_PROJECT
+                    + CommonConstants.PATH_SPLIT + uid + fileType;
+            File destDirectory = new File(tempUrl + CommonConstants.PATH_SPLIT + CommonConstants.OZTT_ADMIN_PROJECT);
+            if (!destDirectory.exists()) {
+                destDirectory.mkdirs();
+            }
             file.transferTo(new File(fileFullPath));
             mapReturn.put("fileId", uid + fileType);
             return mapReturn;
@@ -115,7 +118,39 @@ public class CommonController extends BaseController {
             mapReturn.put("isException", true);
             return null;
         }
-        
+
+    }
+
+    /**
+     * 删除缩略图信息
+     * 
+     * @param request
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/deleteThumbFile")
+    public Map<String, Object> deleteThumbFile(HttpServletRequest request, HttpSession session, String fileId,
+            String goodId) {
+        Map<String, Object> mapReturn = new HashMap<String, Object>();
+        try {
+            //            TGoods tGoods = goodsService.getGoodsById(goodId);
+            //            if (tGoods != null) {
+            //                tGoods.setGoodsthumbnail(fileId);
+            //                tGoods.setUpdpgmid("COMMON");
+            //                tGoods.setUpdtimestamp(new Date());
+            //                tGoods.setUpduserkey(CommonConstants.ADMIN_USERKEY);
+            //                goodsService.updateGoodsForAdmin(tGoods);
+            //            }
+            //            CommonUtils.deleteFile(super.getApplicationMessage("DistImgPath") + goodId + "/" + fileId);
+            mapReturn.put("fileId", fileId);
+            mapReturn.put("isException", false);
+            return mapReturn;
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            mapReturn.put("isException", true);
+            return null;
+        }
     }
 
 }
