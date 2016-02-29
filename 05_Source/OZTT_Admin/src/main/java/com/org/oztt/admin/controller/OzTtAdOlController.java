@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
+import com.org.oztt.base.util.DateFormatUtils;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.formDto.OzTtAdOlDto;
 import com.org.oztt.formDto.OzTtAdOlListDto;
@@ -49,8 +50,11 @@ public class OzTtAdOlController extends BaseController {
             model.addAttribute("orderSelect", commonService.getOrderStatus());
             model.addAttribute("paymentSelect", commonService.getPayment());
             model.addAttribute("deliverySelect", commonService.getDelivery());
-            model.addAttribute("ozTtAdOlDto", new OzTtAdOlDto());
-            model.addAttribute("pageInfo", new PagingResult<OzTtAdOlListDto>());
+            OzTtAdOlDto dto = new OzTtAdOlDto();
+            dto.setDataFrom(DateFormatUtils.getNowTimeFormat(DateFormatUtils.PATTEN_YMD2));
+            dto.setDataTo(DateFormatUtils.getNowTimeFormat(DateFormatUtils.PATTEN_YMD2));
+            model.addAttribute("ozTtAdOlDto", dto);
+            this.search(model, request, session, dto);
             return "OZ_TT_AD_OL";
         }
         catch (Exception e) {
@@ -67,7 +71,7 @@ public class OzTtAdOlController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/search")
-    public String init(Model model, HttpServletRequest request, HttpSession session, @ModelAttribute OzTtAdOlDto ozTtAdOlDto) {
+    public String search(Model model, HttpServletRequest request, HttpSession session, @ModelAttribute OzTtAdOlDto ozTtAdOlDto) {
         try {
             model.addAttribute("orderSelect", commonService.getOrderStatus());
             model.addAttribute("paymentSelect", commonService.getPayment());
@@ -77,7 +81,8 @@ public class OzTtAdOlController extends BaseController {
             
             Pagination pagination = new Pagination(1);
             Map<Object, Object> params = new HashMap<Object, Object>();
-            params.put("customerNo", ozTtAdOlDto.getCustomerNo());
+            params.put("nickName", ozTtAdOlDto.getNickName());
+            params.put("orderNo", ozTtAdOlDto.getOrderNo());
             params.put("orderStatus", ozTtAdOlDto.getOrderStatus());
             params.put("payment", ozTtAdOlDto.getPayment());
             params.put("deliveryMethod", ozTtAdOlDto.getDeliveryMethod());
@@ -104,7 +109,7 @@ public class OzTtAdOlController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/pageSearch")
-    public String init(Model model, HttpServletRequest request, HttpSession session, String pageNo) {
+    public String pageSearch(Model model, HttpServletRequest request, HttpSession session, String pageNo) {
         try {
             OzTtAdOlDto ozTtAdOlDto = (OzTtAdOlDto) session.getAttribute("ozTtAdOlDto");
             
@@ -114,7 +119,8 @@ public class OzTtAdOlController extends BaseController {
             
             Pagination pagination = new Pagination(Integer.valueOf(pageNo));
             Map<Object, Object> params = new HashMap<Object, Object>();
-            params.put("customerNo", ozTtAdOlDto.getCustomerNo());
+            params.put("nickName", ozTtAdOlDto.getNickName());
+            params.put("orderNo", ozTtAdOlDto.getOrderNo());
             params.put("orderStatus", ozTtAdOlDto.getOrderStatus());
             params.put("payment", ozTtAdOlDto.getPayment());
             params.put("deliveryMethod", ozTtAdOlDto.getDeliveryMethod());

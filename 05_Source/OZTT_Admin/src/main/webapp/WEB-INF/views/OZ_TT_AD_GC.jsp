@@ -55,7 +55,7 @@
   						$("#groupDesc").val(data.resMap.groupDesc);
   						$("#groupReminder").val(data.resMap.groupReminder);
   						$("#groupRule").val(data.resMap.groupRule);
-  						if (data.resMap.openflg == '1'){
+  						if (data.resMap.openflg == '0'){
   							$("#isGroupOpenFlag0").attr("checked", true);
   						} else {
   							$("#isGroupOpenFlag1").attr("checked", true);
@@ -101,7 +101,7 @@
 				return false;
 			}
 			var openFlag = "0";
-			if ($("#isGroupOpenFlag0").attr("checked")) {
+			if ($("#isGroupOpenFlag1").attr("checked")) {
 				openFlag = "1";
 			}
 			
@@ -363,7 +363,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_GC_DIALOG_number" /></label>
 							<div class="col-md-8">
-								<input type="text" id="goodsGroupNumber" class="input-small form-control"></input>
+								<input type="text" id="goodsGroupNumber" class="input-small form-control textright"></input>
 							</div>
 						</div>
 						<div class="form-group">
@@ -408,11 +408,11 @@
 							<label class="col-md-4 control-label"><fmt:message key="OZ_TT_AD_GC_DIALOG_isOpen" /></label>
 							<div class="radio-list col-md-8">
 								<label class="radio-inline">
-									<input type="radio" name="isOpenFlag" id="isGroupOpenFlag0" value="1"></input>
+									<input type="radio" name="isOpenFlag" id="isGroupOpenFlag0" value="0"></input>
 								 	<fmt:message key="COMMON_NO" />
 								</label>
 								<label class="radio-inline">
-									<input type="radio" name="isOpenFlag" id="isGroupOpenFlag1" value="0"></input>
+									<input type="radio" name="isOpenFlag" id="isGroupOpenFlag1" value="1"></input>
 								 	<fmt:message key="COMMON_YES" />
 								</label>
 							

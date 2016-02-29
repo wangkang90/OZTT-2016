@@ -172,7 +172,7 @@
 					</li>
 				</ul>
 			</li>
-			<li>
+			<li id="groupviewLi">
 				<a href="javascript:;">
 					<i class="fa fa-group"></i>
 					<span class="title">
@@ -243,6 +243,13 @@
 		$("#memberLi").addClass("active")
 		$("#memberLi").click();
 	}
+	
+	if (currentPath.indexOf("OZ_TT_AD_GC") > 0) {
+		$("#groupviewLi").find("span.arrow").addClass("open");
+		$("#groupviewLi").addClass("active")
+		$("#groupviewLi").click();
+	}
+	
 	
 	if (currentPath.indexOf("OZ_TT_AD_GD") > 0) {
 		var goodsId = $("#goodsId").val();

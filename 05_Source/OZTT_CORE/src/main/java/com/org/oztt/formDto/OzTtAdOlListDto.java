@@ -26,6 +26,10 @@ public class OzTtAdOlListDto {
     private String address;
     
     private String atHomeTime;
+    
+    private String detailNo;
+    
+    private String nickName;
 
     public String getCustomerNo() {
         return customerNo;
@@ -105,5 +109,21 @@ public class OzTtAdOlListDto {
 
     public void setDeliveryMethodView(String deliveryMethodView) {
         this.deliveryMethodView = deliveryMethodView;
+    }
+
+    public String getDetailNo() {
+        return detailNo;
+    }
+
+    public void setDetailNo(String detailNo) {
+        this.detailNo = detailNo;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

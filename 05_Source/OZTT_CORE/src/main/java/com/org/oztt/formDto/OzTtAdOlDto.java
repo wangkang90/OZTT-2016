@@ -8,6 +8,10 @@ package com.org.oztt.formDto;
  */
 public class OzTtAdOlDto {
     
+    private String nickName;
+    
+    private String orderNo;
+    
     private String customerNo;
     
     private String orderStatus;
@@ -66,6 +70,22 @@ public class OzTtAdOlDto {
 
     public void setDeliveryMethod(String deliveryMethod) {
         this.deliveryMethod = deliveryMethod;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
 }

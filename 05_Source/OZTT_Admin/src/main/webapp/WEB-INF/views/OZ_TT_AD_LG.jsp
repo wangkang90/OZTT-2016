@@ -75,6 +75,22 @@
 	
 
 </script>
+<style type="text/css">
+
+.error {
+	max-width:25px;
+	white-space:nowrap;
+	color: white;
+	line-height: 30px;
+	padding-left: 5px;
+	display: inline-block;
+	position: absolute;
+	top:1px; right:-30px;
+	z-index: 1;
+	overflow:hidden;
+}
+
+</style>
 </head>
 <!-- BEGIN BODY -->
 <body class="login">
@@ -90,25 +106,25 @@
 	<!-- BEGIN LOGIN FORM -->
 	<form:form class="login-form" action="" method="post" id="loginForm" modelAttribute="ozTtAdLgDto" commandName="ozTtAdLgDto">
 		<h3 class="form-title"><fmt:message key="OZ_TT_AD_LG_h3" /></h3>
-		<div class="form-group">
+		<div class="form-group col-md-12" style="padding-left: 0px">
 			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
 			<label class="control-label visible-ie8 visible-ie9"><fmt:message key="OZ_TT_AD_LG_username" /></label>
 			<div class="input-icon">
 				<i class="fa fa-user"></i>
-				<form:input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" path="username" id="username"/>
+				<form:input class="form-control" type="text" autocomplete="off" placeholder="Username" path="username" id="username"/>
 			</div>
 		</div>
-		<div class="form-group">
+		<div class="form-group col-md-12" style="padding-left: 0px">
 			<label class="control-label visible-ie8 visible-ie9"><fmt:message key="OZ_TT_AD_LG_password" /></label>
 			<div class="input-icon">
 				<i class="fa fa-lock"></i>
-				<form:input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" path="password" id="password"/>
+				<form:input class="form-control" type="password" autocomplete="off" placeholder="Password" path="password" id="password"/>
 			</div>
 		</div>
-		<div class="form-actions">
+		<div class="form-actions" style="padding-right: 45px">
 <!-- 			<label class="checkbox"> -->
 <%-- 			<input type="checkbox" name="remember" value="1"/><fmt:message key="OZ_TT_AD_LG_remember" /></label> --%>
-			<button type="submit" class="btn green pull-right" onclick="adminLogin()">
+			<button type="button" class="btn green pull-right" onclick="adminLogin()">
 			<fmt:message key="OZ_TT_AD_LG_loginbtn" /> <i class="m-icon-swapright m-icon-white"></i>
 			</button>
 		</div>

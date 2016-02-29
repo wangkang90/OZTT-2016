@@ -470,7 +470,17 @@ public class OrderServiceImpl extends BaseService implements OrderService {
 
     @Override
     public PagingResult<OzTtAdOlListDto> getAllOrderInfoForAdmin(Pagination pagination) throws Exception {
-        return tConsOrderDao.getAllOrderInfoForAdmin(pagination);
+        PagingResult<OzTtAdOlListDto> dtoPage =  tConsOrderDao.getAllOrderInfoForAdmin(pagination);
+        if (dtoPage.getResultList() != null && dtoPage.getResultList().size() > 0) {
+            int i = 0;
+            for (OzTtAdOlListDto detail : dtoPage.getResultList()) {
+                detail.setDetailNo(String.valueOf((dtoPage.getCurrentPage()- 1) * dtoPage.getPageSize() + ++i));
+                detail.setOrderStatusView(CommonEnum.HandleFlag.getEnumLabel(detail.getOrderStatusView()));
+                detail.setPaymentMethod(CommonEnum.PaymentMethod.getEnumLabel(detail.getPaymentMethod()));
+                detail.setDeliveryMethodView(CommonEnum.DeliveryMethod.getEnumLabel(detail.getDeliveryMethodView()));
+            }
+        }
+        return dtoPage;
     }
 
     @Override
