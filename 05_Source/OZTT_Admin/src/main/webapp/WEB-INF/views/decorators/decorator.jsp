@@ -46,11 +46,11 @@
 					<i class="fa fa-angle-down"></i>
 				</a>
 				<ul class="dropdown-menu">
-					<li>
+					<%-- <li>
 						<a href="extra_profile.html">
 							<i class="fa fa-user"></i> <fmt:message key="OZ_TT_AD_MN_myprofile" />
 						</a>
-					</li>
+					</li> --%>
 					<li>
 						<a href="${pageContext.request.contextPath}/OZ_TT_AD_LG/logout">
 							<i class="fa fa-key"></i> <fmt:message key="OZ_TT_AD_MN_logout" />
@@ -245,8 +245,23 @@
 	}
 	
 	if (currentPath.indexOf("OZ_TT_AD_GD") > 0) {
-		$("#fileNormalPic").fileinput({
-	        uploadUrl: '${pageContext.request.contextPath}/COMMON/uploadThumbFile?goodId='+goodsId,
+		var goodsId = $("#goodsId").val();
+		var previewThumbJson = [];
+		var preThumbConfigList = [];
+		if ($("#goodsThumbnail").val() != null && $("#goodsThumbnail").val() != "") {
+			var tempImg = '<img src="{0}" class="file-preview-image" style="width:auto;height:160px;"/>';
+			previewThumbJson.push(tempImg.replace('{0}',saveImgUrl + goodsId + '/' + $("#goodsThumbnail").val()));
+			var tjson = {caption: $("#goodsThumbnail").val(), // 展示的文件名  
+	                width: '120px',   
+	                url: '${ctx}/COMMON/deleteThumbFile', // 删除url  
+	                key: $("#goodsThumbnail").val(), // 删除是Ajax向后台传递的参数  
+	                extra: {fileId: $("#goodsThumbnail").val(), goodId:goodsId}  
+	            };
+			preThumbConfigList.push(tjson);
+		}
+		
+		$("#fileThumbnailPic").fileinput({
+	        uploadUrl: '${pageContext.request.contextPath}/COMMON/uploadFile?goodId='+goodsId,
 	        allowedFileExtensions : ['jpg', 'png','gif'],
 	        uploadAsync: true,  
 			showCaption: true,  
@@ -261,48 +276,41 @@
 			initialPreviewShowDelete:true,  
 			initialPreview: previewThumbJson,  
 	        allowedFileTypes: ['image'],
-	        initialPreviewConfig: preConfigList,  
+	        initialPreviewConfig: preThumbConfigList,  
 	        slugCallback: function(filename) {
 	            return filename.replace('(', '_').replace(']', '_');
 	        }
 		}).on("fileuploaded", function(event, outData) {  
             //文件上传成功后返回的数据， 此处我只保存返回文件的id  
-            var result = outData.fileId;  
+            var result = outData.response.fileId;  
             // 对应的input 赋值  
-            $('#fileNormalPic').val(result).change();
+            $("#goodsThumbnail").val(result);
             
-            if (normalImagesStr == "") {
-            	$("#goodsNormalPic").val(result);
-            } else {
-            	$("#goodsNormalPic").val("," + result);
-            }
      	});
 	    // 以上是缩略图
 	    
 	    // 以下是商品图
 		var normalImagesStr = $("#goodsNormalPic").val();
-		var goodsId = $("#goodsId").val();
 	    var imagesArr = normalImagesStr.split(",");
-	    var preList = new Array();
-	    for (var i = 0; i < imagesArr.length; i++) {
-	    	var tempImg = '<img src="{0}" class="file-preview-image" style="width:auto;height:160px;"/>';
-	    	preList[i] = tempImg.replace('{0}',saveImgUrl + goodsId + '/' + imagesArr[i]);
+	    var preList = [];
+	    var preConfigList = [];
+	    if (normalImagesStr != null && normalImagesStr != "" && imagesArr.length > 0) {
+	    	for (var i = 0; i < imagesArr.length; i++) {
+		    	var tempImg = '<img src="{0}" class="file-preview-image" style="width:auto;height:160px;"/>';
+		    	preList.push(tempImg.replace('{0}',saveImgUrl + goodsId + '/' + imagesArr[i]));
+		    }
+	    	// 与上面 预览图片json数据组 对应的config数据  
+		    for ( var i = 0; i < imagesArr.length; i++) {
+		        var array_element = imagesArr[i];  
+		        var tjson = {caption: array_element, // 展示的文件名  
+		                    width: '120px',   
+		                    url: '${ctx}/COMMON/deleteFile', // 删除url  
+		                    key: array_element, // 删除是Ajax向后台传递的参数  
+		                    extra: {fileId: array_element, goodId:goodsId}  
+		                    };  
+		        preConfigList.push(tjson);  
+		     }  
 	    }
-	    
-	    var previewJson = preList;
-	    
-	 	// 与上面 预览图片json数据组 对应的config数据  
-	     var preConfigList = new Array();  
-	     for ( var i = 0; i < imagesArr.length; i++) {  
-	        var array_element = imagesArr[i];  
-	        var tjson = {caption: "文件名", // 展示的文件名  
-	                    width: '120px',   
-	                    url: '${ctx}/COMMON/deleteFile', // 删除url  
-	                    key: array_element, // 删除是Ajax向后台传递的参数  
-	                    extra: {fileId: array_element, goodId:goodsId}  
-	                    };  
-	        preConfigList[i] = tjson;  
-	     }  
 		
 		$("#fileNormalPic").fileinput({
 	        uploadUrl: '${pageContext.request.contextPath}/COMMON/uploadFile?goodId='+goodsId,
@@ -318,23 +326,25 @@
 			minFileCount:1,
 			maxFileCount: 10, 
 			initialPreviewShowDelete:true,  
-			initialPreview: previewJson,  
+			initialPreview: preList,  
 	        allowedFileTypes: ['image'],
 	        initialPreviewConfig: preConfigList,  
 	        slugCallback: function(filename) {
 	            return filename.replace('(', '_').replace(']', '_');
 	        }
-		}).on("fileuploaded", function(event, outData) {  
+		}).on("fileuploaded", function(event, outData) {
             //文件上传成功后返回的数据， 此处我只保存返回文件的id  
-            var result = outData.fileId;  
+            var result = outData.response.fileId;  
             // 对应的input 赋值  
-            $('#fileNormalPic').val(result).change();
-            
-            if (normalImagesStr == "") {
+            if ($("#goodsNormalPic").val() == "") {
             	$("#goodsNormalPic").val(result);
             } else {
-            	$("#goodsNormalPic").val("," + result);
+            	$("#goodsNormalPic").val($("#goodsNormalPic").val() + "," + result);
             }
+     	}).on("filedeleted", function(event, extraData) {  
+            //文件上传成功后返回的数据， 此处我只保存返回文件的id  
+            var result = extraData;
+            $("#goodsNormalPic").val($("#goodsNormalPic").val().replace(result + ",","").replace("," + result,"").replace(result,""));
      	});
 	}
 	

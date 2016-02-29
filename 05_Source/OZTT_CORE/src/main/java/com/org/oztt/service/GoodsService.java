@@ -337,7 +337,7 @@ public interface GoodsService {
      * @param tGoods
      * @throws Exception
      */
-    public void saveGoodsForAdmin(TGoods tGoods) throws Exception;
+    public String saveGoodsForAdmin(TGoods tGoods) throws Exception;
     
     /**
      * 商品保存
