@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.formDto.OzTtAdClDto;
+import com.org.oztt.service.CommonService;
 import com.org.oztt.service.GoodsService;
 
 /**
@@ -25,6 +26,9 @@ public class OzTtAdClController extends BaseController {
 
     @Resource
     private GoodsService goodsService;
+    
+    @Resource
+    private CommonService commonService;
     /**
      * 分类一览
      * 
@@ -36,6 +40,7 @@ public class OzTtAdClController extends BaseController {
     public String init(Model model, HttpServletRequest request, HttpSession session) {
         try {
             List<OzTtAdClDto> dtoList = goodsService.getAllClassficationForAdmin();
+            model.addAttribute("categoryList", commonService.getMyCategroy());
             model.addAttribute("itemList", dtoList);
             return "OZ_TT_AD_CL";
         }

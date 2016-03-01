@@ -52,7 +52,32 @@
 				</div>
 			</div>
 			<!-- END PAGE HEADER-->
+			<form:form cssClass="form-horizontal" action="" method="post" id="olForm" modelAttribute="" commandName="" role="form">
 			<div class="form-body">
+				<div class="form-group">
+					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_CL_category" /></label>
+					<div class="col-md-3">
+						<select class="bs-select input-medium form-control">
+							<optgroup label="">
+								<option value=""></option>
+							</optgroup>
+							<c:forEach var="faList" items="${ categoryList }">
+								<optgroup label="${faList.fatherClass.classid }：${faList.fatherClass.classname }">
+									<c:forEach var="chList" items="${ faList.childrenClass }">
+									<option value="${ chList.fatherClass.classid }">${ chList.fatherClass.classid }：${ chList.fatherClass.classname }</option>
+									</c:forEach>
+								</optgroup>
+                   				
+                   			</c:forEach>
+							
+						</select>
+						
+					</div>
+					
+					
+					<div class="col-md-8">
+					</div>
+				</div>
 				<div class="form-group">
 					<div class="col-md-12 textright">
 						<button type="button" class="btn green mybtn" onclick="newClassfication()"><i class="fa fa-plus"></i><fmt:message key="COMMON_NEW" /></button>
@@ -121,7 +146,7 @@
 				</div>
 				
 			</div>
-			
+			</form:form>
 			
 		</div>
 	</div>

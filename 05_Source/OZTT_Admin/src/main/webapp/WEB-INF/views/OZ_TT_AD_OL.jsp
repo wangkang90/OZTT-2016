@@ -68,11 +68,24 @@
 			<!-- END PAGE HEADER-->
 			<form:form cssClass="form-horizontal" action="" method="post" id="olForm" modelAttribute="ozTtAdOlDto" commandName="ozTtAdOlDto" role="form">
 			<div class="form-body">
+			
 				<div class="form-group">
-					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_OL_customer" /></label>
+					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_OL_nickname" /></label>
 					<div class="col-md-3">
-						<form:input type="text" path="customerNo" class="input-medium form-control"></form:input>
+						<form:input type="text" path="nickName" class="input-medium form-control"></form:input>
 					</div>
+					
+					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_OL_orderNo" /></label>
+					<div class="col-md-3">
+						<form:input type="text" path="orderNo" class="input-medium form-control"></form:input>
+					</div>
+					
+					<div class="col-md-4">
+						
+					</div>
+				</div>
+				
+				<div class="form-group">
 					
 					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_OL_orderStatus" /></label>
 					<div class="col-md-3">
@@ -88,18 +101,14 @@
 					
 					<label class="col-md-1 control-label"><fmt:message key="OZ_TT_AD_OL_payment" /></label>
 					<div class="col-md-3">
-						<form:select class="input-medium form-control" path="payment">
+						<form:select class="input-medium form-control" path="payment">	
 							<form:option value=""></form:option>
 							<c:forEach var="seList" items="${ paymentSelect }">
                    				<form:option value="${ seList.key }">${ seList.value }</form:option>
                    			</c:forEach>
 						</form:select>
 					</div>
-				</div>
-				
-				
-				
-				<div class="form-group">
+					
 					<label class="col-md-1 control-label"><fmt:message key="OZ_TT_AD_OL_delivery" /></label>
 					<div class="col-md-3">
 						<form:select class="input-medium form-control" path="deliveryMethod">
@@ -109,6 +118,10 @@
                    			</c:forEach>
 						</form:select>
 					</div>
+				</div>
+				
+				<div class="form-group">
+					
 					
 					<label class="col-md-1 control-label"><fmt:message key="OZ_TT_AD_OL_time" /></label>
 					<div class="col-md-6">
@@ -121,7 +134,7 @@
 						</div>
 					</div>
 					
-					<div class="col-md-1"></div>
+					<div class="col-md-5"></div>
 				</div>
 				
 				<div class="form-group textright">
@@ -135,10 +148,16 @@
 					<thead>
 					<tr>
 						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_OL_DE_customer" />
+							 <fmt:message key="OZ_TT_AD_OL_DE_detailNo" />
 						</th>
 						<th scope="col">
 							 <fmt:message key="OZ_TT_AD_OL_DE_orderNo" />
+						</th>
+						<th scope="col">
+							 <fmt:message key="OZ_TT_AD_OL_DE_customer" />
+						</th>
+						<th scope="col">
+							 <fmt:message key="OZ_TT_AD_OL_DE_nickName" />
 						</th>
 						<th scope="col">
 							 <fmt:message key="OZ_TT_AD_OL_DE_orderStatusView" />
@@ -147,22 +166,13 @@
 							 <fmt:message key="OZ_TT_AD_OL_DE_orderTime" />
 						</th>
 						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_OL_DE_orderAmount" />
+							 <fmt:message key="OZ_TT_AD_OL_DE_paymentMethod" />
 						</th>
 						<th scope="col">
 							 <fmt:message key="OZ_TT_AD_OL_DE_deliveryMethod" />
 						</th>
 						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_OL_DE_deliveryCost" />
-						</th>
-						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_OL_DE_paymentMethod" />
-						</th>
-						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_OL_DE_address" />
-						</th>
-						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_OL_DE_atHomeTime" />
+							 <fmt:message key="OZ_TT_AD_OL_DE_orderAmount" />
 						</th>
 						<th scope="col">
 							 <fmt:message key="OZ_TT_AD_OL_DE_control" />
@@ -173,10 +183,16 @@
 					<c:forEach var="orderItem" items="${ pageInfo.resultList }">
 					<tr>
 						<td>
-							 ${orderItem.customerNo }
+							 ${orderItem.detailNo }
 						</td>
 						<td>
 							 ${orderItem.orderNo }
+						</td>
+						<td>
+							 ${orderItem.customerNo }
+						</td>
+						<td>
+							 ${orderItem.nickName }
 						</td>
 						<td>
 							 ${orderItem.orderStatusView }
@@ -185,22 +201,13 @@
 							 ${orderItem.orderTime }
 						</td>
 						<td>
-							 ${orderItem.orderAmount }
-						</td>
-						<td>
 							 ${orderItem.paymentMethod }
-						</td>
-						<td>
-							 ${orderItem.deliveryCost }
 						</td>
 						<td>
 							 ${orderItem.deliveryMethodView }
 						</td>
 						<td>
-							 ${orderItem.address }
-						</td>
-						<td>
-							 ${orderItem.atHomeTime }
+							 ${orderItem.orderAmount }
 						</td>
 						<td>
 							<button type="button" class="btn green mybtn" onclick="toDetail('${orderItem.orderNo}')">

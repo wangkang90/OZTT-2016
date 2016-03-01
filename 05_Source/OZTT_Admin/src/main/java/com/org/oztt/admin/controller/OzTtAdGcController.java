@@ -144,7 +144,7 @@ public class OzTtAdGcController extends BaseController {
             res.put("goodsGroupNumber", tGoodsGroup.getGroupmaxquantity().toString());
             res.put("dataFromGroup", DateFormatUtils.date2StringWithFormat(tGoodsGroup.getValidperiodstart(),
                     DateFormatUtils.PATTEN_YMD2));
-            res.put("dataToGroup", DateFormatUtils.date2StringWithFormat(tGoodsGroup.getValidperiodstart(),
+            res.put("dataToGroup", DateFormatUtils.date2StringWithFormat(tGoodsGroup.getValidperiodend(),
                     DateFormatUtils.PATTEN_YMD2));
             res.put("groupComment", tGoodsGroup.getGroupcomments());
             res.put("groupDesc", tGoodsGroup.getGroupdesc());
