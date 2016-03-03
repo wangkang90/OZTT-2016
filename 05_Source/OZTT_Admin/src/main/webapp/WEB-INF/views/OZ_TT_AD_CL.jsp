@@ -55,7 +55,7 @@
 			<form:form cssClass="form-horizontal" action="" method="post" id="olForm" modelAttribute="" commandName="" role="form">
 			<div class="form-body">
 				<div class="form-group">
-					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_CL_category" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_CL_category" /></label>
 					<div class="col-md-3">
 						<select class="bs-select input-medium form-control">
 							<optgroup label="">
@@ -75,7 +75,7 @@
 					</div>
 					
 					
-					<div class="col-md-8">
+					<div class="col-md-7">
 					</div>
 				</div>
 				<div class="form-group">

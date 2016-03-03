@@ -57,17 +57,53 @@
 			<form:form cssClass="form-horizontal" action="" method="post" id="olForm" modelAttribute="ozTtAdOdDto" commandName="ozTtAdOdDto" role="form">
 			<div class="form-body">
 				<div class="form-group">
+					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_OD_orderNo" /></label>
+					<div class="col-md-3">
+						<label class="control-label textleft">${ozTtAdOdDto.orderNo}</label>
+					</div>
 					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_OD_customer" /></label>
 					<div class="col-md-3">
-						<label class="control-label textleft">100012000122</label>
+						<label class="control-label textleft">${ozTtAdOdDto.customerNo}</label>
 					</div>
 					
 					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_OD_orderStatus" /></label>
 					<div class="col-md-3">
-						<label class="control-label textleft">已经付款</label>
+						<label class="control-label textleft">${ozTtAdOdDto.orderStatusView}</label>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_OD_receiver" /></label>
+					<div class="col-md-3">
+						<label class="control-label textleft">${ozTtAdOdDto.receiver}</label>
 					</div>
 					
-					<div class="col-md-4"></div>
+					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_OD_phone" /></label>
+					<div class="col-md-3">
+						<label class="control-label textleft">${ozTtAdOdDto.phone}</label>
+					</div>
+					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_OD_receaddress" /></label>
+					<div class="col-md-3">
+						<label class="control-label textleft">${ozTtAdOdDto.receAddress}</label>
+					</div>
+					
+					
+				</div>
+				
+				<div class="form-group">
+					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_OD_yunfei" /></label>
+					<div class="col-md-3">
+						<label class="control-label textleft">${ozTtAdOdDto.yunfei}</label>
+					</div>
+					<label class="col-md-1 control-label"><fmt:message key="OZ_TT_AD_OD_wantarrivetime" /></label>
+					<div class="col-md-3">
+						<label class="control-label textleft">${ozTtAdOdDto.wantArriveTime}</label>
+					</div>
+					
+					
+					<div class="col-md-4">
+						
+					</div>
 				</div>
 				
 				<h4 class="form-section"></h4>
@@ -77,13 +113,13 @@
 					<thead>
 					<tr>
 						<th scope="col">
+							 <fmt:message key="COMMON_NUM" />
+						</th>
+						<th scope="col">
 							 <fmt:message key="OZ_TT_AD_OD_DE_goodsId" />
 						</th>
 						<th scope="col">
 							 <fmt:message key="OZ_TT_AD_OD_DE_goodsName" />
-						</th>
-						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_OD_DE_goodsProperties" />
 						</th>
 						<th scope="col">
 							 <fmt:message key="OZ_TT_AD_OD_DE_goodsPrice" />
@@ -100,13 +136,13 @@
 					<c:forEach var="orderItem" items="${ ozTtAdOdDto.itemList }">
 					<tr>
 						<td>
+							 ${orderItem.detailNo }
+						</td>
+						<td>
 							 ${orderItem.goodsId }
 						</td>
 						<td>
 							 ${orderItem.goodsName }
-						</td>
-						<td>
-							 ${orderItem.goodsProperties }
 						</td>
 						<td>
 							 ${orderItem.goodsPrice }
@@ -134,7 +170,6 @@
 				<div class="col-md-8 textleft">
 					<c:if test="${ ozTtAdOdDto.orderStatus == '0' }">
 					<button type="button" class="btn green mybtn" onclick="changeOrderStatus('${ozTtAdOdDto.orderNo}','1')"><i class="fa fa-check"></i><fmt:message key="OZ_TT_AD_OD_changeToPaySu" /></button>
-					
 					<span class="spanTip"><fmt:message key="OZ_TT_AD_OD_changeToPaySuTip" /></span>
 					</c:if>
 					<c:if test="${ ozTtAdOdDto.orderStatus == '1' }">

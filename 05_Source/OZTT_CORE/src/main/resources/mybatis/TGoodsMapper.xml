@@ -518,6 +518,9 @@
 		<if test="isNewSale != null and isNewSale != ''">
 			and A.newSaleFlg = #{isNewSale,jdbcType=VARCHAR}
 		</if>
+		<if test="goodsClass != null and goodsClass != ''">
+			and A.classId = #{goodsClass,jdbcType=VARCHAR}
+		</if>
 		<if test="isSetPrice == '1'">
 			and B.goodsClassValue is not null
 		</if>
@@ -537,6 +540,9 @@
 		</if>
 		<if test="isNewSale != null and isNewSale != ''">
 			and A.newSaleFlg = #{isNewSale,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsClass != null and goodsClass != ''">
+			and A.classId = #{goodsClass,jdbcType=VARCHAR}
 		</if>
 		<if test="isSetPrice == '1'">
 			and B.goodsClassValue is not null

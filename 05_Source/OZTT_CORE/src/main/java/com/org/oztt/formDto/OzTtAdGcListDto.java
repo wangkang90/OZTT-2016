@@ -26,6 +26,8 @@ public class OzTtAdGcListDto {
     private String isOpen;
 
     private String groupId;
+    
+    private String detailNo;
 
     public String getGoodsId() {
         return goodsId;
@@ -105,5 +107,13 @@ public class OzTtAdGcListDto {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public String getDetailNo() {
+        return detailNo;
+    }
+
+    public void setDetailNo(String detailNo) {
+        this.detailNo = detailNo;
     }
 }

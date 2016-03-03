@@ -470,11 +470,11 @@ public class OrderServiceImpl extends BaseService implements OrderService {
 
     @Override
     public PagingResult<OzTtAdOlListDto> getAllOrderInfoForAdmin(Pagination pagination) throws Exception {
-        PagingResult<OzTtAdOlListDto> dtoPage =  tConsOrderDao.getAllOrderInfoForAdmin(pagination);
+        PagingResult<OzTtAdOlListDto> dtoPage = tConsOrderDao.getAllOrderInfoForAdmin(pagination);
         if (dtoPage.getResultList() != null && dtoPage.getResultList().size() > 0) {
             int i = 0;
             for (OzTtAdOlListDto detail : dtoPage.getResultList()) {
-                detail.setDetailNo(String.valueOf((dtoPage.getCurrentPage()- 1) * dtoPage.getPageSize() + ++i));
+                detail.setDetailNo(String.valueOf((dtoPage.getCurrentPage() - 1) * dtoPage.getPageSize() + ++i));
                 detail.setOrderStatusView(CommonEnum.HandleFlag.getEnumLabel(detail.getOrderStatusView()));
                 detail.setPaymentMethod(CommonEnum.PaymentMethod.getEnumLabel(detail.getPaymentMethod()));
                 detail.setDeliveryMethodView(CommonEnum.DeliveryMethod.getEnumLabel(detail.getDeliveryMethodView()));
@@ -487,20 +487,43 @@ public class OrderServiceImpl extends BaseService implements OrderService {
     public OzTtAdOdDto getOrderDetailForAdmin(String orderNo) throws Exception {
         // 获取订单
         TConsOrder tConsOrder = this.selectByOrderId(orderNo);
+
         // 获取订单明细
         List<ContCartItemDto> detailList = tConsOrderDetailsDao.selectByOrderId(orderNo);
 
         OzTtAdOdDto dto = new OzTtAdOdDto();
         dto.setOrderNo(orderNo);
         dto.setCustomerNo(tConsOrder.getCustomerno());
-        dto.setOrderStatusView(tConsOrder.getHandleflg());
+        dto.setOrderStatusView(CommonEnum.HandleFlag.getEnumLabel(tConsOrder.getHandleflg()));
         dto.setOrderStatus(tConsOrder.getHandleflg());
+        dto.setDeliveryMethodFlag(tConsOrder.getDeliverymethod());
+        if (tConsOrder.getAddressid() != 0) {
+            // 获取地址
+            TAddressInfo tAddressInfo = tAddressInfoDao.selectByPrimaryKey(tConsOrder.getAddressid());
+            if (tAddressInfo != null) {
+                dto.setReceiver(tAddressInfo.getReceiver());
+                dto.setReceAddress(tAddressInfo.getAddressdetails() + " "
+                        + tSuburbDeliverFeeDao.selectByPrimaryKey(Long.valueOf(tAddressInfo.getSuburb())).getSuburb()
+                        + " " + tAddressInfo.getState() + " " + tAddressInfo.getCountrycode());
+                dto.setPhone(tAddressInfo.getContacttel());
+            }
+        }
+
+        String homeTime = tConsOrder.getHomedeliverytime();
+        if (homeTime != null && homeTime.length() > 9) {
+            String date = DateFormatUtils.dateFormatFromTo(homeTime.substring(0, 8),
+                    DateFormatUtils.PATTEN_YMD_NO_SEPRATE, DateFormatUtils.PATTEN_YMD);
+            String time = CommonEnum.DeliveryTime.getEnumLabel(homeTime.substring(8));
+            dto.setWantArriveTime(date + " " + time);
+        }
+        dto.setYunfei(tConsOrder.getDeliverycost().toString());
 
         if (!CollectionUtils.isEmpty(detailList)) {
             List<OzTtAdOdListDto> itemList = new ArrayList<OzTtAdOdListDto>();
-
+            int i = 0;
             for (ContCartItemDto item : detailList) {
                 OzTtAdOdListDto odDto = new OzTtAdOdListDto();
+                odDto.setDetailNo(String.valueOf(++i));
                 odDto.setGoodsId(item.getGoodsId());
                 odDto.setGoodsName(item.getGoodsName());
                 odDto.setGoodsPic(item.getGoodsImage());

@@ -131,6 +131,15 @@ public interface GoodsService {
      * @throws Exception
      */
     public GoodItemDto getGoodAllItemDto(String goodId) throws Exception;
+    
+    /**
+     * 获取商品的所有属性
+     * 
+     * @param tGoodsAppendItems
+     * @return
+     * @throws Exception
+     */
+    public GoodItemDto getGroupAllItemDtoForPreview(String groupId) throws Exception;
 
     /**
      * 加入购物车

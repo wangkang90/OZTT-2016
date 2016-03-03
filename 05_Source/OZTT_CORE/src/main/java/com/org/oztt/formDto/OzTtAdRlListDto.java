@@ -37,6 +37,8 @@ public class OzTtAdRlListDto {
     private String deleteFlg;
 
     private String canlogin;
+    
+    private String detailNo;
 
     public String getCustomerNo() {
         return customerNo;
@@ -164,5 +166,13 @@ public class OzTtAdRlListDto {
 
     public void setCanlogin(String canlogin) {
         this.canlogin = canlogin;
+    }
+
+    public String getDetailNo() {
+        return detailNo;
+    }
+
+    public void setDetailNo(String detailNo) {
+        this.detailNo = detailNo;
     }
 }

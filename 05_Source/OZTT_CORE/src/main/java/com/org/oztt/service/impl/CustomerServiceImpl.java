@@ -212,7 +212,9 @@ public class CustomerServiceImpl extends BaseService implements CustomerService 
     public PagingResult<OzTtAdRlListDto> getAllCustomerInfoForAdmin(Pagination pagination) throws Exception {
         PagingResult<OzTtAdRlListDto> page = tCustomerBasicInfoDao.getAllCustomerInfoForAdmin(pagination);
         if (!CollectionUtils.isEmpty(page.getResultList())) {
+            int i = 0;
             for (OzTtAdRlListDto dto : page.getResultList()) {
+                dto.setDetailNo(String.valueOf((page.getCurrentPage() - 1) * page.getPageSize() + ++i));
                 dto.setBirthday(DateFormatUtils.date2StringWithFormat(
                         DateFormatUtils.string2DateWithFormat(dto.getBirthday(), DateFormatUtils.PATTEN_YMD_NO_SEPRATE),
                         DateFormatUtils.PATTEN_YMD2));

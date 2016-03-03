@@ -286,15 +286,20 @@ function checkHasFull(str) {
  * 
  * @param str
  */
+var BIGDECIMAL_PATTERN_FIVE_TWO = "99999.99";
+var BIGDECIMAL_PATTERN_SEVEN_TWO = "9999999.99";
+var BIGDECIMAL_PATTERN_NINE_TWO = "999999999.99";
 function checkDecimalSize(str, pattern) {
-	if(BIGDECIMAL_PATTERN_FIVE_TWO != pattern && BIGDECIMAL_PATTERN_SEVEN_TWO != pattern) {
+	if(BIGDECIMAL_PATTERN_FIVE_TWO != pattern && BIGDECIMAL_PATTERN_SEVEN_TWO != pattern && BIGDECIMAL_PATTERN_NINE_TWO != pattern) {
 		return false;
 	}
 	if (!checkDecimal(str)) {
 		return false;
 	}
-	var intPart = str.split(".")[0];
-	var decimalPart = str.split(".")[1];
+	var partArr = str.split(".");
+	
+	var intPart = partArr[0];
+	var decimalPart = partArr.length == 1 ? "" : partArr[1];
 	var intPartSize = 0;
 	var decimalPartSize = 0;
 	if(BIGDECIMAL_PATTERN_FIVE_TWO == pattern) {
@@ -302,6 +307,9 @@ function checkDecimalSize(str, pattern) {
 		decimalPartSize = 2;
 	} else if (BIGDECIMAL_PATTERN_SEVEN_TWO != pattern) {
 		intPartSize = 7;
+		decimalPartSize = 2;
+	} else if (BIGDECIMAL_PATTERN_NINE_TWO != pattern) {
+		intPartSize = 9;
 		decimalPartSize = 2;
 	}
 	if (intPart.length > intPartSize || decimalPart.length > decimalPartSize) {

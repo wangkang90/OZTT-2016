@@ -7,63 +7,74 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title><fmt:message key="OZ_TT_AD_GD_title" /></title>
+  <title><fmt:message key="OZ_TT_AD_PD_title" /></title>
   <script type="text/javascript">
   
   	function backToGoodsList(){
 		var pageNo = $("#pageNo").val();
 		if (pageNo == "") {
-			location.href= "${pageContext.request.contextPath}/OZ_TT_AD_GL/init";
+			location.href= "${pageContext.request.contextPath}/OZ_TT_AD_PL/init";
 		} else {
-			location.href= "${pageContext.request.contextPath}/OZ_TT_AD_GL/pageSearch?pageNo="+pageNo;
+			location.href= "${pageContext.request.contextPath}/OZ_TT_AD_PL/pageSearch?pageNo="+pageNo;
 		}
 		
 	}
   	function saveGoods(){
   		if (!validateForm()) return;
   		var targetForm = document.forms['olForm'];
-		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_GD/save";
+		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_PD/save";
 		targetForm.method = "POST";
 		targetForm.submit();
   	}
   	
   	var E0002 = '<fmt:message key="E0002" />';
+  	var E0003 = '<fmt:message key="E0003" />';
   	function validateForm(){
 		cleanFormError();
 		var goodsName = $("#goodsName").val();
 		var classId = $("#classId").val();
+		var goodsBrand = $("#goodsBrand").val();
 		var goodsThumbnail = $("#goodsThumbnail").val();
 		var goodsNormalPic = $("#goodsNormalPic").val();
 		var costPrice = $("#costPrice").val();
 		var sortOrder = $("#sortOrder").val();
 		if (goodsName == "") {
-			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_goodsname" />')
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PD_goodsname" />')
 			showErrorSpan($("#goodsName"), message);
 			return false;
 		}
 		if (classId == "") {
-			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_class" />')
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PD_class" />')
 			showErrorSpan($("#classId"), message);
 			return false;
 		}
+		if (goodsBrand == "") {
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PD_goodsBrand" />')
+			showErrorSpan($("#goodsBrand"), message);
+			return false;
+		}
 		if (goodsThumbnail == "") {
-			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_goodsThumbnail" />')
-			//showErrorSpan($("#goodsThumbnailDiv"), message);
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PD_goodsThumbnail" />')
+			alert(message);
 			return false;
 		}
 		if (goodsNormalPic == "") {
-			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_goodsNormalPic" />')
-			//showErrorSpan($("#goodsNormalPicDiv"), message);
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PD_goodsNormalPic" />')
+			alert(message);
 			return false;
 		}
 		if (costPrice == "") {
-			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_costPrice" />')
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PD_costPrice" />')
 			showErrorSpan($("#costPrice"), message);
 			return false;
 		}
 		if (sortOrder == "") {
-			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GD_sortOrder" />')
+			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PD_sortOrder" />')
 			showErrorSpan($("#sortOrder"), message);
+			return false;
+		}
+		if (!checkDecimalSize(costPrice,"999999999.99")) {
+			showErrorSpan($("#costPrice"), E0003);
 			return false;
 		}
 		return true;
@@ -99,7 +110,7 @@
 						</li>
 						<li>
 							<a href="#">
-								<fmt:message key="OZ_TT_AD_GD_title" />
+								<fmt:message key="OZ_TT_AD_PD_title" />
 							</a>
 						</li>
 					</ul>
@@ -110,14 +121,14 @@
 			<form:form cssClass="form-horizontal" action="" method="post" id="olForm" modelAttribute="ozTtAdGdDto" commandName="ozTtAdGdDto" role="form">
 			<div class="form-body">
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_goodsname" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_goodsname" /></label>
 					<div class="col-md-3">
 						<form:input type="text" path="goodsName" class="form-control" maxlength="50"></form:input>
 					</div>					
 					<div class="col-md-7"></div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_class" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_class" /></label>
 					<div class="col-md-3">
 						<form:select class="form-control" path="classId">
 							<form:option value=""></form:option>
@@ -129,28 +140,28 @@
 					<div class="col-md-7"></div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_goodsBrand" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_goodsBrand" /></label>
 					<div class="col-md-3">
 						<form:input type="text" path="goodsBrand" class="form-control" maxlength="50"></form:input>
 					</div>					
 					<div class="col-md-7"></div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_goodsDesc" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_goodsDesc" /></label>
 					<div class="col-md-3">
 						<form:input type="text" path="goodsDesc" class="form-control" maxlength="50"></form:input>
 					</div>					
 					<div class="col-md-7"></div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_goodsComments" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_goodsComments" /></label>
 					<div class="col-md-3">
 						<form:input type="text" path="goodsComments" class="form-control" maxlength="50"></form:input>
 					</div>					
 					<div class="col-md-7"></div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_goodsThumbnail" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_goodsThumbnail" /></label>
 					<div class="col-md-3">
 						<form:hidden path="goodsThumbnail"/>
 						<input id="fileThumbnailPic" type="file" name="file" class="file" data-max-file-count="1"/>
@@ -158,14 +169,14 @@
 					<div class="col-md-7"></div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_goodsNormalPic" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_goodsNormalPic" /></label>
 					<div class="col-md-10">
 						<form:hidden path="goodsNormalPic"/>
 						<input id="fileNormalPic" type="file" multiple name="file" class="file" data-overwrite-initial="false" data-min-file-count="1">
 					</div>					
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_onSaleFlg" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_onSaleFlg" /></label>
 					<div class="radio-list col-md-3">
 						<label class="radio-inline">
 						<form:radiobutton path="onSaleFlg" value="0"></form:radiobutton>
@@ -180,7 +191,7 @@
 					<div class="col-md-7"></div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_hotSaleFlg" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_hotSaleFlg" /></label>
 					<div class="radio-list col-md-3">
 						<label class="radio-inline">
 						<form:radiobutton path="hotSaleFlg" value="0"></form:radiobutton>
@@ -194,7 +205,7 @@
 					<div class="col-md-7"></div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_newSaleFlg" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_newSaleFlg" /></label>
 					<div class="radio-list col-md-3">
 						<label class="radio-inline">
 						<form:radiobutton path="newSaleFlg" value="0"></form:radiobutton>
@@ -208,16 +219,16 @@
 					<div class="col-md-7"></div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_costPrice" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_costPrice" /></label>
 					<div class="col-md-3">
-						<form:input type="text" path="costPrice" class="form-control" maxlength="50"></form:input>
+						<form:input type="text" path="costPrice" class="form-control" maxlength="12"></form:input>
 					</div>					
 					<div class="col-md-7"></div>
 				</div>
 				<div class="form-group">
-					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_GD_sortOrder" /></label>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PD_sortOrder" /></label>
 					<div class="col-md-3">
-						<form:input type="text" path="sortOrder" class="form-control" maxlength="50"></form:input>
+						<form:input type="number" path="sortOrder" class="form-control" maxlength="8"></form:input>
 					</div>					
 					<div class="col-md-7"></div>
 				</div>

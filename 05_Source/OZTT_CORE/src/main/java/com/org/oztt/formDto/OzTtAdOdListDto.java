@@ -15,6 +15,8 @@ public class OzTtAdOdListDto {
     private String goodsProperties;
 
     private String goodsTotalAmount;
+    
+    private String detailNo;
 
     public String getGoodsId() {
         return goodsId;
@@ -70,5 +72,13 @@ public class OzTtAdOdListDto {
 
     public void setGoodsTotalAmount(String goodsTotalAmount) {
         this.goodsTotalAmount = goodsTotalAmount;
+    }
+
+    public String getDetailNo() {
+        return detailNo;
+    }
+
+    public void setDetailNo(String detailNo) {
+        this.detailNo = detailNo;
     }
 }

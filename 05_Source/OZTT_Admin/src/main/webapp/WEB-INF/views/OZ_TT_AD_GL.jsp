@@ -9,36 +9,150 @@
   <meta charset="utf-8">
   <title><fmt:message key="OZ_TT_AD_GL_title" /></title>
   
-  <script type="text/javascript">
-  	function searchGoods(){
-  		var targetForm = document.forms['olForm'];
-		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_GL/search";
-		targetForm.method = "POST";
-		targetForm.submit();
-  	}
-  	
-  	function pageSelected(pageNo){
-  		var targetForm = document.forms['olForm'];
-		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_GL/pageSearch?pageNo="+pageNo;
-		targetForm.method = "POST";
-		targetForm.submit();
-  	}
-  	
-  	function toDetail(goodsId){
-  		var pageNo = $("#pageNo").val();
-  		var targetForm = document.forms['olForm'];
-		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_GD/init?goodsId="+goodsId+"&pageNo="+pageNo;
-		targetForm.method = "POST";
-		targetForm.submit();
-  	}
-  	
-  	function newGoods(){
-  		var targetForm = document.forms['olForm'];
-		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_GD/init";
-		targetForm.method = "POST";
-		targetForm.submit();
-  	}
-  
+  <script type="text/javascript">		
+		function searchGroup(){
+	  		var targetForm = document.forms['olForm'];
+			targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_GL/search";
+			targetForm.method = "POST";
+			targetForm.submit();
+	  	}
+	  	
+	  	function pageSelected(pageNo){
+	  		var targetForm = document.forms['olForm'];
+			targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_GL/pageSearch?pageNo="+pageNo;
+			targetForm.method = "POST";
+			targetForm.submit();
+	  	}
+	  	
+	  	function setGroup(groupId,goodsId, obj) {
+	  		cleanFormError();
+	  		var nametd = $(obj).parent().parent().find('td')[2];
+	  		$("#goodGroupName").text($(nametd).text());
+	  		$("#hiddenGroupGoodsId").val(goodsId);
+	  		$("#hiddenGroupId").val(groupId);
+	  		$("#goodsGroupPrice").val('');
+			$("#goodsGroupNumber").val('');
+			$("#dataFromGroup").val('');
+			$("#dataToGroup").val('');
+			$("#groupComment").val('');
+			$("#groupDesc").val('');
+			$("#groupReminder").val('');
+			$("#groupRule").val('');
+	  		//将数据检索出
+  			$.ajax({
+  				type : "GET",
+  				contentType:'application/json',
+  				url : '${pageContext.request.contextPath}/OZ_TT_AD_GL/getGroupInfo?groupId='+groupId,
+  				dataType : "json",
+  				async:false,
+  				data : "", 
+  				success : function(data) {
+  					if(!data.isException) {
+  						$("#goodsGroupPrice").val(data.resMap.goodsGroupPrice);
+  						$("#goodsGroupNumber").val(data.resMap.goodsGroupNumber);
+  						$("#dataFromGroup").val(data.resMap.dataFromGroup);
+  						$("#dataToGroup").val(data.resMap.dataToGroup);
+  						$("#groupComment").val(data.resMap.groupComment);
+  						$("#groupDesc").val(data.resMap.groupDesc);
+  						$("#groupReminder").val(data.resMap.groupReminder);
+  						$("#groupRule").val(data.resMap.groupRule);
+  						if (data.resMap.openflg == '0'){
+  							$("#isGroupOpenFlag0").attr("checked", true);
+  						} else {
+  							$("#isGroupOpenFlag1").attr("checked", true);
+  						}
+  			  			$(":radio").uniform({radioClass: 'myRadioClass'});
+  					}
+  				},
+  				error : function(data) {
+
+  				}
+  			});
+	  		$('#groupSet_modal').modal('show');
+	  	}
+	  	
+	  	var E0002 = '<fmt:message key="E0002" />';
+	  	function setGroupSave(){
+	  		cleanFormError();
+			var goodsGroupPrice = $("#goodsGroupPrice").val();
+			var goodsGroupNumber = $("#goodsGroupNumber").val();
+			var dataFromGroup = $("#dataFromGroup").val();
+			var dataToGroup = $("#dataToGroup").val();
+			var groupComment = $("#groupComment").val();
+			var groupDesc = $("#groupDesc").val();
+			var groupReminder = $("#groupReminder").val();
+			var groupRule = $("#groupRule").val();
+			if (goodsGroupPrice == "") {
+				var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GL_DIALOG_price" />')
+				showErrorSpan($("#goodsGroupPrice"), message);
+				return false;
+			}
+			if (goodsGroupNumber == "") {
+				var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GL_DIALOG_number" />')
+				showErrorSpan($("#goodsGroupNumber"), message);
+				return false;
+			}
+			if (dataFromGroup == "") {
+				var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GL_DIALOG_validDate" />')
+				showErrorSpan($("#dataToGroup"), message);
+				
+				return false;
+			}
+			if (dataToGroup == "") {
+				var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_GL_DIALOG_validDate" />')
+				showErrorSpan($("#dataToGroup"), message);
+				return false;
+			}
+			
+			if (!checkDecimalSize(goodsGroupPrice,"999999999.99")) {
+				var message = '<fmt:message key="E0003" />';
+				showErrorSpan($("#goodsGroupPrice"), message);
+				return false;
+			}
+			var openFlag = "0";
+			if ($("#isGroupOpenFlag1").attr("checked")) {
+				openFlag = "1";
+			}
+			
+			var jsonMap = {
+				comsumerreminder:groupReminder,
+				goodsid:$("#hiddenGroupGoodsId").val(),
+				groupcomments:groupComment,
+				groupdesc:groupDesc,
+				groupprice:goodsGroupPrice,
+				openflg:openFlag,
+				shopperrules:groupRule,
+				validperiodend:dataToGroup,
+				validperiodstart:dataFromGroup,
+				groupmaxquantity:goodsGroupNumber,
+				groupno:$("#hiddenGroupId").val()
+			}
+			
+			$.ajax({
+				type : "POST",
+				contentType:'application/json',
+				url : '${pageContext.request.contextPath}/OZ_TT_AD_GL/saveSetGroup',
+				dataType : "json",
+				async:false,
+				data : JSON.stringify(jsonMap), 
+				success : function(data) {
+					
+				},
+				error : function(data) {
+					
+				}
+			});
+			window.location.reload();
+	  	}
+	  	
+	  	function previewGroup(groupId) {
+		  	//将跳转到团购预览画面
+		  	var pageNo = $("#pageNo").val();
+	  		var targetForm = document.forms['olForm'];
+			targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_GL/groupPreview?groupId="+groupId+"&pageNo="+pageNo;
+			targetForm.method = "POST";
+			targetForm.submit();
+	  	}
   </script>
 </head>
 <body>
@@ -59,7 +173,7 @@
 						</li>
 						<li>
 							<a href="#">
-								<fmt:message key="OZ_TT_AD_MN_goods" />
+								<fmt:message key="OZ_TT_AD_MN_group" />
 							</a>
 							<i class="fa fa-angle-right"></i>
 						</li>
@@ -73,55 +187,45 @@
 				</div>
 			</div>
 			<!-- END PAGE HEADER-->
-			<form:form cssClass="form-horizontal" action="" method="post" id="olForm" modelAttribute="ozTtAdGlDto" commandName="ozTtAdGlDto" role="form">
+			<form:form cssClass="form-horizontal" action="" method="post" id="olForm" modelAttribute="ozTtAdGcDto" commandName="ozTtAdGcDto" role="form">
 			<div class="form-body">
 				<div class="form-group">
-					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_GL_goodsname" /></label>
+					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_GL_goodsId" /></label>
 					<div class="col-md-3">
+						<form:input type="text" path="goodsId" class="input-medium form-control"></form:input>
+					</div>
+					
+					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_GL_goodName" /></label>
+					<div class="radio-list col-md-3">
 						<form:input type="text" path="goodsName" class="input-medium form-control"></form:input>
 					</div>
 					
-					<label class="col-md-1 control-label"><fmt:message key="OZ_TT_AD_GL_ishotsale" /></label>
-					<div class="radio-list col-md-3">
-						<label class="radio-inline">
-						<form:radiobutton path="isHotSale" id="isHotSaleId0" value="0"></form:radiobutton>
-						 <fmt:message key="COMMON_NO" />
-						 </label>
-						<label class="radio-inline">
-						<form:radiobutton path="isHotSale" id="isHotSaleId1" value="1"></form:radiobutton>
-						 <fmt:message key="COMMON_YES" />
-						 </label>
-						 <label class="radio-inline">
-							<form:radiobutton path="isHotSale" value=""></form:radiobutton>
-						 	<fmt:message key="COMMON_ALL" />
-						 </label>
+					<div class="col-md-4">
+						
 					</div>
 					
-					<label class="col-md-1 control-label"><fmt:message key="OZ_TT_AD_GL_isnewsale" /></label>
-					<div class="radio-list col-md-3">
-						<label class="radio-inline">
-						<form:radiobutton path="isNewSale" id="isNewSaleId0" value="0"></form:radiobutton>
-						 <fmt:message key="COMMON_NO" />
-						 </label>
-						<label class="radio-inline">
-						<form:radiobutton path="isNewSale" id="isNewSaleId1" value="1"></form:radiobutton>
-						 <fmt:message key="COMMON_YES" />
-						 </label>
-						 <label class="radio-inline">
-							<form:radiobutton path="isNewSale" value=""></form:radiobutton>
-						 	<fmt:message key="COMMON_ALL" />
-						 </label>
+				</div>
+				<div class="form-group">
+					
+					<label class="col-md-1 control-label"><fmt:message key="OZ_TT_AD_GL_validDate" /></label>
+					<div class="col-md-4">
+						<div class="input-group input-large date-picker input-daterange" data-date="" data-date-format="yyyy/mm/dd">
+							<form:input type="text" class="form-control" path="dateFrom"></form:input>
+							<span class="input-group-addon">
+								 <fmt:message key="COMMON_TO" />
+							</span>
+							<form:input type="text" class="form-control" path="dateTo"></form:input>
+						</div>
 					</div>
+					
+					<div class="col-md-7">
+						
+					</div>
+					
 				</div>
 				
-				<div class="form-group">
-					<div class="col-md-6 textleft">
-						<button type="button" class="btn green mybtn" onclick="newGoods()"><i class="fa fa-search"></i><fmt:message key="COMMON_NEW" /></button>
-					</div>
-					<div class="col-md-6 textright">
-						<button type="button" class="btn green mybtn" onclick="searchGoods()"><i class="fa fa-search"></i><fmt:message key="COMMON_SEARCH" /></button>
-					</div>
-					
+				<div class="form-group textright">
+					<button type="button" class="btn green mybtn" onclick="searchGroup()"><i class="fa fa-search"></i><fmt:message key="COMMON_SEARCH" /></button>
 				</div>
 				
 				<h4 class="form-section"></h4>
@@ -131,25 +235,31 @@
 					<thead>
 					<tr>
 						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_GL_DE_goodsid" />
+							 <fmt:message key="COMMON_NUM" />
 						</th>
 						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_GL_DE_goodsname" />
+							 <fmt:message key="OZ_TT_AD_GL_DE_goodsId" />
 						</th>
 						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_GL_DE_goodsdesc" />
+							 <fmt:message key="OZ_TT_AD_GL_DE_goodsName" />
 						</th>
 						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_GL_DE_onsale" />
+							 <fmt:message key="OZ_TT_AD_GL_DE_goodsPrice" />
 						</th>
 						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_GL_DE_ishot" />
+							 <fmt:message key="OZ_TT_AD_GL_DE_goodsMax" />
 						</th>
 						<th scope="col">
-							 <fmt:message key="OZ_TT_AD_GL_DE_isnew" />
+							 <fmt:message key="OZ_TT_AD_GL_DE_goodsCurr" />
+						</th>
+						<th scope="col">
+							 <fmt:message key="OZ_TT_AD_GL_DE_validDate" />
 						</th>
 						<th scope="col">
 							 <fmt:message key="OZ_TT_AD_GL_DE_cost" />
+						</th>
+						<th scope="col">
+							 <fmt:message key="OZ_TT_AD_GL_DE_isOpen" />
 						</th>
 						<th scope="col">
 							 <fmt:message key="COMMON_CONTROL" />
@@ -157,47 +267,47 @@
 					</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="goodsItem" items="${ pageInfo.resultList }">
+					<c:forEach var="groupsItem" items="${ pageInfo.resultList }">
 					<tr>
 						<td>
-							 ${goodsItem.goodsId }
+							 ${groupsItem.detailNo }
 						</td>
 						<td>
-							 ${goodsItem.goodsName }
+							 ${groupsItem.goodsId }
 						</td>
 						<td>
-							 ${goodsItem.goodsDesc }
+							 ${groupsItem.goodsName }
 						</td>
 						<td>
-							 <c:if test="${goodsItem.onSaleFlg == '1'}">
-							 	<fmt:message key="COMMON_YES" />
-							 </c:if>
-							 <c:if test="${goodsItem.onSaleFlg == '0'}">
-							 	<fmt:message key="COMMON_NO" />
-							 </c:if>
+							 ${groupsItem.goodsPrice }
 						</td>
 						<td>
-							 <c:if test="${goodsItem.hotSaleFlg == '1'}">
-							 	<fmt:message key="COMMON_YES" />
-							 </c:if>
-							 <c:if test="${goodsItem.hotSaleFlg == '0'}">
-							 	<fmt:message key="COMMON_NO" />
-							 </c:if>
+							 ${groupsItem.goodsMax }
 						</td>
 						<td>
-							 <c:if test="${goodsItem.newSaleFlg == '1'}">
-							 	<fmt:message key="COMMON_YES" />
-							 </c:if>
-							 <c:if test="${goodsItem.newSaleFlg == '0'}">
-							 	<fmt:message key="COMMON_NO" />
-							 </c:if>
+							 ${groupsItem.goodsCurr }
 						</td>
 						<td>
-							 ${goodsItem.costPrice }
+							 ${groupsItem.validDateFrom }~${groupsItem.validDateTo }
 						</td>
 						<td>
-							<button type="button" class="btn green mybtn" onclick="toDetail('${goodsItem.goodsId}')">
-								<i class="fa fa-info"></i>&nbsp;<fmt:message key="COMMON_DETAIL" />
+							 ${groupsItem.cost }
+						</td>
+						<td>
+							<c:if test="${groupsItem.isOpen == '0'}">
+								<fmt:message key="COMMON_NO" />
+							</c:if>
+							<c:if test="${groupsItem.isOpen == '1'}">
+								<fmt:message key="COMMON_YES" />
+							</c:if>
+							 
+						</td>
+						<td>
+							<button type="button" class="btn green mybtn" onclick="setGroup('${groupsItem.groupId}','${groupsItem.goodsId}',this)">
+								<i class="fa fa-info"></i>&nbsp;<fmt:message key="OZ_TT_AD_GL_DE_btn" />
+							</button>
+							<button type="button" class="btn green mybtn" onclick="previewGroup('${groupsItem.groupId}')">
+								<i class="fa fa-info"></i>&nbsp;<fmt:message key="COMMON_PREVIEW" />
 							</button>
 						</td>
 					</tr>
@@ -254,5 +364,95 @@
 	</div>
 	<!-- END CONTENT -->
 	
+	<div id="groupSet_modal" class="modal fade" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="text-align: center">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title"><fmt:message key="OZ_TT_AD_GL_DIALOG_setGroup" /></h4>
+				</div>
+				<div class="modal-body">
+					<form action="#" class="form-horizontal">
+						<div class="form-group">
+							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_GL_DIALOG_goodsName" /></label>
+							<div class="col-md-8">				
+								<label class="control-label" id="goodGroupName"></label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_GL_DIALOG_price" /></label>
+							<div class="col-md-3">
+								<input type="text" id="goodsGroupPrice" class="input-small form-control textright"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_GL_DIALOG_number" /></label>
+							<div class="col-md-3">
+								<input type="number" id="goodsGroupNumber" class="input-small form-control textright"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_GL_DIALOG_validDate" /></label>
+							<div class="col-md-7">
+								<div class="input-group input-large date-picker input-daterange" data-date="" data-date-format="yyyy/mm/dd">
+									<input type="text" class="form-control" id="dataFromGroup"></input>
+									<span class="input-group-addon">
+										 <fmt:message key="COMMON_TO" />
+									</span>
+									<input type="text" class="form-control" id="dataToGroup"></input>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_GL_DIALOG_comment" /></label>
+							<div class="col-md-6">
+								<textarea id="groupComment" class="input-medium form-control" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_GL_DIALOG_desc" /></label>
+							<div class="col-md-6">
+								<input type="text" id="groupDesc" class="input-medium form-control"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_GL_DIALOG_comsumerReminder" /></label>
+							<div class="col-md-8">
+								<input type="text" id="groupReminder" class="input-medium form-control"></input>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_GL_DIALOG_rule" /></label>
+							<div class="col-md-8">
+								<input type="text" id="groupRule" class="input-medium form-control"></input>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-4 control-label"><fmt:message key="OZ_TT_AD_GL_DIALOG_isOpen" /></label>
+							<div class="radio-list col-md-8">
+								<label class="radio-inline">
+									<input type="radio" name="isOpenFlag" id="isGroupOpenFlag0" value="0"></input>
+								 	<fmt:message key="COMMON_NO" />
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="isOpenFlag" id="isGroupOpenFlag1" value="1"></input>
+								 	<fmt:message key="COMMON_YES" />
+								</label>
+							
+							</div>
+						</div>
+					</form>
+					<input type="hidden" id="hiddenGroupGoodsId"/>
+					<input type="hidden" id="hiddenGroupId"/>
+				</div>
+				<div class="modal-footer">
+					<button class="btn" data-dismiss="modal" aria-hidden="true"><fmt:message key="COMMON_CLOSE" /></button>
+					<button class="btn green btn-primary" onclick="setGroupSave()"><fmt:message key="COMMON_SAVE" /></button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
