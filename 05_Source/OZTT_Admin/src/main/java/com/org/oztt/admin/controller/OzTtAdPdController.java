@@ -27,8 +27,8 @@ import com.org.oztt.service.GoodsService;
  * @author linliuan
  */
 @Controller
-@RequestMapping("/OZ_TT_AD_GD")
-public class OzTtAdGdController extends BaseController {
+@RequestMapping("/OZ_TT_AD_PD")
+public class OzTtAdPdController extends BaseController {
 
     @Resource
     private GoodsService goodsService;
@@ -73,7 +73,7 @@ public class OzTtAdGdController extends BaseController {
             }
             model.addAttribute("classficationList",
                     goodsService.getSecondClassfication(CommonConstants.BELONG_FATHER_CLASS));
-            return "OZ_TT_AD_GD";
+            return "OZ_TT_AD_PD";
         }
         catch (Exception e) {
             logger.error(e.getMessage());
@@ -158,10 +158,10 @@ public class OzTtAdGdController extends BaseController {
             }
 
             if (StringUtils.isEmpty(ozTtAdGdDto.getNo())) {
-                return "redirect:/OZ_TT_AD_GL/init";
+                return "redirect:/OZ_TT_AD_PL/init";
             }
             else {
-                return "redirect:/OZ_TT_AD_GL/pageSearch?pageNo=" + ozTtAdGdDto.getPageNo();
+                return "redirect:/OZ_TT_AD_PL/pageSearch?pageNo=" + ozTtAdGdDto.getPageNo();
             }
 
         }

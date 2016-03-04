@@ -106,31 +106,7 @@
 					</li>
 				</ul>
 			</li>
-			<li>
-				<a href="javascript:;">
-					<i class="fa fa-barcode"></i>
-					<span class="title">
-						<fmt:message key="OZ_TT_AD_MN_goods" />
-					</span>
-					<span class="arrow ">
-					</span>
-				</a>
-				<ul class="sub-menu">
-					<li>
-						<a href="${pageContext.request.contextPath}/OZ_TT_AD_GL/init">
-							<i class="fa fa-list-ol"></i>
-							<fmt:message key="OZ_TT_AD_GL_title" />
-						</a>
-					</li>
-					<li>
-						<a href="${pageContext.request.contextPath}/OZ_TT_AD_GD/init">
-							<i class="fa fa-plus"></i>
-							<fmt:message key="OZ_TT_AD_GD_title" />
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li>
+			<li id="goodsClassLi">
 				<a href="javascript:;">
 					<i class="fa fa-sitemap"></i>
 					<span class="title">
@@ -156,9 +132,9 @@
 			</li>
 			<li id="priceLi">
 				<a href="javascript:;">
-					<i class="fa fa-money"></i>
+					<i class="fa fa-barcode"></i>
 					<span class="title">
-						<fmt:message key="OZ_TT_AD_MN_price" />
+						<fmt:message key="OZ_TT_AD_MN_goods" />
 					</span>
 					<span class="arrow ">
 					</span>
@@ -168,6 +144,12 @@
 						<a href="${pageContext.request.contextPath}/OZ_TT_AD_PL/init">
 							<i class="fa fa-list-ol"></i>
 							<fmt:message key="OZ_TT_AD_PL_title" />
+						</a>
+					</li>
+					<li>
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_PD/init">
+							<i class="fa fa-plus"></i>
+							<fmt:message key="OZ_TT_AD_PD_title" />
 						</a>
 					</li>
 				</ul>
@@ -183,9 +165,9 @@
 				</a>
 				<ul class="sub-menu">
 					<li>
-						<a href="${pageContext.request.contextPath}/OZ_TT_AD_GC/init">
+						<a href="${pageContext.request.contextPath}/OZ_TT_AD_GL/init">
 							<i class="fa fa-list-ol"></i>
-							<fmt:message key="OZ_TT_AD_GC_title" />
+							<fmt:message key="OZ_TT_AD_GL_title" />
 						</a>
 					</li>
 				</ul>
@@ -232,7 +214,7 @@
 		$("#orderLi").click();
 	}
 	
-	if (currentPath.indexOf("OZ_TT_AD_PL") > 0) {
+	if (currentPath.indexOf("OZ_TT_AD_PL") > 0 || currentPath.indexOf("OZ_TT_AD_PD") > 0) {
 		$("#priceLi").find("span.arrow").addClass("open");
 		$("#priceLi").addClass("active")
 		$("#priceLi").click();
@@ -244,14 +226,20 @@
 		$("#memberLi").click();
 	}
 	
-	if (currentPath.indexOf("OZ_TT_AD_GC") > 0) {
+	if (currentPath.indexOf("OZ_TT_AD_GL") > 0) {
 		$("#groupviewLi").find("span.arrow").addClass("open");
 		$("#groupviewLi").addClass("active")
 		$("#groupviewLi").click();
 	}
 	
+	if (currentPath.indexOf("OZ_TT_AD_CL") > 0) {
+		$("#goodsClassLi").find("span.arrow").addClass("open");
+		$("#goodsClassLi").addClass("active")
+		$("#goodsClassLi").click();
+	}
 	
-	if (currentPath.indexOf("OZ_TT_AD_GD") > 0) {
+	
+	if (currentPath.indexOf("OZ_TT_AD_PD") > 0) {
 		var goodsId = $("#goodsId").val();
 		var previewThumbJson = [];
 		var preThumbConfigList = [];

@@ -30,7 +30,7 @@ import com.org.oztt.service.GoodsService;
 import com.org.oztt.service.OrderService;
 
 /**
- * 定价管理
+ * 商品管理
  * 
  * @author linliuan
  */
@@ -48,7 +48,7 @@ public class OzTtAdPlController extends BaseController {
     private GoodsService  goodsService;
 
     /**
-     * 商品定价一览画面
+     * 商品一览画面
      * 
      * @param request
      * @param session
@@ -57,6 +57,7 @@ public class OzTtAdPlController extends BaseController {
     @RequestMapping(value = "/init")
     public String init(Model model, HttpServletRequest request, HttpSession session) {
         try {
+            model.addAttribute("categoryList", commonService.getMyCategroy());
             model.addAttribute("ozTtAdPlDto", new OzTtAdPlDto());
             model.addAttribute("pageInfo", new PagingResult<OzTtAdPlListDto>());
             return "OZ_TT_AD_PL";
@@ -68,7 +69,7 @@ public class OzTtAdPlController extends BaseController {
     }
 
     /**
-     * 商品定价一览检索画面
+     * 商品一览检索画面
      * 
      * @param request
      * @param session
@@ -79,7 +80,7 @@ public class OzTtAdPlController extends BaseController {
             @ModelAttribute OzTtAdPlDto ozTtAdPlDto) {
         try {
             session.setAttribute("ozTtAdPlDto", ozTtAdPlDto);
-
+            model.addAttribute("categoryList", commonService.getMyCategroy());
             Pagination pagination = new Pagination(1);
             Map<Object, Object> params = new HashMap<Object, Object>();
             params.put("goodsClass", ozTtAdPlDto.getGoodsClass());
@@ -101,7 +102,7 @@ public class OzTtAdPlController extends BaseController {
     }
 
     /**
-     * 商品定价一览分页选择画面
+     * 商品一览分页选择画面
      * 
      * @param request
      * @param session
@@ -110,6 +111,7 @@ public class OzTtAdPlController extends BaseController {
     @RequestMapping(value = "/pageSearch")
     public String init(Model model, HttpServletRequest request, HttpSession session, String pageNo) {
         try {
+            model.addAttribute("categoryList", commonService.getMyCategroy());
             OzTtAdPlDto ozTtAdPlDto = (OzTtAdPlDto) session.getAttribute("ozTtAdPlDto");
             Pagination pagination = new Pagination(Integer.valueOf(pageNo));
             Map<Object, Object> params = new HashMap<Object, Object>();

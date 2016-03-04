@@ -104,11 +104,15 @@
 				</div>
 				<div class="form-group">
 					<label class="col-md-1 control-label textleft"><fmt:message key="OZ_TT_AD_CD_openFlag" /></label>
-					<div class="col-md-3">
-						<label><fmt:message key="OZ_TT_AD_CD_open" /></label>
-						<form:radiobutton path="openFlg" class="form-control" value="0"></form:radiobutton>
-						<label><fmt:message key="OZ_TT_AD_CD_notopen" /></label>
-						<form:radiobutton path="openFlg" class="form-control" value="1"></form:radiobutton>
+					<div class="radio-list col-md-3">
+						<label class="radio-inline">
+						<form:radiobutton path="openFlg" value="0"></form:radiobutton>
+						 <fmt:message key="OZ_TT_AD_CD_open" />
+						 </label>
+						<label class="radio-inline">
+						<form:radiobutton path="openFlg" value="1"></form:radiobutton>
+						 <fmt:message key="OZ_TT_AD_CD_notopen" />
+						 </label>
 					</div>					
 					<div class="col-md-8"></div>
 				</div>

@@ -22,6 +22,8 @@ public class OzTtAdPlListDto {
     private String newsale;
 
     private String isSetPrice;
+    
+    private String detailNo;
 
     public String getGoodsId() {
         return goodsId;
@@ -93,6 +95,14 @@ public class OzTtAdPlListDto {
 
     public void setIsSetPrice(String isSetPrice) {
         this.isSetPrice = isSetPrice;
+    }
+
+    public String getDetailNo() {
+        return detailNo;
+    }
+
+    public void setDetailNo(String detailNo) {
+        this.detailNo = detailNo;
     }
 
 }

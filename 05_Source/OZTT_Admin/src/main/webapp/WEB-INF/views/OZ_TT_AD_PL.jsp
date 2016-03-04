@@ -25,7 +25,7 @@
   	}
   	
   	function showSetPrice(goodsId, isSetPrice, obj){
-  		var nametd = $(obj).parent().parent().find('td')[1];
+  		var nametd = $(obj).parent().parent().find('td')[2];
   		$("#goodName").text($(nametd).text());
   		$("#goodsPrice").val('');
 		$("#dataFrom").val('');
@@ -75,7 +75,7 @@
   			alert('<fmt:message key="W0001" />');
   			return;
   		}
-  		var nametd = $(obj).parent().parent().find('td')[1];
+  		var nametd = $(obj).parent().parent().find('td')[2];
   		$("#goodGroupName").text($(nametd).text());
   		$("#hiddenGroupGoodsId").val(goodsId);
   		$('#groupSet_modal').modal('show');
@@ -89,17 +89,22 @@
 		var dataTo = $("#dataTo").val();
 		if (goodsPrice == "") {
 			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PL_DIALOG_price" />')
-			//showErrorSpan($("#goodsPrice"), message);
+			showErrorSpan($("#goodsPrice"), message);
 			return false;
 		}
 		if (dataFrom == "") {
 			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PL_DIALOG_validDate" />')
-			//showErrorSpan($("#dataTo"), message);
+			showErrorSpan($("#dataTo"), message);
 			return false;
 		}
 		if (dataTo == "") {
 			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PL_DIALOG_validDate" />')
-			//showErrorSpan($("#dataTo"), message);
+			showErrorSpan($("#dataTo"), message);
+			return false;
+		}
+		if (!checkDecimalSize(goodsPrice,"999999999.99")) {
+			var message = '<fmt:message key="E0003" />';
+			showErrorSpan($("#goodsPrice"), message);
 			return false;
 		}
 		var openFlag = "0";
@@ -143,27 +148,37 @@
 		var groupRule = $("#groupRule").val();
 		if (goodsGroupPrice == "") {
 			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PL_DIALOG_price" />')
-			//showErrorSpan($("#goodsGroupPrice"), message);
+			showErrorSpan($("#goodsGroupPrice"), message);
 			return false;
 		}
 		if (goodsGroupNumber == "") {
 			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PL_DIALOG_number" />')
-			//showErrorSpan($("#goodsGroupNumber"), message);
+			showErrorSpan($("#goodsGroupNumber"), message);
 			return false;
 		}
 		if (dataFromGroup == "") {
 			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PL_DIALOG_validDate" />')
-			//showErrorSpan($("#dataFromGroup"), message);
+			showErrorSpan($("#dataToGroup"), message);
 			return false;
 		}
 		if (dataToGroup == "") {
 			var message = E0002.replace("{0}", '<fmt:message key="OZ_TT_AD_PL_DIALOG_validDate" />')
-			//showErrorSpan($("#dataToGroup"), message);
+			showErrorSpan($("#dataToGroup"), message);
+			return false;
+		}
+		if (!checkDecimalSize(goodsGroupPrice,"999999999.99")) {
+			var message = '<fmt:message key="E0003" />';
+			showErrorSpan($("#goodsGroupPrice"), message);
 			return false;
 		}
 		var openFlag = "0";
 		if ($("#isGroupOpenFlag0").attr("checked")) {
 			openFlag = "1";
+		}
+		
+		var I0001 = '<fmt:message key="I0001" />'
+		if(!confirm(I0001)) {
+			return false;
 		}
 		
 		var jsonMap = {
@@ -195,6 +210,21 @@
 		});
 		window.location.reload();
   	}
+  	
+  	function toDetail(goodsId){
+  		var pageNo = $("#pageNo").val();
+  		var targetForm = document.forms['olForm'];
+		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_PD/init?goodsId="+goodsId+"&pageNo="+pageNo;
+		targetForm.method = "POST";
+		targetForm.submit();
+  	}
+  	
+  	function newGoods(){
+  		var targetForm = document.forms['olForm'];
+		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_PD/init";
+		targetForm.method = "POST";
+		targetForm.submit();
+  	}
   
   </script>
 </head>
@@ -216,13 +246,13 @@
 						</li>
 						<li>
 							<a href="#">
-								<fmt:message key="OZ_TT_AD_MN_order" />
+								<fmt:message key="OZ_TT_AD_MN_goods" />
 							</a>
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
 							<a href="#">
-								<fmt:message key="OZ_TT_AD_OL_orderlist" />
+								<fmt:message key="OZ_TT_AD_PL_title" />
 							</a>
 						</li>
 					</ul>
@@ -288,11 +318,35 @@
 						 </label>
 					</div>
 					
-					<div class="col-md-8"></div>
+					<label class="col-md-2 control-label textleft"><fmt:message key="OZ_TT_AD_PL_category" /></label>
+					<div class="col-md-3">
+						<form:select class="bs-select input-medium form-control" path="goodsClass">
+							<optgroup label="">
+								<form:option value=""></form:option>
+							</optgroup>
+							<c:forEach var="faList" items="${ categoryList }">
+								<optgroup label="${faList.fatherClass.classid }：${faList.fatherClass.classname }">
+									<c:forEach var="chList" items="${ faList.childrenClass }">
+									<form:option value="${ chList.fatherClass.classid }">${ chList.fatherClass.classid }：${ chList.fatherClass.classname }</form:option>
+									</c:forEach>
+								</optgroup>
+                   			</c:forEach>
+						</form:select>
+						
+					</div>
+					
+					
+					<div class="col-md-3">
+					</div>
 				</div>
 				
 				<div class="form-group textright">
-					<button type="button" class="btn green mybtn" onclick="searchSetPrice()"><i class="fa fa-search"></i><fmt:message key="COMMON_SEARCH" /></button>
+					<div class="col-md-6 textleft">
+						<button type="button" class="btn green mybtn" onclick="newGoods()"><i class="fa fa-search"></i><fmt:message key="COMMON_NEW" /></button>
+					</div>
+					<div class="col-md-6 textright">
+						<button type="button" class="btn green mybtn" onclick="searchSetPrice()"><i class="fa fa-search"></i><fmt:message key="COMMON_SEARCH" /></button>
+					</div>
 				</div>
 				
 				<h4 class="form-section"></h4>
@@ -301,6 +355,9 @@
 					<table class="table table-striped table-bordered table-hover">
 					<thead>
 					<tr>
+						<th scope="col">
+							 <fmt:message key="COMMON_NUM" />
+						</th>
 						<th scope="col">
 							 <fmt:message key="OZ_TT_AD_PL_DE_goodsId" />
 						</th>
@@ -330,6 +387,9 @@
 					<tbody>
 					<c:forEach var="goodsItem" items="${ pageInfo.resultList }">
 					<tr>
+						<td>
+							 ${goodsItem.detailNo }
+						</td>
 						<td>
 							 ${goodsItem.goodsId }
 						</td>
@@ -372,6 +432,9 @@
 							 </c:if>
 						</td>
 						<td>
+							<button type="button" class="btn green mybtn" onclick="toDetail('${goodsItem.goodsId}')">
+								<i class="fa fa-info"></i>&nbsp;<fmt:message key="COMMON_DETAIL" />
+							</button>
 							<button type="button" class="btn green mybtn" onclick="showSetPrice('${goodsItem.goodsId}','${goodsItem.isSetPrice}', this)">
 								<i class="fa fa-info"></i>&nbsp;<fmt:message key="OZ_TT_AD_PL_DE_setprice" />
 							</button>
@@ -449,7 +512,7 @@
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_PL_DIALOG_price" /></label>
-							<div class="col-md-8">
+							<div class="col-md-3">
 								<input type="text" id="goodsPrice" class="input-small form-control textright"></input>
 							</div>
 						</div>
@@ -509,14 +572,14 @@
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_PL_DIALOG_price" /></label>
-							<div class="col-md-8">
+							<div class="col-md-3">
 								<input type="text" id="goodsGroupPrice" class="input-small form-control textright"></input>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-4"><fmt:message key="OZ_TT_AD_PL_DIALOG_number" /></label>
-							<div class="col-md-8">
-								<input type="text" id="goodsGroupNumber" class="input-small form-control"></input>
+							<div class="col-md-3">
+								<input type="number" id="goodsGroupNumber" class="input-small form-control textright"></input>
 							</div>
 						</div>
 						<div class="form-group">

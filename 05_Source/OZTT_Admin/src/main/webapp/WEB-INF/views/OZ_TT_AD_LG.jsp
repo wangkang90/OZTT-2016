@@ -104,7 +104,7 @@
 <!-- BEGIN LOGIN -->
 <div class="content">
 	<!-- BEGIN LOGIN FORM -->
-	<form:form class="login-form" action="" method="post" id="loginForm" modelAttribute="ozTtAdLgDto" commandName="ozTtAdLgDto">
+	<form:form class="login-form" action="${ctx}/OZ_TT_AD_LG/login" method="post" id="loginForm" modelAttribute="ozTtAdLgDto" commandName="ozTtAdLgDto">
 		<h3 class="form-title"><fmt:message key="OZ_TT_AD_LG_h3" /></h3>
 		<div class="form-group col-md-12" style="padding-left: 0px">
 			<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -539,6 +539,8 @@
 			// 登录出错
 			showErrorSpan($("#username"), E0001);
 		}
+		
+		$("#username").focus();
 	</script>
 <!-- END JAVASCRIPTS -->
 </body>

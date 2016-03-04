@@ -60,6 +60,9 @@
 					<thead>
 					<tr>
 						<th scope="col">
+							 <fmt:message key="COMMON_NUM" />
+						</th>
+						<th scope="col">
 							 <fmt:message key="OZ_TT_AD_RL_DE_customerNo" />
 						</th>
 						<th scope="col">
@@ -98,6 +101,9 @@
 					<tbody>
 					<c:forEach var="customerItem" items="${ pageInfo.resultList }">
 					<tr>
+						<td>
+							 ${customerItem.detailNo }
+						</td>
 						<td>
 							 ${customerItem.customerNo }
 						</td>

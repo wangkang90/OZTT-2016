@@ -26,10 +26,7 @@
   	
   	function toDetail(orderNo){
   		var pageNo = $("#pageNo").val();
-  		var targetForm = document.forms['olForm'];
-		targetForm.action = "${pageContext.request.contextPath}/OZ_TT_AD_OD/init?orderNo="+orderNo+"&pageNo="+pageNo;
-		targetForm.method = "POST";
-		targetForm.submit();
+  		location.href = "${pageContext.request.contextPath}/OZ_TT_AD_OD/init?orderNo="+orderNo+"&pageNo="+pageNo;
   	}
   
   </script>
@@ -83,6 +80,8 @@
 					<div class="col-md-4">
 						
 					</div>
+					
+					
 				</div>
 				
 				<div class="form-group">
