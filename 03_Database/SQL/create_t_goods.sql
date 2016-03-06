@@ -1,11 +1,14 @@
-DROP TABLE IF EXISTS `t_goods`;
+﻿DROP TABLE IF EXISTS `t_goods`;
 CREATE TABLE `t_goods` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `goodsId` varchar(16) NOT NULL,
   `classId` varchar(10) NOT NULL,
   `goodsBrand` varchar(50) NOT NULL,
+  `goodsBrandEn` varchar(100) NOT NULL,
   `goodsName` varchar(100) NOT NULL,
+  `goodsNameEn` varchar(200) NOT NULL,
   `goodsDesc` varchar(200) DEFAULT NULL,
+  `goodsDescEn` varchar(400) DEFAULT NULL,
   `goodsComments` varchar(500) DEFAULT NULL,
   `goodsThumbnail` varchar(255) DEFAULT NULL,
   `goodsSmallPic` varchar(255) DEFAULT NULL,

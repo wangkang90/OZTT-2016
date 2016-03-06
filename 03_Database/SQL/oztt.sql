@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : local
+Source Server         : localMysql
 Source Server Version : 50710
 Source Host           : localhost:3306
 Source Database       : oztt
@@ -10,12 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50710
 File Encoding         : 65001
 
-Date: 2016-01-29 14:45:53
+Date: 2016-03-06 21:33:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
--- Table structure for `t_address_info`
+-- Table structure for t_address_info
 -- ----------------------------
 DROP TABLE IF EXISTS `t_address_info`;
 CREATE TABLE `t_address_info` (
@@ -37,7 +38,7 @@ CREATE TABLE `t_address_info` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_admin_basic_info`
+-- Table structure for t_admin_basic_info
 -- ----------------------------
 DROP TABLE IF EXISTS `t_admin_basic_info`;
 CREATE TABLE `t_admin_basic_info` (
@@ -63,7 +64,7 @@ CREATE TABLE `t_admin_basic_info` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_admin_login_his`
+-- Table structure for t_admin_login_his
 -- ----------------------------
 DROP TABLE IF EXISTS `t_admin_login_his`;
 CREATE TABLE `t_admin_login_his` (
@@ -79,7 +80,7 @@ CREATE TABLE `t_admin_login_his` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_admin_login_info`
+-- Table structure for t_admin_login_info
 -- ----------------------------
 DROP TABLE IF EXISTS `t_admin_login_info`;
 CREATE TABLE `t_admin_login_info` (
@@ -102,7 +103,7 @@ CREATE TABLE `t_admin_login_info` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_cons_cart`
+-- Table structure for t_cons_cart
 -- ----------------------------
 DROP TABLE IF EXISTS `t_cons_cart`;
 CREATE TABLE `t_cons_cart` (
@@ -129,7 +130,7 @@ CREATE TABLE `t_cons_cart` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_cons_invoice`
+-- Table structure for t_cons_invoice
 -- ----------------------------
 DROP TABLE IF EXISTS `t_cons_invoice`;
 CREATE TABLE `t_cons_invoice` (
@@ -144,7 +145,7 @@ CREATE TABLE `t_cons_invoice` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_cons_order`
+-- Table structure for t_cons_order
 -- ----------------------------
 DROP TABLE IF EXISTS `t_cons_order`;
 CREATE TABLE `t_cons_order` (
@@ -175,7 +176,7 @@ CREATE TABLE `t_cons_order` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_cons_order_details`
+-- Table structure for t_cons_order_details
 -- ----------------------------
 DROP TABLE IF EXISTS `t_cons_order_details`;
 CREATE TABLE `t_cons_order_details` (
@@ -203,7 +204,7 @@ CREATE TABLE `t_cons_order_details` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_cons_transaction`
+-- Table structure for t_cons_transaction
 -- ----------------------------
 DROP TABLE IF EXISTS `t_cons_transaction`;
 CREATE TABLE `t_cons_transaction` (
@@ -236,7 +237,7 @@ CREATE TABLE `t_cons_transaction` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_customer_basic_info`
+-- Table structure for t_customer_basic_info
 -- ----------------------------
 DROP TABLE IF EXISTS `t_customer_basic_info`;
 CREATE TABLE `t_customer_basic_info` (
@@ -270,7 +271,7 @@ CREATE TABLE `t_customer_basic_info` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_customer_login_his`
+-- Table structure for t_customer_login_his
 -- ----------------------------
 DROP TABLE IF EXISTS `t_customer_login_his`;
 CREATE TABLE `t_customer_login_his` (
@@ -286,7 +287,7 @@ CREATE TABLE `t_customer_login_his` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_customer_login_info`
+-- Table structure for t_customer_login_info
 -- ----------------------------
 DROP TABLE IF EXISTS `t_customer_login_info`;
 CREATE TABLE `t_customer_login_info` (
@@ -310,7 +311,7 @@ CREATE TABLE `t_customer_login_info` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_customer_member_info`
+-- Table structure for t_customer_member_info
 -- ----------------------------
 DROP TABLE IF EXISTS `t_customer_member_info`;
 CREATE TABLE `t_customer_member_info` (
@@ -332,7 +333,7 @@ CREATE TABLE `t_customer_member_info` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_customer_security_info`
+-- Table structure for t_customer_security_info
 -- ----------------------------
 DROP TABLE IF EXISTS `t_customer_security_info`;
 CREATE TABLE `t_customer_security_info` (
@@ -355,7 +356,7 @@ CREATE TABLE `t_customer_security_info` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_goods`
+-- Table structure for t_goods
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods`;
 CREATE TABLE `t_goods` (
@@ -363,8 +364,11 @@ CREATE TABLE `t_goods` (
   `goodsId` varchar(16) NOT NULL,
   `classId` varchar(10) NOT NULL,
   `goodsBrand` varchar(50) NOT NULL,
+  `goodsBrandEn` varchar(100) NOT NULL,
   `goodsName` varchar(100) NOT NULL,
+  `goodsNameEn` varchar(200) NOT NULL,
   `goodsDesc` varchar(200) DEFAULT NULL,
+  `goodsDescEn` varchar(400) DEFAULT NULL,
   `goodsComments` varchar(500) DEFAULT NULL,
   `goodsThumbnail` varchar(255) DEFAULT NULL,
   `goodsSmallPic` varchar(255) DEFAULT NULL,
@@ -386,49 +390,49 @@ CREATE TABLE `t_goods` (
 -- ----------------------------
 -- Records of t_goods
 -- ----------------------------
-INSERT INTO `t_goods` VALUES ('1', 'GD20160108000001', '2C0012', 'Blackmores', 'BM Conceive Well Gold', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('2', 'GD20160108000002', '2C0014', 'Blackmores', 'BM VE面霜', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('3', 'GD20160108000003', '2C0001', 'Blackmores', 'BM CoQ10辅酶', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('4', 'GD20160108000004', '2C0001', 'Blackmores', 'BM 三倍鱼油', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('5', 'GD20160108000005', '2C0012', 'Blackmores', 'BM 孕妇黄金素', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('6', 'GD20160108000006', '2C0005', 'Blackmores', 'BM 维骨力', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('7', 'GD20160108000007', '2C0006', 'Blackmores', 'BW 月见草', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('8', 'GD20160108000008', '2C0001', 'Blackmores', 'Blackmores 叶黄素护眼片加强版', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('9', 'GD20160108000009', '2C0001', 'Blackmores', 'Blackmores 更年期日夜舒缓片', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('10', 'GD20160108000010', '2C0009', 'Comvita', 'Comvita 儿童柠檬蜂蜜棒棒糖', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('11', 'GD20160108000011', '2C0009', 'Comvita', 'Comvita 蜂胶柠檬蜂蜜润喉糖', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('12', 'GD20160108000012', '2C0006', 'Femfresh', 'Femfresh 女性私处护理洗液', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('13', 'GD20160108000013', '2C0006', 'Healthycare', 'Healthycare葡萄籽', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('14', 'GD20160108000014', '2C0011', 'Life Space', 'Life Space婴儿益生菌粉', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('15', 'GD20160108000015', '2C0001', 'Lucas', 'Lucas木瓜膏', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('16', 'GD20160108000016', '2C0001', 'Medi Herb', 'Medi Herb', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('17', 'GD20160108000017', '2C0007', 'RedSeal', 'RedSeal去烟渍牙膏', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('18', 'GD20160108000018', '2C0006', 'Swisse', 'SW50岁以上女性营养片', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('19', 'GD20160108000019', '2C0002', 'Swisse', 'SW护肝片', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('20', 'GD20160108000020', '2C0002', 'Swisse', 'SW更年期平衡片', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('21', 'GD20160108000021', '2C0007', 'Swisse', 'SW男士复合营养片', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('22', 'GD20160108000022', '2C0001', 'Swisse', 'SW胶原蛋白液', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('23', 'GD20160108000023', '2C0001', 'Swisse', 'SW葡萄籽', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('24', 'GD20160108000024', '2C0001', 'Swisse', 'SW蔓越莓', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('25', 'GD20160108000025', '2C0001', 'Swisse', 'SW蜂胶', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('26', 'GD20160108000026', '2C0001', 'Swisse', 'Swisse CoQ10辅酶护心宝', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('27', 'GD20160108000027', '2C0001', 'Swisse', 'Swisse 大豆卵磷脂 1200mg', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('28', 'GD20160108000028', '2C0001', 'Swisse', 'Swisse 瑞思 钙片+维生素D', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('29', 'GD20160108000029', '2C0001', 'Thompson\'s', 'Thompson\'s Cholestrol Manager', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('30', 'GD20160108000030', '2C0001', 'Thompson\'s', 'Thompson\'s CoQ10', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('31', 'GD20160108000031', '2C0001', 'Thompson\'s', 'Thompson\'s Cod Liver Oil', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('32', 'GD20160108000032', '2C0001', 'Thompson\'s', 'Thompson\'s Memory Manager 60', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('33', 'GD20160108000033', '2C0001', 'Thompson\'s', 'Thompson\'s Salmon Oi', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('34', 'GD20160108000034', '2C0001', 'Thompson\'s', 'Thompson\'s 壮骨片', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('35', 'GD20160108000035', '2C0001', 'Thompson\'s', 'Thompson\'s 深海鱼油', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('36', 'GD20160108000036', '2C0001', 'Thompson\'s', 'Thopmson\'s 超级卵磷脂胶囊', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('37', 'GD20160108000037', '2C0014', 'Goat Soap', '羊奶皂-原味', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('38', 'GD20160108000038', '2C0014', 'Goat Soap', '羊奶皂-椰油', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('39', 'GD20160108000039', '2C0014', 'Goat Soap', '羊奶皂-燕麦', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods` VALUES ('40', 'GD20160108000040', '2C0014', 'Goat Soap', '羊奶皂-美卢卡蜂蜜', '这里是商品描述区域。', '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('1', 'GD20160108000001', '2C0012', 'Blackmores', '', 'BM Conceive Well Gold', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('2', 'GD20160108000002', '2C0014', 'Blackmores', '', 'BM VE面霜', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('3', 'GD20160108000003', '2C0001', 'Blackmores', '', 'BM CoQ10辅酶', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('4', 'GD20160108000004', '2C0001', 'Blackmores', '', 'BM 三倍鱼油', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('5', 'GD20160108000005', '2C0012', 'Blackmores', '', 'BM 孕妇黄金素', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('6', 'GD20160108000006', '2C0005', 'Blackmores', '', 'BM 维骨力', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('7', 'GD20160108000007', '2C0006', 'Blackmores', '', 'BW 月见草', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('8', 'GD20160108000008', '2C0001', 'Blackmores', '', 'Blackmores 叶黄素护眼片加强版', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('9', 'GD20160108000009', '2C0001', 'Blackmores', '', 'Blackmores 更年期日夜舒缓片', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('10', 'GD20160108000010', '2C0009', 'Comvita', '', 'Comvita 儿童柠檬蜂蜜棒棒糖', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('11', 'GD20160108000011', '2C0009', 'Comvita', '', 'Comvita 蜂胶柠檬蜂蜜润喉糖', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('12', 'GD20160108000012', '2C0006', 'Femfresh', '', 'Femfresh 女性私处护理洗液', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('13', 'GD20160108000013', '2C0006', 'Healthycare', '', 'Healthycare葡萄籽', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('14', 'GD20160108000014', '2C0011', 'Life Space', '', 'Life Space婴儿益生菌粉', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('15', 'GD20160108000015', '2C0001', 'Lucas', '', 'Lucas木瓜膏', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('16', 'GD20160108000016', '2C0001', 'Medi Herb', '', 'Medi Herb', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('17', 'GD20160108000017', '2C0007', 'RedSeal', '', 'RedSeal去烟渍牙膏', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('18', 'GD20160108000018', '2C0006', 'Swisse', '', 'SW50岁以上女性营养片', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('19', 'GD20160108000019', '2C0002', 'Swisse', '', 'SW护肝片', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('20', 'GD20160108000020', '2C0002', 'Swisse', '', 'SW更年期平衡片', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('21', 'GD20160108000021', '2C0007', 'Swisse', '', 'SW男士复合营养片', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('22', 'GD20160108000022', '2C0001', 'Swisse', '', 'SW胶原蛋白液', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('23', 'GD20160108000023', '2C0001', 'Swisse', '', 'SW葡萄籽', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('24', 'GD20160108000024', '2C0001', 'Swisse', '', 'SW蔓越莓', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('25', 'GD20160108000025', '2C0001', 'Swisse', '', 'SW蜂胶', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('26', 'GD20160108000026', '2C0001', 'Swisse', '', 'Swisse CoQ10辅酶护心宝', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('27', 'GD20160108000027', '2C0001', 'Swisse', '', 'Swisse 大豆卵磷脂 1200mg', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('28', 'GD20160108000028', '2C0001', 'Swisse', '', 'Swisse 瑞思 钙片+维生素D', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('29', 'GD20160108000029', '2C0001', 'Thompson\'s', '', 'Thompson\'s Cholestrol Manager', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('30', 'GD20160108000030', '2C0001', 'Thompson\'s', '', 'Thompson\'s CoQ10', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('31', 'GD20160108000031', '2C0001', 'Thompson\'s', '', 'Thompson\'s Cod Liver Oil', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('32', 'GD20160108000032', '2C0001', 'Thompson\'s', '', 'Thompson\'s Memory Manager 60', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('33', 'GD20160108000033', '2C0001', 'Thompson\'s', '', 'Thompson\'s Salmon Oi', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('34', 'GD20160108000034', '2C0001', 'Thompson\'s', '', 'Thompson\'s 壮骨片', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('35', 'GD20160108000035', '2C0001', 'Thompson\'s', '', 'Thompson\'s 深海鱼油', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('36', 'GD20160108000036', '2C0001', 'Thompson\'s', '', 'Thopmson\'s 超级卵磷脂胶囊', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('37', 'GD20160108000037', '2C0014', 'Goat Soap', '', '羊奶皂-原味', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('38', 'GD20160108000038', '2C0014', 'Goat Soap', '', '羊奶皂-椰油', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('39', 'GD20160108000039', '2C0014', 'Goat Soap', '', '羊奶皂-燕麦', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods` VALUES ('40', 'GD20160108000040', '2C0014', 'Goat Soap', '', '羊奶皂-美卢卡蜂蜜', '', '这里是商品描述区域。', null, '', 'pic_01.jpg', '', 'pic_01.jpg,pic_02.jpg,pic_03.jpg,pic_04.jpg', '1', '0', '0', '60.00', '10', '0', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
 
 -- ----------------------------
--- Table structure for `t_goods_append_items`
+-- Table structure for t_goods_append_items
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_append_items`;
 CREATE TABLE `t_goods_append_items` (
@@ -458,13 +462,14 @@ CREATE TABLE `t_goods_append_items` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_goods_classification`
+-- Table structure for t_goods_classification
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_classification`;
 CREATE TABLE `t_goods_classification` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `classId` varchar(10) NOT NULL,
   `className` varchar(50) DEFAULT NULL,
+  `classNameEn` varchar(100) DEFAULT NULL,
   `sortOrder` int(8) DEFAULT NULL,
   `fatherClassId` varchar(10) NOT NULL,
   `openFlg` char(1) NOT NULL,
@@ -479,40 +484,40 @@ CREATE TABLE `t_goods_classification` (
 -- ----------------------------
 -- Records of t_goods_classification
 -- ----------------------------
-INSERT INTO `t_goods_classification` VALUES ('1', '1C0001', '营养保健', '10', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('2', '1C0002', '母婴用品', '15', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('3', '1C0003', '美容护肤', '20', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('4', '1C0004', '进口食品', '25', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('5', '1C0005', '酒水茶饮', '30', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('6', '1C0006', '居家日用', '35', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('7', '2C0001', '调节免疫', '10', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('8', '2C0002', '调节三高', '15', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('9', '2C0003', '维生素钙', '20', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('10', '2C0004', '肝肾养护', '25', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('11', '2C0005', '骨骼健康', '30', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('12', '2C0006', '呵护女性', '35', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('13', '2C0007', '男性健康', '40', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('14', '2C0008', '宝宝奶粉', '10', '1C0002', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('15', '2C0009', '宝宝健康', '15', '1C0002', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('16', '2C0010', '宝宝辅食', '20', '1C0002', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('17', '2C0011', '宝宝护理', '25', '1C0002', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('18', '2C0012', '妈妈备孕', '30', '1C0002', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('19', '2C0013', '绵羊油', '10', '1C0003', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('20', '2C0014', '护肤', '15', '1C0003', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('21', '2C0015', '精油', '20', '1C0003', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('22', '2C0016', '化妆品', '25', '1C0003', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('23', '2C0017', '饼干糕点', '10', '1C0004', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('24', '2C0018', '乳制品', '15', '1C0004', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('25', '2C0019', '糖果/巧克力', '20', '1C0004', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('26', '2C0020', '休闲食品', '25', '1C0004', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('27', '2C0021', '红酒', '10', '1C0005', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('28', '2C0022', '咖啡', '15', '1C0005', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('29', '2C0023', 'UGG', '10', '1C0006', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('30', '2C0024', '羊毛制品', '15', '1C0006', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
-INSERT INTO `t_goods_classification` VALUES ('31', '2C0025', '日常用品', '20', '1C0006', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('1', '1C0001', '营养保健', null, '10', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('2', '1C0002', '母婴用品', null, '15', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('3', '1C0003', '美容护肤', null, '20', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('4', '1C0004', '进口食品', null, '25', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('5', '1C0005', '酒水茶饮', null, '30', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('6', '1C0006', '居家日用', null, '35', '0C0000', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('7', '2C0001', '调节免疫', null, '10', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('8', '2C0002', '调节三高', null, '15', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('9', '2C0003', '维生素钙', null, '20', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('10', '2C0004', '肝肾养护', null, '25', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('11', '2C0005', '骨骼健康', null, '30', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('12', '2C0006', '呵护女性', null, '35', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('13', '2C0007', '男性健康', null, '40', '1C0001', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('14', '2C0008', '宝宝奶粉', null, '10', '1C0002', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('15', '2C0009', '宝宝健康', null, '15', '1C0002', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('16', '2C0010', '宝宝辅食', null, '20', '1C0002', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('17', '2C0011', '宝宝护理', null, '25', '1C0002', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('18', '2C0012', '妈妈备孕', null, '30', '1C0002', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('19', '2C0013', '绵羊油', null, '10', '1C0003', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('20', '2C0014', '护肤', null, '15', '1C0003', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('21', '2C0015', '精油', null, '20', '1C0003', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('22', '2C0016', '化妆品', null, '25', '1C0003', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('23', '2C0017', '饼干糕点', null, '10', '1C0004', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('24', '2C0018', '乳制品', null, '15', '1C0004', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('25', '2C0019', '糖果/巧克力', null, '20', '1C0004', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('26', '2C0020', '休闲食品', null, '25', '1C0004', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('27', '2C0021', '红酒', null, '10', '1C0005', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('28', '2C0022', '咖啡', null, '15', '1C0005', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('29', '2C0023', 'UGG', null, '10', '1C0006', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('30', '2C0024', '羊毛制品', null, '15', '1C0006', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
+INSERT INTO `t_goods_classification` VALUES ('31', '2C0025', '日常用品', null, '20', '1C0006', '0', '2016-02-01 00:00:00', 'oztt', '2016-02-01 00:00:00', 'oztt', 'manual');
 
 -- ----------------------------
--- Table structure for `t_goods_group`
+-- Table structure for t_goods_group
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_group`;
 CREATE TABLE `t_goods_group` (
@@ -582,7 +587,7 @@ INSERT INTO `t_goods_group` VALUES ('39', 'GP20160108000039', 'GD20160108000039'
 INSERT INTO `t_goods_group` VALUES ('40', 'GP20160108000040', 'GD20160108000040', '80.00', '100', '20', '欢迎来到OZTuanTuan！', 'desc.html', 'reminder.html', 'rules.html', '0', '2016-01-01 00:00:00', '2020-01-01 00:00:00', '2016-01-08 00:00:00', 'oztt', '2016-01-08 00:00:00', 'oztt', 'manual');
 
 -- ----------------------------
--- Table structure for `t_goods_price`
+-- Table structure for t_goods_price
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_price`;
 CREATE TABLE `t_goods_price` (
@@ -643,7 +648,7 @@ INSERT INTO `t_goods_price` VALUES ('39', 'PR20160108000039', 'GD20160108000039'
 INSERT INTO `t_goods_price` VALUES ('40', 'PR20160108000040', 'GD20160108000040', '0', '100.00', '0', '2016-01-08 00:00:00', '2016-01-08 00:00:00', '1');
 
 -- ----------------------------
--- Table structure for `t_goods_property`
+-- Table structure for t_goods_property
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_property`;
 CREATE TABLE `t_goods_property` (
@@ -665,7 +670,7 @@ CREATE TABLE `t_goods_property` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_goods_storage`
+-- Table structure for t_goods_storage
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_storage`;
 CREATE TABLE `t_goods_storage` (
@@ -691,7 +696,7 @@ CREATE TABLE `t_goods_storage` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_no_customer`
+-- Table structure for t_no_customer
 -- ----------------------------
 DROP TABLE IF EXISTS `t_no_customer`;
 CREATE TABLE `t_no_customer` (
@@ -706,7 +711,7 @@ CREATE TABLE `t_no_customer` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_no_goods`
+-- Table structure for t_no_goods
 -- ----------------------------
 DROP TABLE IF EXISTS `t_no_goods`;
 CREATE TABLE `t_no_goods` (
@@ -721,7 +726,7 @@ CREATE TABLE `t_no_goods` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_no_group`
+-- Table structure for t_no_group
 -- ----------------------------
 DROP TABLE IF EXISTS `t_no_group`;
 CREATE TABLE `t_no_group` (
@@ -736,7 +741,7 @@ CREATE TABLE `t_no_group` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_no_invoice`
+-- Table structure for t_no_invoice
 -- ----------------------------
 DROP TABLE IF EXISTS `t_no_invoice`;
 CREATE TABLE `t_no_invoice` (
@@ -751,7 +756,7 @@ CREATE TABLE `t_no_invoice` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_no_order`
+-- Table structure for t_no_order
 -- ----------------------------
 DROP TABLE IF EXISTS `t_no_order`;
 CREATE TABLE `t_no_order` (
@@ -766,7 +771,7 @@ CREATE TABLE `t_no_order` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_no_price`
+-- Table structure for t_no_price
 -- ----------------------------
 DROP TABLE IF EXISTS `t_no_price`;
 CREATE TABLE `t_no_price` (
@@ -781,7 +786,7 @@ CREATE TABLE `t_no_price` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_no_transaction`
+-- Table structure for t_no_transaction
 -- ----------------------------
 DROP TABLE IF EXISTS `t_no_transaction`;
 CREATE TABLE `t_no_transaction` (
@@ -796,7 +801,7 @@ CREATE TABLE `t_no_transaction` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_suburb_deliver_fee`
+-- Table structure for t_suburb_deliver_fee
 -- ----------------------------
 DROP TABLE IF EXISTS `t_suburb_deliver_fee`;
 CREATE TABLE `t_suburb_deliver_fee` (
@@ -900,7 +905,7 @@ INSERT INTO `t_suburb_deliver_fee` VALUES ('88', 'Wavell Heights', '18.00');
 INSERT INTO `t_suburb_deliver_fee` VALUES ('89', 'Yeronga', '9.00');
 
 -- ----------------------------
--- Table structure for `t_sys_account`
+-- Table structure for t_sys_account
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_account`;
 CREATE TABLE `t_sys_account` (
@@ -921,7 +926,7 @@ CREATE TABLE `t_sys_account` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_sys_code`
+-- Table structure for t_sys_code
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_code`;
 CREATE TABLE `t_sys_code` (
@@ -974,7 +979,7 @@ INSERT INTO `t_sys_code` VALUES ('35', 'COM009', '04', '送货上门时间段', 
 INSERT INTO `t_sys_code` VALUES ('36', 'COM009', '05', '送货上门时间段', '16:00～～18:00');
 
 -- ----------------------------
--- Table structure for `t_sys_module`
+-- Table structure for t_sys_module
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_module`;
 CREATE TABLE `t_sys_module` (
@@ -997,7 +1002,7 @@ CREATE TABLE `t_sys_module` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_sys_resource`
+-- Table structure for t_sys_resource
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_resource`;
 CREATE TABLE `t_sys_resource` (
@@ -1017,7 +1022,7 @@ CREATE TABLE `t_sys_resource` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_sys_role`
+-- Table structure for t_sys_role
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_role`;
 CREATE TABLE `t_sys_role` (
@@ -1039,7 +1044,7 @@ CREATE TABLE `t_sys_role` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `t_sys_validate_message`
+-- Table structure for t_sys_validate_message
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_validate_message`;
 CREATE TABLE `t_sys_validate_message` (

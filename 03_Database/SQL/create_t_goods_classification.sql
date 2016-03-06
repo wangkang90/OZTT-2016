@@ -1,8 +1,9 @@
-DROP TABLE IF EXISTS `t_goods_classification`;
+﻿DROP TABLE IF EXISTS `t_goods_classification`;
 CREATE TABLE `t_goods_classification` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `classId` varchar(10) NOT NULL,
   `className` varchar(50) DEFAULT NULL,
+  `classNameEn` varchar(100) DEFAULT NULL,
   `sortOrder` int(8),
   `fatherClassId` varchar(10) NOT NULL,
   `openFlg` char(1) NOT NULL,
