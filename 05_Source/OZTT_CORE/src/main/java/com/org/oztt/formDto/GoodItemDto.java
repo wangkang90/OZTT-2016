@@ -38,6 +38,8 @@ public class GoodItemDto {
     
     private String sellerRule; // 买家规则
     
+    private String groupId; // 团购ID
+    
     private String properties;
 
     public TGoods getGoods() {
@@ -158,5 +160,13 @@ public class GoodItemDto {
 
     public void setIsOverTime(String isOverTime) {
         this.isOverTime = isOverTime;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 }

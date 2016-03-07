@@ -10,6 +10,8 @@ import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.dao.TGoodsDao;
 import com.org.oztt.entity.TGoods;
+import com.org.oztt.formDto.GroupItemDto;
+import com.org.oztt.formDto.GroupItemIdDto;
 import com.org.oztt.formDto.OzTtAdGlListDto;
 import com.org.oztt.formDto.OzTtAdPlListDto;
 
@@ -56,26 +58,26 @@ public class TGoodsDaoImpl extends BaseDao implements TGoodsDao {
         return select("com.org.oztt.dao.TGoodsDao.getFirstThreeNewArravail");
     }
 
-    public List<TGoods> getAllNewArravail() {
+    public List<GroupItemDto> getAllNewArravail() {
         return select("com.org.oztt.dao.TGoodsDao.getAllNewArravail");
     }
 
-    public List<TGoods> getGoodsListForMain(Map<String, String> map) {
+    public List<GroupItemDto> getGoodsListForMain(Map<String, String> map) {
         return select("com.org.oztt.dao.TGoodsDao.getGoodsListForMain", map);
     }
 
-    public PagingResult<TGoods> getGoodsByParamForPage(Pagination pagination) {
+    public PagingResult<GroupItemDto> getGoodsByParamForPage(Pagination pagination) {
         return selectPagination("com.org.oztt.dao.TGoodsDao.getGoodsByParamForPage",
                 "com.org.oztt.dao.TGoodsDao.getGoodsByParamForPageCount", pagination);
     }
 
     @Override
-    public List<TGoods> getFiveHotSeller(TGoods record) {
+    public List<GroupItemDto> getFiveHotSeller(TGoods record) {
         return select("com.org.oztt.dao.TGoodsDao.getFiveHotSeller", record);
     }
 
     @Override
-    public List<TGoods> getGoodsBySearchParam(String goodsParam) {
+    public List<GroupItemDto> getGoodsBySearchParam(String goodsParam) {
         return select("com.org.oztt.dao.TGoodsDao.getGoodsBySearchParam", goodsParam);
     }
 
@@ -89,6 +91,11 @@ public class TGoodsDaoImpl extends BaseDao implements TGoodsDao {
     public PagingResult<OzTtAdGlListDto> getAllGoodsInfoForAdmin(Pagination pagination) {
         return selectPagination("com.org.oztt.dao.TGoodsDao.getAllGoodsInfoForAdmin",
                 "com.org.oztt.dao.TGoodsDao.getAllGoodsInfoForAdminCount", pagination);
+    }
+
+    @Override
+    public GroupItemIdDto getGroupItemId(String groupId) {
+        return null;
     }
 
 }

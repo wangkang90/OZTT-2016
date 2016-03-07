@@ -115,7 +115,7 @@
 							var tempCookie = [];
 							for(var i=0; i<contcartArrayFromDB.length; i++){
 								var properties = {
-										"goodsId":contcartArrayFromDB[i].goodsId,
+										"groupId":contcartArrayFromDB[i].groupId,
 										"goodsName":contcartArrayFromDB[i].goodsName,
 										"goodsImage":contcartArrayFromDB[i].goodsImage,
 										"goodsQuantity":contcartArrayFromDB[i].goodsQuantity,
@@ -142,11 +142,11 @@
 		});
 	}
 	
-	function viewProductPopUp(goodsId){
+	function viewProductPopUp(groupId){
 		jQuery.ajax({
 			type : 'GET',
 			contentType : 'application/json',
-			url : '${pageContext.request.contextPath}/COMMON/getGoodsItem?goodsId='+goodsId,
+			url : '${pageContext.request.contextPath}/COMMON/getGoodsItem?groupId='+groupId,
 			cache : false,
 			async : false,
 			dataType : 'json',
@@ -191,8 +191,8 @@
 					$("#prodectDesc").html(goodItemDto.goods.goodsdesc)
 					$("#productOptions").empty();
 
-					$("#detail").attr("onclick", "toItem('"+goodItemDto.goods.goodsid+"')");
-					$("#addCart").attr("onclick", "addToCart('"+goodItemDto.goods.goodsid+"')");
+					$("#detail").attr("onclick", "toItem('"+goodItemDto.groupId+"')");
+					$("#addCart").attr("onclick", "addToCart('"+goodItemDto.groupId+"')");
 					
 					var properties = JSON.parse(goodItemDto.properties);
 					
@@ -225,8 +225,8 @@
 		});	
 	}
 	
-	function toItem(goodsId) {
-		location.href = "${pageContext.request.contextPath}/OZ_TT_TP_PD/init?goodId="+goodsId;
+	function toItem(groupId) {
+		location.href = "${pageContext.request.contextPath}/OZ_TT_TP_PD/init?groupId="+groupId;
 	}
 	
 	function toMainIndex(){
@@ -241,9 +241,11 @@
 		$("#activeImage").attr("src", image);
 		$("#activeImage").attr("alt", goodsName);
 		$("#activeImage").attr("data-BigImgSrc", image);
+		
+		App.initImageZoom();
 	}
 	
-	function addToCart(goodsId) {
+	function addToCart(groupId) {
 		// 取得商品的属性
 		var allDiv = $("#productOptions").find("div");
 		var goodsName = $("#goodsNameh1").html();
@@ -268,7 +270,7 @@
 			}
 		}
 		var properties = {
-				"goodsId":goodsId,
+				"groupId":groupId,
 				"goodsName":goodsName,
 				"goodsImage":goodsImage,
 				"goodsQuantity":goodsQuantity,
@@ -316,7 +318,7 @@
 			var contcartArray = eval(contcartJSON);
 			var hasGoods = false;
 			for(var i=0; i<contcartArray.length; i++){
-				if (contcartArray[i].goodsId == properties.goodsId && JSON.stringify(contcartArray[i].goodsProperties) == properties.goodsProperties ) {
+				if (contcartArray[i].groupId == properties.groupId && JSON.stringify(contcartArray[i].goodsProperties) == properties.goodsProperties ) {
 					contcartArray[i].goodsQuantity = parseFloat(contcartArray[i].goodsQuantity) + parseFloat(properties.goodsQuantity);
 					contcartArray[i].goodsPrice = parseFloat(contcartArray[i].goodsPrice) + parseFloat(properties.goodsPrice);
 					hasGoods = true;
@@ -395,7 +397,7 @@
 			var money = 0;
 			if (contcartArray != null && contcartArray.length > 0) {
 				for(var i=0; i<contcartArray.length; i++){
-					var goodsId = contcartArray[i].goodsId;
+					var groupId = contcartArray[i].groupId;
 					var goodsName = contcartArray[i].goodsName;
 					var goodsImage = contcartArray[i].goodsImage;
 					var goodsQuantity = contcartArray[i].goodsQuantity;
@@ -407,11 +409,11 @@
 						goodsPropertiesStr += goodsPropertiesEval[j].properName + ":" + goodsPropertiesEval[j].properValue + " ";
 					}
 					inHtml += temp1;
-					inHtml += temp2.replace("{0}",goodsId).replace("{1}", goodsImage).replace("{2}", goodsName);
+					inHtml += temp2.replace("{0}",groupId).replace("{1}", goodsImage).replace("{2}", goodsName);
 					inHtml += temp3.replace("{0}",goodsQuantity);
-					inHtml += temp4.replace("{0}",goodsId).replace("{1}", goodsName).replace("{2}",goodsPropertiesStr);
+					inHtml += temp4.replace("{0}",groupId).replace("{1}", goodsName).replace("{2}",goodsPropertiesStr);
 					inHtml += temp5.replace("{0}",goodsPrice);
-					inHtml += temp6.replace("{0}",goodsId).replace("{1}","ITEM" + i);
+					inHtml += temp6.replace("{0}",groupId).replace("{1}","ITEM" + i);
 					inHtml += temp7;
 					
 					money = money + parseFloat(goodsPrice);
@@ -482,7 +484,7 @@
 			var sessionUserId = '${sessionUserId}';
 			if (sessionUserId != null && sessionUserId != "") {
 				var deleteData = {
-						"goodsId":deleteItem.goodsId,
+						"groupId":deleteItem.groupId,
 						"goodsName":deleteItem.goodsName,
 						"goodsImage":deleteItem.goodsImage,
 						"goodsQuantity":deleteItem.goodsQuantity,
@@ -581,7 +583,7 @@
 								var tempCookie = [];
 								for(var i=0; i<contcartArrayFromDB.length; i++){
 									var properties = {
-											"goodsId":contcartArrayFromDB[i].goodsId,
+											"groupId":contcartArrayFromDB[i].groupId,
 											"goodsName":contcartArrayFromDB[i].goodsName,
 											"goodsImage":contcartArrayFromDB[i].goodsImage,
 											"goodsQuantity":contcartArrayFromDB[i].goodsQuantity,
@@ -648,7 +650,7 @@
 					var tempCookie = [];
 					for(var i=0; i<contcartArrayFromDB.length; i++){
 						var properties = {
-								"goodsId":contcartArrayFromDB[i].goodsId,
+								"groupId":contcartArrayFromDB[i].groupId,
 								"goodsName":contcartArrayFromDB[i].goodsName,
 								"goodsImage":contcartArrayFromDB[i].goodsImage,
 								"goodsQuantity":contcartArrayFromDB[i].goodsQuantity,
@@ -829,25 +831,25 @@
             <div class="collapse navbar-collapse mega-menu">
                 <ul class="nav navbar-nav">
                     <li class="dropdown" onclick="toMainIndex()">
-                      <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="product-list.html" href="product-list.html">
+                      <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="" href="#">
                          <fmt:message key="common_group"/>
                         <i class="fa fa-angle-down"></i>
                       </a>
                     </li>
                     <li class="dropdown">
-                      <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="product-list.html" href="product-list.html">
+                      <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="" href="#">
                          <fmt:message key="common_pleshop"/>
                         <i class="fa fa-angle-down"></i>
                       </a>
                     </li>
                     <li class="dropdown">
-                      <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="product-list.html" href="product-list.html">
+                      <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="" href="#">
                          <fmt:message key="common_hotsell"/>
                         <i class="fa fa-angle-down"></i>
                       </a>
                     </li>
                     <li class="dropdown">
-                      <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="product-list.html" href="product-list.html">
+                      <a class="dropdown-toggle" data-toggle="dropdown" data-delay="0" data-close-others="false" data-target="" href="#">
                          <fmt:message key="common_retail"/>
                         <i class="fa fa-angle-down"></i>
                       </a>

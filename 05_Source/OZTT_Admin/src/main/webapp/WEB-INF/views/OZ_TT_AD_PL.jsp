@@ -172,7 +172,7 @@
 			return false;
 		}
 		var openFlag = "0";
-		if ($("#isGroupOpenFlag0").attr("checked")) {
+		if ($("#isGroupOpenFlag1").attr("checked")) {
 			openFlag = "1";
 		}
 		
@@ -624,11 +624,11 @@
 							<label class="col-md-4 control-label"><fmt:message key="OZ_TT_AD_PL_DIALOG_isOpen" /></label>
 							<div class="radio-list col-md-8">
 								<label class="radio-inline">
-									<input type="radio" name="isOpenFlag" id="isGroupOpenFlag0" value="1"></input>
+									<input type="radio" name="isOpenFlag" id="isGroupOpenFlag0" value="0"></input>
 								 	<fmt:message key="COMMON_NO" />
 								</label>
 								<label class="radio-inline">
-									<input type="radio" name="isOpenFlag" id="isGroupOpenFlag1" value="0"></input>
+									<input type="radio" name="isOpenFlag" id="isGroupOpenFlag1" value="1"></input>
 								 	<fmt:message key="COMMON_YES" />
 								</label>
 							

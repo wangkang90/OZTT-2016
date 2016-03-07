@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : localMysql
@@ -184,16 +184,15 @@ CREATE TABLE `t_cons_order_details` (
   `orderNo` varchar(16) NOT NULL,
   `customerNo` varchar(16) NOT NULL,
   `goodsId` varchar(16) NOT NULL,
-  `groupMaxQuantity` varchar(1000) DEFAULT NULL,
-  `groupCurrentQuantity` decimal(12,0) DEFAULT NULL,
-  `groupComments` varchar(500) DEFAULT NULL,
-  `groupDesc` varchar(255) DEFAULT NULL,
+  `specifications` varchar(1000) DEFAULT NULL,
+  `quantity` decimal(12, 0),
+  `groupNo` varchar(16) DEFAULT NULL,
   `priceNo` varchar(16) DEFAULT NULL,
-  `unitPrice` decimal(12,2) DEFAULT NULL,
-  `sumAmount` decimal(12,2) DEFAULT NULL,
+  `unitPrice` decimal(12, 2),
+  `sumAmount` decimal(12, 2),
   `addTimestamp` timestamp NULL DEFAULT NULL,
   `addUserKey` varchar(40) DEFAULT NULL,
-  `updTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updTimestamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updUserKey` varchar(40) DEFAULT NULL,
   `updPgmId` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`no`)
@@ -1057,4 +1056,41 @@ CREATE TABLE `t_sys_validate_message` (
 
 -- ----------------------------
 -- Records of t_sys_validate_message
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_no_announcement
+-- ----------------------------
+DROP TABLE IF EXISTS `t_no_announcement`;
+CREATE TABLE `t_no_announcement` (
+  `no` bigint(12) NOT NULL AUTO_INCREMENT,
+  `date` varchar(8) NOT NULL,
+  `maxNo` varchar(16) NOT NULL,
+  PRIMARY KEY (`no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_no_announcement
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_sys_announcement
+-- ----------------------------
+DROP TABLE IF EXISTS `t_sys_announcement`;
+CREATE TABLE `t_sys_announcement` (
+  `no` bigint(12) NOT NULL AUTO_INCREMENT,
+  `announceNo` varchar(16) NOT NULL,
+  `announceTitle` varchar(255) NOT NULL,
+  `announceContent` varchar(1000) NOT NULL,
+  `releaseTime` timestamp NULL DEFAULT NULL,
+  `ifRevoke` char(1),
+  `revokeTime` timestamp NULL DEFAULT NULL,
+  `ifDelete` char(1),
+  `deleteTime` timestamp NULL DEFAULT NULL,
+  `priority` char(1),
+  PRIMARY KEY (`no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_sys_announcement
 -- ----------------------------

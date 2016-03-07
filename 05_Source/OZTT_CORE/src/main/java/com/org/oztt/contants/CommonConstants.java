@@ -36,7 +36,9 @@ public final class CommonConstants {
 
     public static final int    PRODUCT_INIT_COUNT    = 15;                                     // 默认显示15条数据
 
-    public static final String OPEN_FLAG             = "0";                                    // 0:开放
+    public static final String OPEN_FLAG_GROUP       = "1";                                    // 1:开放
+
+    public static final String OPEN_FLAG_OTHER       = "0";                                    // 0:开放
 
     public static final String LEFT_INDICATE         = "&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;"; //右向箭头
 
@@ -79,7 +81,7 @@ public final class CommonConstants {
     public static final String PRICE_NO_SIGN         = "PR";
 
     public static final String GROUP_NO_SIGN         = "GP";
-    
+
     public static final String GOODS_NO_SIGN         = "GD";
 
     public static final String FILE_SPLIT            = ".";

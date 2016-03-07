@@ -152,7 +152,7 @@
 				var inHtml = "";
 				var money = 0;
 				for(var i=0; i<contcartArray.length; i++){
-					var goodsId = contcartArray[i].goodsId;
+					var groupId = contcartArray[i].groupId;
 					var goodsName = contcartArray[i].goodsName;
 					var goodsImage = contcartArray[i].goodsImage;
 					var goodsQuantity = contcartArray[i].goodsQuantity;
@@ -166,11 +166,11 @@
 					}
 					inHtml += temp1;
 					inHtml += temp2.replace("{0}",goodsImage).replace("{1}", goodsName);
-					inHtml += temp3.replace("{0}",goodsId).replace("{1}", goodsName).replace("{2}",goodsPropertiesStr);
+					inHtml += temp3.replace("{0}",groupId).replace("{1}", goodsName).replace("{2}",goodsPropertiesStr);
 					inHtml += temp4.replace("{0}",i).replace("{1}",goodsQuantity);
 					inHtml += temp5.replace("{0}",goodsUnitPrice + '<fmt:message key="common_yuan"/>');
 					inHtml += temp6.replace("{0}",goodsPrice + '<fmt:message key="common_yuan"/>');
-					inHtml += temp7.replace("{0}",goodsId).replace("{1}","ITEM" + i);
+					inHtml += temp7.replace("{0}",groupId).replace("{1}","ITEM" + i);
 					inHtml += temp8;
 					money = money + parseFloat(goodsPrice);
 				}
@@ -179,11 +179,11 @@
 			}
 		}
 		
-		function deleteContCartList(str, goodsId, itemIndex){
+		function deleteContCartList(str, groupId, itemIndex){
 			// 删除
 			$(str).parent().parent().remove();
 			// 删除Cookie和更新购物车
-			deleteContCart(str, goodsId, itemIndex);
+			deleteContCart(str, groupId, itemIndex);
 			if ($("#shopCartTable").find("tr").length > 1) {
 				// 刷新画面
 				initContCartList();
@@ -219,7 +219,7 @@
 						contcartArray[i].goodsPrice = parseFloat(contcartArray[i].goodsPrice) / parseFloat(contcartArray[i].goodsQuantity) * parseFloat(quantity);
 						contcartArray[i].goodsQuantity = quantity;
 						updateData = {
-								"goodsId":contcartArray[i].goodsId,
+								"groupId":contcartArray[i].groupId,
 								"goodsName":contcartArray[i].goodsName,
 								"goodsImage":contcartArray[i].goodsImage,
 								"goodsQuantity":updateQuantity,
