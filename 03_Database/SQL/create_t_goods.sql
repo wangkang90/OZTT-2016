@@ -10,6 +10,7 @@ CREATE TABLE `t_goods` (
   `goodsDesc` varchar(200) DEFAULT NULL,
   `goodsDescEn` varchar(400) DEFAULT NULL,
   `goodsComments` varchar(500) DEFAULT NULL,
+  `ifTax` char(1),
   `goodsThumbnail` varchar(255) DEFAULT NULL,
   `goodsSmallPic` varchar(255) DEFAULT NULL,
   `goodsNormalPic` varchar(255) DEFAULT NULL,
