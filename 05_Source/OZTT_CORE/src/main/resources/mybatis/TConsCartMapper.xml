@@ -224,6 +224,9 @@
 		<if test="goodsid != null">
 			and goodsId = #{goodsid,jdbcType=VARCHAR}
 		</if>
+		<if test="groupno != null">
+			and groupNo = #{groupno,jdbcType=VARCHAR}
+		</if>
 		<if test="customerno != null">
 			and customerNo = #{customerno,jdbcType=VARCHAR}
 		</if>
@@ -248,11 +251,12 @@
 	
 	<select id="getAllContCartForCookie" resultType="com.org.oztt.formDto.ContCartItemDto" parameterType="java.lang.String">
 		select
+		a.groupNo as groupId,
 		a.goodsId,
 		b.goodsName,
 		b.goodsThumbnail as goodsImage,
 		a.quantity as goodsQuantity,
-		(case when a.ifGroup = '1' then d.groupPrice 
+		(case when a.ifGroup = '1' then d.groupPrice
 		      else  c.goodsClassValue
 		      end )* a.quantity  as  goodsPrice, 
 		a.goodsSpecifications as goodsPropertiesDB
@@ -265,6 +269,7 @@
 	
 	<select id="getAllContCartForBuy" resultType="com.org.oztt.formDto.ContCartItemDto" parameterType="java.lang.String">
 		select
+		a.groupNo as groupId,
 		a.goodsId,
 		b.goodsName,
 		b.goodsThumbnail as goodsImage,

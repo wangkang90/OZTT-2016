@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.org.oztt.base.common.MyCategroy;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.controller.BaseController;
-import com.org.oztt.entity.TGoods;
+import com.org.oztt.formDto.GroupItemDto;
 import com.org.oztt.service.GoodsService;
 
 @Controller
@@ -42,10 +42,10 @@ public class MainController extends BaseController {
             String imgUrl = super.getApplicationMessage("saveImgUrl");
 
             // 获取新货
-            List<TGoods> allGoodsList = goodsService.getAllNewArravail();
+            List<GroupItemDto> allGoodsList = goodsService.getAllNewArravail();
 
             if (!CollectionUtils.isEmpty(allGoodsList)) {
-                for (TGoods goods : allGoodsList) {
+                for (GroupItemDto goods : allGoodsList) {
                     goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT
                             + goods.getGoodsthumbnail());
                 }
@@ -54,9 +54,9 @@ public class MainController extends BaseController {
             // 获取明细分类的数据
             Map<String, String> mapParam = new HashMap<String, String>();
             mapParam.put(CommonConstants.LIMIT_PARAM, CommonConstants.MAIN_LIST_COUNT);
-            List<TGoods> tgoodList = goodsService.getGoodsListForMain(mapParam);
+            List<GroupItemDto> tgoodList = goodsService.getGoodsListForMain(mapParam);
             if (!CollectionUtils.isEmpty(tgoodList)) {
-                for (TGoods goods : tgoodList) {
+                for (GroupItemDto goods : tgoodList) {
                     goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT
                             + goods.getGoodsthumbnail());
                 }
@@ -97,10 +97,10 @@ public class MainController extends BaseController {
             String imgUrl = super.getApplicationMessage("saveImgUrl");
 
             // 获取新货
-            List<TGoods> newGoodsList = goodsService.getAllNewArravail();
+            List<GroupItemDto> newGoodsList = goodsService.getAllNewArravail();
 
             if (!CollectionUtils.isEmpty(newGoodsList)) {
-                for (TGoods goods : newGoodsList) {
+                for (GroupItemDto goods : newGoodsList) {
                     goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT
                             + goods.getGoodsthumbnail());
                 }
@@ -109,9 +109,9 @@ public class MainController extends BaseController {
             // 获取明细分类的数据
             Map<String, String> mapParam = new HashMap<String, String>();
             mapParam.put(CommonConstants.LIMIT_PARAM, CommonConstants.MAIN_LIST_COUNT);
-            List<TGoods> tgoodList = goodsService.getGoodsBySearchParam(goodsNameParam);
+            List<GroupItemDto> tgoodList = goodsService.getGoodsBySearchParam(goodsNameParam);
             if (!CollectionUtils.isEmpty(tgoodList)) {
-                for (TGoods goods : tgoodList) {
+                for (GroupItemDto goods : tgoodList) {
                     goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT
                             + goods.getGoodsthumbnail());
                 }

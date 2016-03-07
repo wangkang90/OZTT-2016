@@ -42,6 +42,8 @@ import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.ContCartProItemDto;
 import com.org.oztt.formDto.GoodItemDto;
 import com.org.oztt.formDto.GoodProertyDto;
+import com.org.oztt.formDto.GroupItemDto;
+import com.org.oztt.formDto.GroupItemIdDto;
 import com.org.oztt.formDto.OzTtAdClDto;
 import com.org.oztt.formDto.OzTtAdGcListDto;
 import com.org.oztt.formDto.OzTtAdGlListDto;
@@ -90,11 +92,11 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         return tGoodsDao.selectByParams(tGoods);
     }
 
-    public List<TGoods> getAllNewArravail() throws Exception {
+    public List<GroupItemDto> getAllNewArravail() throws Exception {
         return tGoodsDao.getAllNewArravail();
     }
 
-    public List<TGoods> getGoodsListForMain(Map<String, String> map) throws Exception {
+    public List<GroupItemDto> getGoodsListForMain(Map<String, String> map) throws Exception {
         return tGoodsDao.getGoodsListForMain(map);
     }
 
@@ -102,7 +104,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         return tGoodsClassficationDao.getGoodsClassficationByClassId(classId);
     }
 
-    public PagingResult<TGoods> getGoodsByParamForPage(Pagination pagination) throws Exception {
+    public PagingResult<GroupItemDto> getGoodsByParamForPage(Pagination pagination) throws Exception {
         return tGoodsDao.getGoodsByParamForPage(pagination);
     }
 
@@ -127,35 +129,37 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
     }
 
     @Override
-    public GoodItemDto getGoodAllItemDto(String goodId) throws Exception {
+    public GoodItemDto getGoodAllItemDto(String groupId) throws Exception {
 
         String imgUrl = MessageUtils.getApplicationMessage("saveImgUrl");
+        // 折扣价  团购这张表中
+        TGoodsGroup tGoodsGroup = new TGoodsGroup();
+        tGoodsGroup.setGroupno(groupId);
+        tGoodsGroup.setOpenflg(CommonConstants.OPEN_FLAG_GROUP);
+        tGoodsGroup = getGoodPrice(tGoodsGroup);
         // 取得当前商品的所有属性
+        String goodId = tGoodsGroup.getGoodsid();
         TGoods goods = getGoodsById(goodId);
         goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
         // 原价   商品定价策略表中
         TGoodsPrice tGoodsPrice = new TGoodsPrice();
         tGoodsPrice.setGoodsid(goodId);
-        tGoodsPrice.setOpenflg(CommonConstants.OPEN_FLAG);
+        tGoodsPrice.setOpenflg(CommonConstants.OPEN_FLAG_OTHER);
         tGoodsPrice = getGoodPrice(tGoodsPrice);
-        // 折扣价  团购这张表中
-        TGoodsGroup tGoodsGroup = new TGoodsGroup();
-        tGoodsGroup.setGoodsid(goodId);
-        tGoodsGroup.setOpenflg(CommonConstants.OPEN_FLAG);
-        tGoodsGroup = getGoodPrice(tGoodsGroup);
+        
 
         // 属性（比如：size，颜色）
         // 商品扩展属性定义这张表中
         List<GoodProertyDto> propertiesFormList = new ArrayList<GoodProertyDto>();
         TGoodsProperty tGoodsProperty = new TGoodsProperty();
         tGoodsProperty.setGoodsid(goodId);
-        tGoodsProperty.setOpenflg(CommonConstants.OPEN_FLAG);
+        tGoodsProperty.setOpenflg(CommonConstants.OPEN_FLAG_OTHER);
         List<TGoodsProperty> properties = getGoodsProperty(tGoodsProperty);
         if (!CollectionUtils.isEmpty(properties)) {
             for (TGoodsProperty property : properties) {
                 TGoodsAppendItems tGoodsAppendItems = new TGoodsAppendItems();
                 tGoodsAppendItems.setItemid(property.getGoodsclassid());
-                tGoodsAppendItems.setOpenflg(CommonConstants.OPEN_FLAG);
+                tGoodsAppendItems.setOpenflg(CommonConstants.OPEN_FLAG_OTHER);
                 tGoodsAppendItems = getGoodsAppendItems(tGoodsAppendItems);
 
                 GoodProertyDto proDto = new GoodProertyDto();
@@ -181,6 +185,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
 
         GoodItemDto goodItemDto = new GoodItemDto();
         goodItemDto.setGoods(goods);
+        goodItemDto.setGroupId(groupId);
         goodItemDto.setFirstImg((goodPicList != null && goodPicList.size() > 0) ? goodPicList.get(0) : "");
         goodItemDto.setImgList(goodPicList);
         goodItemDto.setNowPrice(tGoodsPrice.getGoodsclassvalue().toString());
@@ -231,7 +236,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         // 原价   商品定价策略表中
         TGoodsPrice tGoodsPrice = new TGoodsPrice();
         tGoodsPrice.setGoodsid(goodId);
-        tGoodsPrice.setOpenflg(CommonConstants.OPEN_FLAG);
+        tGoodsPrice.setOpenflg(CommonConstants.OPEN_FLAG_OTHER);
         tGoodsPrice = getGoodPrice(tGoodsPrice);
 
         // 属性（比如：size，颜色）
@@ -239,13 +244,13 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         List<GoodProertyDto> propertiesFormList = new ArrayList<GoodProertyDto>();
         TGoodsProperty tGoodsProperty = new TGoodsProperty();
         tGoodsProperty.setGoodsid(goodId);
-        tGoodsProperty.setOpenflg(CommonConstants.OPEN_FLAG);
+        tGoodsProperty.setOpenflg(CommonConstants.OPEN_FLAG_OTHER);
         List<TGoodsProperty> properties = getGoodsProperty(tGoodsProperty);
         if (!CollectionUtils.isEmpty(properties)) {
             for (TGoodsProperty property : properties) {
                 TGoodsAppendItems tGoodsAppendItems = new TGoodsAppendItems();
                 tGoodsAppendItems.setItemid(property.getGoodsclassid());
-                tGoodsAppendItems.setOpenflg(CommonConstants.OPEN_FLAG);
+                tGoodsAppendItems.setOpenflg(CommonConstants.OPEN_FLAG_OTHER);
                 tGoodsAppendItems = getGoodsAppendItems(tGoodsAppendItems);
 
                 GoodProertyDto proDto = new GoodProertyDto();
@@ -311,7 +316,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             return false;
         for (int i = 0; i < list.size(); i++) {
             Map<String, String> map = (Map<String, String>) list.get(i);
-            String goodId = map.get("goodsId");
+            String groupId = map.get("groupId");
             String goodProperties = map.get("goodsProperties");
             if (goodProperties != null) {
                 List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties,
@@ -323,29 +328,33 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             String goodQuantity = map.get("goodsQuantity");
             // 判断属性是不是相同，如果相同则数量相加
             TConsCart tConsCart = new TConsCart();
-            tConsCart.setGoodsid(goodId);
+            tConsCart.setGroupno(groupId);
             tConsCart.setCustomerno(customerNo);
             tConsCart.setGoodsspecifications(goodProperties);
             tConsCart = tConsCartDao.selectByParams(tConsCart);
+            
             if (tConsCart == null) {
                 // 没有数据则需要插入数据
+                // 商品团购
+                TGoodsGroup tGoodsGroup = new TGoodsGroup();
+                tGoodsGroup.setGroupno(groupId);
+                tGoodsGroup = this.getGoodPrice(tGoodsGroup);
+                
                 tConsCart = new TConsCart();
+                
+                tConsCart.setGroupno(groupId);
                 tConsCart.setAddcarttimestamp(new Date());
                 tConsCart.setAddtimestamp(new Date());
                 tConsCart.setAdduserkey(customerNo);
                 tConsCart.setCustomerno(customerNo);
-                tConsCart.setGoodsid(goodId);
+                tConsCart.setGoodsid(tGoodsGroup.getGoodsid());
                 tConsCart.setGoodsspecifications(goodProperties);
                 // 商品价格
                 TGoodsPrice tGoodsPrice = new TGoodsPrice();
-                tGoodsPrice.setGoodsid(goodId);
+                tGoodsPrice.setGoodsid(tGoodsGroup.getGoodsid());
                 tGoodsPrice = this.getGoodPrice(tGoodsPrice);
                 tConsCart.setPriceno(tGoodsPrice.getPriceno());
-                // 商品团购
-                TGoodsGroup tGoodsGroup = new TGoodsGroup();
-                tGoodsGroup.setGoodsid(goodId);
-                tGoodsGroup = this.getGoodPrice(tGoodsGroup);
-                tConsCart.setGroupno(tGoodsGroup.getGroupno());
+                
 
                 tConsCart.setIfgroup(CommonConstants.IS_GROUP);
                 tConsCart.setQuantity(Long.valueOf(goodQuantity));
@@ -366,7 +375,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
     }
 
     @Override
-    public List<TGoods> getFiveHotSeller(TGoods tGoods) throws Exception {
+    public List<GroupItemDto> getFiveHotSeller(TGoods tGoods) throws Exception {
         return tGoodsDao.getFiveHotSeller(tGoods);
     }
 
@@ -407,7 +416,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
     }
 
     @Override
-    public List<TGoods> getGoodsBySearchParam(String goodsParam) throws Exception {
+    public List<GroupItemDto> getGoodsBySearchParam(String goodsParam) throws Exception {
         return tGoodsDao.getGoodsBySearchParam(goodsParam);
     }
 
@@ -733,6 +742,11 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
     @Override
     public void updateGoodsForAdmin(TGoods tGoods) throws Exception {
         tGoodsDao.updateByPrimaryKeySelective(tGoods);
+    }
+
+    @Override
+    public GroupItemIdDto getGroupItemId(String groupId) throws Exception {
+        return tGoodsDao.getGroupItemId(groupId);
     }
 
 }

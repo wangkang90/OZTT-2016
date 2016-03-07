@@ -68,8 +68,8 @@
               <h2><fmt:message key="OZ_TT_TP_PL_bestSellers"/></h2>
               <c:forEach var="hotSellerList" items="${ hotSellerList }">
               <div class="item">
-                <a href="javascript:toItem('${hotSellerList.goodsid }')"><img src="${ hotSellerList.goodsthumbnail }" alt="${ hotSellerList.goodsname }"></a>
-                <h3><a href="javascript:toItem('${hotSellerList.goodsid }')">${ hotSellerList.goodsname }</a></h3>
+                <a href="javascript:toItem('${hotSellerList.groupno }')"><img src="${ hotSellerList.goodsthumbnail }" alt="${ hotSellerList.goodsname }"></a>
+                <h3><a href="javascript:toItem('${hotSellerList.groupno }')">${ hotSellerList.goodsname }</a></h3>
                 <div class="price">${ hotSellerList.costprice }<fmt:message key="common_yuan"/></div>
               </div>
               </c:forEach>
@@ -133,7 +133,7 @@
                     	<div class="product-quantity">
 	                        <input id="product-quantity" type="text" value="1" readonly class="form-control input-sm">
 	                    </div>
-                    	<button class="btn btn-primary" type="botton" onclick="addToCart('${goodItemDto.goods.goodsid}')"><fmt:message key="common_addtocart"/></button>
+                    	<button class="btn btn-primary" type="botton" onclick="addToCart('${goodItemDto.groupId}')"><fmt:message key="common_addtocart"/></button>
                     </c:if>
                     <c:if test="${goodItemDto.isOver == '1' || goodItemDto.isOver == '1'}">
                     	<div style="height:38px"></div>

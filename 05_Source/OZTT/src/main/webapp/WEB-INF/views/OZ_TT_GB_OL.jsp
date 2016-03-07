@@ -74,7 +74,7 @@ function toPay(orderId) {
                  			<c:forEach var="itemList" items="${ orderlist.itemList }" varStatus="status">
                  			<tr>
 								<td class="shopping-cart-image col-sm-1"><a><img src="${itemList.goodsImage}" alt="${itemList.goodsName}"></a></td>
-								<td class="col-sm-4 order_detail_nor_td"><a onclick="toItem('${itemList.goodsId}')">${itemList.goodsName}</a>&nbsp;&nbsp;&nbsp;&nbsp;X${itemList.goodsQuantity}<p></p></td>
+								<td class="col-sm-4 order_detail_nor_td"><a onclick="toItem('${itemList.groupId}')">${itemList.goodsName}</a>&nbsp;&nbsp;&nbsp;&nbsp;X${itemList.goodsQuantity}<p></p></td>
 								<c:if test="${status.index == '0'}">
 									<td class="col-sm-2 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">${orderlist.consignee }</td>
 									<td class="col-sm-1 textcenter order_detail_rows_td" rowspan="${orderlist.detailCount}" style="vertical-align:top">
@@ -176,7 +176,7 @@ function toPay(orderId) {
 			var tempCookie = [];
 			for(var i=0; i<contcartArrayFromDB.length; i++){
 				var properties = {
-						"goodsId":contcartArrayFromDB[i].goodsId,
+						"groupId":contcartArrayFromDB[i].groupId,
 						"goodsName":contcartArrayFromDB[i].goodsName,
 						"goodsImage":contcartArrayFromDB[i].goodsImage,
 						"goodsQuantity":contcartArrayFromDB[i].goodsQuantity,

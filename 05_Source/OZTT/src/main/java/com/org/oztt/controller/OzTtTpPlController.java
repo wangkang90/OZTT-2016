@@ -20,6 +20,7 @@ import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.entity.TGoods;
 import com.org.oztt.entity.TGoodsClassfication;
+import com.org.oztt.formDto.GroupItemDto;
 import com.org.oztt.service.CustomerService;
 import com.org.oztt.service.GoodsService;
 
@@ -53,9 +54,9 @@ public class OzTtTpPlController extends BaseController {
             tGoodsParam.setDeleteflg(CommonConstants.IS_NOT_DELETE);
             tGoodsParam.setOnsaleflg(CommonConstants.IS_ON_SALE);
             tGoodsParam.setHotsaleflg(CommonConstants.IS_HOT_SALE);
-            List<TGoods> hotSellerList = goodsService.getFiveHotSeller(tGoodsParam);
+            List<GroupItemDto> hotSellerList = goodsService.getFiveHotSeller(tGoodsParam);
             if (!CollectionUtils.isEmpty(hotSellerList)) {
-                for (TGoods goods : hotSellerList) {
+                for (GroupItemDto goods : hotSellerList) {
                     goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
                 }
             }
@@ -70,10 +71,10 @@ public class OzTtTpPlController extends BaseController {
                     className = tGoodsClassfication.getClassname() + CommonConstants.LEFT_INDICATE + className;
                 }
                 // 三级结构
-                tGoodsClassfication = goodsService.getGoodsClassficationByClassId(tGoodsClassfication.getFatherclassid());
-                if (tGoodsClassfication != null) {
-                    className = tGoodsClassfication.getClassname() + CommonConstants.LEFT_INDICATE + className;
-                }
+//                tGoodsClassfication = goodsService.getGoodsClassficationByClassId(tGoodsClassfication.getFatherclassid());
+//                if (tGoodsClassfication != null) {
+//                    className = tGoodsClassfication.getClassname() + CommonConstants.LEFT_INDICATE + className;
+//                }
                 
                 
                 
@@ -93,10 +94,10 @@ public class OzTtTpPlController extends BaseController {
             mapParam.put("classId", classId);
             pagination.setParams(mapParam);
             
-            PagingResult<TGoods> pageInfo = goodsService.getGoodsByParamForPage(pagination);
+            PagingResult<GroupItemDto> pageInfo = goodsService.getGoodsByParamForPage(pagination);
             
             if (!CollectionUtils.isEmpty(pageInfo.getResultList())) {
-                for (TGoods goods : pageInfo.getResultList()) {
+                for (GroupItemDto goods : pageInfo.getResultList()) {
                     goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
                 }
             }

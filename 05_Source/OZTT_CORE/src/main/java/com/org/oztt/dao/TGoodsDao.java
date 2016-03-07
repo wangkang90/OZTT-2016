@@ -6,6 +6,8 @@ import java.util.Map;
 import com.org.oztt.base.page.Pagination;
 import com.org.oztt.base.page.PagingResult;
 import com.org.oztt.entity.TGoods;
+import com.org.oztt.formDto.GroupItemDto;
+import com.org.oztt.formDto.GroupItemIdDto;
 import com.org.oztt.formDto.OzTtAdGlListDto;
 import com.org.oztt.formDto.OzTtAdPlListDto;
 
@@ -62,7 +64,7 @@ public interface TGoodsDao {
      * 
      * @return
      */
-    List<TGoods> getAllNewArravail();
+    List<GroupItemDto> getAllNewArravail();
 
     /**
      * 根据参数获取商品数据
@@ -70,7 +72,7 @@ public interface TGoodsDao {
      * @param map
      * @return
      */
-    List<TGoods> getGoodsListForMain(Map<String, String> map);
+    List<GroupItemDto> getGoodsListForMain(Map<String, String> map);
 
     /**
      * 分页获取商品信息
@@ -78,7 +80,7 @@ public interface TGoodsDao {
      * @param pagination
      * @return
      */
-    PagingResult<TGoods> getGoodsByParamForPage(Pagination pagination);
+    PagingResult<GroupItemDto> getGoodsByParamForPage(Pagination pagination);
 
     /**
      * 热卖
@@ -86,7 +88,7 @@ public interface TGoodsDao {
      * @param record
      * @return
      */
-    List<TGoods> getFiveHotSeller(TGoods record);
+    List<GroupItemDto> getFiveHotSeller(TGoods record);
 
     /**
      * 检索商品
@@ -94,7 +96,7 @@ public interface TGoodsDao {
      * @param goodsParam
      * @return
      */
-    List<TGoods> getGoodsBySearchParam(String goodsParam);
+    List<GroupItemDto> getGoodsBySearchParam(String goodsParam);
 
     /**
      * 商品定价admin端获取
@@ -111,5 +113,12 @@ public interface TGoodsDao {
      * @return
      */
     PagingResult<OzTtAdGlListDto> getAllGoodsInfoForAdmin(Pagination pagination);
+    
+    /**
+     * 获取团购属性的所有ID
+     * @param groupId
+     * @return
+     */
+    GroupItemIdDto getGroupItemId(String groupId);
 
 }

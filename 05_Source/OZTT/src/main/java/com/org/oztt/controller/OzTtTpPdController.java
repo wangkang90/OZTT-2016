@@ -15,6 +15,7 @@ import com.org.oztt.base.common.MyCategroy;
 import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.entity.TGoods;
 import com.org.oztt.formDto.GoodItemDto;
+import com.org.oztt.formDto.GroupItemDto;
 import com.org.oztt.service.CustomerService;
 import com.org.oztt.service.GoodsService;
 
@@ -35,7 +36,7 @@ public class OzTtTpPdController extends BaseController {
      * @return
      */
     @RequestMapping(value = "init", method = RequestMethod.GET)
-    public String init(Model model, @RequestParam String goodId) {
+    public String init(Model model, @RequestParam String groupId) {
         try {
             // 获取目录
             List<MyCategroy> myCategroyList = super.commonService.getMyCategroy();
@@ -48,14 +49,14 @@ public class OzTtTpPdController extends BaseController {
             tGoodsParam.setDeleteflg(CommonConstants.IS_NOT_DELETE);
             tGoodsParam.setOnsaleflg(CommonConstants.IS_ON_SALE);
             tGoodsParam.setHotsaleflg(CommonConstants.IS_HOT_SALE);
-            List<TGoods> hotSellerList = goodsService.getFiveHotSeller(tGoodsParam);
+            List<GroupItemDto> hotSellerList = goodsService.getFiveHotSeller(tGoodsParam);
             if (!CollectionUtils.isEmpty(hotSellerList)) {
-                for (TGoods goods : hotSellerList) {
+                for (GroupItemDto goods : hotSellerList) {
                     goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT + goods.getGoodsthumbnail());
                 }
             }
 
-            GoodItemDto goodItemDto = goodsService.getGoodAllItemDto(goodId);
+            GoodItemDto goodItemDto = goodsService.getGoodAllItemDto(groupId);
 
             // 后台维护的时候提示让以逗号隔开
             model.addAttribute("goodItemDto", goodItemDto);

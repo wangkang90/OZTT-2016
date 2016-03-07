@@ -164,7 +164,7 @@
 													<tr>
 														<td class="shopping-cart-image"><a><img src="${goodItem.goodsImage}" alt="${goodItem.goodsName}"></a></td>
 														<td class="shopping-cart-description">
-															<h3><a onclick="toItem('${goodItem.goodsId}')">${goodItem.goodsName}</a></h3><p ></p>
+															<h3><a onclick="toItem('${goodItem.groupId}')">${goodItem.goodsName}</a></h3><p ></p>
 														</td>
 														<td class="shopping-cart-quantity shopping-cart-price"><strong>${goodItem.goodsQuantity}</strong></td>
 														<td class="shopping-cart-price textright" style="padding-right:0px"><strong>${goodItem.goodsUnitPrice}</strong></td>

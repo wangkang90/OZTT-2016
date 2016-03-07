@@ -14,6 +14,8 @@ import com.org.oztt.entity.TGoodsPrice;
 import com.org.oztt.entity.TGoodsProperty;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.GoodItemDto;
+import com.org.oztt.formDto.GroupItemDto;
+import com.org.oztt.formDto.GroupItemIdDto;
 import com.org.oztt.formDto.OzTtAdClDto;
 import com.org.oztt.formDto.OzTtAdGcListDto;
 import com.org.oztt.formDto.OzTtAdGlListDto;
@@ -50,7 +52,7 @@ public interface GoodsService {
      * @return
      * @throws Exception
      */
-    public List<TGoods> getFiveHotSeller(TGoods tGoods) throws Exception;
+    public List<GroupItemDto> getFiveHotSeller(TGoods tGoods) throws Exception;
 
     /**
      * 获取新货
@@ -58,7 +60,7 @@ public interface GoodsService {
      * @return
      * @throws Exception
      */
-    public List<TGoods> getAllNewArravail() throws Exception;
+    public List<GroupItemDto> getAllNewArravail() throws Exception;
 
     /**
      * 主画面一栏用，这里暂时显示12个
@@ -67,7 +69,7 @@ public interface GoodsService {
      * @return
      * @throws Exception
      */
-    public List<TGoods> getGoodsListForMain(Map<String, String> map) throws Exception;
+    public List<GroupItemDto> getGoodsListForMain(Map<String, String> map) throws Exception;
 
     /**
      * 通过分类ID取得分类名称
@@ -85,7 +87,7 @@ public interface GoodsService {
      * @return
      * @throws Exception
      */
-    public PagingResult<TGoods> getGoodsByParamForPage(Pagination pagination) throws Exception;
+    public PagingResult<GroupItemDto> getGoodsByParamForPage(Pagination pagination) throws Exception;
 
     /**
      * 获取商品价格信息
@@ -124,13 +126,13 @@ public interface GoodsService {
     public TGoodsAppendItems getGoodsAppendItems(TGoodsAppendItems tGoodsAppendItems) throws Exception;
 
     /**
-     * 获取商品的所有属性
+     * 获取团购商品的所有属性
      * 
      * @param tGoodsAppendItems
      * @return
      * @throws Exception
      */
-    public GoodItemDto getGoodAllItemDto(String goodId) throws Exception;
+    public GoodItemDto getGoodAllItemDto(String groupId) throws Exception;
     
     /**
      * 获取商品的所有属性
@@ -187,7 +189,7 @@ public interface GoodsService {
      * @return
      * @throws Exception
      */
-    public List<TGoods> getGoodsBySearchParam(String goodsParam) throws Exception;
+    public List<GroupItemDto> getGoodsBySearchParam(String goodsParam) throws Exception;
 
     /**
      * 取得DB中购物车的数据
@@ -354,4 +356,12 @@ public interface GoodsService {
      * @throws Exception
      */
     public void updateGoodsForAdmin(TGoods tGoods) throws Exception;
+    
+    /**
+     * 获取团购属性的所有ID
+     * @param groupId
+     * @return
+     * @throws Exception
+     */
+    public GroupItemIdDto getGroupItemId(String groupId) throws Exception;
 }
