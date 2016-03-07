@@ -58,7 +58,7 @@ public class CommonController extends BaseController {
     private AddressService  addressService;
 
     /**
-     * 得到产品信息
+     * 得到团购产品信息
      * 
      * @param request
      * @param session
@@ -66,11 +66,11 @@ public class CommonController extends BaseController {
      */
     @RequestMapping(value = "/getGoodsItem")
     public Map<String, Object> getCurrentItem(HttpServletRequest request, HttpSession session,
-            @RequestParam String goodsId) {
+            @RequestParam String groupId) {
         Map<String, Object> mapReturn = new HashMap<String, Object>();
         try {
 
-            GoodItemDto goodItemDto = goodsService.getGoodAllItemDto(goodsId);
+            GoodItemDto goodItemDto = goodsService.getGoodAllItemDto(groupId);
 
             // 后台维护的时候提示让以逗号隔开
             mapReturn.put("goodItemDto", goodItemDto);
@@ -595,7 +595,7 @@ public class CommonController extends BaseController {
             if (list != null && list.size() > 0) {
                 mapParam = list.get(0);
                 TGoodsGroup tGoodsGroup = new TGoodsGroup();
-                tGoodsGroup.setGoodsid(mapParam.get("goodsId"));
+                tGoodsGroup.setGroupno(mapParam.get("groupId"));
                 tGoodsGroup = goodsService.getGoodPrice(tGoodsGroup);
                 Long checkQuantity = Long.valueOf(mapParam.get("goodsQuantity"));
                 if (checkQuantity + tGoodsGroup.getGroupcurrentquantity() <= tGoodsGroup.getGroupmaxquantity()) {

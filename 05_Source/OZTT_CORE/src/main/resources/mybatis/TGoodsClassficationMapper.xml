@@ -5,6 +5,7 @@
     <id column="no" property="no" jdbcType="BIGINT" />
     <result column="classId" property="classid" jdbcType="VARCHAR" />
     <result column="className" property="classname" jdbcType="VARCHAR" />
+    <result column="classNameEn" property="classnameen" jdbcType="VARCHAR" />
     <result column="sortOrder" property="sortorder" jdbcType="INTEGER" />
     <result column="fatherClassId" property="fatherclassid" jdbcType="VARCHAR" />
     <result column="openFlg" property="openflg" jdbcType="CHAR" />

@@ -85,8 +85,8 @@
               <h2><fmt:message key="OZ_TT_TP_PL_bestSellers"/></h2>
               <c:forEach var="hotSellerList" items="${ hotSellerList }">
               <div class="item">
-                <a href="javascript:toItem('${hotSellerList.goodsid }')"><img src="${ hotSellerList.goodsthumbnail }" alt="${ hotSellerList.goodsname }"></a>
-                <h3><a href="javascript:toItem('${hotSellerList.goodsid }')">${ hotSellerList.goodsname }</a></h3>
+                <a href="javascript:toItem('${hotSellerList.groupno }')"><img src="${ hotSellerList.goodsthumbnail }" alt="${ hotSellerList.goodsname }"></a>
+                <h3><a href="javascript:toItem('${hotSellerList.groupno }')">${ hotSellerList.goodsname }</a></h3>
                 <div class="price">${ hotSellerList.costprice }<fmt:message key="common_yuan"/></div>
               </div>
               </c:forEach>
@@ -124,12 +124,12 @@
                     <img src="${goodslist.goodsthumbnail }" class="img-responsive" alt="${goodslist.goodsname }">
                     <div>
                       <a href="${goodslist.goodsthumbnail }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
-                      <a href="#product-pop-up" onclick="viewProductPopUp('${goodslist.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
+                      <a href="#product-pop-up" onclick="viewProductPopUp('${goodslist.groupno }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                     </div>
                   </div>
-                  <h3><a onclick="toItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>
+                  <h3><a onclick="toItem('${goodslist.groupno }')">${goodslist.goodsname }</a></h3>
                   <div class="pi-price">${goodslist.costprice }<fmt:message key="common_yuan"/></div>
-                  <a onclick="toItem('${goodslist.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_detail"/></a>
+                  <a onclick="toItem('${goodslist.groupno }')" class="btn btn-default add2cart"><fmt:message key="common_detail"/></a>
                   <c:if test="${goodslist.newsaleflg == '1' }">
                   	<div class="sticker sticker-new"></div>
                   </c:if>

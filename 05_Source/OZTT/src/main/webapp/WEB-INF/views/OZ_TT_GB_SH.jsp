@@ -480,7 +480,7 @@
 				var inHtml = "";
 				var money = 0;
 				for(var i=0; i<contcartArray.length; i++){
-					var goodsId = contcartArray[i].goodsId;
+					var groupId = contcartArray[i].groupId;
 					var goodsName = contcartArray[i].goodsName;
 					var goodsImage = contcartArray[i].goodsImage;
 					var goodsQuantity = contcartArray[i].goodsQuantity;
@@ -494,7 +494,7 @@
 					}
 					inHtml += temp1;
 					inHtml += temp2.replace("{0}",goodsImage).replace("{1}", goodsName);
-					inHtml += temp3.replace("{0}",goodsId).replace("{1}", goodsName).replace("{2}",goodsPropertiesStr);
+					inHtml += temp3.replace("{0}",groupId).replace("{1}", goodsName).replace("{2}",goodsPropertiesStr);
 					inHtml += temp4.replace("{0}",goodsQuantity);
 					inHtml += temp5.replace("{0}",goodsUnitPrice + '<fmt:message key="common_yuan"/>');
 					inHtml += temp6.replace("{0}",goodsPrice + '<fmt:message key="common_yuan"/>');

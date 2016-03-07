@@ -1,30 +1,25 @@
-package com.org.oztt.entity;
+package com.org.oztt.formDto;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
-public class TGoods {
-    private Long no;
-
+/**
+ * 团购商品信息
+ * @author linliuan
+ *
+ */
+public class GroupItemDto {
+    
     private String goodsid;
 
     private String classid;
-
+    
     private String goodsbrand;
-
-    private String goodsbranden;
 
     private String goodsname;
 
-    private String goodsnameen;
-
     private String goodsdesc;
 
-    private String goodsdescen;
-
     private String goodscomments;
-
-    private String iftax;
 
     private String goodsthumbnail;
 
@@ -43,24 +38,8 @@ public class TGoods {
     private Integer sortorder;
 
     private String deleteflg;
-
-    private Date addtimestamp;
-
-    private String adduserkey;
-
-    private Date updtimestamp;
-
-    private String upduserkey;
-
-    private String updpgmid;
-
-    public Long getNo() {
-        return no;
-    }
-
-    public void setNo(Long no) {
-        this.no = no;
-    }
+    
+    private String groupno;
 
     public String getGoodsid() {
         return goodsid;
@@ -86,28 +65,12 @@ public class TGoods {
         this.goodsbrand = goodsbrand;
     }
 
-    public String getGoodsbranden() {
-        return goodsbranden;
-    }
-
-    public void setGoodsbranden(String goodsbranden) {
-        this.goodsbranden = goodsbranden;
-    }
-
     public String getGoodsname() {
         return goodsname;
     }
 
     public void setGoodsname(String goodsname) {
         this.goodsname = goodsname;
-    }
-
-    public String getGoodsnameen() {
-        return goodsnameen;
-    }
-
-    public void setGoodsnameen(String goodsnameen) {
-        this.goodsnameen = goodsnameen;
     }
 
     public String getGoodsdesc() {
@@ -118,28 +81,12 @@ public class TGoods {
         this.goodsdesc = goodsdesc;
     }
 
-    public String getGoodsdescen() {
-        return goodsdescen;
-    }
-
-    public void setGoodsdescen(String goodsdescen) {
-        this.goodsdescen = goodsdescen;
-    }
-
     public String getGoodscomments() {
         return goodscomments;
     }
 
     public void setGoodscomments(String goodscomments) {
         this.goodscomments = goodscomments;
-    }
-
-    public String getIftax() {
-        return iftax;
-    }
-
-    public void setIftax(String iftax) {
-        this.iftax = iftax;
     }
 
     public String getGoodsthumbnail() {
@@ -214,43 +161,13 @@ public class TGoods {
         this.deleteflg = deleteflg;
     }
 
-    public Date getAddtimestamp() {
-        return addtimestamp;
+    public String getGroupno() {
+        return groupno;
     }
 
-    public void setAddtimestamp(Date addtimestamp) {
-        this.addtimestamp = addtimestamp;
+    public void setGroupno(String groupno) {
+        this.groupno = groupno;
     }
 
-    public String getAdduserkey() {
-        return adduserkey;
-    }
-
-    public void setAdduserkey(String adduserkey) {
-        this.adduserkey = adduserkey;
-    }
-
-    public Date getUpdtimestamp() {
-        return updtimestamp;
-    }
-
-    public void setUpdtimestamp(Date updtimestamp) {
-        this.updtimestamp = updtimestamp;
-    }
-
-    public String getUpduserkey() {
-        return upduserkey;
-    }
-
-    public void setUpduserkey(String upduserkey) {
-        this.upduserkey = upduserkey;
-    }
-
-    public String getUpdpgmid() {
-        return updpgmid;
-    }
-
-    public void setUpdpgmid(String updpgmid) {
-        this.updpgmid = updpgmid;
-    }
+    
 }

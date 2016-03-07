@@ -11,6 +11,8 @@ public class TGoodsClassfication implements Serializable {
     private String classid;
 
     private String classname;
+    
+    private String classnameen;
 
     private Integer sortorder;
 
@@ -114,5 +116,13 @@ public class TGoodsClassfication implements Serializable {
 
     public void setUpdpgmid(String updpgmid) {
         this.updpgmid = updpgmid;
+    }
+
+    public String getClassnameen() {
+        return classnameen;
+    }
+
+    public void setClassnameen(String classnameen) {
+        this.classnameen = classnameen;
     }
 }

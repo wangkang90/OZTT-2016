@@ -114,12 +114,12 @@
                       <img src="${goodNewArr.goodsthumbnail }" class="img-responsive" alt="${goodNewArr.goodsname }">
                       <div>
                         <a href="${goodNewArr.goodsthumbnail }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
-                        <a href="#product-pop-up" onclick="viewProductPopUp('${goodNewArr.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
+                        <a href="#product-pop-up" onclick="viewProductPopUp('${goodNewArr.groupno }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                       </div>
                     </div>
-                    <h3><a onclick="toItem('${goodNewArr.goodsid }')">${goodNewArr.goodsname }</a></h3>
+                    <h3><a onclick="toItem('${goodNewArr.groupno }')">${goodNewArr.goodsname }</a></h3>
                     <div class="pi-price">${goodNewArr.costprice }<fmt:message key="common_yuan"/></div>
-                    <a onclick="toItem('${goodNewArr.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_detail"/></a>
+                    <a onclick="toItem('${goodNewArr.groupno }')" class="btn btn-default add2cart"><fmt:message key="common_detail"/></a>
                   </div>
                 </li>
                 </c:forEach>
@@ -176,12 +176,12 @@
                     <img src="${goodslist.goodsthumbnail }" class="img-responsive" alt="${goodslist.goodsname }">
                     <div>
                       <a href="${goodslist.goodsthumbnail }" class="btn btn-default fancybox-button"><fmt:message key="common_zoom"/></a>
-                      <a href="#product-pop-up" onclick="viewProductPopUp('${goodslist.goodsid }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
+                      <a href="#product-pop-up" onclick="viewProductPopUp('${goodslist.groupno }')" class="btn btn-default fancybox-fast-view"><fmt:message key="common_view"/></a>
                     </div>
                   </div>
-                  <h3><a onclick="toItem('${goodslist.goodsid }')">${goodslist.goodsname }</a></h3>
+                  <h3><a onclick="toItem('${goodslist.groupno }')">${goodslist.goodsname }</a></h3>
                   <div class="pi-price">${goodslist.costprice }<fmt:message key="common_yuan"/></div>
-                  <a onclick="toItem('${goodslist.goodsid }')" class="btn btn-default add2cart"><fmt:message key="common_detail"/></a>
+                  <a onclick="toItem('${goodslist.groupno }')" class="btn btn-default add2cart"><fmt:message key="common_detail"/></a>
                   <c:if test="${goodslist.newsaleflg == '1' }">
                   	<div class="sticker sticker-new"></div>
                   </c:if>

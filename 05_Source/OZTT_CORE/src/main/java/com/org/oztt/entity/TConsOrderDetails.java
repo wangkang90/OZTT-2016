@@ -1,12 +1,9 @@
 package com.org.oztt.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TConsOrderDetails implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class TConsOrderDetails {
     private Long no;
 
     private String orderno;
@@ -15,13 +12,11 @@ public class TConsOrderDetails implements Serializable {
 
     private String goodsid;
 
-    private String groupmaxquantity;
+    private String specifications;
 
-    private Long groupcurrentquantity;
+    private Long quantity;
 
-    private String groupcomments;
-
-    private String groupdesc;
+    private String groupno;
 
     private String priceno;
 
@@ -71,36 +66,28 @@ public class TConsOrderDetails implements Serializable {
         this.goodsid = goodsid;
     }
 
-    public String getGroupmaxquantity() {
-        return groupmaxquantity;
+    public String getSpecifications() {
+        return specifications;
     }
 
-    public void setGroupmaxquantity(String groupmaxquantity) {
-        this.groupmaxquantity = groupmaxquantity;
+    public void setSpecifications(String specifications) {
+        this.specifications = specifications;
     }
 
-    public Long getGroupcurrentquantity() {
-        return groupcurrentquantity;
+    public Long getQuantity() {
+        return quantity;
     }
 
-    public void setGroupcurrentquantity(Long groupcurrentquantity) {
-        this.groupcurrentquantity = groupcurrentquantity;
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
 
-    public String getGroupcomments() {
-        return groupcomments;
+    public String getGroupno() {
+        return groupno;
     }
 
-    public void setGroupcomments(String groupcomments) {
-        this.groupcomments = groupcomments;
-    }
-
-    public String getGroupdesc() {
-        return groupdesc;
-    }
-
-    public void setGroupdesc(String groupdesc) {
-        this.groupdesc = groupdesc;
+    public void setGroupno(String groupno) {
+        this.groupno = groupno;
     }
 
     public String getPriceno() {

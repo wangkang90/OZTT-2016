@@ -23,9 +23,9 @@ import com.org.oztt.contants.CommonConstants;
 import com.org.oztt.entity.TCustomerBasicInfo;
 import com.org.oztt.entity.TCustomerLoginHis;
 import com.org.oztt.entity.TCustomerLoginInfo;
-import com.org.oztt.entity.TGoods;
 import com.org.oztt.formDto.ContCartItemDto;
 import com.org.oztt.formDto.ContCartProItemDto;
+import com.org.oztt.formDto.GroupItemDto;
 import com.org.oztt.formDto.OzTtTpLgDto;
 import com.org.oztt.service.CustomerService;
 import com.org.oztt.service.GoodsService;
@@ -138,10 +138,10 @@ public class OzTtTpLgController extends BaseController {
             List<MyCategroy> myCategroyList = super.commonService.getMyCategroy();
 
             // 获取新货
-            List<TGoods> allGoodsList = goodsService.getAllNewArravail();
+            List<GroupItemDto> allGoodsList = goodsService.getAllNewArravail();
 
             if (!CollectionUtils.isEmpty(allGoodsList)) {
-                for (TGoods goods : allGoodsList) {
+                for (GroupItemDto goods : allGoodsList) {
                     goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT
                             + goods.getGoodsthumbnail());
                 }
@@ -150,9 +150,9 @@ public class OzTtTpLgController extends BaseController {
             // 获取明细分类的数据
             Map<String, String> mapParam = new HashMap<String, String>();
             mapParam.put(CommonConstants.LIMIT_PARAM, CommonConstants.MAIN_LIST_COUNT);
-            List<TGoods> tgoodList = goodsService.getGoodsListForMain(mapParam);
+            List<GroupItemDto> tgoodList = goodsService.getGoodsListForMain(mapParam);
             if (!CollectionUtils.isEmpty(tgoodList)) {
-                for (TGoods goods : tgoodList) {
+                for (GroupItemDto goods : tgoodList) {
                     goods.setGoodsthumbnail(imgUrl + goods.getGoodsid() + CommonConstants.PATH_SPLIT
                             + goods.getGoodsthumbnail());
                 }

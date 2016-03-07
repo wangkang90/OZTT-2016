@@ -6,6 +6,10 @@
 		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
 		<result column="classId" property="classid" jdbcType="VARCHAR" />
 		<result column="goodsBrand" property="goodsbrand" jdbcType="VARCHAR" />
+		<result column="goodsBrandEn" property="goodsbranden" jdbcType="VARCHAR" />
+    	<result column="goodsNameEn" property="goodsnameen" jdbcType="VARCHAR" />
+    	<result column="goodsDescEn" property="goodsdescen" jdbcType="VARCHAR" />
+    	<result column="ifTax" property="iftax" jdbcType="CHAR" />
 		<result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
 		<result column="goodsDesc" property="goodsdesc" jdbcType="VARCHAR" />
 		<result column="goodsComments" property="goodscomments"
@@ -27,6 +31,30 @@
 		<result column="updTimestamp" property="updtimestamp" jdbcType="TIMESTAMP" />
 		<result column="updUserKey" property="upduserkey" jdbcType="VARCHAR" />
 		<result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="GroupInfoMap" type="com.org.oztt.formDto.GroupItemDto">
+		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
+		<result column="classId" property="classid" jdbcType="VARCHAR" />
+		<result column="goodsBrand" property="goodsbrand" jdbcType="VARCHAR" />
+		<result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
+		<result column="goodsDesc" property="goodsdesc" jdbcType="VARCHAR" />
+		<result column="goodsComments" property="goodscomments"
+			jdbcType="VARCHAR" />
+		<result column="goodsThumbnail" property="goodsthumbnail"
+			jdbcType="VARCHAR" />
+		<result column="goodsSmallPic" property="goodssmallpic"
+			jdbcType="VARCHAR" />
+		<result column="goodsNormalPic" property="goodsnormalpic"
+			jdbcType="VARCHAR" />
+		<result column="onSaleFlg" property="onsaleflg" jdbcType="CHAR" />
+		<result column="hotSaleFlg" property="hotsaleflg" jdbcType="CHAR" />
+		<result column="newSaleFlg" property="newsaleflg" jdbcType="CHAR" />
+		<result column="costPrice" property="costprice" jdbcType="DECIMAL" />
+		<result column="sortOrder" property="sortorder" jdbcType="INTEGER" />
+		<result column="deleteFlg" property="deleteflg" jdbcType="CHAR" />
+		<result column="groupNo" property="groupno" jdbcType="VARCHAR" />
+
 	</resultMap>
 	<sql id="Base_Column_List">
 		no, goodsId, classId, goodsBrand, goodsName, goodsDesc, goodsComments,
@@ -360,36 +388,38 @@
 		limit 3
 	</select>
 
-	<select id="getAllNewArravail" resultMap="BaseResultMap">
+	<select id="getAllNewArravail" resultMap="GroupInfoMap">
 		select
 		a.no, a.goodsId, a.classId, a.goodsBrand, a.goodsName, a.goodsDesc, a.goodsComments,
 		a.goodsThumbnail,
 		a.goodsSmallPic, a.goodsNormalPic, a.onSaleFlg, a.hotSaleFlg, a.newSaleFlg, 
-		(case when c.groupPrice is not null  then c.groupPrice 
-		      else  b.goodsClassValue
-		      end )  as  costPrice, 
+		c.groupPrice as  costPrice, 
 		a.sortOrder,
-		a.deleteFlg, a.addTimestamp, a.addUserKey, a.updTimestamp, a.updUserKey, a.updPgmId
-		from t_goods a 
-		inner join t_goods_price b on a.goodsId = b.goodsId
-		inner join t_goods_group c on a.goodsId = c.goodsId
-		where newSaleFlg = '1' and onSaleFlg= '1'
+		a.deleteFlg,
+		c.groupNo
+		from t_goods_group c 
+		inner join t_goods_price b on c.goodsId = b.goodsId
+		and (current_timestamp between b.validPeriodStart and b.validPeriodEnd and b.goodsClassId = '0' and b.openFlg = '0') 
+		inner join t_goods a on c.goodsId = a.goodsId
+		where a.newSaleFlg = '1' and a.onSaleFlg= '1'
+		and (current_timestamp between c.validPeriodStart and c.validPeriodEnd and c.openFlg = '1')
 	</select>
 
-	<select id="getGoodsListForMain" resultMap="BaseResultMap" parameterType="java.util.Map">
+	<select id="getGoodsListForMain" resultMap="GroupInfoMap" parameterType="java.util.Map">
 		select
 		a.no, a.goodsId, a.classId, a.goodsBrand, a.goodsName, a.goodsDesc, a.goodsComments,
 		a.goodsThumbnail,
 		a.goodsSmallPic, a.goodsNormalPic, a.onSaleFlg, a.hotSaleFlg, a.newSaleFlg, 
-		(case when c.groupPrice is not null  then c.groupPrice 
-		      else  b.goodsClassValue
-		      end )  as  costPrice, 
+		c.groupPrice as  costPrice, 
 		a.sortOrder,
-		a.deleteFlg, a.addTimestamp, a.addUserKey, a.updTimestamp, a.updUserKey, a.updPgmId
-		from t_goods a 
-		inner join t_goods_price b on a.goodsId = b.goodsId
-		inner join t_goods_group c on a.goodsId = c.goodsId
-		where onSaleFlg= '1'
+		a.deleteFlg, 
+		c.groupNo
+		from t_goods_group c 
+		inner join t_goods_price b on c.goodsId = b.goodsId
+		and (current_timestamp between b.validPeriodStart and b.validPeriodEnd and b.goodsClassId = '0' and b.openFlg = '0')
+		inner join t_goods a on c.goodsId = a.goodsId
+		where a.onSaleFlg= '1'
+		and (current_timestamp between c.validPeriodStart and c.validPeriodEnd and c.openFlg = '1')
 		<if test="classId != null">
 			and classId = #{classId,jdbcType=VARCHAR}
 		</if>
@@ -398,20 +428,21 @@
 		</if>
 	</select>
 	
-	<select id="getGoodsByParamForPage" resultMap="BaseResultMap">
+	<select id="getGoodsByParamForPage" resultMap="GroupInfoMap">
 		select
 		a.no, a.goodsId, a.classId, a.goodsBrand, a.goodsName, a.goodsDesc, a.goodsComments,
 		a.goodsThumbnail,
 		a.goodsSmallPic, a.goodsNormalPic, a.onSaleFlg, a.hotSaleFlg, a.newSaleFlg, 
-		(case when c.groupPrice is not null  then c.groupPrice 
-		      else  b.goodsClassValue
-		      end )  as  costPrice, 
+		c.groupPrice as  costPrice, 
 		a.sortOrder,
-		a.deleteFlg, a.addTimestamp, a.addUserKey, a.updTimestamp, a.updUserKey, a.updPgmId
-		from t_goods a 
-		inner join t_goods_price b on a.goodsId = b.goodsId
-		inner join t_goods_group c on a.goodsId = c.goodsId
+		a.deleteFlg, 
+		c.groupNo
+		from t_goods_group c 
+		inner join t_goods_price b on c.goodsId = b.goodsId
+		and (current_timestamp between b.validPeriodStart and b.validPeriodEnd and b.goodsClassId = '0' and b.openFlg = '0')
+		inner join t_goods a on c.goodsId = a.goodsId
 		where a.onSaleFlg= '1'
+		and (current_timestamp between c.validPeriodStart and c.validPeriodEnd and c.openFlg = '1')
 		<if test="classId != null">
 			and a.classId = #{classId,jdbcType=VARCHAR}
 		</if>
@@ -419,27 +450,32 @@
 	
 	<select id="getGoodsByParamForPageCount" resultType="int" >
 		SELECT count(1)
-		FROM t_goods 
-		WHERE onSaleFlg= '1'
+		from t_goods_group c 
+		inner join t_goods_price b on c.goodsId = b.goodsId
+		and (current_timestamp between b.validPeriodStart and b.validPeriodEnd and b.goodsClassId = '0' and b.openFlg = '0')
+		inner join t_goods a on c.goodsId = a.goodsId
+		where a.onSaleFlg= '1'
+		and (current_timestamp between c.validPeriodStart and c.validPeriodEnd and c.openFlg = '1')
 		<if test="classId != null">
 			and classId = #{classId,jdbcType=VARCHAR}
 		</if>
 	</select>
 	
-	<select id="getFiveHotSeller" resultMap="BaseResultMap" parameterType="com.org.oztt.entity.TGoods">
+	<select id="getFiveHotSeller" resultMap="GroupInfoMap" parameterType="com.org.oztt.entity.TGoods">
 		select
 		a.no, a.goodsId, a.classId, a.goodsBrand, a.goodsName, a.goodsDesc, a.goodsComments,
 		a.goodsThumbnail,
 		a.goodsSmallPic, a.goodsNormalPic, a.onSaleFlg, a.hotSaleFlg, a.newSaleFlg, 
-		(case when c.groupPrice is not null  then c.groupPrice 
-		      else  b.goodsClassValue
-		      end )  as  costPrice, 
+		c.groupPrice as  costPrice, 
 		a.sortOrder,
-		a.deleteFlg, a.addTimestamp, a.addUserKey, a.updTimestamp, a.updUserKey, a.updPgmId
-		from t_goods a 
-		inner join t_goods_price b on a.goodsId = b.goodsId
-		inner join t_goods_group c on a.goodsId = c.goodsId
-		where 1=1
+		a.deleteFlg, 
+		c.groupNo
+		from t_goods_group c 
+		inner join t_goods_price b on c.goodsId = b.goodsId
+		and (current_timestamp between b.validPeriodStart and b.validPeriodEnd and b.goodsClassId = '0' and b.openFlg = '0')
+		inner join t_goods a on c.goodsId = a.goodsId
+		where a.onSaleFlg= '1'
+		and (current_timestamp between c.validPeriodStart and c.validPeriodEnd and c.openFlg = '1')
 		<if test="goodsid != null">
 			and goodsId = #{goodsid,jdbcType=VARCHAR}
 		</if>
@@ -485,12 +521,22 @@
 		limit 5
 	</select>
 	
-	<select id="getGoodsBySearchParam" resultMap="BaseResultMap" parameterType="java.lang.String">
+	<select id="getGoodsBySearchParam" resultMap="GroupInfoMap" parameterType="java.lang.String">
 		select
-		<include refid="Base_Column_List" />
-		from t_goods
-		where onSaleFlg= '1'
-		and goodsName like concat('%',#{goodsParam},'%')
+		a.no, a.goodsId, a.classId, a.goodsBrand, a.goodsName, a.goodsDesc, a.goodsComments,
+		a.goodsThumbnail,
+		a.goodsSmallPic, a.goodsNormalPic, a.onSaleFlg, a.hotSaleFlg, a.newSaleFlg, 
+		c.groupPrice as  costPrice, 
+		a.sortOrder,
+		a.deleteFlg, 
+		c.groupNo
+		from t_goods_group c 
+		inner join t_goods_price b on c.goodsId = b.goodsId
+		and (current_timestamp between b.validPeriodStart and b.validPeriodEnd and b.goodsClassId = '0' and b.openFlg = '0')
+		inner join t_goods a on c.goodsId = a.goodsId
+		where a.onSaleFlg= '1'
+		and (current_timestamp between c.validPeriodStart and c.validPeriodEnd and c.openFlg = '1')
+		and a.goodsName like concat('%',#{goodsParam},'%')
 		limit 12
 	</select>
 	

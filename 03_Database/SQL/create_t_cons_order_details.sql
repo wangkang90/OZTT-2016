@@ -1,13 +1,12 @@
-DROP TABLE IF EXISTS `t_cons_order_details`;
+﻿DROP TABLE IF EXISTS `t_cons_order_details`;
 CREATE TABLE `t_cons_order_details` (
   `no` bigint(12) NOT NULL AUTO_INCREMENT,
   `orderNo` varchar(16) NOT NULL,
   `customerNo` varchar(16) NOT NULL,
   `goodsId` varchar(16) NOT NULL,
-  `groupMaxQuantity` varchar(1000) DEFAULT NULL,
-  `groupCurrentQuantity` decimal(12, 0),
-  `groupComments` varchar(500) DEFAULT NULL,
-  `groupDesc` varchar(255) DEFAULT NULL,
+  `specifications` varchar(1000) DEFAULT NULL,
+  `quantity` decimal(12, 0),
+  `groupNo` varchar(16) DEFAULT NULL,
   `priceNo` varchar(16) DEFAULT NULL,
   `unitPrice` decimal(12, 2),
   `sumAmount` decimal(12, 2),
