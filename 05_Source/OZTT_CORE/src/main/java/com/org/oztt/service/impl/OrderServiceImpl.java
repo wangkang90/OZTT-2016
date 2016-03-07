@@ -134,11 +134,12 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         // 生成订单表以及订单详细表
         for (ContCartItemDto itemDto : payList) {
             TConsOrderDetails tConsOrderDetails = new TConsOrderDetails();
+            tConsOrderDetails.setGroupno(itemDto.getGroupId());
             tConsOrderDetails.setOrderno(maxOrderNo);
             tConsOrderDetails.setCustomerno(customerNo);
             tConsOrderDetails.setGoodsid(itemDto.getGoodsId());
-            tConsOrderDetails.setGroupmaxquantity(itemDto.getGoodsPropertiesDB());
-            tConsOrderDetails.setGroupcurrentquantity(itemDto.getGoodsQuantity() == null ? 0L : Long.valueOf(itemDto
+            tConsOrderDetails.setSpecifications(itemDto.getGoodsPropertiesDB());
+            tConsOrderDetails.setQuantity(itemDto.getGoodsQuantity() == null ? 0L : Long.valueOf(itemDto
                     .getGoodsQuantity()));
             tConsOrderDetails.setSumamount(itemDto.getGoodsPrice() == null ? BigDecimal.ZERO : new BigDecimal(itemDto
                     .getGoodsPrice()));
@@ -152,7 +153,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
             // 生成明细订单的时候
             TGoodsGroup tGoodsGroup = new TGoodsGroup();
             tGoodsGroup.setGoodsid(itemDto.getGoodsId());
-            tGoodsGroup.setGroupcurrentquantity(tConsOrderDetails.getGroupcurrentquantity());
+            tGoodsGroup.setGroupcurrentquantity(tConsOrderDetails.getQuantity());
             tGoodsGroup.setUpdtimestamp(new Date());
             tGoodsGroup.setUpdpgmid("PAY");
             tGoodsGroup.setUpduserkey(customerNo);

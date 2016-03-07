@@ -6,6 +6,10 @@
 		<result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
 		<result column="classId" property="classid" jdbcType="VARCHAR" />
 		<result column="goodsBrand" property="goodsbrand" jdbcType="VARCHAR" />
+		<result column="goodsBrandEn" property="goodsbranden" jdbcType="VARCHAR" />
+    	<result column="goodsNameEn" property="goodsnameen" jdbcType="VARCHAR" />
+    	<result column="goodsDescEn" property="goodsdescen" jdbcType="VARCHAR" />
+    	<result column="ifTax" property="iftax" jdbcType="CHAR" />
 		<result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
 		<result column="goodsDesc" property="goodsdesc" jdbcType="VARCHAR" />
 		<result column="goodsComments" property="goodscomments"

@@ -1,25 +1,30 @@
 package com.org.oztt.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TGoods implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class TGoods {
     private Long no;
 
     private String goodsid;
 
     private String classid;
-    
+
     private String goodsbrand;
+
+    private String goodsbranden;
 
     private String goodsname;
 
+    private String goodsnameen;
+
     private String goodsdesc;
 
+    private String goodsdescen;
+
     private String goodscomments;
+
+    private String iftax;
 
     private String goodsthumbnail;
 
@@ -73,12 +78,36 @@ public class TGoods implements Serializable {
         this.classid = classid;
     }
 
+    public String getGoodsbrand() {
+        return goodsbrand;
+    }
+
+    public void setGoodsbrand(String goodsbrand) {
+        this.goodsbrand = goodsbrand;
+    }
+
+    public String getGoodsbranden() {
+        return goodsbranden;
+    }
+
+    public void setGoodsbranden(String goodsbranden) {
+        this.goodsbranden = goodsbranden;
+    }
+
     public String getGoodsname() {
         return goodsname;
     }
 
     public void setGoodsname(String goodsname) {
         this.goodsname = goodsname;
+    }
+
+    public String getGoodsnameen() {
+        return goodsnameen;
+    }
+
+    public void setGoodsnameen(String goodsnameen) {
+        this.goodsnameen = goodsnameen;
     }
 
     public String getGoodsdesc() {
@@ -89,12 +118,28 @@ public class TGoods implements Serializable {
         this.goodsdesc = goodsdesc;
     }
 
+    public String getGoodsdescen() {
+        return goodsdescen;
+    }
+
+    public void setGoodsdescen(String goodsdescen) {
+        this.goodsdescen = goodsdescen;
+    }
+
     public String getGoodscomments() {
         return goodscomments;
     }
 
     public void setGoodscomments(String goodscomments) {
         this.goodscomments = goodscomments;
+    }
+
+    public String getIftax() {
+        return iftax;
+    }
+
+    public void setIftax(String iftax) {
+        this.iftax = iftax;
     }
 
     public String getGoodsthumbnail() {
@@ -207,13 +252,5 @@ public class TGoods implements Serializable {
 
     public void setUpdpgmid(String updpgmid) {
         this.updpgmid = updpgmid;
-    }
-
-    public String getGoodsbrand() {
-        return goodsbrand;
-    }
-
-    public void setGoodsbrand(String goodsbrand) {
-        this.goodsbrand = goodsbrand;
     }
 }
