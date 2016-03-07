@@ -6,10 +6,9 @@
     <result column="orderNo" property="orderno" jdbcType="VARCHAR" />
     <result column="customerNo" property="customerno" jdbcType="VARCHAR" />
     <result column="goodsId" property="goodsid" jdbcType="VARCHAR" />
-    <result column="groupMaxQuantity" property="groupmaxquantity" jdbcType="VARCHAR" />
-    <result column="groupCurrentQuantity" property="groupcurrentquantity" jdbcType="DECIMAL" />
-    <result column="groupComments" property="groupcomments" jdbcType="VARCHAR" />
-    <result column="groupDesc" property="groupdesc" jdbcType="VARCHAR" />
+    <result column="specifications" property="specifications" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="DECIMAL" />
+    <result column="groupNo" property="groupno" jdbcType="VARCHAR" />
     <result column="priceNo" property="priceno" jdbcType="VARCHAR" />
     <result column="unitPrice" property="unitprice" jdbcType="DECIMAL" />
     <result column="sumAmount" property="sumamount" jdbcType="DECIMAL" />
@@ -20,9 +19,8 @@
     <result column="updPgmId" property="updpgmid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    no, orderNo, customerNo, goodsId, groupMaxQuantity, groupCurrentQuantity, groupComments, 
-    groupDesc, priceNo, unitPrice, sumAmount, addTimestamp, addUserKey, updTimestamp, 
-    updUserKey, updPgmId
+    no, orderNo, customerNo, goodsId, specifications, quantity, groupNo, priceNo, unitPrice, 
+    sumAmount, addTimestamp, addUserKey, updTimestamp, updUserKey, updPgmId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -36,17 +34,17 @@
   </delete>
   <insert id="insert" parameterType="com.org.oztt.entity.TConsOrderDetails" >
     insert into t_cons_order_details (no, orderNo, customerNo, 
-      goodsId, groupMaxQuantity, groupCurrentQuantity, 
-      groupComments, groupDesc, priceNo, 
-      unitPrice, sumAmount, addTimestamp, 
-      addUserKey, updTimestamp, updUserKey, 
-      updPgmId)
+      goodsId, specifications, quantity, 
+      groupNo, priceNo, unitPrice, 
+      sumAmount, addTimestamp, addUserKey, 
+      updTimestamp, updUserKey, updPgmId
+      )
     values (#{no,jdbcType=BIGINT}, #{orderno,jdbcType=VARCHAR}, #{customerno,jdbcType=VARCHAR}, 
-      #{goodsid,jdbcType=VARCHAR}, #{groupmaxquantity,jdbcType=VARCHAR}, #{groupcurrentquantity,jdbcType=DECIMAL}, 
-      #{groupcomments,jdbcType=VARCHAR}, #{groupdesc,jdbcType=VARCHAR}, #{priceno,jdbcType=VARCHAR}, 
-      #{unitprice,jdbcType=DECIMAL}, #{sumamount,jdbcType=DECIMAL}, #{addtimestamp,jdbcType=TIMESTAMP}, 
-      #{adduserkey,jdbcType=VARCHAR}, #{updtimestamp,jdbcType=TIMESTAMP}, #{upduserkey,jdbcType=VARCHAR}, 
-      #{updpgmid,jdbcType=VARCHAR})
+      #{goodsid,jdbcType=VARCHAR}, #{specifications,jdbcType=VARCHAR}, #{quantity,jdbcType=DECIMAL}, 
+      #{groupno,jdbcType=VARCHAR}, #{priceno,jdbcType=VARCHAR}, #{unitprice,jdbcType=DECIMAL}, 
+      #{sumamount,jdbcType=DECIMAL}, #{addtimestamp,jdbcType=TIMESTAMP}, #{adduserkey,jdbcType=VARCHAR}, 
+      #{updtimestamp,jdbcType=TIMESTAMP}, #{upduserkey,jdbcType=VARCHAR}, #{updpgmid,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.org.oztt.entity.TConsOrderDetails" >
     insert into t_cons_order_details
@@ -63,17 +61,14 @@
       <if test="goodsid != null" >
         goodsId,
       </if>
-      <if test="groupmaxquantity != null" >
-        groupMaxQuantity,
+      <if test="specifications != null" >
+        specifications,
       </if>
-      <if test="groupcurrentquantity != null" >
-        groupCurrentQuantity,
+      <if test="quantity != null" >
+        quantity,
       </if>
-      <if test="groupcomments != null" >
-        groupComments,
-      </if>
-      <if test="groupdesc != null" >
-        groupDesc,
+      <if test="groupno != null" >
+        groupNo,
       </if>
       <if test="priceno != null" >
         priceNo,
@@ -113,17 +108,14 @@
       <if test="goodsid != null" >
         #{goodsid,jdbcType=VARCHAR},
       </if>
-      <if test="groupmaxquantity != null" >
-        #{groupmaxquantity,jdbcType=VARCHAR},
+      <if test="specifications != null" >
+        #{specifications,jdbcType=VARCHAR},
       </if>
-      <if test="groupcurrentquantity != null" >
-        #{groupcurrentquantity,jdbcType=DECIMAL},
+      <if test="quantity != null" >
+        #{quantity,jdbcType=DECIMAL},
       </if>
-      <if test="groupcomments != null" >
-        #{groupcomments,jdbcType=VARCHAR},
-      </if>
-      <if test="groupdesc != null" >
-        #{groupdesc,jdbcType=VARCHAR},
+      <if test="groupno != null" >
+        #{groupno,jdbcType=VARCHAR},
       </if>
       <if test="priceno != null" >
         #{priceno,jdbcType=VARCHAR},
@@ -163,17 +155,14 @@
       <if test="goodsid != null" >
         goodsId = #{goodsid,jdbcType=VARCHAR},
       </if>
-      <if test="groupmaxquantity != null" >
-        groupMaxQuantity = #{groupmaxquantity,jdbcType=VARCHAR},
+      <if test="specifications != null" >
+        specifications = #{specifications,jdbcType=VARCHAR},
       </if>
-      <if test="groupcurrentquantity != null" >
-        groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=DECIMAL},
       </if>
-      <if test="groupcomments != null" >
-        groupComments = #{groupcomments,jdbcType=VARCHAR},
-      </if>
-      <if test="groupdesc != null" >
-        groupDesc = #{groupdesc,jdbcType=VARCHAR},
+      <if test="groupno != null" >
+        groupNo = #{groupno,jdbcType=VARCHAR},
       </if>
       <if test="priceno != null" >
         priceNo = #{priceno,jdbcType=VARCHAR},
@@ -207,10 +196,9 @@
     set orderNo = #{orderno,jdbcType=VARCHAR},
       customerNo = #{customerno,jdbcType=VARCHAR},
       goodsId = #{goodsid,jdbcType=VARCHAR},
-      groupMaxQuantity = #{groupmaxquantity,jdbcType=VARCHAR},
-      groupCurrentQuantity = #{groupcurrentquantity,jdbcType=DECIMAL},
-      groupComments = #{groupcomments,jdbcType=VARCHAR},
-      groupDesc = #{groupdesc,jdbcType=VARCHAR},
+      specifications = #{specifications,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=DECIMAL},
+      groupNo = #{groupno,jdbcType=VARCHAR},
       priceNo = #{priceno,jdbcType=VARCHAR},
       unitPrice = #{unitprice,jdbcType=DECIMAL},
       sumAmount = #{sumamount,jdbcType=DECIMAL},
@@ -229,12 +217,13 @@
   
   <select id="selectByOrderId" resultType="com.org.oztt.formDto.ContCartItemDto" parameterType="java.lang.String" >
     select 
+    a.groupNo as groupId,
     a.goodsId,
 	b.goodsName,
 	b.goodsThumbnail as goodsImage,
-	a.groupCurrentQuantity as goodsQuantity,
+	a.quantity as goodsQuantity,
 	a.unitPrice as goodsPrice, 
-	a.groupMaxQuantity as goodsPropertiesDB
+	a.specifications as goodsPropertiesDB
     from t_cons_order_details a
     inner join t_goods b on a.goodsId = b.goodsId
     where a.orderNo = #{orderno,jdbcType=VARCHAR}

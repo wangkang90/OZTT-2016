@@ -146,7 +146,6 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
         tGoodsPrice.setGoodsid(goodId);
         tGoodsPrice.setOpenflg(CommonConstants.OPEN_FLAG_OTHER);
         tGoodsPrice = getGoodPrice(tGoodsPrice);
-        
 
         // 属性（比如：size，颜色）
         // 商品扩展属性定义这张表中
@@ -332,16 +331,16 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             tConsCart.setCustomerno(customerNo);
             tConsCart.setGoodsspecifications(goodProperties);
             tConsCart = tConsCartDao.selectByParams(tConsCart);
-            
+
             if (tConsCart == null) {
                 // 没有数据则需要插入数据
                 // 商品团购
                 TGoodsGroup tGoodsGroup = new TGoodsGroup();
                 tGoodsGroup.setGroupno(groupId);
                 tGoodsGroup = this.getGoodPrice(tGoodsGroup);
-                
+
                 tConsCart = new TConsCart();
-                
+
                 tConsCart.setGroupno(groupId);
                 tConsCart.setAddcarttimestamp(new Date());
                 tConsCart.setAddtimestamp(new Date());
@@ -354,7 +353,6 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
                 tGoodsPrice.setGoodsid(tGoodsGroup.getGoodsid());
                 tGoodsPrice = this.getGoodPrice(tGoodsPrice);
                 tConsCart.setPriceno(tGoodsPrice.getPriceno());
-                
 
                 tConsCart.setIfgroup(CommonConstants.IS_GROUP);
                 tConsCart.setQuantity(Long.valueOf(goodQuantity));
@@ -386,7 +384,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             return false;
         for (int i = 0; i < list.size(); i++) {
             Map<String, String> map = (Map<String, String>) list.get(i);
-            String goodId = map.get("goodsId");
+            String groupId = map.get("groupId");
             String goodProperties = map.get("goodsProperties");
             if (goodProperties != null) {
                 List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties,
@@ -397,7 +395,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             }
             // 判断属性是不是相同，如果相同则数量相加
             TConsCart tConsCart = new TConsCart();
-            tConsCart.setGoodsid(goodId);
+            tConsCart.setGroupno(groupId);
             tConsCart.setCustomerno(customerNo);
             tConsCart.setGoodsspecifications(goodProperties);
             tConsCart = tConsCartDao.selectByParams(tConsCart);
@@ -437,7 +435,7 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             return false;
         for (int i = 0; i < list.size(); i++) {
             Map<String, String> map = (Map<String, String>) list.get(i);
-            String goodId = map.get("goodsId");
+            String groupId = map.get("groupId");
             String goodProperties = map.get("goodsProperties");
             if (goodProperties != null) {
                 List<ContCartProItemDto> concartContentList = JSONObject.parseArray(goodProperties,
@@ -449,29 +447,31 @@ public class GoodsServiceImpl extends BaseService implements GoodsService {
             String goodQuantity = map.get("goodsQuantity");
             // 判断属性是不是相同，如果相同则数量相加
             TConsCart tConsCart = new TConsCart();
-            tConsCart.setGoodsid(goodId);
+            tConsCart.setGroupno(groupId);
             tConsCart.setCustomerno(customerNo);
             tConsCart.setGoodsspecifications(goodProperties);
             tConsCart = tConsCartDao.selectByParams(tConsCart);
             if (tConsCart == null) {
                 // 没有数据则需要插入数据
+                // 商品团购
+                TGoodsGroup tGoodsGroup = new TGoodsGroup();
+                tGoodsGroup.setGroupno(groupId);
+                tGoodsGroup = this.getGoodPrice(tGoodsGroup);
+               
+
                 tConsCart = new TConsCart();
+                tConsCart.setGroupno(groupId);
                 tConsCart.setAddcarttimestamp(new Date());
                 tConsCart.setAddtimestamp(new Date());
                 tConsCart.setAdduserkey(customerNo);
                 tConsCart.setCustomerno(customerNo);
-                tConsCart.setGoodsid(goodId);
+                tConsCart.setGoodsid(tGoodsGroup.getGoodsid());
                 tConsCart.setGoodsspecifications(goodProperties);
                 // 商品价格
                 TGoodsPrice tGoodsPrice = new TGoodsPrice();
-                tGoodsPrice.setGoodsid(goodId);
+                tGoodsPrice.setGoodsid(tGoodsGroup.getGoodsid());
                 tGoodsPrice = this.getGoodPrice(tGoodsPrice);
                 tConsCart.setPriceno(tGoodsPrice.getPriceno());
-                // 商品团购
-                TGoodsGroup tGoodsGroup = new TGoodsGroup();
-                tGoodsGroup.setGoodsid(goodId);
-                tGoodsGroup = this.getGoodPrice(tGoodsGroup);
-                tConsCart.setGroupno(tGoodsGroup.getGroupno());
 
                 tConsCart.setIfgroup(CommonConstants.IS_GROUP);
                 tConsCart.setQuantity(Long.valueOf(goodQuantity));

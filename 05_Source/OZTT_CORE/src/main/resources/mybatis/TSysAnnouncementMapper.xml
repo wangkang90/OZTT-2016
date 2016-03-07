@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.oztt.dao.TSysAnnouncementDao" >
+  <resultMap id="BaseResultMap" type="com.org.oztt.entity.TSysAnnouncement" >
+    <id column="no" property="no" jdbcType="BIGINT" />
+    <result column="announceNo" property="announceno" jdbcType="VARCHAR" />
+    <result column="announceTitle" property="announcetitle" jdbcType="VARCHAR" />
+    <result column="announceContent" property="announcecontent" jdbcType="VARCHAR" />
+    <result column="releaseTime" property="releasetime" jdbcType="TIMESTAMP" />
+    <result column="ifRevoke" property="ifrevoke" jdbcType="CHAR" />
+    <result column="revokeTime" property="revoketime" jdbcType="TIMESTAMP" />
+    <result column="ifDelete" property="ifdelete" jdbcType="CHAR" />
+    <result column="deleteTime" property="deletetime" jdbcType="TIMESTAMP" />
+    <result column="priority" property="priority" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    no, announceNo, announceTitle, announceContent, releaseTime, ifRevoke, revokeTime, 
+    ifDelete, deleteTime, priority
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_announcement
+    where no = #{no,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_sys_announcement
+    where no = #{no,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.org.oztt.entity.TSysAnnouncement" >
+    insert into t_sys_announcement (no, announceNo, announceTitle, 
+      announceContent, releaseTime, ifRevoke, 
+      revokeTime, ifDelete, deleteTime, 
+      priority)
+    values (#{no,jdbcType=BIGINT}, #{announceno,jdbcType=VARCHAR}, #{announcetitle,jdbcType=VARCHAR}, 
+      #{announcecontent,jdbcType=VARCHAR}, #{releasetime,jdbcType=TIMESTAMP}, #{ifrevoke,jdbcType=CHAR}, 
+      #{revoketime,jdbcType=TIMESTAMP}, #{ifdelete,jdbcType=CHAR}, #{deletetime,jdbcType=TIMESTAMP}, 
+      #{priority,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.org.oztt.entity.TSysAnnouncement" >
+    insert into t_sys_announcement
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="announceno != null" >
+        announceNo,
+      </if>
+      <if test="announcetitle != null" >
+        announceTitle,
+      </if>
+      <if test="announcecontent != null" >
+        announceContent,
+      </if>
+      <if test="releasetime != null" >
+        releaseTime,
+      </if>
+      <if test="ifrevoke != null" >
+        ifRevoke,
+      </if>
+      <if test="revoketime != null" >
+        revokeTime,
+      </if>
+      <if test="ifdelete != null" >
+        ifDelete,
+      </if>
+      <if test="deletetime != null" >
+        deleteTime,
+      </if>
+      <if test="priority != null" >
+        priority,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="no != null" >
+        #{no,jdbcType=BIGINT},
+      </if>
+      <if test="announceno != null" >
+        #{announceno,jdbcType=VARCHAR},
+      </if>
+      <if test="announcetitle != null" >
+        #{announcetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="announcecontent != null" >
+        #{announcecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="releasetime != null" >
+        #{releasetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ifrevoke != null" >
+        #{ifrevoke,jdbcType=CHAR},
+      </if>
+      <if test="revoketime != null" >
+        #{revoketime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ifdelete != null" >
+        #{ifdelete,jdbcType=CHAR},
+      </if>
+      <if test="deletetime != null" >
+        #{deletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.oztt.entity.TSysAnnouncement" >
+    update t_sys_announcement
+    <set >
+      <if test="announceno != null" >
+        announceNo = #{announceno,jdbcType=VARCHAR},
+      </if>
+      <if test="announcetitle != null" >
+        announceTitle = #{announcetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="announcecontent != null" >
+        announceContent = #{announcecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="releasetime != null" >
+        releaseTime = #{releasetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ifrevoke != null" >
+        ifRevoke = #{ifrevoke,jdbcType=CHAR},
+      </if>
+      <if test="revoketime != null" >
+        revokeTime = #{revoketime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ifdelete != null" >
+        ifDelete = #{ifdelete,jdbcType=CHAR},
+      </if>
+      <if test="deletetime != null" >
+        deleteTime = #{deletetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="priority != null" >
+        priority = #{priority,jdbcType=CHAR},
+      </if>
+    </set>
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.org.oztt.entity.TSysAnnouncement" >
+    update t_sys_announcement
+    set announceNo = #{announceno,jdbcType=VARCHAR},
+      announceTitle = #{announcetitle,jdbcType=VARCHAR},
+      announceContent = #{announcecontent,jdbcType=VARCHAR},
+      releaseTime = #{releasetime,jdbcType=TIMESTAMP},
+      ifRevoke = #{ifrevoke,jdbcType=CHAR},
+      revokeTime = #{revoketime,jdbcType=TIMESTAMP},
+      ifDelete = #{ifdelete,jdbcType=CHAR},
+      deleteTime = #{deletetime,jdbcType=TIMESTAMP},
+      priority = #{priority,jdbcType=CHAR}
+    where no = #{no,jdbcType=BIGINT}
+  </update>
+</mapper>
